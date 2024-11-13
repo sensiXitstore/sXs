@@ -108,8 +108,39 @@
         }
 
         function applySettings() {
-            const uri = "freefire://?aimbot=" + document.getElementById("aimbot").value;
-            alert("Settings Applied\n" + "Aimbot: " + document.getElementById("aimbot").value + "%");
+            // Gather settings for all tabs
+            const aimbot = document.getElementById("aimbot").value;
+            const aimlock = document.getElementById("aimlock").checked ? "100" : "0";
+            const aimassist = document.getElementById("aimassist").checked ? "100" : "0";
+            const aimfov = document.getElementById("aimfov").value;
+
+            const esp = document.getElementById("esp").checked ? "100" : "0";
+            const wallhack = document.getElementById("wallhack").checked ? "100" : "0";
+
+            const speedboost = document.getElementById("speedboost").checked ? "100" : "0";
+            const nofall = document.getElementById("nofall").checked ? "100" : "0";
+
+            const rapidfire = document.getElementById("rapidfire").checked ? "100" : "0";
+            const noreload = document.getElementById("noreload").checked ? "100" : "0";
+
+            const godmode = document.getElementById("godmode").checked ? "100" : "0";
+            const invisible = document.getElementById("invisible").checked ? "100" : "0";
+
+            // Generate URL with all settings for freefire://
+            const uri = "freefire://?aimbot=" + aimbot +
+                        "&aimlock=" + aimlock +
+                        "&aimassist=" + aimassist +
+                        "&aimfov=" + aimfov +
+                        "&esp=" + esp +
+                        "&wallhack=" + wallhack +
+                        "&speedboost=" + speedboost +
+                        "&nofall=" + nofall +
+                        "&rapidfire=" + rapidfire +
+                        "&noreload=" + noreload +
+                        "&godmode=" + godmode +
+                        "&invisible=" + invisible;
+
+            alert("Settings Applied!");
             window.location.href = uri;
         }
     </script>
@@ -129,31 +160,54 @@
             <div class="mod-menu-tab active" onclick="showTab(0)">Aimbot</div>
             <div class="mod-menu-tab" onclick="showTab(1)">Visuals</div>
             <div class="mod-menu-tab" onclick="showTab(2)">Player</div>
+            <div class="mod-menu-tab" onclick="showTab(3)">Weapon</div>
+            <div class="mod-menu-tab" onclick="showTab(4)">Misc</div>
         </div>
 
+        <!-- Aimbot Settings -->
         <div class="mod-menu-page active">
             <h3>Aimbot Settings</h3>
             <div class="range-container">
                 <label for="aimbot">Aimbot Strength:</label>
                 <input type="range" id="aimbot" min="0" max="100" value="50">
-                <span id="aimbotText">50%</span>
             </div>
-            <button onclick="applySettings()">Apply Aimbot Settings</button>
+            <label>Aimlock</label><input type="checkbox" id="aimlock"><br>
+            <label>Aim Assist</label><input type="checkbox" id="aimassist"><br>
+            <div class="range-container">
+                <label for="aimfov">Aim FOV:</label>
+                <input type="range" id="aimfov" min="0" max="100" value="50">
+            </div>
         </div>
 
+        <!-- Visual Settings -->
         <div class="mod-menu-page">
             <h3>Visual Settings</h3>
-            <label><input type="checkbox"> ESP</label>
-            <label><input type="checkbox"> Wallhack</label>
-            <button onclick="applySettings()">Apply Visual Settings</button>
+            <label>ESP</label><input type="checkbox" id="esp"><br>
+            <label>Wallhack</label><input type="checkbox" id="wallhack"><br>
         </div>
 
+        <!-- Player Settings -->
         <div class="mod-menu-page">
             <h3>Player Settings</h3>
-            <label><input type="checkbox"> Speed Boost</label>
-            <label><input type="checkbox"> No Fall Damage</label>
-            <button onclick="applySettings()">Apply Player Settings</button>
+            <label>Speed Boost</label><input type="checkbox" id="speedboost"><br>
+            <label>No Fall Damage</label><input type="checkbox" id="nofall"><br>
         </div>
+
+        <!-- Weapon Settings -->
+        <div class="mod-menu-page">
+            <h3>Weapon Settings</h3>
+            <label>Rapid Fire</label><input type="checkbox" id="rapidfire"><br>
+            <label>No Reload</label><input type="checkbox" id="noreload"><br>
+        </div>
+
+        <!-- Miscellaneous Settings -->
+        <div class="mod-menu-page">
+            <h3>Miscellaneous Settings</h3>
+            <label>God Mode</label><input type="checkbox" id="godmode"><br>
+            <label>Invisibility</label><input type="checkbox" id="invisible"><br>
+        </div>
+
+        <button onclick="applySettings()">Apply All Settings</button>
     </div>
 
     <div class="footer">
