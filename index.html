@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RGXtreme Enhanced Panel</title>
+    <title>RGXtreme Control Panel</title>
 
-    <!-- Google Fonts and Icons -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
     <style>
@@ -20,222 +20,175 @@
             justify-content: center;
             align-items: center;
             background: #0a0a0a;
+            color: #ffddc1;
         }
 
-        /* Space-like animated background */
+        /* Animated background */
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://images.unsplash.com/photo-1496065187959-7f07b5bd6895') no-repeat center center/cover;
-            filter: blur(4px) brightness(0.3);
-            animation: zoomInOut 30s infinite;
+            background: radial-gradient(circle, #0f0f0f, #1a1a1a, #000);
+            overflow: hidden;
+            z-index: -1;
         }
 
-        @keyframes zoomInOut {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        .background .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ff4500;
+            border-radius: 50%;
+            animation: moveParticles 10s linear infinite;
+            opacity: 0.7;
         }
 
-        /* Panel container */
+        @keyframes moveParticles {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20vw);
+                opacity: 0;
+            }
+        }
+
+        /* Control panel container */
         .panel-container {
             width: 80%;
-            max-width: 1000px;
+            max-width: 900px;
             background: rgba(0, 0, 0, 0.85);
             border: 3px solid #ff4500;
             border-radius: 15px;
-            padding: 30px;
+            padding: 20px;
             box-shadow: 0px 0px 15px rgba(255, 69, 0, 0.6);
             backdrop-filter: blur(10px);
-            color: #ffddc1;
         }
 
         .panel-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
+            color: #ff4500;
         }
 
         .panel-header h1 {
             font-size: 2em;
-            color: #ff4500;
             margin: 0;
         }
 
+        /* Tab buttons */
         .tab-buttons {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             margin-top: 20px;
         }
 
         .tab-button {
             width: 30%;
-            padding: 15px;
+            padding: 10px;
             text-align: center;
             background: #1f1f1f;
             border: 1px solid #ff4500;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.3s;
             color: #ffddc1;
             font-weight: bold;
+            font-size: 1em;
+        }
+
+        .tab-button:hover {
+            background: #ff4500;
+            color: #0a0a0a;
+            transform: scale(1.05);
+        }
+
+        /* Content */
+        .content {
+            display: none;
+            margin-top: 20px;
             font-size: 1.1em;
         }
 
-        .tab-button.active, .tab-button:hover {
-            background: #ff4500;
-            color: #fff;
-        }
-
-        .tab-content {
-            display: none;
-            margin-top: 25px;
-            text-align: center;
-            font-size: 1.2em;
-        }
-
-        .tab-content.active {
+        .content.active {
             display: block;
+            animation: fadeIn 0.5s;
         }
 
-        /* Enhanced buttons and sliders */
-        .setting-group {
-            margin: 15px 0;
-            color: #ffddc1;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        .setting-group label {
-            font-size: 1.2em;
-            color: #ffddc1;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .slider {
-            width: 80%;
-        }
-
-        .activate-btn {
-            font-size: 1.3em;
-            padding: 10px 25px;
-            background: #ff4500;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .activate-btn:hover {
-            background: #ff3300;
-        }
-
-        /* Notification styles */
-        .notification {
-            position: fixed;
-            bottom: 10px;
-            right: 10px;
-            padding: 15px;
-            background: rgba(50, 50, 50, 0.9);
-            color: #ff4500;
-            border-radius: 5px;
+        /* Sound effects */
+        .sound {
             display: none;
-            animation: fadeInOut 3s forwards;
-            font-size: 1.1em;
-        }
-
-        @keyframes fadeInOut {
-            0% { opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { opacity: 0; }
         }
     </style>
-
-    <script>
-        function switchTab(tabName) {
-            let contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => content.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
-
-            let buttons = document.querySelectorAll('.tab-button');
-            buttons.forEach(button => button.classList.remove('active'));
-            document.querySelector(`.tab-button[data-tab="${tabName}"]`).classList.add('active');
-        }
-
-        function activateFeature(feature) {
-            let notification = document.getElementById('notification');
-            notification.innerText = feature + ' activated!';
-            notification.style.display = 'block';
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
-
-            // Play activation sound
-            let sound = new Audio('https://www.soundjay.com/button/sounds/button-09.mp3');
-            sound.play();
-
-            // Simulate command for freefire:// - note this will not actually trigger the game feature
-            console.log(`freefire://${feature}`);
-        }
-    </script>
 </head>
 <body>
 
-<div class="background"></div>
-
-<div class="panel-container">
-    <div class="panel-header">
-        <h1>RGXtreme Enhanced Panel</h1>
+    <!-- Background with particles -->
+    <div class="background">
+        <div class="particle" style="top: 100%; left: 20%; animation-duration: 12s;"></div>
+        <div class="particle" style="top: 100%; left: 50%; animation-duration: 15s;"></div>
+        <div class="particle" style="top: 100%; left: 80%; animation-duration: 8s;"></div>
+        <div class="particle" style="top: 100%; left: 30%; animation-duration: 10s;"></div>
+        <div class="particle" style="top: 100%; left: 60%; animation-duration: 13s;"></div>
     </div>
 
-    <div class="tab-buttons">
-        <button class="tab-button active" data-tab="aimbot" onclick="switchTab('aimbot')">Aimbot</button>
-        <button class="tab-button" data-tab="esp" onclick="switchTab('esp')">ESP</button>
-        <button class="tab-button" data-tab="settings" onclick="switchTab('settings')">Settings</button>
+    <!-- Control Panel -->
+    <div class="panel-container">
+        <div class="panel-header">
+            <h1>RGXtreme Control Panel</h1>
+        </div>
+
+        <!-- Tab Buttons -->
+        <div class="tab-buttons">
+            <div class="tab-button" onclick="openTab('aimbot')">Aimbot</div>
+            <div class="tab-button" onclick="openTab('esp')">ESP</div>
+            <div class="tab-button" onclick="openTab('other')">Other</div>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="aimbot" class="content">
+            <p><strong>Aimbot:</strong> Auto-lock onto enemy heads instantly.</p>
+            <button onclick="playSound()">Activate Aimbot</button>
+        </div>
+
+        <div id="esp" class="content">
+            <p><strong>ESP:</strong> Highlight enemies through walls.</p>
+            <button onclick="playSound()">Activate ESP</button>
+        </div>
+
+        <div id="other" class="content">
+            <p><strong>Other Features:</strong> No recoil, speed boost, etc.</p>
+            <button onclick="playSound()">Activate Features</button>
+        </div>
     </div>
 
-    <!-- Aimbot Tab -->
-    <div id="aimbot" class="tab-content active">
-        <div class="setting-group">
-            <label>Aimbot Strength</label>
-            <input type="range" min="0" max="100" value="50" class="slider">
-        </div>
-        <div class="setting-group">
-            <label>Headtracking</label>
-            <button class="activate-btn" onclick="activateFeature('headtracking')">Activate</button>
-        </div>
-        <button class="activate-btn" onclick="activateFeature('aimbot')">Apply Aimbot</button>
-    </div>
+    <!-- Sound Effect -->
+    <audio id="clickSound" class="sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
 
-    <!-- ESP Tab -->
-    <div id="esp" class="tab-content">
-        <div class="setting-group">
-            <label>Wallhack</label>
-            <button class="activate-btn" onclick="activateFeature('wallhack')">Activate</button>
-        </div>
-        <div class="setting-group">
-            <label>Enemy Glow</label>
-            <button class="activate-btn" onclick="activateFeature('enemyGlow')">Activate</button>
-        </div>
-    </div>
+    <script>
+        // Tab functionality
+        function openTab(tabId) {
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
 
-    <!-- Settings Tab -->
-    <div id="settings" class="tab-content">
-        <div class="setting-group">
-            <label>No Recoil</label>
-            <button class="activate-btn" onclick="activateFeature('norecoil')">Activate</button>
-        </div>
-        <div class="setting-group">
-            <label>Fixed Crosshair</label>
-            <button class="activate-btn" onclick="activateFeature('fixedCrosshair')">Activate</button>
-        </div>
-    </div>
-</div>
-
-<!-- Notification -->
-<div id="notification" class="notification">Feature activated!</div>
-
+        // Sound effect for button click
+        function playSound() {
+            var sound = document.getElementById('clickSound');
+            sound.play();
+        }
+    </script>
 </body>
 </html>
