@@ -157,17 +157,17 @@
         <!-- Tab Contents -->
         <div id="aimbot" class="content">
             <p><strong>Aimbot:</strong> Auto-lock onto enemy heads instantly.</p>
-            <button onclick="playSound()">Activate Aimbot</button>
+            <button onclick="activateFeature('aimbot')">Activate Aimbot</button>
         </div>
 
         <div id="esp" class="content">
             <p><strong>ESP:</strong> Highlight enemies through walls.</p>
-            <button onclick="playSound()">Activate ESP</button>
+            <button onclick="activateFeature('esp')">Activate ESP</button>
         </div>
 
         <div id="other" class="content">
             <p><strong>Other Features:</strong> No recoil, speed boost, etc.</p>
-            <button onclick="playSound()">Activate Features</button>
+            <button onclick="activateFeature('other')">Activate Features</button>
         </div>
     </div>
 
@@ -188,6 +188,28 @@
         function playSound() {
             var sound = document.getElementById('clickSound');
             sound.play();
+        }
+
+        // Function to handle activation of features
+        function activateFeature(feature) {
+            playSound();
+
+            // Trigger the freefire:// scheme based on the feature
+            let url = "";
+            if (feature === 'aimbot') {
+                url = "freefire://aimbot";
+            } else if (feature === 'esp') {
+                url = "freefire://esp";
+            } else if (feature === 'other') {
+                url = "freefire://other";
+            }
+
+            if (url) {
+                // Attempt to open the URL scheme
+                window.location.href = url;
+            } else {
+                alert("Invalid feature selected.");
+            }
         }
     </script>
 </body>
