@@ -21,9 +21,10 @@
             align-items: center;
             background: #0a0a0a;
             color: #ffddc1;
+            position: relative;
         }
 
-        /* Animated background */
+        /* Animated background with moving particles */
         .background {
             position: fixed;
             top: 0;
@@ -33,6 +34,7 @@
             background: radial-gradient(circle, #0f0f0f, #1a1a1a, #000);
             overflow: hidden;
             z-index: -1;
+            animation: backgroundMove 20s linear infinite;
         }
 
         .background .particle {
