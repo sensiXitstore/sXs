@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGXtreme Control Panel</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base styling */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100%;
+            font-family: 'Orbitron', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0a0a;
+            color: #ffddc1;
+            position: relative;
+        }
+
+        /* Animated background with moving particles */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #0f0f0f, #1a1a1a, #000);
+            overflow: hidden;
+            z-index: -1;
+            animation: backgroundMove 20s linear infinite;
+        }
+
+        .background .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #ff4500;
+            border-radius: 50%;
+            animation: moveParticles 10s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes moveParticles {
+            0% {
+                transform: translateY(0) translateX(0);
+                opacity: 0.7;
+            }
+            50% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(20vw);
+                opacity: 0;
+            }
+        }
+
+        /* Control panel container */
+        .panel-container {
+            width: 80%;
+            max-width: 900px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 3px solid #ff4500;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(255, 69, 0, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header {
+            text-align: center;
+            color: #ff4500;
+        }
+
+        .panel-header h1 {
+            font-size: 2em;
+            margin: 0;
+        }
+
+        /* Tab buttons */
+        .tab-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .tab-button {
+            width: 30%;
+            padding: 10px;
+            text-align: center;
+            background: #1f1f1f;
+            border: 1px solid #ff4500;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            color: #ffddc1;
+            font-weight: bold;
+            font-size: 1em;
+        }
+
+        .tab-button:hover {
+            background: #ff4500;
+            color: #0a0a0a;
+            transform: scale(1.05);
+        }
+
+        /* Content */
+        .content {
+            display: none;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        .content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Sound effects */
+        .sound {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background with particles -->
+    <div class="background">
+        <div class="particle" style="top: 100%; left: 20%; animation-duration: 12s;"></div>
+        <div class="particle" style="top: 100%; left: 50%; animation-duration: 15s;"></div>
+        <div class="particle" style="top: 100%; left: 80%; animation-duration: 8s;"></div>
+        <div class="particle" style="top: 100%; left: 30%; animation-duration: 10s;"></div>
+        <div class="particle" style="top: 100%; left: 60%; animation-duration: 13s;"></div>
+    </div>
+
+    <!-- Control Panel -->
+    <div class="panel-container">
+        <div class="panel-header">
+            <h1>RGXtreme Control Panel</h1>
+        </div>
+
+        <!-- Tab Buttons -->
+        <div class="tab-buttons">
+            <div class="tab-button" onclick="openTab('aimbot')">Aimbot</div>
+            <div class="tab-button" onclick="openTab('esp')">ESP</div>
+            <div class="tab-button" onclick="openTab('other')">Other</div>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="aimbot" class="content">
+            <p><strong>Aimbot:</strong> Auto-lock onto enemy heads instantly.</p>
+            <button onclick="activateFeature('aimbot')">Activate Aimbot</button>
+        </div>
+
+        <div id="esp" class="content">
+            <p><strong>ESP:</strong> Highlight enemies through walls.</p>
+            <button onclick="activateFeature('esp')">Activate ESP</button>
+        </div>
+
+        <div id="other" class="content">
+            <p><strong>Other Features:</strong> No recoil, speed boost, etc.</p>
+            <button onclick="activateFeature('other')">Activate Features</button>
+        </div>
+    </div>
+
+    <!-- Sound Effect -->
+    <audio id="clickSound" class="sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+
+    <script>
+        // Tab functionality
+        function openTab(tabId) {
+            var contents = document.querySelectorAll('.content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Sound effect for button click
+        function playSound() {
+            var sound = document.getElementById('clickSound');
+            sound.play();
+        }
+
+        // Function to handle activation of features
+        function activateFeature(feature) {
+            playSound();
+
+            // Trigger the freefire:// scheme based on the feature
+            let url = "";
+            if (feature === 'aimbot') {
+                url = "freefire://aimbot";
+            } else if (feature === 'esp') {
+                url = "freefire://esp";
+            } else if (feature === 'other') {
+                url = "freefire://other";
+            }
+
+            if (url) {
+                // Attempt to open the URL scheme
+                window.location.href = url;
+            } else {
+                alert("Invalid feature selected.");
+            }
+        }
+    </script>
+</body>
+</html>
