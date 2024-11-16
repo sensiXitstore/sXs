@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RGXtreme Panel</title>
-    
+
     <!-- Importing Google Fonts for a clean, modern look -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
@@ -23,7 +23,7 @@
             height: 100vh;
         }
 
-        /* Animated background */
+        /* Animated moving background */
         .background {
             position: fixed;
             top: 0;
@@ -31,13 +31,30 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), linear-gradient(45deg, #0f2027, #203a43, #2c5364);
-            animation: backgroundAnimation 10s infinite linear;
+            overflow: hidden;
         }
 
-        @keyframes backgroundAnimation {
-            0% {background-position: 0% 0%;}
-            100% {background-position: 100% 100%;}
+        .background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -2;
+            object-fit: cover;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
         }
 
         /* Panel styling */
@@ -180,7 +197,12 @@
 </head>
 <body>
 
-<div class="background"></div>
+<div class="background">
+    <video autoplay loop muted>
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-nebula-space-background-2886-large.mp4" type="video/mp4">
+    </video>
+    <div class="overlay"></div>
+</div>
 
 <div class="panel-container">
     <div class="panel-header">
@@ -199,35 +221,17 @@
             <label>Aimbot Strength</label>
             <input type="range" min="0" max="100" value="50" class="slider">
         </div>
-        <div class="setting-group">
-            <label>Headtracking</label>
-            <button class="activate-btn" onclick="activateFeature('headtracking')">Activate</button>
-        </div>
         <button class="activate-btn" onclick="activateFeature('aimbot')">Apply Aimbot</button>
     </div>
 
     <!-- ESP Tab -->
     <div id="esp" class="tab-content">
-        <div class="setting-group">
-            <label>Wallhack</label>
-            <button class="activate-btn" onclick="activateFeature('wallhack')">Activate</button>
-        </div>
-        <div class="setting-group">
-            <label>Enemy Glow</label>
-            <button class="activate-btn" onclick="activateFeature('enemyGlow')">Activate</button>
-        </div>
+        <button class="activate-btn" onclick="activateFeature('wallhack')">Activate Wallhack</button>
     </div>
 
     <!-- Settings Tab -->
     <div id="settings" class="tab-content">
-        <div class="setting-group">
-            <label>No Recoil</label>
-            <button class="activate-btn" onclick="activateFeature('norecoil')">Activate</button>
-        </div>
-        <div class="setting-group">
-            <label>Fixed Crosshair</label>
-            <button class="activate-btn" onclick="activateFeature('fixedCrosshair')">Activate</button>
-        </div>
+        <button class="activate-btn" onclick="activateFeature('norecoil')">No Recoil</button>
     </div>
 </div>
 
