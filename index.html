@@ -3,215 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RGXtreme Mods™ Super Mod Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <title>RGXtreme Panel</title>
+
+    <!-- Importing Google Fonts for a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <style>
+        /* Base styling */
         body {
             font-family: 'Poppins', sans-serif;
             color: #f5f5f5;
             margin: 0;
             padding: 0;
-            text-align: center;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            background: #000; /* Fallback in case the video doesn't load */
             height: 100vh;
         }
 
-        .title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 2.5em;
-            color: white;
-            margin-top: 20px;
-            text-align: center;
+        /* Fullscreen background video */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        .title .x { color: blue; }
-        .title .tm { font-size: 0.6em; color: blue; }
+        .background video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: cover;
+        }
 
-        .login-container, .mod-menu-container {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5); /* Dark overlay for better text visibility */
+        }
+
+        /* Panel styling */
+        .panel-container {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ff0000;
             border-radius: 15px;
-            max-width: 500px;
-            margin: 30px auto;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
         }
 
-        .mod-menu-container { display: none; }
-        .panel { display: flex; justify-content: center; gap: 10px; }
-
-        .login-container input, .panel button {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: none;
-            font-size: 1.2em;
-        }
-
-        .mod-menu-tabs {
+        .panel-header {
             display: flex;
-            justify-content: space-evenly;
-            padding: 10px;
-        }
-
-        .mod-menu-tab, .panel button {
-            cursor: pointer;
-            background-color: #333;
-            color: white;
-            border-radius: 10px;
-            padding: 10px;
-            border: none;
-            transition: background-color 0.3s;
-        }
-
-        .mod-menu-tab.active, .panel button:hover {
-            background-color: #005bb5;
-        }
-
-        .mod-menu-page { display: none; }
-        .mod-menu-page.active { display: block; }
-
-        .range-container {
-            display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
+            align-items: center;
         }
 
-        .footer { color: #aaa; padding: 10px; }
-        .footer strong { color: #ccc; }
+        .panel-header h2 {
+            font-size: 1.5em;
+            margin: 0;
+            color: #ff0000;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .tab-button {
+            font-size: 1em;
+            padding: 8px 12px;
+            color: white;
+            background: #333;
+            border: 1px solid #444;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-button.active, .tab-button:hover {
+            background: #ff0000;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Setting buttons and sliders */
+        .setting-group {
+            margin: 15px 0;
+        }
+
+        .setting-group label {
+            font-size: 1.1em;
+            color: #ddd;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .slider {
+            width: 100%;
+        }
+
+        .activate-btn {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .activate-btn:hover {
+            background: #cc0000;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
+            display: none;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {opacity: 0;}
+            20% {opacity: 1;}
+            80% {opacity: 1;}
+            100% {opacity: 0;}
+        }
     </style>
+
     <script>
-        window.onload = () => document.querySelector('.login-container').style.display = 'block';
+        function switchTab(tabName) {
+            let contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
 
-        function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            if (username === "RG" && password === "1k") {
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.mod-menu-container').style.display = 'block';
-            } else {
-                alert("Invalid credentials! Please try again.");
-            }
+            let buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`.tab-button[data-tab="${tabName}"]`).classList.add('active');
         }
 
-        function showTab(tabIndex) {
-            document.querySelectorAll('.mod-menu-page').forEach((page, i) => {
-                page.classList.toggle('active', i === tabIndex);
-            });
-            document.querySelectorAll('.mod-menu-tab').forEach((tab, i) => {
-                tab.classList.toggle('active', i === tabIndex);
-            });
-        }
+        function activateFeature(feature) {
+            // Display a temporary notification
+            let notification = document.getElementById('notification');
+            notification.innerText = feature + ' activated!';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
 
-        function applySettings() {
-            // Gather settings for all tabs
-            const aimbot = document.getElementById("aimbot").value;
-            const aimlock = document.getElementById("aimlock").checked ? "100" : "0";
-            const aimassist = document.getElementById("aimassist").checked ? "100" : "0";
-            const aimfov = document.getElementById("aimfov").value;
+            // Play sound effect
+            let sound = new Audio('https://www.soundjay.com/button/sounds/button-20.mp3');
+            sound.play();
 
-            const esp = document.getElementById("esp").checked ? "100" : "0";
-            const wallhack = document.getElementById("wallhack").checked ? "100" : "0";
-
-            const speedboost = document.getElementById("speedboost").checked ? "100" : "0";
-            const nofall = document.getElementById("nofall").checked ? "100" : "0";
-
-            const rapidfire = document.getElementById("rapidfire").checked ? "100" : "0";
-            const noreload = document.getElementById("noreload").checked ? "100" : "0";
-
-            const godmode = document.getElementById("godmode").checked ? "100" : "0";
-            const invisible = document.getElementById("invisible").checked ? "100" : "0";
-
-            // Generate URL with all settings for freefire://
-            const uri = "freefire://?aimbot=" + aimbot +
-                        "&aimlock=" + aimlock +
-                        "&aimassist=" + aimassist +
-                        "&aimfov=" + aimfov +
-                        "&esp=" + esp +
-                        "&wallhack=" + wallhack +
-                        "&speedboost=" + speedboost +
-                        "&nofall=" + nofall +
-                        "&rapidfire=" + rapidfire +
-                        "&noreload=" + noreload +
-                        "&godmode=" + godmode +
-                        "&invisible=" + invisible;
-
-            alert("Settings Applied!");
-            window.location.href = uri;
+            // Perform activation (assuming freefire:// accepts feature-based URLs)
+            window.location.href = `freefire://${feature}`;
         }
     </script>
 </head>
 <body>
-    <h1 class="title">RG<strong class="x">X</strong>treme Mods<span class="tm">™</span></h1>
 
-    <div class="login-container">
-        <p><strong>Premium Version</strong></p>
-        <input type="text" id="username" placeholder="Username"><br>
-        <input type="password" id="password" placeholder="Password"><br>
-        <button onclick="login()">Login</button>
+<div class="background">
+    <video autoplay loop muted>
+        <source src="https://cdn.videvo.net/videvo_files/video/free/2021-05/large_watermarked/210503_04_B_04_preview.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <div class="overlay"></div>
+</div>
+
+<div class="panel-container">
+    <div class="panel-header">
+        <h2>RGXtreme Panel</h2>
     </div>
 
-    <div class="mod-menu-container">
-        <div class="mod-menu-tabs">
-            <div class="mod-menu-tab active" onclick="showTab(0)">Aimbot</div>
-            <div class="mod-menu-tab" onclick="showTab(1)">Visuals</div>
-            <div class="mod-menu-tab" onclick="showTab(2)">Player</div>
-            <div class="mod-menu-tab" onclick="showTab(3)">Weapon</div>
-            <div class="mod-menu-tab" onclick="showTab(4)">Misc</div>
-        </div>
-
-        <!-- Aimbot Settings -->
-        <div class="mod-menu-page active">
-            <h3>Aimbot Settings</h3>
-            <div class="range-container">
-                <label for="aimbot">Aimbot Strength:</label>
-                <input type="range" id="aimbot" min="0" max="100" value="50">
-            </div>
-            <label>Aimlock</label><input type="checkbox" id="aimlock"><br>
-            <label>Aim Assist</label><input type="checkbox" id="aimassist"><br>
-            <div class="range-container">
-                <label for="aimfov">Aim FOV:</label>
-                <input type="range" id="aimfov" min="0" max="100" value="50">
-            </div>
-        </div>
-
-        <!-- Visual Settings -->
-        <div class="mod-menu-page">
-            <h3>Visual Settings</h3>
-            <label>ESP</label><input type="checkbox" id="esp"><br>
-            <label>Wallhack</label><input type="checkbox" id="wallhack"><br>
-        </div>
-
-        <!-- Player Settings -->
-        <div class="mod-menu-page">
-            <h3>Player Settings</h3>
-            <label>Speed Boost</label><input type="checkbox" id="speedboost"><br>
-            <label>No Fall Damage</label><input type="checkbox" id="nofall"><br>
-        </div>
-
-        <!-- Weapon Settings -->
-        <div class="mod-menu-page">
-            <h3>Weapon Settings</h3>
-            <label>Rapid Fire</label><input type="checkbox" id="rapidfire"><br>
-            <label>No Reload</label><input type="checkbox" id="noreload"><br>
-        </div>
-
-        <!-- Miscellaneous Settings -->
-        <div class="mod-menu-page">
-            <h3>Miscellaneous Settings</h3>
-            <label>God Mode</label><input type="checkbox" id="godmode"><br>
-            <label>Invisibility</label><input type="checkbox" id="invisible"><br>
-        </div>
-
-        <button onclick="applySettings()">Apply All Settings</button>
+    <div class="tab-buttons">
+        <button class="tab-button active" data-tab="aimbot" onclick="switchTab('aimbot')">Aimbot</button>
+        <button class="tab-button" data-tab="settings" onclick="switchTab('settings')">Settings</button>
     </div>
 
-    <div class="footer">
-        <p>RGXtreme Mods™ | Developed by <strong>@iOSrazielOFC</strong></p>
+    <!-- Aimbot Tab -->
+    <div id="aimbot" class="tab-content active">
+        <div class="setting-group">
+            <label>Headtracking</label>
+            <button class="activate-btn" onclick="activateFeature('headtracking')">Activate</button>
+        </div>
+        <div class="setting-group">
+            <label>Aimlock</label>
+            <button class="activate-btn" onclick="activateFeature('aimlock')">Activate</button>
+        </div>
+        <div class="setting-group">
+            <label>Aim FOV</label>
+            <button class="activate-btn" onclick="activateFeature('aimfov')">Activate</button>
+        </div>
+        <div class="setting-group">
+            <label>Aim Assist</label>
+            <button class="activate-btn" onclick="activateFeature('aimassist')">Activate</button>
+        </div>
+        <button class="activate-btn" onclick="activateFeature('aimbot')">Apply Aimbot</button>
     </div>
+
+    <!-- Settings Tab -->
+    <div id="settings" class="tab-content">
+        <div class="setting-group">
+            <label>No Recoil</label>
+            <button class="activate-btn" onclick="activateFeature('norecoil')">Activate</button>
+        </div>
+    </div>
+</div>
+
+<!-- Notification -->
+<div id="notification" class="notification">Feature activated!</div>
+
 </body>
 </html>
