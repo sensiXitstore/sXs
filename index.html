@@ -3,216 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RGXtreme Control Panel</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <title>RGXtreme Panel</title>
+    
+    <!-- Importing Google Fonts for a clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         /* Base styling */
-        body, html {
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #f5f5f5;
             margin: 0;
             padding: 0;
             overflow: hidden;
-            height: 100%;
-            font-family: 'Orbitron', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #0a0a0a;
-            color: #ffddc1;
-            position: relative;
+            background: #0e0e0e;
+            height: 100vh;
         }
 
-        /* Animated background with moving particles */
+        /* Animated background */
         .background {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, #0f0f0f, #1a1a1a, #000);
-            overflow: hidden;
             z-index: -1;
-            animation: backgroundMove 20s linear infinite;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-dark.png'), linear-gradient(45deg, #0f2027, #203a43, #2c5364);
+            animation: backgroundAnimation 10s infinite linear;
         }
 
-        .background .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: #ff4500;
-            border-radius: 50%;
-            animation: moveParticles 10s linear infinite;
-            opacity: 0.7;
+        @keyframes backgroundAnimation {
+            0% {background-position: 0% 0%;}
+            100% {background-position: 100% 100%;}
         }
 
-        @keyframes moveParticles {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(20vw);
-                opacity: 0;
-            }
-        }
-
-        /* Control panel container */
+        /* Panel styling */
         .panel-container {
-            width: 80%;
-            max-width: 900px;
-            background: rgba(0, 0, 0, 0.85);
-            border: 3px solid #ff4500;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #ff0000;
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0px 0px 15px rgba(255, 69, 0, 0.6);
-            backdrop-filter: blur(10px);
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0px 0px 20px rgba(255, 0, 0, 0.6);
         }
 
         .panel-header {
-            text-align: center;
-            color: #ff4500;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .panel-header h1 {
-            font-size: 2em;
+        .panel-header h2 {
+            font-size: 1.5em;
             margin: 0;
+            color: #ff0000;
         }
 
-        /* Tab buttons */
         .tab-buttons {
             display: flex;
             justify-content: space-around;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         .tab-button {
-            width: 30%;
-            padding: 10px;
-            text-align: center;
-            background: #1f1f1f;
-            border: 1px solid #ff4500;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-            color: #ffddc1;
-            font-weight: bold;
             font-size: 1em;
+            padding: 8px 12px;
+            color: white;
+            background: #333;
+            border: 1px solid #444;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        .tab-button:hover {
-            background: #ff4500;
-            color: #0a0a0a;
-            transform: scale(1.05);
+        .tab-button.active, .tab-button:hover {
+            background: #ff0000;
         }
 
-        /* Content */
-        .content {
+        .tab-content {
             display: none;
-            margin-top: 20px;
-            font-size: 1.1em;
+            margin-top: 15px;
+            text-align: center;
         }
 
-        .content.active {
+        .tab-content.active {
             display: block;
-            animation: fadeIn 0.5s;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Setting buttons and sliders */
+        .setting-group {
+            margin: 15px 0;
         }
 
-        /* Sound effects */
-        .sound {
+        .setting-group label {
+            font-size: 1.1em;
+            color: #ddd;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .slider {
+            width: 100%;
+        }
+
+        .activate-btn {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            background: #ff0000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .activate-btn:hover {
+            background: #cc0000;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            border-radius: 5px;
             display: none;
+            animation: fadeInOut 3s forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% {opacity: 0;}
+            20% {opacity: 1;}
+            80% {opacity: 1;}
+            100% {opacity: 0;}
         }
     </style>
+
+    <script>
+        function switchTab(tabName) {
+            let contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName).classList.add('active');
+
+            let buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            document.querySelector(`.tab-button[data-tab="${tabName}"]`).classList.add('active');
+        }
+
+        function activateFeature(feature) {
+            // Display a temporary notification
+            let notification = document.getElementById('notification');
+            notification.innerText = feature + ' activated!';
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+
+            // Play sound effect
+            let sound = new Audio('https://www.soundjay.com/button/sounds/button-20.mp3');
+            sound.play();
+
+            // Perform activation (assuming freefire:// accepts feature-based URLs)
+            window.location.href = `freefire://${feature}`;
+        }
+    </script>
 </head>
 <body>
 
-    <!-- Background with particles -->
-    <div class="background">
-        <div class="particle" style="top: 100%; left: 20%; animation-duration: 12s;"></div>
-        <div class="particle" style="top: 100%; left: 50%; animation-duration: 15s;"></div>
-        <div class="particle" style="top: 100%; left: 80%; animation-duration: 8s;"></div>
-        <div class="particle" style="top: 100%; left: 30%; animation-duration: 10s;"></div>
-        <div class="particle" style="top: 100%; left: 60%; animation-duration: 13s;"></div>
+<div class="background"></div>
+
+<div class="panel-container">
+    <div class="panel-header">
+        <h2>RGXtreme Panel</h2>
     </div>
 
-    <!-- Control Panel -->
-    <div class="panel-container">
-        <div class="panel-header">
-            <h1>RGXtreme Control Panel</h1>
-        </div>
+    <div class="tab-buttons">
+        <button class="tab-button active" data-tab="aimbot" onclick="switchTab('aimbot')">Aimbot</button>
+        <button class="tab-button" data-tab="esp" onclick="switchTab('esp')">ESP</button>
+        <button class="tab-button" data-tab="settings" onclick="switchTab('settings')">Settings</button>
+    </div>
 
-        <!-- Tab Buttons -->
-        <div class="tab-buttons">
-            <div class="tab-button" onclick="openTab('aimbot')">Aimbot</div>
-            <div class="tab-button" onclick="openTab('esp')">ESP</div>
-            <div class="tab-button" onclick="openTab('other')">Other</div>
+    <!-- Aimbot Tab -->
+    <div id="aimbot" class="tab-content active">
+        <div class="setting-group">
+            <label>Aimbot Strength</label>
+            <input type="range" min="0" max="100" value="50" class="slider">
         </div>
-
-        <!-- Tab Contents -->
-        <div id="aimbot" class="content">
-            <p><strong>Aimbot:</strong> Auto-lock onto enemy heads instantly.</p>
-            <button onclick="activateFeature('aimbot')">Activate Aimbot</button>
+        <div class="setting-group">
+            <label>Headtracking</label>
+            <button class="activate-btn" onclick="activateFeature('headtracking')">Activate</button>
         </div>
+        <button class="activate-btn" onclick="activateFeature('aimbot')">Apply Aimbot</button>
+    </div>
 
-        <div id="esp" class="content">
-            <p><strong>ESP:</strong> Highlight enemies through walls.</p>
-            <button onclick="activateFeature('esp')">Activate ESP</button>
+    <!-- ESP Tab -->
+    <div id="esp" class="tab-content">
+        <div class="setting-group">
+            <label>Wallhack</label>
+            <button class="activate-btn" onclick="activateFeature('wallhack')">Activate</button>
         </div>
-
-        <div id="other" class="content">
-            <p><strong>Other Features:</strong> No recoil, speed boost, etc.</p>
-            <button onclick="activateFeature('other')">Activate Features</button>
+        <div class="setting-group">
+            <label>Enemy Glow</label>
+            <button class="activate-btn" onclick="activateFeature('enemyGlow')">Activate</button>
         </div>
     </div>
 
-    <!-- Sound Effect -->
-    <audio id="clickSound" class="sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+    <!-- Settings Tab -->
+    <div id="settings" class="tab-content">
+        <div class="setting-group">
+            <label>No Recoil</label>
+            <button class="activate-btn" onclick="activateFeature('norecoil')">Activate</button>
+        </div>
+        <div class="setting-group">
+            <label>Fixed Crosshair</label>
+            <button class="activate-btn" onclick="activateFeature('fixedCrosshair')">Activate</button>
+        </div>
+    </div>
+</div>
 
-    <script>
-        // Tab functionality
-        function openTab(tabId) {
-            var contents = document.querySelectorAll('.content');
-            contents.forEach(function(content) {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-        }
+<!-- Notification -->
+<div id="notification" class="notification">Feature activated!</div>
 
-        // Sound effect for button click
-        function playSound() {
-            var sound = document.getElementById('clickSound');
-            sound.play();
-        }
-
-        // Function to handle activation of features
-        function activateFeature(feature) {
-            playSound();
-
-            // Trigger the freefire:// scheme based on the feature
-            let url = "";
-            if (feature === 'aimbot') {
-                url = "freefire://aimbot";
-            } else if (feature === 'esp') {
-                url = "freefire://esp";
-            } else if (feature === 'other') {
-                url = "freefire://other";
-            }
-
-            if (url) {
-                // Attempt to open the URL scheme
-                window.location.href = url;
-            } else {
-                alert("Invalid feature selected.");
-            }
-        }
-    </script>
 </body>
 </html>
