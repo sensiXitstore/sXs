@@ -3,26 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RGXtreme Mods™</title>
+    <title>PREMIUM ™</title>
 
-    <!-- Importing Google Fonts for a clean, modern look -->
+    <!-- Importing Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-image:
-
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-repeat: no-repeat;
-            color: #f5f5f5;
             margin: 0;
             padding: 0;
+            overflow: hidden;
             text-align: center;
             height: 100vh;
-            overflow: hidden;
+            background: radial-gradient(circle, #1e1e2e, #0d0d15);
+            color: #f5f5f5;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -30,44 +25,41 @@
 
         .title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 2.5em;
+            font-size: 3em;
             color: white;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
             margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
-        .title .x {
-            color: blue;
-        }
-
-        .title .tm {
-            font-size: 0.6em;
-            margin-left: 5px;
-            vertical-align: top;
-            color: blue;
+        .subtitle {
+            font-size: 1.5em;
+            color: #00bfff;
+            margin-top: 5px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
         .login-container {
             display: block;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 30px;
             border-radius: 15px;
             width: 80%;
             max-width: 500px;
-            margin: 50px auto;
-            text-align: center;
+            margin: auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            animation: fadeIn 1s forwards;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10;
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-container h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .login-container .premium-version {
+            font-size: 1em;
+            color: #a9a9a9;
+            margin-bottom: 20px;
         }
 
         .login-container input {
@@ -84,208 +76,201 @@
         .login-container button {
             font-size: 1.2em;
             padding: 10px 30px;
-            background-color: #1a73e8;
+            background-color: #00bfff;
             color: white;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .login-container button:hover {
-            background-color: #005bb5;
+            background-color: #007acc;
+            transform: scale(1.05);
         }
 
         .mod-menu-container {
             display: none;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
             width: 80%;
             max-width: 600px;
-            margin: 50px auto;
-            text-align: center;
+            margin: auto;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s forwards;
-            z-index: 5;
-        }
-
-        .mod-menu-container h3 {
-            font-family: 'Poppins', sans-serif;
-            color: #d3d3d3;
-            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
         }
 
         .mod-menu-container label {
             font-size: 1.1em;
-            margin-bottom: 10px;
-            display: block;
             color: #d3d3d3;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
         }
 
         .mod-menu-container input[type="range"] {
             width: 80%;
-            margin-bottom: 15px;
+            margin-top: 10px;
         }
 
-        .mod-menu-container input[type="checkbox"] {
-            margin: 10px;
+        .slider-value {
+            font-size: 1em;
+            color: #00bfff;
+            margin-left: 10px;
         }
 
-        .mod-menu-container button {
-            font-size: 1.2em;
-            padding: 10px 40px;
-            background-color: #333;
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px 0;
+        }
+
+        .toggle-container span {
+            font-size: 1em;
+            color: #d3d3d3;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background-color: #444;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-switch::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background-color: #00bfff;
+        }
+
+        .toggle-switch.active::before {
+            transform: translateY(-50%) translateX(25px);
+        }
+
+        .apply-button {
+            font-size: 1.3em;
+            padding: 12px 40px;
+            background: linear-gradient(90deg, #00bfff, #1e90ff);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 25px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
         }
 
-        .mod-menu-container button:hover {
-            background-color: #444;
-            transform: scale(1.05);
+        .apply-button:hover {
+            background: linear-gradient(90deg, #1e90ff, #00bfff);
+            transform: scale(1.1);
         }
 
         .footer {
             font-size: 1em;
             color: #aaa;
-            margin-top: auto;
-            padding: 10px;
+            margin-bottom: 10px;
         }
 
         .footer strong {
             color: #ccc;
         }
 
-        /* Fade-in Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Toggle Switch Styles */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
+        /* Particle Animation Background */
+        .particle-bg {
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
         }
 
-        .slider:before {
+        .particle {
             position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            border-radius: 50%;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: moveParticles 10s linear infinite;
         }
 
-        input:checked + .slider {
-            background-color: #1a73e8;
+        @keyframes moveParticles {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(calc(100vw - 10px));
+                opacity: 0;
+            }
         }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
     </style>
 
     <script>
-        // Show the login screen initially
-        window.onload = function() {
-            document.querySelector('.login-container').style.display = 'block';
-        }
+        // Initialize particles
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 5 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
 
-        // Login validation with username "RG" and password "1k"
         function login() {
-            var username = document.getElementById("username").value;
-            var password = document.getElementById("password").value;
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
 
-            // Basic login validation (replace with your own logic)
             if (username === "RG" && password === "1k") {
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.mod-menu-container').style.display = 'block';
+                document.querySelector(".login-container").style.display = "none";
+                document.querySelector(".mod-menu-container").style.display = "block";
             } else {
                 alert("Invalid credentials! Please try again.");
             }
         }
 
-        // Update Aimbot strength text
-        function updateAimbotText() {
-            var aimbotValue = document.getElementById("aimbot").value;
-            document.getElementById("aimbotText").innerText = "Aimbot Strength: " + aimbotValue + "%";
+        function toggleSwitch(element) {
+            element.classList.toggle("active");
         }
 
-        // Apply settings and open Free Fire app
-        function applySettings() {
-            var aimbot = document.getElementById("aimbot").value;
-            var headtracking = document.getElementById("headtracking").checked ? "100" : "0";
-            var aimlock = document.getElementById("aimlock").checked ? "100" : "0";
-            var aimassist = document.getElementById("aimassist").checked ? "100" : "0"; // New Aim Assist
-            var norecoil = document.getElementById("norecoil").checked ? "100" : "0"; // No Recoil
-            var fixedcrosshair = document.getElementById("fixedcrosshair").checked ? "100" : "0"; // Fixed Crosshair
-
-            // Build the URI with parameters
-            var uri = "freefire://?aimbot=" + aimbot +
-                      "&headtracking=" + headtracking +
-                      "&aimlock=" + aimlock +
-                      "&aimassist=" + aimassist + 
-                      "&norecoil=" + norecoil + 
-                      "&fixedcrosshair=" + fixedcrosshair;
-
-            alert("Settings Applied:\n" + 
-                  "Aimbot: " + aimbot + "%" + "\n" + 
-                  "Headtracking: " + headtracking + "%" + "\n" +
-                  "Aimlock: " + aimlock + "%" + "\n" +
-                  "Aim Assist: " + aimassist + "%" + "\n" +
-                  "No Recoil: " + norecoil + "%" + "\n" +
-                  "Fixed Crosshair: " + fixedcrosshair + "%");
-
-            // Redirect to Free Fire app with the settings
-            setTimeout(function() {
-                window.location.href = uri;
-            }, 500);
+        function updateSliderValue(id, value) {
+            document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
-
     </script>
 </head>
 <body>
 
-    <!-- Main Title -->
-    <div class="title">RG<span class="x">X</span>treme Mods<span class="tm">™</span></div>
+    <!-- Particle Background -->
+    <div class="particle-bg"></div>
+
+    <!-- Title and Subtitle -->
+    <div class="title">PREMIUM ™</div>
+    <div class="subtitle">MOD MENU</div>
 
     <!-- Login Form -->
     <div class="login-container">
         <h3>Login to Access Mod Menu</h3>
-        <p><strong>Free Version</strong></p>
-        <p><a href="https://chat.whatsapp.com/CVNEaIuky8D5X2qP6KGyEl" target="_blank">Upgrade to Premium</a></p>
+        <p class="premium-version">Permanent Version</p>
         <input type="text" id="username" placeholder="Username" required><br>
         <input type="password" id="password" placeholder="Password" required><br>
         <button onclick="login()">Login</button>
@@ -294,52 +279,46 @@
     <!-- Mod Menu Form -->
     <div class="mod-menu-container">
         <h3>Mod Menu Settings</h3>
+        
+        <label>
+            Aimbot Strength: 
+            <span class="slider-value" id="aimbot-value">50%</span>
+        </label>
+        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
 
-        <!-- Aimbot Strength -->
-        <label for="aimbot">Aimbot Strength:</label>
-        <input type="range" id="aimbot" min="0" max="100" value="0" oninput="updateAimbotText()">
-        <span id="aimbotText">Aimbot Strength: 0%</span><br>
+        <label>
+            Aim FOV: 
+            <span class="slider-value" id="aimfov-value">50%</span>
+        </label>
+        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
 
-        <!-- Headtracking Toggle -->
-        <label for="headtracking">Enable Headtracking:</label>
-        <label class="switch">
-            <input type="checkbox" id="headtracking">
-            <span class="slider"></span>
-        </label><br>
+        <label>
+            No Recoil: 
+            <span class="slider-value" id="norecoil-value">50%</span>
+        </label>
+        <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
 
-        <!-- Aimlock Toggle -->
-        <label for="aimlock">Enable Aimlock:</label>
-        <label class="switch">
-            <input type="checkbox" id="aimlock">
-            <span class="slider"></span>
-        </label><br>
+        <!-- Additional Toggles -->
+        <div class="toggle-container">
+            <span>Aimlock</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
 
-        <!-- Aim Assist Toggle -->
-        <label for="aimassist">Enable Aim Assist:</label>
-        <label class="switch">
-            <input type="checkbox" id="aimassist">
-            <span class="slider"></span>
-        </label><br>
+        <div class="toggle-container">
+            <span>Head Tracking</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
 
-        <!-- No Recoil Toggle -->
-        <label for="norecoil">Enable No Recoil:</label>
-        <label class="switch">
-            <input type="checkbox" id="norecoil">
-            <span class="slider"></span>
-        </label><br>
+        <div class="toggle-container">
+            <span>Aim Assist</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
 
-        <!-- Fixed Crosshair Toggle -->
-        <label for="fixedcrosshair">Enable Fixed Crosshair:</label>
-        <label class="switch">
-            <input type="checkbox" id="fixedcrosshair">
-            <span class="slider"></span>
-        </label><br>
-
-        <button type="button" onclick="applySettings()">Apply Settings</button>
+        <button class="apply-button">Apply Settings</button>
     </div>
 
     <div class="footer">
-        <p>RGXtreme Mods™ | Developed by <strong>@iOSrazielOFC</strong></p>
+        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
     </div>
 
 </body>
