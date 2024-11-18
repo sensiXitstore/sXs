@@ -186,7 +186,6 @@
             font-size: 1em;
             color: #aaa;
             margin-bottom: 10px;
-            text-align: center;
         }
 
         .footer strong {
@@ -226,6 +225,7 @@
     </style>
 
     <script>
+        // Initialize particles
         document.addEventListener("DOMContentLoaded", () => {
             const particleContainer = document.querySelector(".particle-bg");
             for (let i = 0; i < 50; i++) {
@@ -257,49 +257,44 @@
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
 
-    // Apply settings and open Free Fire app
-    function applySettings() {
-        // Get the slider values
-        var aimbot = document.getElementById("aimbot").value;
-        var aimfov = document.getElementById("aimfov").value;
-        var norecoil = document.getElementById("norecoil").value;
+        // Function to apply settings and build URI
+        function applySettings() {
+            var aimbot = document.getElementById("aimbot").value;
+            var aimfov = document.getElementById("aimfov").value;
+            var norecoil = document.getElementById("norecoil").value;
+            var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+            var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+            var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-        // Get the toggle switch values (1 if active, 0 if not)
-        var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-        var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-        var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+            // Build the URI with parameters
+            var uri = "freefire://?aimbot=" + aimbot +
+                      "&aimfov=" + aimfov +
+                      "&norecoil=" + norecoil +
+                      "&aimlock=" + aimlock + 
+                      "&headtracking=" + headtracking + 
+                      "&aimassist=" + aimassist;
 
-        // Build the URI with parameters
-        var uri = "freefire://?aimbot=" + aimbot +
-                  "&aimfov=" + aimfov +
-                  "&norecoil=" + norecoil +
-                  "&aimlock=" + aimlock +
-                  "&headtracking=" + headtracking +
-                  "&aimassist=" + aimassist;
-
-        // Show the settings in an alert
-        alert("Settings Applied:\n" +
-              "Aimbot: " + aimbot + "%" + "\n" +
-              "Aim FOV: " + aimfov + "%" + "\n" +
-              "No Recoil: " + norecoil + "%" + "\n" +
-              "Aimlock: " + aimlock + "%" + "\n" +
-              "Headtracking: " + headtracking + "%" + "\n" +
-              "Aim Assist: " + aimassist + "%");
-
-        // Redirect to Free Fire app with the settings
-        setTimeout(function() {
-            window.location.href = uri;
-        }, 500);
-    }
+            alert("Settings Applied:\n" + 
+                  "Aimbot Strength: " + aimbot + "%" + "\n" +
+                  "Aim FOV: " + aimfov + "%" + "\n" +
+                  "No Recoil: " + norecoil + "%" + "\n" +
+                  "Aimlock: " + aimlock + "%" + "\n" +
+                  "Head Tracking: " + headtracking + "%" + "\n" +
+                  "Aim Assist: " + aimassist + "%" + "\n\n" +
+                  "URI: " + uri);
+        }
     </script>
 </head>
 <body>
 
+    <!-- Particle Background -->
     <div class="particle-bg"></div>
 
+    <!-- Title and Subtitle -->
     <div class="title">PREMIUM ™</div>
     <div class="subtitle">MOD MENU</div>
 
+    <!-- Login Form -->
     <div class="login-container">
         <h3>Login to Access Mod Menu</h3>
         <p class="premium-version">Permanent Version</p>
@@ -308,27 +303,29 @@
         <button onclick="login()">Login</button>
     </div>
 
+    <!-- Mod Menu Form -->
     <div class="mod-menu-container">
         <h3>Mod Menu Settings</h3>
-
+        
         <label>
-            Aimbot Strength:
+            Aimbot Strength: 
             <span class="slider-value" id="aimbot-value">50%</span>
         </label>
         <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
 
         <label>
-            Aim FOV:
+            Aim FOV: 
             <span class="slider-value" id="aimfov-value">50%</span>
         </label>
         <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
 
         <label>
-            No Recoil:
+            No Recoil: 
             <span class="slider-value" id="norecoil-value">50%</span>
         </label>
         <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
 
+        <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
