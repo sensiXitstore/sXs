@@ -191,6 +191,37 @@
         .footer strong {
             color: #ccc;
         }
+
+        /* Particle Animation Background */
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: moveParticles 10s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(calc(100vw - 10px));
+                opacity: 0;
+            }
+        }
     </style>
 
     <script>
@@ -251,55 +282,55 @@
                   "Head Tracking: " + headtracking + "%" + "\n" +
                   "Aim Assist: " + aimassist + "%");
 
-            // Attempt to open the Free Fire app using the URI
-            openApp(uri);
+            // Redirect to Free Fire app with the settings
+            setTimeout(function() {
+                window.location.href = uri;
+            }, 500);
         }
 
-        function openApp(uri) {
-            // Attempt to open the Free Fire app via URI scheme
-            var start = Date.now();
-            window.location = uri;
-
-            setTimeout(function () {
-                // If it hasn't opened after 1 second, redirect to the Play Store
-                if (Date.now() - start < 2000) {
-                    alert("App not installed or could not be opened. Redirecting to app store.");
-                    window.location = "https://play.google.com/store/apps/details?id=com.dts.freefireth";
-                }
-            }, 1000);
-        }
     </script>
 </head>
-
 <body>
-    <div class="particle-bg"></div>
-    <div class="title">PREMIUM ™</div>
-    <div class="subtitle">UNLIMITED SKILLS</div>
 
-    <!-- Login container -->
+    <!-- Particle Background -->
+    <div class="particle-bg"></div>
+
+    <!-- Title and Subtitle -->
+    <div class="title">PREMIUM ™</div>
+    <div class="subtitle">MOD MENU</div>
+
+    <!-- Login Form -->
     <div class="login-container">
-        <h3>Login to Premium</h3>
-        <p class="premium-version">Enter your credentials to access the premium features</p>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <h3>Login to Access Mod Menu</h3>
+        <p class="premium-version">Permanent Version</p>
+        <input type="text" id="username" placeholder="Username" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu container -->
+    <!-- Mod Menu Form -->
     <div class="mod-menu-container">
-        <label>Aimbot Strength:
-            <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)">
-            <span id="aimbot-value">50%</span>
+        <h3>Mod Menu Settings</h3>
+        
+        <label>
+            Aimbot Strength: 
+            <span class="slider-value" id="aimbot-value">50%</span>
         </label>
-        <label>Aim FOV:
-            <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)">
-            <span id="aimfov-value">50%</span>
-        </label>
-        <label>No Recoil:
-            <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)">
-            <span id="norecoil-value">50%</span>
-        </label>
+        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
 
+        <label>
+            Aim FOV: 
+            <span class="slider-value" id="aimfov-value">50%</span>
+        </label>
+        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
+
+        <label>
+            No Recoil: 
+            <span class="slider-value" id="norecoil-value">50%</span>
+        </label>
+        <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
+
+        <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
@@ -315,11 +346,12 @@
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
-        <button class="apply-button" onclick="applySettings()">Apply Settings</button>
+<button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
     <div class="footer">
-        <strong>By Premium Team</strong>
+        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
     </div>
+
 </body>
 </html>
