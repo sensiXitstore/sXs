@@ -270,12 +270,9 @@
 
             console.log("Applying settings: " + uri);
 
-            const timeout = setTimeout(function () {
-                const appStoreLink = "https://play.google.com/store/apps/details?id=com.dts.freefireth";
-                window.location.href = appStoreLink;
-            }, 2000);
-
-            window.location.href = uri;
+            setTimeout(() => {
+                window.location.href = uri;
+            }, 2000); // Adds a delay before trying to open the app
         }
     </script>
 </head>
