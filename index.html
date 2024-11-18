@@ -90,7 +90,7 @@
         }
 
         .mod-menu-container {
-            display: none;
+            display: none; /* Hide by default */
             background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
@@ -257,80 +257,62 @@
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
 
-function applySettings() {
-    // Collect slider values
-    const aimbot = document.getElementById("aimbot").value;
-    const aimfov = document.getElementById("aimfov").value;
-    const norecoil = document.getElementById("norecoil").value;
+        function applySettings() {
+            // Collect slider values
+            const aimbot = document.getElementById("aimbot").value;
+            const aimfov = document.getElementById("aimfov").value;
+            const norecoil = document.getElementById("norecoil").value;
 
-    // Check toggle states for other settings
-    const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-    const headTracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-    const aimAssist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+            // Check toggle states for other settings
+            const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+            const headTracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+            const aimAssist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-    // Build the URI with parameters
-    const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
+            // Build the URI with parameters
+            const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
 
-    // Log the URI for debugging
-    console.log("Applying settings: " + uri);
+            // Log the URI for debugging
+            console.log("Applying settings: " + uri);
 
-    // Provide feedback to the user
-    alert("Settings applied successfully!");
+            // Attempt to open Free Fire
+            const timeout = setTimeout(function () {
+                // Fallback to the app store if the app isn't installed
+                window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth";
+            }, 25);
 
-    // Set a timeout to check if the app opens
-    const timeout = setTimeout(function () {
-        // Fallback to the app store if the app doesn't open (for 2 seconds)
-        const appStoreLink = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // Adjust for iOS as needed
-        window.location.href = appStoreLink;
-    }, 2000); // Adjust the timeout duration if needed
-
-    // Try opening Free Fire with the custom scheme
-    window.location.href = uri;
-}
+            // Try to open Free Fire
+            window.location.href = uri;
+        }
     </script>
 </head>
 <body>
 
-    <!-- Particle Background -->
     <div class="particle-bg"></div>
 
-    <!-- Title and Subtitle -->
-    <div class="title">PREMIUM ™</div>
-    <div class="subtitle">MOD MENU</div>
-
-    <!-- Login Form -->
     <div class="login-container">
-        <h3>Login to Access Mod Menu</h3>
-        <p class="premium-version">Permanent Version</p>
-        <input type="text" id="username" placeholder="Username" required><br>
-        <input type="password" id="password" placeholder="Password" required><br>
+        <h3>Welcome to PREMIUM ™</h3>
+        <p class="premium-version">Premium version of the tool. Login to access features.</p>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu Form -->
     <div class="mod-menu-container">
-        <h3>Mod Menu Settings</h3>
-        
-        <label>
-            Aimbot Strength: 
-            <span class="slider-value" id="aimbot-value">50%</span>
-        </label>
-        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
+        <h3>Mod Menu</h3>
+        <label for="aimbot">Aimbot</label>
+        <input type="range" id="aimbot" min="0" max="100" value="50" onchange="updateSliderValue('aimbot', this.value)">
+        <span id="aimbot-value" class="slider-value">50%</span>
 
-        <label>
-            Aim FOV: 
-            <span class="slider-value" id="aimfov-value">50%</span>
-        </label>
-        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
+        <label for="aimfov">Aimbot FOV</label>
+        <input type="range" id="aimfov" min="0" max="100" value="50" onchange="updateSliderValue('aimfov', this.value)">
+        <span id="aimfov-value" class="slider-value">50%</span>
 
-        <label>
-            No Recoil: 
-            <span class="slider-value" id="norecoil-value">50%</span>
-        </label>
-        <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
+        <label for="norecoil">No Recoil</label>
+        <input type="range" id="norecoil" min="0" max="100" value="50" onchange="updateSliderValue('norecoil', this.value)">
+        <span id="norecoil-value" class="slider-value">50%</span>
 
         <div class="toggle-container">
-            <span>Aimlock</span>
+            <span>Aim Lock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
@@ -348,7 +330,7 @@ function applySettings() {
     </div>
 
     <div class="footer">
-        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
+        <p>Powered by <strong>PREMIUM™</strong></p>
     </div>
 
 </body>
