@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTRA PREMIUM ™</title>
+    <title>PREMIUM ™</title>
 
     <!-- Importing Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
             overflow: hidden;
             text-align: center;
             height: 100vh;
-            background: radial-gradient(circle, #121212, #0c0c0c);
-            color: #f0f0f0;
+            background: radial-gradient(circle, #1e1e2e, #0d0d15);
+            color: #f5f5f5;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -25,107 +25,99 @@
 
         .title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3.5em;
-            color: #ff0000;
-            margin-top: 30px;
-            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.7);
+            font-size: 3em;
+            color: white;
+            margin-top: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .subtitle {
-            font-size: 1.8em;
-            color: #ff0000;
+            font-size: 1.5em;
+            color: #00bfff;
             margin-top: 5px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
         .login-container {
             display: block;
-            background-color: rgba(0, 0, 0, 0.85);
-            padding: 40px;
-            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
             width: 80%;
-            max-width: 600px;
+            max-width: 500px;
             margin: auto;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
         }
 
         .login-container h3 {
-            font-size: 2em;
-            margin-bottom: 15px;
+            font-size: 1.5em;
+            margin-bottom: 10px;
         }
 
         .login-container .premium-version {
-            font-size: 1.2em;
-            color: #e60000;
-            margin-bottom: 25px;
+            font-size: 1em;
+            color: #a9a9a9;
+            margin-bottom: 20px;
         }
 
         .login-container input {
             width: 80%;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 15px;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
             border: none;
-            background-color: #222;
-            color: #ff0000;
-            font-size: 1.3em;
+            background-color: #333;
+            color: #fff;
+            font-size: 1.2em;
         }
 
         .login-container button {
-            font-size: 1.4em;
-            padding: 15px 40px;
-            background-color: #ff0000;
+            font-size: 1.2em;
+            padding: 10px 30px;
+            background-color: #00bfff;
             color: white;
             border: none;
-            border-radius: 25px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
         .login-container button:hover {
-            background-color: #cc0000;
-            transform: scale(1.1);
+            background-color: #007acc;
+            transform: scale(1.05);
         }
 
         .mod-menu-container {
             display: none;
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
             width: 80%;
-            max-width: 650px;
+            max-width: 600px;
             margin: auto;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
         }
 
-        .mod-menu-container h3 {
-            font-size: 2.5em;
-            color: #ff0000;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-        }
-
         .mod-menu-container label {
-            font-size: 1.2em;
-            color: #e60000;
+            font-size: 1.1em;
+            color: #d3d3d3;
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .mod-menu-container input[type="range"] {
-            width: 90%;
-            margin-top: 15px;
-            accent-color: #ff0000;
+            width: 80%;
+            margin-top: 10px;
         }
 
         .slider-value {
-            font-size: 1.3em;
-            color: #ff0000;
+            font-size: 1em;
+            color: #00bfff;
             margin-left: 10px;
         }
 
@@ -133,20 +125,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin: 30px 0;
+            margin: 20px 0;
         }
 
         .toggle-container span {
-            font-size: 1.3em;
-            color: #e60000;
+            font-size: 1em;
+            color: #d3d3d3;
         }
 
         .toggle-switch {
             position: relative;
-            width: 60px;
-            height: 30px;
-            background-color: #333;
-            border-radius: 30px;
+            width: 50px;
+            height: 25px;
+            background-color: #444;
+            border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
@@ -154,9 +146,9 @@
         .toggle-switch::before {
             content: '';
             position: absolute;
-            width: 25px;
-            height: 25px;
-            background-color: #fff;
+            width: 20px;
+            height: 20px;
+            background-color: white;
             border-radius: 50%;
             top: 50%;
             left: 5px;
@@ -165,39 +157,39 @@
         }
 
         .toggle-switch.active {
-            background-color: #ff0000;
+            background-color: #00bfff;
         }
 
         .toggle-switch.active::before {
-            transform: translateY(-50%) translateX(30px);
+            transform: translateY(-50%) translateX(25px);
         }
 
         .apply-button {
-            font-size: 1.6em;
-            padding: 15px 50px;
-            background: linear-gradient(90deg, #ff0000, #e60000);
+            font-size: 1.3em;
+            padding: 12px 40px;
+            background: linear-gradient(90deg, #00bfff, #1e90ff);
             color: white;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
-            margin-top: 30px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
         }
 
         .apply-button:hover {
-            background: linear-gradient(90deg, #e60000, #ff0000);
-            transform: scale(1.15);
+            background: linear-gradient(90deg, #1e90ff, #00bfff);
+            transform: scale(1.1);
         }
 
         .footer {
-            font-size: 1.2em;
-            color: #999;
-            margin-bottom: 20px;
+            font-size: 1em;
+            color: #aaa;
+            margin-bottom: 10px;
         }
 
         .footer strong {
-            color: #e60000;
+            color: #ccc;
         }
     </style>
 
@@ -205,7 +197,7 @@
         // Initialize particles
         document.addEventListener("DOMContentLoaded", () => {
             const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 70; i++) {
+            for (let i = 0; i < 50; i++) {
                 const particle = document.createElement("div");
                 particle.classList.add("particle");
                 particle.style.left = Math.random() * 100 + "vw";
@@ -230,37 +222,37 @@
             element.classList.toggle("active");
 
             if (element.classList.contains("active")) {
-                // Set Aimlock, Headtracking, and Aim Assist to 200% when active for extreme effects
+                // Set Aimlock, Headtracking, and Aim Assist to 100% when active
                 if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
-                    document.getElementById('aimlock').value = 200;
-                    document.getElementById('aimlock-value').innerText = "200°";
+                    document.getElementById('aimlock').value = 100;
+                    document.getElementById('aimlock-value').innerText = "100%";
                 }
                 if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
-                    document.getElementById('headtracking').value = 200;
-                    document.getElementById('headtracking-value').innerText = "200°";
+                    document.getElementById('headtracking').value = 100;
+                    document.getElementById('headtracking-value').innerText = "100%";
                 }
                 if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
-                    document.getElementById('aimassist').value = 200;
-                    document.getElementById('aimassist-value').innerText = "200°";
+                    document.getElementById('aimassist').value = 100;
+                    document.getElementById('aimassist-value').innerText = "100%";
                 }
             } else {
                 if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
                     document.getElementById('aimlock').value = 0;
-                    document.getElementById('aimlock-value').innerText = "0°";
+                    document.getElementById('aimlock-value').innerText = "0%";
                 }
                 if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
                     document.getElementById('headtracking').value = 0;
-                    document.getElementById('headtracking-value').innerText = "0°";
+                    document.getElementById('headtracking-value').innerText = "0%";
                 }
                 if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
                     document.getElementById('aimassist').value = 0;
-                    document.getElementById('aimassist-value').innerText = "0°";
+                    document.getElementById('aimassist-value').innerText = "0%";
                 }
             }
         }
 
         function updateSliderValue(id, value) {
-            document.getElementById(id + "-value").innerText = value + "°";
+            document.getElementById(`${id}-value`).innerText = `${value}°`;  // Degrees for Aim FOV and other angles
         }
 
         function applySettings() {
@@ -270,28 +262,29 @@
 </head>
 <body>
 
+    <!-- Particle Background -->
     <div class="particle-bg"></div>
 
-    <div class="title">ULTRA PREMIUM ™</div>
+    <div class="title">PREMIUM ™</div>
     <div class="subtitle">By Forrest Li</div>
 
     <div class="login-container">
         <h3>Login to your account</h3>
-        <div class="premium-version">ULTRA PREMIUM VERSION</div>
+        <div class="premium-version">PREMIUM VERSION</div>
         <input type="text" id="username" placeholder="Username">
         <input type="password" id="password" placeholder="Password">
         <button onclick="login()">Login</button>
     </div>
 
     <div class="mod-menu-container">
-        <h3>MOD MENU SETTINGS</h3>
+        <h3>Mod Menu Settings</h3>
 
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
         <label for="aimlock">Aimlock Strength:</label>
-        <input type="range" id="aimlock" min="0" max="200" step="1" value="0" oninput="updateSliderValue('aimlock', this.value)">
+        <input type="range" id="aimlock" min="0" max="100" step="1" value="0" oninput="updateSliderValue('aimlock', this.value)">
         <span id="aimlock-value">0°</span>
 
         <div class="toggle-container">
@@ -299,7 +292,7 @@
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
         <label for="headtracking">Head Tracking Strength:</label>
-        <input type="range" id="headtracking" min="0" max="200" step="1" value="0" oninput="updateSliderValue('headtracking', this.value)">
+        <input type="range" id="headtracking" min="0" max="100" step="1" value="0" oninput="updateSliderValue('headtracking', this.value)">
         <span id="headtracking-value">0°</span>
 
         <div class="toggle-container">
@@ -307,8 +300,32 @@
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
         <label for="aimassist">Aim Assist Strength:</label>
-        <input type="range" id="aimassist" min="0" max="200" step="1" value="0" oninput="updateSliderValue('aimassist', this.value)">
+        <input type="range" id="aimassist" min="0" max="100" step="1" value="0" oninput="updateSliderValue('aimassist', this.value)">
         <span id="aimassist-value">0°</span>
+
+        <label for="aim-speed">Aim Speed:</label>
+        <input type="range" id="aim-speed" min="0" max="100" step="1" value="50" oninput="updateSliderValue('aim-speed', this.value)">
+        <span id="aim-speed-value">50°/s</span>
+
+        <label for="recoil-angle">Recoil Control Angle:</label>
+        <input type="range" id="recoil-angle" min="0" max="100" step="1" value="0" oninput="updateSliderValue('recoil-angle', this.value)">
+        <span id="recoil-angle-value">0°</span>
+
+        <label for="target-distance">Target Distance:</label>
+        <input type="range" id="target-distance" min="0" max="100" step="1" value="50" oninput="updateSliderValue('target-distance', this.value)">
+        <span id="target-distance-value">50°</span>
+
+        <label for="auto-trigger-range">Auto-Trigger Range:</label>
+        <input type="range" id="auto-trigger-range" min="0" max="100" step="1" value="50" oninput="updateSliderValue('auto-trigger-range', this.value)">
+        <span id="auto-trigger-range-value">50°</span>
+
+        <label for="headshot-precision">Headshot Precision Angle:</label>
+        <input type="range" id="headshot-precision" min="0" max="100" step="1" value="50" oninput="updateSliderValue('headshot-precision', this.value)">
+        <span id="headshot-precision-value">50°</span>
+
+        <label for="fov-zoom">FOV Zoom:</label>
+        <input type="range" id="fov-zoom" min="0" max="100" step="1" value="50" oninput="updateSliderValue('fov-zoom', this.value)">
+        <span id="fov-zoom-value">50°</span>
 
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
