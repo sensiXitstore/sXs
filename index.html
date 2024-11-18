@@ -251,6 +251,30 @@
 
         function toggleSwitch(element) {
             element.classList.toggle("active");
+
+            if (element.classList.contains("active")) {
+                // Set Aimlock, Headtracking, and Aim Assist to 100% when active
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
+                    document.getElementById('aimlock').value = 100;
+                    document.getElementById('aimlock-value').innerText = "100%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
+                    document.getElementById('headtracking').value = 100;
+                    document.getElementById('headtracking-value').innerText = "100%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
+                    document.getElementById('aimassist').value = 100;
+                    document.getElementById('aimassist-value').innerText = "100%";
+                }
+            } else {
+                // Reset to 0% if toggled off
+                document.getElementById('aimlock').value = 0;
+                document.getElementById('aimlock-value').innerText = "0%";
+                document.getElementById('headtracking').value = 0;
+                document.getElementById('headtracking-value').innerText = "0%";
+                document.getElementById('aimassist').value = 0;
+                document.getElementById('aimassist-value').innerText = "0%";
+            }
         }
 
         function updateSliderValue(id, value) {
@@ -287,15 +311,15 @@
         
         <label>
             Aimbot Strength: 
-            <span class="slider-value" id="aimbot-value">50%</span>
+            <span class="slider-value" id="aimbot-value">0%</span>
         </label>
-        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
+        <input type="range" id="aimbot" min="0" max="100" value="0" oninput="updateSliderValue('aimbot', this.value)"><br>
 
         <label>
             Aim FOV: 
-            <span class="slider-value" id="aimfov-value">50%</span>
+            <span class="slider-value" id="aimfov-value">0%</span>
         </label>
-        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
+        <input type="range" id="aimfov" min="0" max="100" value="0" oninput="updateSliderValue('aimfov', this.value)"><br>
 
         <label>
             No Recoil: 
