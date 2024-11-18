@@ -258,29 +258,20 @@
         }
 
         function applySettings() {
-            // Collect slider values
             const aimbot = document.getElementById("aimbot").value;
             const aimfov = document.getElementById("aimfov").value;
             const norecoil = document.getElementById("norecoil").value;
 
-            // Check toggle states for other settings
-            const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-            const headTracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-            const aimAssist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+            const aimlock = document.querySelector(".toggle-container:nth-child(1) .toggle-switch").classList.contains("active") ? "true" : "false";
+            const headtracking = document.querySelector(".toggle-container:nth-child(2) .toggle-switch").classList.contains("active") ? "true" : "false";
+            const aimassist = document.querySelector(".toggle-container:nth-child(3) .toggle-switch").classList.contains("active") ? "true" : "false";
 
-            // Build the URI with parameters
-            const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
-
-            // Log the URI for debugging
-            console.log("Applying settings: " + uri);
-
-            // Attempt to open Free Fire
-            const timeout = setTimeout(function () {
-                // Fallback to the app store if the app isn't installed
+            const uri = `freefire://settings?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headtracking=${headtracking}&aimassist=${aimassist}`;
+            
+            setTimeout(() => {
                 window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth";
             }, 25);
 
-            // Try to open Free Fire
             window.location.href = uri;
         }
     </script>
