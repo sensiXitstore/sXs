@@ -274,14 +274,17 @@ function applySettings() {
     // Log the URI for debugging
     console.log("Applying settings: " + uri);
 
-    // Attempt to open Free Fire
+    // Provide feedback to the user
+    alert("Settings applied successfully!");
+
+    // Set a timeout to check if the app opens
     const timeout = setTimeout(function () {
-        // Fallback to the app store if the app is not installed
+        // Fallback to the app store if the app doesn't open (for 2 seconds)
         const appStoreLink = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // Adjust for iOS as needed
         window.location.href = appStoreLink;
-    }, 2000); // Give the custom scheme 2 seconds to open the app
+    }, 2000); // Adjust the timeout duration if needed
 
-    // Redirect to Free Fire app with the settings URI
+    // Try opening Free Fire with the custom scheme
     window.location.href = uri;
 }
     </script>
