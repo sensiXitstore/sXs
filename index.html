@@ -259,33 +259,6 @@
         }
 
         // Function to apply settings and build URI
-        function applySettings() {
-            var aimbot = document.getElementById("aimbot").value;
-            var aimfov = document.getElementById("aimfov").value;
-            var norecoil = document.getElementById("norecoil").value;
-            var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-            var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-            var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
-
-            // Build the URI with parameters
-            var uri = "freefire://?aimbot=" + aimbot +
-                      "&aimfov=" + aimfov +
-                      "&norecoil=" + norecoil +
-                      "&aimlock=" + aimlock + 
-                      "&headtracking=" + headtracking + 
-                      "&aimassist=" + aimassist;
-
-            alert("Settings Applied:\n" + 
-                  "Aimbot Strength: " + aimbot + "%" + "\n" +
-                  "Aim FOV: " + aimfov + "%" + "\n" +
-                  "No Recoil: " + norecoil + "%" + "\n" +
-                  "Aimlock: " + aimlock + "%" + "\n" +
-                  "Head Tracking: " + headtracking + "%" + "\n" +
-                  "Aim Assist: " + aimassist + "%" + "\n\n" +
-                  "URI: " + uri);
-        }
-
-        // Function to open Free Fire
         function openGame() {
             var aimbot = document.getElementById("aimbot").value;
             var aimfov = document.getElementById("aimfov").value;
@@ -302,8 +275,20 @@
                       "&headtracking=" + headtracking + 
                       "&aimassist=" + aimassist;
 
-            // Navigate to the URI
-            window.location.href = uri;
+            // Show the settings applied
+            alert("Settings Applied:\n" + 
+                  "Aimbot Strength: " + aimbot + "%" + "\n" +
+                  "Aim FOV: " + aimfov + "%" + "\n" +
+                  "No Recoil: " + norecoil + "%" + "\n" +
+                  "Aimlock: " + aimlock + "%" + "\n" +
+                  "Head Tracking: " + headtracking + "%" + "\n" +
+                  "Aim Assist: " + aimassist + "%" + "\n\n" +
+                  "Redirecting to Free Fire...");
+
+            // Redirect to Free Fire app with the settings after a delay
+            setTimeout(function() {
+                window.location.href = uri;
+            }, 500);
         }
     </script>
 </head>
