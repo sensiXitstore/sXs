@@ -38,8 +38,7 @@
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
-        .login-container {
-            display: block;
+        .login-container, .mod-menu-container {
             background-color: rgba(0, 0, 0, 0.8);
             padding: 30px;
             border-radius: 15px;
@@ -51,7 +50,7 @@
             z-index: 2;
         }
 
-        .login-container h3 {
+        .login-container h3, .mod-menu-container h3 {
             font-size: 1.5em;
             margin-bottom: 10px;
         }
@@ -87,19 +86,6 @@
         .login-container button:hover {
             background-color: #007acc;
             transform: scale(1.05);
-        }
-
-        .mod-menu-container {
-            display: none;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 2;
         }
 
         .mod-menu-container label {
@@ -191,52 +177,9 @@
         .footer strong {
             color: #ccc;
         }
-
-        /* Particle Animation Background */
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: moveParticles 10s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) translateX(calc(100vw - 10px));
-                opacity: 0;
-            }
-        }
     </style>
 
     <script>
-        // Initialize particles
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 5 + "s";
-                particleContainer.appendChild(particle);
-            }
-        });
-
         function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -257,49 +200,33 @@
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
 
-        // Function to apply settings and build URI
         function applySettings() {
-            var aimbot = document.getElementById("aimbot").value;
-            var aimfov = document.getElementById("aimfov").value;
-            var norecoil = document.getElementById("norecoil").value;
-            var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-            var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-            var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+            const aimbot = document.getElementById("aimbot").value;
+            const aimfov = document.getElementById("aimfov").value;
+            const norecoil = document.getElementById("norecoil").value;
+            const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+            const headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+            const aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-            // Build the URI with parameters
-            var uri = "freefire://?aimbot=" + aimbot +
-                      "&aimfov=" + aimfov +
-                      "&norecoil=" + norecoil +
-                      "&aimlock=" + aimlock + 
-                      "&headtracking=" + headtracking + 
-                      "&aimassist=" + aimassist;
+            const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headtracking=${headtracking}&aimassist=${aimassist}`;
 
-            alert("Settings Applied:\n" + 
-                  "Aimbot Strength: " + aimbot + "%" + "\n" +
-                  "Aim FOV: " + aimfov + "%" + "\n" +
-                  "No Recoil: " + norecoil + "%" + "\n" +
-                  "Aimlock: " + aimlock + "%" + "\n" +
-                  "Head Tracking: " + headtracking + "%" + "\n" +
-                  "Aim Assist: " + aimassist + "%");
+            alert("Settings Applied:\n" + uri);
 
-            // Redirect to Free Fire app with the settings
-            setTimeout(function() {
+            setTimeout(() => {
                 window.location.href = uri;
             }, 500);
-        }
 
+            setTimeout(() => {
+                alert("It seems the app did not open. Ensure Free Fire is installed and supports this feature.");
+            }, 2000);
+        }
     </script>
 </head>
 <body>
 
-    <!-- Particle Background -->
-    <div class="particle-bg"></div>
-
-    <!-- Title and Subtitle -->
     <div class="title">PREMIUM ™</div>
     <div class="subtitle">MOD MENU</div>
 
-    <!-- Login Form -->
     <div class="login-container">
         <h3>Login to Access Mod Menu</h3>
         <p class="premium-version">Permanent Version</p>
@@ -308,8 +235,7 @@
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu Form -->
-    <div class="mod-menu-container">
+    <div class="mod-menu-container" style="display: none;">
         <h3>Mod Menu Settings</h3>
         
         <label>
@@ -330,7 +256,6 @@
         </label>
         <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
 
-        <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
@@ -346,12 +271,10 @@
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
-<button class="apply-button" onclick="applySettings()">Apply Settings</button>
+        <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
-    <div class="footer">
-        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
-    </div>
+    <div class="footer">Powered by <strong>PREMIUM™</strong></div>
 
 </body>
 </html>
