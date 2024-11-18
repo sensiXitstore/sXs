@@ -258,99 +258,57 @@
         }
 
         function applySettings() {
-    var aimbot = document.getElementById("aimbot").value;
-    var aimfov = document.getElementById("aimfov").value;
-    var norecoil = document.getElementById("norecoil").value;
-    var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-    var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-    var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
-
-    // Build the URI with parameters
-    var uri = "freefire://?aimbot=" + aimbot +
-              "&aimfov=" + aimfov +
-              "&norecoil=" + norecoil +
-              "&aimlock=" + aimlock + 
-              "&headtracking=" + headtracking + 
-              "&aimassist=" + aimassist;
-
-    alert("Settings Applied:\n" + 
-          "Aimbot Strength: " + aimbot + "%" + "\n" +
-          "Aim FOV: " + aimfov + "%" + "\n" +
-          "No Recoil: " + norecoil + "%" + "\n" +
-          "Aimlock: " + aimlock + "%" + "\n" +
-          "Head Tracking: " + headtracking + "%" + "\n" +
-          "Aim Assist: " + aimassist + "%");
-
-    // Try opening the URI with a timeout to check if the app is installed
-    setTimeout(function() {
-        // Fallback URL in case the app isn't opened
-        window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // or any other fallback URL for your app
-    }, 1500);
-
-    // Open the Free Fire app URI after 1 second
-    setTimeout(function() {
-        window.location.href = uri;
-    }, 1000);
-}
+            // Any other logic or settings application can be added here
+            window.location.href = 'freefire://apply-settings'; // Redirects or opens Free Fire
+        }
     </script>
 </head>
 <body>
+
+    <!-- Particle Background -->
+    <div class="particle-bg"></div>
+
+    <!-- Title and Subtitle -->
     <div class="title">PREMIUM ™</div>
     <div class="subtitle">MOD MENU</div>
 
-    <!-- Particle background -->
-    <div class="particle-bg"></div>
-
     <!-- Login Form -->
     <div class="login-container">
-        <h3>Login to Premium™ Mod Menu</h3>
-        <p class="premium-version">Version: 1.0.0</p>
-        <input type="text" id="username" placeholder="Username" />
-        <input type="password" id="password" placeholder="Password" />
+        <h3>Login to Access Mod Menu</h3>
+        <p class="premium-version">Permanent Version</p>
+        <input type="text" id="username" placeholder="Username" required><br>
+        <input type="password" id="password" placeholder="Password" required><br>
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu -->
+    <!-- Mod Menu Form -->
     <div class="mod-menu-container">
         <h3>Mod Menu Settings</h3>
+        
+        <label>
+            Aimbot Strength: 
+            <span class="slider-value" id="aimbot-value">50%</span>
+        </label>
+        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)">
+        
+        <label>
+            Recoil Control: 
+            <span class="slider-value" id="recoil-value">50%</span>
+        </label>
+        <input type="range" id="recoil" min="0" max="100" value="50" oninput="updateSliderValue('recoil', this.value)">
 
-        <!-- Aimbot Strength Slider -->
-        <label for="aimbot">Aimbot Strength</label>
-        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)" />
-        <span id="aimbot-value" class="slider-value">50%</span>
-
-        <!-- Aim FOV Slider -->
-        <label for="aimfov">Aim FOV</label>
-        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)" />
-        <span id="aimfov-value" class="slider-value">50%</span>
-
-        <!-- No Recoil Slider -->
-        <label for="norecoil">No Recoil</label>
-        <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)" />
-        <span id="norecoil-value" class="slider-value">50%</span>
-
-        <!-- Toggle Options -->
         <div class="toggle-container">
-            <span>Aimlock</span>
+            <span>Auto Headshot</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
-        <div class="toggle-container">
-            <span>Head Tracking</span>
-            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-        </div>
-
-        <div class="toggle-container">
-            <span>Aim Assist</span>
-            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-        </div>
-
-        <!-- Apply Settings Button -->
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
+    <!-- Footer -->
     <div class="footer">
-        <p>Powered by <strong>PREMIUM™</strong></p>
+        <p>Developed by <strong>PREMIUM™ Team</strong></p>
     </div>
+
 </body>
 </html>
