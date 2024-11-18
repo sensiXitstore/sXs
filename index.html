@@ -268,11 +268,9 @@
 
             const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
 
-            console.log("Applying settings: " + uri);
-
             setTimeout(() => {
                 window.location.href = uri;
-            }, 2000); // Adds a delay before trying to open the app
+            }, 500); // Adds a delay before trying to open the app
         }
     </script>
 </head>
