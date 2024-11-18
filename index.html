@@ -268,19 +268,21 @@ function applySettings() {
     const headTracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
     const aimAssist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-    // Build the URI with parameters (similar to your original structure)
+    // Build the URI with parameters
     const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
 
     // Log the URI for debugging
     console.log("Applying settings: " + uri);
 
-    // Provide feedback to the user
-    alert("Settings applied successfully!");
+    // Attempt to open Free Fire
+    const timeout = setTimeout(function () {
+        // Fallback to the app store if the app is not installed
+        const appStoreLink = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // Adjust for iOS as needed
+        window.location.href = appStoreLink;
+    }, 2000); // Give the custom scheme 2 seconds to open the app
 
     // Redirect to Free Fire app with the settings URI
-    setTimeout(function() {
-        window.location.href = uri;
-    }, 500);
+    window.location.href = uri;
 }
     </script>
 </head>
