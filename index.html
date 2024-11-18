@@ -257,36 +257,41 @@
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
 
-        // Function to apply settings and build URI
         function applySettings() {
-            var aimbot = document.getElementById("aimbot").value;
-            var aimfov = document.getElementById("aimfov").value;
-            var norecoil = document.getElementById("norecoil").value;
-            var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-            var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-            var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+    var aimbot = document.getElementById("aimbot").value;
+    var aimfov = document.getElementById("aimfov").value;
+    var norecoil = document.getElementById("norecoil").value;
+    var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+    var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+    var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-            // Build the URI with parameters
-            var uri = "freefire://?aimbot=" + aimbot +
-                      "&aimfov=" + aimfov +
-                      "&norecoil=" + norecoil +
-                      "&aimlock=" + aimlock + 
-                      "&headtracking=" + headtracking + 
-                      "&aimassist=" + aimassist;
+    // Build the URI with parameters
+    var uri = "freefire://?aimbot=" + aimbot +
+              "&aimfov=" + aimfov +
+              "&norecoil=" + norecoil +
+              "&aimlock=" + aimlock + 
+              "&headtracking=" + headtracking + 
+              "&aimassist=" + aimassist;
 
-            alert("Settings Applied:\n" + 
-                  "Aimbot Strength: " + aimbot + "%" + "\n" +
-                  "Aim FOV: " + aimfov + "%" + "\n" +
-                  "No Recoil: " + norecoil + "%" + "\n" +
-                  "Aimlock: " + aimlock + "%" + "\n" +
-                  "Head Tracking: " + headtracking + "%" + "\n" +
-                  "Aim Assist: " + aimassist + "%");
+    alert("Settings Applied:\n" + 
+          "Aimbot Strength: " + aimbot + "%" + "\n" +
+          "Aim FOV: " + aimfov + "%" + "\n" +
+          "No Recoil: " + norecoil + "%" + "\n" +
+          "Aimlock: " + aimlock + "%" + "\n" +
+          "Head Tracking: " + headtracking + "%" + "\n" +
+          "Aim Assist: " + aimassist + "%");
 
-            // Open the Free Fire app URI after 1 second
-            setTimeout(() => {
-                window.location.href = uri;
-            }, 1000);
-        }
+    // Try opening the URI with a timeout to check if the app is installed
+    setTimeout(function() {
+        // Fallback URL in case the app isn't opened
+        window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // or any other fallback URL for your app
+    }, 1500);
+
+    // Open the Free Fire app URI after 1 second
+    setTimeout(function() {
+        window.location.href = uri;
+    }, 1000);
+}
     </script>
 </head>
 <body>
