@@ -191,37 +191,6 @@
         .footer strong {
             color: #ccc;
         }
-
-        /* Particle Animation Background */
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: moveParticles 10s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) translateX(calc(100vw - 10px));
-                opacity: 0;
-            }
-        }
     </style>
 
     <script>
@@ -283,7 +252,7 @@
         }
 
         function updateSliderValue(id, value) {
-            document.getElementById(`${id}-value`).innerText = `${value}°`;  // Degrees for Aim FOV
+            document.getElementById(`${id}-value`).innerText = `${value}°`;  // Degrees for Aim FOV and other angles
         }
 
         function applySettings() {
@@ -296,63 +265,72 @@
     <!-- Particle Background -->
     <div class="particle-bg"></div>
 
-    <!-- Title and Subtitle -->
     <div class="title">PREMIUM ™</div>
-    <div class="subtitle">MOD MENU</div>
+    <div class="subtitle">By Forrest Li</div>
 
-    <!-- Login Form -->
     <div class="login-container">
-        <h3>Login to Access Mod Menu</h3>
-        <p class="premium-version">Permanent Version</p>
-        <input type="text" id="username" placeholder="Username" required><br>
-        <input type="password" id="password" placeholder="Password" required><br>
+        <h3>Login to your account</h3>
+        <div class="premium-version">PREMIUM VERSION</div>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu Form -->
     <div class="mod-menu-container">
         <h3>Mod Menu Settings</h3>
-        
-        <label>
-            Aimbot Strength: 
-            <span class="slider-value" id="aimbot-value">0%</span>
-        </label>
-        <input type="range" id="aimbot" min="0" max="100" value="0" oninput="updateSliderValue('aimbot', this.value)"><br>
 
-        <label>
-            Aim FOV: 
-            <span class="slider-value" id="aimfov-value">0°</span>
-        </label>
-        <input type="range" id="aimfov" min="0" max="100" value="0" oninput="updateSliderValue('aimfov', this.value)"><br>
-
-        <label>
-            No Recoil: 
-            <span class="slider-value" id="norecoil-value">0%</span>
-        </label>
-        <input type="range" id="norecoil" min="0" max="100" value="0" oninput="updateSliderValue('norecoil', this.value)"><br>
-
-        <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
+        <label for="aimlock">Aimlock Strength:</label>
+        <input type="range" id="aimlock" min="0" max="100" step="1" value="0" oninput="updateSliderValue('aimlock', this.value)">
+        <span id="aimlock-value">0°</span>
 
         <div class="toggle-container">
             <span>Head Tracking</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
+        <label for="headtracking">Head Tracking Strength:</label>
+        <input type="range" id="headtracking" min="0" max="100" step="1" value="0" oninput="updateSliderValue('headtracking', this.value)">
+        <span id="headtracking-value">0°</span>
 
         <div class="toggle-container">
             <span>Aim Assist</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
+        <label for="aimassist">Aim Assist Strength:</label>
+        <input type="range" id="aimassist" min="0" max="100" step="1" value="0" oninput="updateSliderValue('aimassist', this.value)">
+        <span id="aimassist-value">0°</span>
+
+        <label for="aim-speed">Aim Speed:</label>
+        <input type="range" id="aim-speed" min="0" max="100" step="1" value="50" oninput="updateSliderValue('aim-speed', this.value)">
+        <span id="aim-speed-value">50°/s</span>
+
+        <label for="recoil-angle">Recoil Control Angle:</label>
+        <input type="range" id="recoil-angle" min="0" max="100" step="1" value="0" oninput="updateSliderValue('recoil-angle', this.value)">
+        <span id="recoil-angle-value">0°</span>
+
+        <label for="target-distance">Target Distance:</label>
+        <input type="range" id="target-distance" min="0" max="100" step="1" value="50" oninput="updateSliderValue('target-distance', this.value)">
+        <span id="target-distance-value">50°</span>
+
+        <label for="auto-trigger-range">Auto-Trigger Range:</label>
+        <input type="range" id="auto-trigger-range" min="0" max="100" step="1" value="50" oninput="updateSliderValue('auto-trigger-range', this.value)">
+        <span id="auto-trigger-range-value">50°</span>
+
+        <label for="headshot-precision">Headshot Precision Angle:</label>
+        <input type="range" id="headshot-precision" min="0" max="100" step="1" value="50" oninput="updateSliderValue('headshot-precision', this.value)">
+        <span id="headshot-precision-value">50°</span>
+
+        <label for="fov-zoom">FOV Zoom:</label>
+        <input type="range" id="fov-zoom" min="0" max="100" step="1" value="50" oninput="updateSliderValue('fov-zoom', this.value)">
+        <span id="fov-zoom-value">50°</span>
 
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
-    <div class="footer">
-        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
-    </div>
+    <div class="footer">Created by <strong>Forrest Li</strong></div>
 
 </body>
 </html>
