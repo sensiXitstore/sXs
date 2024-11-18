@@ -225,53 +225,18 @@
     </style>
 
     <script>
-        let aimlockActive = false;
-        let headTrackingActive = false;
-        let enemyTargets = []; // List of detected enemies (simulation)
-
-        // Function to handle firing
-        function onFireButtonPressed() {
-            if (aimlockActive && enemyTargets.length > 0) {
-                const closestEnemy = findClosestHeadshotTarget();
-                if (closestEnemy) {
-                    // Guide crosshair to the enemy's head (this will be a visual simulation)
-                    lockCrosshairToHead(closestEnemy);
-                    // Simulate shooting the enemy
-                    alert("Headshot on " + closestEnemy.name);
-                }
+        // Initialize particles
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 5 + "s";
+                particleContainer.appendChild(particle);
             }
-        }
+        });
 
-        // Find the closest enemy head to aim at
-        function findClosestHeadshotTarget() {
-            // This is a simulation. Replace with actual game logic.
-            return enemyTargets[0]; // For simplicity, select the first enemy
-        }
-
-        // Lock crosshair to the enemy's head
-        function lockCrosshairToHead(enemy) {
-            // Visual feedback: Change crosshair color to red (simulated)
-            console.log("Crosshair locked to " + enemy.name + "'s head");
-        }
-
-        // Enable or disable aimbot
-        function toggleAimlock() {
-            aimlockActive = !aimlockActive;
-            alert('Aimbot ' + (aimlockActive ? 'Activated' : 'Deactivated'));
-        }
-
-        // Enable or disable head tracking
-        function toggleHeadTracking() {
-            headTrackingActive = !headTrackingActive;
-            alert('Head Tracking ' + (headTrackingActive ? 'Activated' : 'Deactivated'));
-        }
-
-        // Function to apply the settings
-        function applySettings() {
-            window.location.href = 'freefire://apply-settings'; // Keep the redirection intact
-        }
-
-        // Login function
         function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -284,14 +249,17 @@
             }
         }
 
-        // Toggle switch for mod features
         function toggleSwitch(element) {
             element.classList.toggle("active");
         }
 
-        // Update slider values
         function updateSliderValue(id, value) {
-            document.getElementById(id + "-value").innerText = value + "%";
+            document.getElementById(`${id}-value`).innerText = `${value}%`;
+        }
+
+        function applySettings() {
+            // Redirect to the URL you specify here
+            window.location.href = 'freefire://apply-settings'; // Redirects or opens Free Fire
         }
     </script>
 </head>
@@ -338,12 +306,12 @@
         <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
-            <div class="toggle-switch" onclick="toggleAimlock()"></div>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
         <div class="toggle-container">
             <span>Head Tracking</span>
-            <div class="toggle-switch" onclick="toggleHeadTracking()"></div>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
         <div class="toggle-container">
