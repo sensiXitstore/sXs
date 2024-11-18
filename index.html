@@ -267,23 +267,27 @@
                     document.getElementById('aimassist-value').innerText = "100%";
                 }
             } else {
-                // Reset to 0% if toggled off
-                document.getElementById('aimlock').value = 0;
-                document.getElementById('aimlock-value').innerText = "0%";
-                document.getElementById('headtracking').value = 0;
-                document.getElementById('headtracking-value').innerText = "0%";
-                document.getElementById('aimassist').value = 0;
-                document.getElementById('aimassist-value').innerText = "0%";
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
+                    document.getElementById('aimlock').value = 0;
+                    document.getElementById('aimlock-value').innerText = "0%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
+                    document.getElementById('headtracking').value = 0;
+                    document.getElementById('headtracking-value').innerText = "0%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
+                    document.getElementById('aimassist').value = 0;
+                    document.getElementById('aimassist-value').innerText = "0%";
+                }
             }
         }
 
         function updateSliderValue(id, value) {
-            document.getElementById(`${id}-value`).innerText = `${value}%`;
+            document.getElementById(`${id}-value`).innerText = `${value}°`;  // Degrees for Aim FOV
         }
 
         function applySettings() {
-            // Redirect to the URL you specify here
-            window.location.href = 'freefire://apply-settings'; // Redirects or opens Free Fire
+            window.location.href = 'freefire://apply-settings'; // Apply the settings in Free Fire
         }
     </script>
 </head>
@@ -317,7 +321,7 @@
 
         <label>
             Aim FOV: 
-            <span class="slider-value" id="aimfov-value">0%</span>
+            <span class="slider-value" id="aimfov-value">0°</span>
         </label>
         <input type="range" id="aimfov" min="0" max="100" value="0" oninput="updateSliderValue('aimfov', this.value)"><br>
 
