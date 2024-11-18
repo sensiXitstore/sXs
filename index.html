@@ -258,7 +258,7 @@
         }
 
         function applySettings() {
-            // Any other logic or settings application can be added here
+            // Redirect to the URL you specify here
             window.location.href = 'freefire://apply-settings'; // Redirects or opens Free Fire
         }
     </script>
@@ -289,25 +289,41 @@
             Aimbot Strength: 
             <span class="slider-value" id="aimbot-value">50%</span>
         </label>
-        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)">
-        
+        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
+
         <label>
-            Recoil Control: 
-            <span class="slider-value" id="recoil-value">50%</span>
+            Aim FOV: 
+            <span class="slider-value" id="aimfov-value">50%</span>
         </label>
-        <input type="range" id="recoil" min="0" max="100" value="50" oninput="updateSliderValue('recoil', this.value)">
+        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
+
+        <label>
+            No Recoil: 
+            <span class="slider-value" id="norecoil-value">50%</span>
+        </label>
+        <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
+
+        <!-- Additional Toggles -->
+        <div class="toggle-container">
+            <span>Aimlock</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
 
         <div class="toggle-container">
-            <span>Auto Headshot</span>
+            <span>Head Tracking</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+
+        <div class="toggle-container">
+            <span>Aim Assist</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
-    <!-- Footer -->
     <div class="footer">
-        <p>Designed & Developed by <strong>PREMIUM™ Team</strong> &amp; <strong>RG</strong></p>
+        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
     </div>
 
 </body>
