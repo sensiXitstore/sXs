@@ -38,7 +38,8 @@
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
-        .login-container, .mod-menu-container {
+        .login-container {
+            display: block;
             background-color: rgba(0, 0, 0, 0.8);
             padding: 30px;
             border-radius: 15px;
@@ -50,7 +51,7 @@
             z-index: 2;
         }
 
-        .login-container h3, .mod-menu-container h3 {
+        .login-container h3 {
             font-size: 1.5em;
             margin-bottom: 10px;
         }
@@ -86,6 +87,19 @@
         .login-container button:hover {
             background-color: #007acc;
             transform: scale(1.05);
+        }
+
+        .mod-menu-container {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
         }
 
         .mod-menu-container label {
@@ -180,6 +194,18 @@
     </style>
 
     <script>
+        // Initialize particles
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 5 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
+
         function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
@@ -200,61 +226,79 @@
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
 
+        // Function to apply settings and build URI
         function applySettings() {
-            const aimbot = document.getElementById("aimbot").value;
-            const aimfov = document.getElementById("aimfov").value;
-            const norecoil = document.getElementById("norecoil").value;
-            const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-            const headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-            const aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+            var aimbot = document.getElementById("aimbot").value;
+            var aimfov = document.getElementById("aimfov").value;
+            var norecoil = document.getElementById("norecoil").value;
+            var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+            var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+            var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-            const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headtracking=${headtracking}&aimassist=${aimassist}`;
+            // Build the URI with parameters
+            var uri = "freefire://?aimbot=" + aimbot +
+                      "&aimfov=" + aimfov +
+                      "&norecoil=" + norecoil +
+                      "&aimlock=" + aimlock + 
+                      "&headtracking=" + headtracking + 
+                      "&aimassist=" + aimassist;
 
-            alert("Settings Applied:\n" + uri);
+            alert("Settings Applied:\n" + 
+                  "Aimbot Strength: " + aimbot + "%" + "\n" +
+                  "Aim FOV: " + aimfov + "%" + "\n" +
+                  "No Recoil: " + norecoil + "%" + "\n" +
+                  "Aimlock: " + aimlock + "%" + "\n" +
+                  "Head Tracking: " + headtracking + "%" + "\n" +
+                  "Aim Assist: " + aimassist + "%");
 
-            setTimeout(() => {
-                window.location.href = uri;
-            }, 500);
+            // Attempt to open the Free Fire app using the URI
+            openApp(uri);
+        }
 
-            setTimeout(() => {
-                alert("It seems the app did not open. Ensure Free Fire is installed and supports this feature.");
-            }, 2000);
+        function openApp(uri) {
+            // Attempt to open the Free Fire app via URI scheme
+            var start = Date.now();
+            window.location = uri;
+
+            setTimeout(function () {
+                // If it hasn't opened after 1 second, redirect to the Play Store
+                if (Date.now() - start < 2000) {
+                    alert("App not installed or could not be opened. Redirecting to app store.");
+                    window.location = "https://play.google.com/store/apps/details?id=com.dts.freefireth";
+                }
+            }, 1000);
         }
     </script>
 </head>
+
 <body>
-
+    <div class="particle-bg"></div>
     <div class="title">PREMIUM ™</div>
-    <div class="subtitle">MOD MENU</div>
+    <div class="subtitle">UNLIMITED SKILLS</div>
 
+    <!-- Login container -->
     <div class="login-container">
-        <h3>Login to Access Mod Menu</h3>
-        <p class="premium-version">Permanent Version</p>
-        <input type="text" id="username" placeholder="Username" required><br>
-        <input type="password" id="password" placeholder="Password" required><br>
+        <h3>Login to Premium</h3>
+        <p class="premium-version">Enter your credentials to access the premium features</p>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
         <button onclick="login()">Login</button>
     </div>
 
-    <div class="mod-menu-container" style="display: none;">
-        <h3>Mod Menu Settings</h3>
-        
-        <label>
-            Aimbot Strength: 
-            <span class="slider-value" id="aimbot-value">50%</span>
+    <!-- Mod Menu container -->
+    <div class="mod-menu-container">
+        <label>Aimbot Strength:
+            <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)">
+            <span id="aimbot-value">50%</span>
         </label>
-        <input type="range" id="aimbot" min="0" max="100" value="50" oninput="updateSliderValue('aimbot', this.value)"><br>
-
-        <label>
-            Aim FOV: 
-            <span class="slider-value" id="aimfov-value">50%</span>
+        <label>Aim FOV:
+            <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)">
+            <span id="aimfov-value">50%</span>
         </label>
-        <input type="range" id="aimfov" min="0" max="100" value="50" oninput="updateSliderValue('aimfov', this.value)"><br>
-
-        <label>
-            No Recoil: 
-            <span class="slider-value" id="norecoil-value">50%</span>
+        <label>No Recoil:
+            <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)">
+            <span id="norecoil-value">50%</span>
         </label>
-        <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
 
         <div class="toggle-container">
             <span>Aimlock</span>
@@ -274,7 +318,8 @@
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
-    <div class="footer">Powered by <strong>PREMIUM™</strong></div>
-
+    <div class="footer">
+        <strong>By Premium Team</strong>
+    </div>
 </body>
 </html>
