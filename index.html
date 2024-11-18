@@ -256,6 +256,30 @@
         function updateSliderValue(id, value) {
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
+
+        function applySettings() {
+            // Collect slider values
+            const aimbot = document.getElementById("aimbot").value;
+            const aimfov = document.getElementById("aimfov").value;
+            const norecoil = document.getElementById("norecoil").value;
+
+            // Check toggle states
+            const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active");
+            const headTracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active");
+            const aimAssist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active");
+
+            // Construct URL scheme (freefire:// or similar)
+            const freefireCommand = `freefire://apply-settings?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
+            
+            // Log the command for debugging (optional)
+            console.log(freefireCommand);
+
+            // Redirect to the URL scheme
+            window.location.href = freefireCommand;
+
+            // Provide feedback to the user
+            alert("Settings applied successfully!");
+        }
     </script>
 </head>
 <body>
@@ -313,7 +337,7 @@
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
-        <button class="apply-button">Apply Settings</button>
+        <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
     <div class="footer">
