@@ -186,6 +186,7 @@
             font-size: 1em;
             color: #aaa;
             margin-bottom: 10px;
+            text-align: center;
         }
 
         .footer strong {
@@ -225,7 +226,6 @@
     </style>
 
     <script>
-        // Initialize particles
         document.addEventListener("DOMContentLoaded", () => {
             const particleContainer = document.querySelector(".particle-bg");
             for (let i = 0; i < 50; i++) {
@@ -298,7 +298,6 @@
         </label>
         <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
 
-        <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
