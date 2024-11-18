@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PREMIUM ™</title>
 
-    <!-- Importing Google Fonts -->
+    <!-• Importing Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
     <style>
@@ -218,7 +219,7 @@
                 opacity: 1;
             }
             100% {
-                transform: translateY(-10vh) translateX(calc(100vw - 10px));
+                transform: translateY(-10vh) translateX(calc(100vw • 10px));
                 opacity: 0;
             }
         }
@@ -283,18 +284,39 @@
                   "Aim Assist: " + aimassist + "%" + "\n\n" +
                   "URI: " + uri);
         }
+
+        // Function to open Free Fire
+        function openGame() {
+            var aimbot = document.getElementById("aimbot").value;
+            var aimfov = document.getElementById("aimfov").value;
+            var norecoil = document.getElementById("norecoil").value;
+            var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+            var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+            var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+
+            // Build the URI with parameters
+            var uri = "freefire://?aimbot=" + aimbot +
+                      "&aimfov=" + aimfov +
+                      "&norecoil=" + norecoil +
+                      "&aimlock=" + aimlock + 
+                      "&headtracking=" + headtracking + 
+                      "&aimassist=" + aimassist;
+
+            // Navigate to the URI
+            window.location.href = uri;
+        }
     </script>
 </head>
 <body>
 
-    <!-- Particle Background -->
+    <!-• Particle Background -->
     <div class="particle-bg"></div>
 
-    <!-- Title and Subtitle -->
+    <!-• Title and Subtitle -->
     <div class="title">PREMIUM ™</div>
     <div class="subtitle">MOD MENU</div>
 
-    <!-- Login Form -->
+    <!-• Login Form -->
     <div class="login-container">
         <h3>Login to Access Mod Menu</h3>
         <p class="premium-version">Permanent Version</p>
@@ -303,7 +325,7 @@
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu Form -->
+    <!-• Mod Menu Form -->
     <div class="mod-menu-container">
         <h3>Mod Menu Settings</h3>
         
@@ -325,12 +347,11 @@
         </label>
         <input type="range" id="norecoil" min="0" max="100" value="50" oninput="updateSliderValue('norecoil', this.value)"><br>
 
-        <!-- Additional Toggles -->
         <div class="toggle-container">
             <span>Aimlock</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
-
+        
         <div class="toggle-container">
             <span>Head Tracking</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
@@ -342,10 +363,11 @@
         </div>
 
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
+        <button class="apply-button" onclick="openGame()">Open Free Fire</button>
     </div>
 
     <div class="footer">
-        <p>PREMIUM ™ | Developed by <strong>@iOSrazielOFC</strong></p>
+        <strong>© 2024 PREMIUM ™</strong>
     </div>
 
 </body>
