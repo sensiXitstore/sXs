@@ -257,21 +257,40 @@
             document.getElementById(`${id}-value`).innerText = `${value}%`;
         }
 
-        function applySettings() {
-            const aimbot = document.getElementById("aimbot").value;
-            const aimfov = document.getElementById("aimfov").value;
-            const norecoil = document.getElementById("norecoil").value;
+    // Apply settings and open Free Fire app
+    function applySettings() {
+        // Get the slider values
+        var aimbot = document.getElementById("aimbot").value;
+        var aimfov = document.getElementById("aimfov").value;
+        var norecoil = document.getElementById("norecoil").value;
 
-            const aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
-            const headTracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
-            const aimAssist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
+        // Get the toggle switch values (1 if active, 0 if not)
+        var aimlock = document.querySelector(".toggle-switch:nth-of-type(1)").classList.contains("active") ? "100" : "0";
+        var headtracking = document.querySelector(".toggle-switch:nth-of-type(2)").classList.contains("active") ? "100" : "0";
+        var aimassist = document.querySelector(".toggle-switch:nth-of-type(3)").classList.contains("active") ? "100" : "0";
 
-            const uri = `freefire://?aimbot=${aimbot}&aimfov=${aimfov}&norecoil=${norecoil}&aimlock=${aimlock}&headTracking=${headTracking}&aimAssist=${aimAssist}`;
+        // Build the URI with parameters
+        var uri = "freefire://?aimbot=" + aimbot +
+                  "&aimfov=" + aimfov +
+                  "&norecoil=" + norecoil +
+                  "&aimlock=" + aimlock +
+                  "&headtracking=" + headtracking +
+                  "&aimassist=" + aimassist;
 
-            setTimeout(() => {
-                window.location.href = uri;
-            }, 500); // Adds a delay before trying to open the app
-        }
+        // Show the settings in an alert
+        alert("Settings Applied:\n" +
+              "Aimbot: " + aimbot + "%" + "\n" +
+              "Aim FOV: " + aimfov + "%" + "\n" +
+              "No Recoil: " + norecoil + "%" + "\n" +
+              "Aimlock: " + aimlock + "%" + "\n" +
+              "Headtracking: " + headtracking + "%" + "\n" +
+              "Aim Assist: " + aimassist + "%");
+
+        // Redirect to Free Fire app with the settings
+        setTimeout(function() {
+            window.location.href = uri;
+        }, 500);
+    }
     </script>
 </head>
 <body>
