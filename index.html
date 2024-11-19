@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTRA HEADSHOT MOD MENU</title>
+    <title>PREMIUM ™</title>
 
     <!-- Importing Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
             overflow: hidden;
             text-align: center;
             height: 100vh;
-            background: radial-gradient(circle, #141414, #000000);
+            background: radial-gradient(circle, #1e1e2e, #0d0d15);
             color: #f5f5f5;
             display: flex;
             flex-direction: column;
@@ -28,51 +28,78 @@
             font-size: 3em;
             color: white;
             margin-top: 20px;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
-        .login-container, .mod-menu-container {
-            background-color: rgba(0, 0, 0, 0.85);
+        .subtitle {
+            font-size: 1.5em;
+            color: #00bfff;
+            margin-top: 5px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        .login-container {
+            display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-container h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .login-container .premium-version {
+            font-size: 1em;
+            color: #a9a9a9;
+            margin-bottom: 20px;
+        }
+
+        .login-container input {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            background-color: #333;
+            color: #fff;
+            font-size: 1.2em;
+        }
+
+        .login-container button {
+            font-size: 1.2em;
+            padding: 10px 30px;
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-container button:hover {
+            background-color: #007acc;
+            transform: scale(1.05);
+        }
+
+        .mod-menu-container {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
             border-radius: 15px;
             width: 80%;
             max-width: 600px;
             margin: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
-        }
-
-        .login-container h3, .mod-menu-container h3 {
-            font-size: 1.8em;
-            margin-bottom: 15px;
-        }
-
-        .login-container input, .mod-menu-container input[type="range"] {
-            width: 85%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: none;
-            background-color: #222;
-            color: #fff;
-            font-size: 1.1em;
-        }
-
-        .login-container button, .mod-menu-container button {
-            font-size: 1.3em;
-            padding: 12px 40px;
-            background: linear-gradient(90deg, #ff4500, #ff0000);
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-container button:hover, .mod-menu-container button:hover {
-            background: linear-gradient(90deg, #ff0000, #ff4500);
-            transform: scale(1.05);
         }
 
         .mod-menu-container label {
@@ -83,14 +110,30 @@
             margin-top: 15px;
         }
 
-        .mod-menu-container .toggle-container {
+        .mod-menu-container input[type="range"] {
+            width: 80%;
+            margin-top: 10px;
+        }
+
+        .slider-value {
+            font-size: 1em;
+            color: #00bfff;
+            margin-left: 10px;
+        }
+
+        .toggle-container {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin: 20px 0;
         }
 
-        .mod-menu-container .toggle-switch {
+        .toggle-container span {
+            font-size: 1em;
+            color: #d3d3d3;
+        }
+
+        .toggle-switch {
             position: relative;
             width: 50px;
             height: 25px;
@@ -98,10 +141,6 @@
             border-radius: 25px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-        }
-
-        .mod-menu-container .toggle-switch.active {
-            background-color: #ff0000;
         }
 
         .toggle-switch::before {
@@ -117,8 +156,30 @@
             transition: transform 0.3s ease;
         }
 
+        .toggle-switch.active {
+            background-color: #00bfff;
+        }
+
         .toggle-switch.active::before {
             transform: translateY(-50%) translateX(25px);
+        }
+
+        .apply-button {
+            font-size: 1.3em;
+            padding: 12px 40px;
+            background: linear-gradient(90deg, #00bfff, #1e90ff);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .apply-button:hover {
+            background: linear-gradient(90deg, #1e90ff, #00bfff);
+            transform: scale(1.1);
         }
 
         .footer {
@@ -130,88 +191,156 @@
         .footer strong {
             color: #ccc;
         }
+
+        /* Particle Animation Background */
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: rgba(255, 255, 255, 0.5);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            animation: moveParticles 10s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(calc(100vw - 10px));
+                opacity: 0;
+            }
+        }
     </style>
 
     <script>
-        // Advanced Mod Menu Functions
+        // Initialize particles
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 5 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
+
         function login() {
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (username === "ULTRA" && password === "HEADSHOT") {
+            if (username === "RG" && password === "1k") {
                 document.querySelector(".login-container").style.display = "none";
                 document.querySelector(".mod-menu-container").style.display = "block";
             } else {
-                alert("Invalid credentials! Try again.");
+                alert("Invalid credentials! Please try again.");
             }
         }
 
         function toggleSwitch(element) {
             element.classList.toggle("active");
-        }
 
-        function updateSliderValue(id, value, unit) {
-            document.getElementById(`${id}-value`).innerText = `${value}${unit}`;
+            if (element.classList.contains("active")) {
+                // Set Aimlock, Headtracking, and Aim Assist to 100% when active
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
+                    document.getElementById('aimlock').value = 100;
+                    document.getElementById('aimlock-value').innerText = "100%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
+                    document.getElementById('headtracking').value = 100;
+                    document.getElementById('headtracking-value').innerText = "100%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
+                    document.getElementById('aimassist').value = 100;
+                    document.getElementById('aimassist-value').innerText = "100%";
+                }
+            } else {
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
+                    document.getElementById('aimlock').value = 0;
+                    document.getElementById('aimlock-value').innerText = "0%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
+                    document.getElementById('headtracking').value = 0;
+                    document.getElementById('headtracking-value').innerText = "0%";
+                }
+                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
+                    document.getElementById('aimassist').value = 0;
+                    document.getElementById('aimassist-value').innerText = "0%";
+                }
+            }
         }
 
         function applySettings() {
             alert("Settings Applied with Ultra Precision for Headshots!");
+
+            // Redirect to Free Fire with custom URL scheme
+            window.location.href = "freefire://applysettings";
         }
     </script>
 </head>
 <body>
+    <!-- Particle Background -->
+    <div class="particle-bg"></div>
 
-    <div class="title">ULTRA HEADSHOT MOD MENU</div>
+    <!-- Title and Subtitle -->
+    <div class="title">PREMIUM ™</div>
+    <div class="subtitle">Headshot Perfection for Free Fire</div>
 
+    <!-- Login Form -->
     <div class="login-container">
-        <h3>Login to Access</h3>
-        <input type="text" id="username" placeholder="Username"><br>
-        <input type="password" id="password" placeholder="Password"><br>
+        <h3>Log in to Access Premium Features</h3>
+        <div class="premium-version">PREMIUM VERSION</div>
+        <input type="text" id="username" placeholder="Username" />
+        <input type="password" id="password" placeholder="Password" />
         <button onclick="login()">Login</button>
     </div>
 
-    <div class="mod-menu-container" style="display:none;">
-        <h3>Advanced Settings</h3>
-
-        <label>
-            Ultra Aimbot Precision: 
-            <span id="ultra-aimbot-value">100%</span>
+    <!-- Mod Menu -->
+    <div class="mod-menu-container">
+        <label>Aimlock
+            <input type="range" id="aimlock" min="0" max="100" value="0" />
+            <span id="aimlock-value">0%</span>
         </label>
-        <input type="range" id="ultra-aimbot" min="90" max="100" value="100" oninput="updateSliderValue('ultra-aimbot', this.value, '%')">
-
-        <label>
-            Headshot Focus FOV: 
-            <span id="headshot-fov-value">30°</span>
+        <label>Head Tracking
+            <input type="range" id="headtracking" min="0" max="100" value="0" />
+            <span id="headtracking-value">0%</span>
         </label>
-        <input type="range" id="headshot-fov" min="5" max="30" value="30" oninput="updateSliderValue('headshot-fov', this.value, '°')">
-
-        <label>
-            Recoil Suppression: 
-            <span id="recoil-suppression-value">100%</span>
+        <label>Aim Assist
+            <input type="range" id="aimassist" min="0" max="100" value="0" />
+            <span id="aimassist-value">0%</span>
         </label>
-        <input type="range" id="recoil-suppression" min="80" max="100" value="100" oninput="updateSliderValue('recoil-suppression', this.value, '%')">
-
-        <label>
-            Crosshair Spread Control: 
-            <span id="spread-control-value">1°</span>
-        </label>
-        <input type="range" id="spread-control" min="0" max="5" value="1" oninput="updateSliderValue('spread-control', this.value, '°')">
-
-        <label>
-            Target Lock Speed:
-            <span id="lock-speed-value">High</span>
-        </label>
-        <input type="range" id="lock-speed" min="0" max="2" step="1" value="2" oninput="updateSliderValue('lock-speed', this.value == 0 ? 'Low' : this.value == 1 ? 'Medium' : 'High', '')">
 
         <div class="toggle-container">
-            <span>Automatic Head Tracking</span>
+            <span>Aimlock</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="toggle-container">
+            <span>Head Tracking</span>
+            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
+        </div>
+        <div class="toggle-container">
+            <span>Aim Assist</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
-        <button onclick="applySettings()">Apply Settings</button>
+        <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
-    <div class="footer">ULTRA MOD | Developed by <strong>Your Custom Footer</strong></div>
-
+    <!-- Footer -->
+    <div class="footer">
+        <strong>PREMIUM ™ - Created by Forrest Li</strong>
+    </div>
 </body>
 </html>
