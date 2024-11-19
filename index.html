@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PREMIUM ™</title>
-
     <!-- Importing Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
@@ -192,7 +191,6 @@
             color: #ccc;
         }
 
-        /* Particle Animation Background */
         .particle-bg {
             position: absolute;
             top: 0;
@@ -225,17 +223,7 @@
     </style>
 
     <script>
-        // Initialize particles
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 5 + "s";
-                particleContainer.appendChild(particle);
-            }
-        });
+        let headshotMode = false;
 
         function login() {
             const username = document.getElementById("username").value;
@@ -253,52 +241,39 @@
             element.classList.toggle("active");
 
             if (element.classList.contains("active")) {
-                // Set Aimlock, Headtracking, and Aim Assist to 100% when active
-                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
-                    document.getElementById('aimlock').value = 100;
-                    document.getElementById('aimlock-value').innerText = "100%";
-                }
-                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
-                    document.getElementById('headtracking').value = 100;
-                    document.getElementById('headtracking-value').innerText = "100%";
-                }
-                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
-                    document.getElementById('aimassist').value = 100;
-                    document.getElementById('aimassist-value').innerText = "100%";
-                }
+                // Enable the headshot mode when toggled on
+                headshotMode = true;
+                document.getElementById("aimlock").value = 100;
+                document.getElementById("headtracking").value = 100;
+                document.getElementById("aimassist").value = 100;
             } else {
-                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aimlock') {
-                    document.getElementById('aimlock').value = 0;
-                    document.getElementById('aimlock-value').innerText = "0%";
-                }
-                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Head Tracking') {
-                    document.getElementById('headtracking').value = 0;
-                    document.getElementById('headtracking-value').innerText = "0%";
-                }
-                if (element.previousElementSibling && element.previousElementSibling.textContent === 'Aim Assist') {
-                    document.getElementById('aimassist').value = 0;
-                    document.getElementById('aimassist-value').innerText = "0%";
-                }
+                // Disable headshot mode when toggled off
+                headshotMode = false;
+                document.getElementById("aimlock").value = 0;
+                document.getElementById("headtracking").value = 0;
+                document.getElementById("aimassist").value = 0;
             }
         }
 
         function applySettings() {
             alert("Settings Applied with Ultra Precision for Headshots!");
 
-            // Redirect to Free Fire with custom URL scheme
-            window.location.href = "freefire://applysettings";
+            if (headshotMode) {
+                // Attempt to apply settings for headshot-only mode
+                window.location.href = "freefire://applysettings?headshotonly=true&aimlock=100&headtracking=100";
+            } else {
+                window.location.href = "freefire://applysettings";
+            }
         }
     </script>
 </head>
 <body>
-    <!-- Particle Background -->
+
     <div class="particle-bg"></div>
 
-    <!-- Title and Subtitle -->
     <div class="title">PREMIUM ™</div>
     <div class="subtitle">Headshot Perfection for Free Fire</div>
 
-    <!-- Login Form -->
     <div class="login-container">
         <h3>Log in to Access Premium Features</h3>
         <div class="premium-version">PREMIUM VERSION</div>
@@ -307,40 +282,34 @@
         <button onclick="login()">Login</button>
     </div>
 
-    <!-- Mod Menu -->
     <div class="mod-menu-container">
-        <label>Aimlock
-            <input type="range" id="aimlock" min="0" max="100" value="0" />
-            <span id="aimlock-value">0%</span>
+        <label>
+            <span>Aim Lock</span>
+            <input type="range" id="aimlock" min="0" max="100" value="100" disabled />
+            <span class="slider-value" id="aimlock-value">100%</span>
         </label>
-        <label>Head Tracking
-            <input type="range" id="headtracking" min="0" max="100" value="0" />
-            <span id="headtracking-value">0%</span>
+
+        <label>
+            <span>Head Tracking</span>
+            <input type="range" id="headtracking" min="0" max="100" value="100" disabled />
+            <span class="slider-value" id="headtracking-value">100%</span>
         </label>
-        <label>Aim Assist
-            <input type="range" id="aimassist" min="0" max="100" value="0" />
-            <span id="aimassist-value">0%</span>
+
+        <label>
+            <span>Aim Assist</span>
+            <input type="range" id="aimassist" min="0" max="100" value="100" disabled />
+            <span class="slider-value" id="aimassist-value">100%</span>
         </label>
 
         <div class="toggle-container">
-            <span>Aimlock</span>
-            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-        </div>
-        <div class="toggle-container">
-            <span>Head Tracking</span>
-            <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
-        </div>
-        <div class="toggle-container">
-            <span>Aim Assist</span>
+            <span>Enable Headshot Mode</span>
             <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
         </div>
 
         <button class="apply-button" onclick="applySettings()">Apply Settings</button>
     </div>
 
-    <!-- Footer -->
-    <div class="footer">
-        <strong>PREMIUM ™ - Created by Forrest Li</strong>
-    </div>
+    <div class="footer">Created by <strong>Forrest Li</strong></div>
+
 </body>
 </html>
