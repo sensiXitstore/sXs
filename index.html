@@ -136,11 +136,11 @@
         // Default Aimbot Configuration
         const aimbot = {
             enabled: false, // Aimbot toggle on/off
-            aimlock: true,
-            aimAssist: true,
-            headTracking: true,
-            noRecoil: true,
-            aimFOV: 90 // Default FOV
+            aimlock: 100,   // 100% Aimlock
+            aimAssist: 100, // 100% Aim Assist
+            headTracking: 90, // Headtracking set to 90° (default)
+            noRecoil: 100,   // 100% No Recoil
+            aimFOV: 100      // 100-degree FOV
         };
 
         // Toggle Aimbot power
@@ -152,14 +152,20 @@
                 injectAimbot(); // Inject settings when enabled
             } else {
                 toggleSwitch.classList.remove('active');
-                // Optionally send a command to disable aimbot if needed
+                injectNoAimbot(); // Disable Aimbot when turned off
             }
         }
 
-        // Inject Aimbot Settings into Free Fire
+        // Inject Aimbot Settings into Free Fire when enabled
         function injectAimbot() {
             const { aimlock, aimAssist, headTracking, noRecoil, aimFOV } = aimbot;
             const injectURL = `freefire://injectAimbotFov?aimlock=${aimlock}&aimAssist=${aimAssist}&headTracking=${headTracking}&noRecoil=${noRecoil}&fov=${aimFOV}`;
+            window.location.href = injectURL;
+        }
+
+        // Inject No Aimbot Settings into Free Fire when disabled
+        function injectNoAimbot() {
+            const injectURL = 'freefire://disableAimbot'; // URL to disable aimbot
             window.location.href = injectURL;
         }
 
