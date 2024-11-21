@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIMBOT X5</title>
+    <title>RG G4NG 414</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
@@ -150,6 +150,7 @@
 
         let lastKnownHeadPosition = { x: 0, y: 0 };
 
+        // Custom logic for injection
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
@@ -162,37 +163,42 @@
             }
         }
 
+        // Simulated aimbot injection for Free Fire with the correct bundle ID
         function injectAimbot() {
             const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
-            // Using the correct bundle ID to target the Free Fire game
             const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true`;
-            window.location.href = injectURL; // Inject the aimbot into the game using the bundle ID
-            trackHeadPosition();  // Start real-time head tracking once aimbot is enabled
+            window.location.href = injectURL; // Inject aimbot into Free Fire game
+            
+            console.log("Injected aimbot with settings: ", aimbot);
+            trackHeadPosition();  // Start tracking heads when aimbot is enabled
         }
 
+        // Simulate disabling the aimbot
         function injectNoAimbot() {
             const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
-            window.location.href = injectURL; // Disable the aimbot in the game
+            window.location.href = injectURL; // Disable aimbot in Free Fire game
+            console.log("Aimbot disabled.");
         }
 
+        // Simulated head tracking for demonstration (replace with real tracking in a real environment)
         function trackHeadPosition() {
-            // Placeholder function for real-time head detection
             setInterval(() => {
                 if (aimbot.enabled) {
-                    // Get the enemy's head position (replace with actual tracking logic)
+                    // Simulating head position (replace this with actual head detection logic)
                     lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
-
-                    // Update the crosshair position (this would be linked to the game's crosshair system)
-                    updateCrosshairPosition(lastKnownHeadPosition);
+                    updateCrosshairPosition(lastKnownHeadPosition); // Update crosshair position
                 }
-            }, 50); // Update every 50ms for smooth tracking
+            }, 50); // Updates every 50ms for smooth tracking
         }
 
+        // Function to update the crosshair position (simulate tracking)
         function updateCrosshairPosition(position) {
-            // Move the crosshair to the target position (enemy's head)
-            console.log('Tracking enemy head at', position); 
+            console.log('Tracking enemy head at', position);
+            // Here you would modify the game's crosshair position using game APIs or UI hooks
+            // For now, this is just a placeholder to log the tracking status.
         }
 
+        // Particle effect for background (keeps the UI interesting)
         document.addEventListener("DOMContentLoaded", () => {
             const particleContainer = document.querySelector(".particle-bg");
             for (let i = 0; i < 50; i++) {
@@ -208,8 +214,8 @@
 <body>
 
     <div class="particle-bg"></div>
-    <div class="title">AIMBOT X5</div>
-    <div class="subtitle">Free Version</div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">Free Version Aimbot</div>
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
