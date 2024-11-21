@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@iOSrazielOFC</title>
+    <title>AIMBOT X5</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -16,26 +16,29 @@
             overflow: hidden;
             text-align: center;
             height: 100vh;
-            background: radial-gradient(circle, #1e1e2e, #0d0d15);
-            color: #f5f5f5;
+            background-color: white; /* White background */
+            color: #333;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
         .title {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 5em; /* Increased size */
-            color: white;
+            font-family: 'Lora', serif;
+            font-size: 4em; /* Adjusted size for better fitting */
+            color: black; /* Changed to black */
             margin-top: 20px;
             text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            display: inline-block;
         }
 
         .subtitle {
-            font-size: 2.5em; /* Increased size */
-            color: #00bfff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2em; /* Adjusted subtitle size */
+            color: black; /* Changed to black */
             margin-top: 5px;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            display: inline-block;
         }
 
         .mod-menu-container {
@@ -49,11 +52,13 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
+            margin-top: 20px; /* Adjusted margin for menu */
         }
 
         .mod-menu-container h3 {
             font-size: 1.5em;
             margin-bottom: 10px;
+            color: white; /* White color for headings */
         }
 
         .mod-menu-container label {
@@ -95,12 +100,14 @@
         }
 
         .footer {
-            font-size: 1.5em; /* Increased size */
-            color: #aaa;
+            font-size: 1em; /* Smaller font size for footer */
+            color: black; /* Black footer text */
             margin-bottom: 10px;
+            margin-top: 20px;
+            display: inline-block;
         }
 
-        /* Particle Animation Background */
+        /* Particle Animation Setup */
         .particle-bg {
             position: absolute;
             top: 0;
@@ -115,7 +122,7 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: rgba(255, 255, 255, 0.5);
+            background-color: black; /* Fully black particles */
             clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
             animation: moveParticles 4s linear infinite;
         }
@@ -136,11 +143,11 @@
         // Default Aimbot Configuration
         const aimbot = {
             enabled: false, // Aimbot toggle on/off
-            aimlock: 100,   // 100% Aimlock
-            aimAssist: 100, // 100% Aim Assist
-            headTracking: 100, // Headtracking set to 100° (default)
-            noRecoil: 100,   // 100% No Recoil
-            aimFOV: 100      // 100-degree FOV
+            aimlock: true,   // Aimlock function
+            aimAssist: true, // Aim Assist function
+            headTracking: true, // Headtracking function
+            noRecoil: true,   // No Recoil function
+            aimFOV: 100      // Default FOV of 100 degrees (you can adjust this in the script)
         };
 
         // Toggle Aimbot power
@@ -185,7 +192,7 @@
 <body>
 
     <div class="particle-bg"></div>
-    <div class="title">@iOSrazielOFC</div>
+    <div class="title">AIMBOT X5</div>
     <div class="subtitle">Free Version</div>
 
     <div class="mod-menu-container">
@@ -200,7 +207,7 @@
         </label>
     </div>
 
-    <div class="footer">Free Version | Developed by @iOSrazielOFC</div>
+    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
 
 </body>
 </html>
