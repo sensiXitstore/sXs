@@ -166,7 +166,8 @@
         // Inject Aimbot Settings into Free Fire when enabled
         function injectAimbot() {
             const { aimlock, aimAssist, headTracking, noRecoil, aimFOV } = aimbot;
-            const injectURL = `freefire://injectAimbotFov?aimlock=${aimlock}&aimAssist=${aimAssist}&headTracking=${headTracking}&noRecoil=${noRecoil}&aimFovEnabled=${aimFOV}`;
+            // Enabling automatic headshot targeting by injecting aimlock and head tracking
+            const injectURL = `freefire://injectAimbotFov?aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFovEnabled=true&headshotOnly=true`;
             window.location.href = injectURL;  // Premature injection for immediate effect
         }
 
