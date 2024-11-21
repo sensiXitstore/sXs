@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PREMIUM ™</title>
+    <title>RG</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
@@ -25,17 +25,17 @@
 
         .title {
             font-family: 'Montserrat', sans-serif;
-            font-size: 3em;
+            font-size: 5em; /* Increased size */
             color: white;
             margin-top: 20px;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
         }
 
         .subtitle {
-            font-size: 1.5em;
+            font-size: 2.5em; /* Increased size */
             color: #00bfff;
             margin-top: 5px;
-            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
         }
 
         .mod-menu-container {
@@ -56,17 +56,6 @@
             margin-bottom: 10px;
         }
 
-        .mod-menu-container input[type="range"] {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: none;
-            background-color: #333;
-            color: #fff;
-            font-size: 1.2em;
-        }
-
         .mod-menu-container label {
             font-size: 1.1em;
             color: #d3d3d3;
@@ -75,32 +64,38 @@
             margin-top: 15px;
         }
 
-        .slider-value {
-            font-size: 1em;
-            color: #00bfff;
-            margin-left: 10px;
-        }
-
-        .apply-button {
-            font-size: 1.3em;
-            padding: 12px 40px;
-            background: linear-gradient(90deg, #00bfff, #1e90ff);
-            color: white;
-            border: none;
-            border-radius: 25px;
+        .toggle-switch {
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 30px;
+            position: relative;
             cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
         }
 
-        .apply-button:hover {
-            background: linear-gradient(90deg, #1e90ff, #00bfff);
-            transform: scale(1.1);
+        .toggle-switch span {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: left 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: #00bfff;
+        }
+
+        .toggle-switch.active span {
+            left: 30px;
         }
 
         .footer {
-            font-size: 1em;
+            font-size: 1.5em; /* Increased size */
             color: #aaa;
             margin-bottom: 10px;
         }
@@ -138,6 +133,37 @@
     </style>
 
     <script>
+        // Default Aimbot Configuration
+        const aimbot = {
+            enabled: false, // Aimbot toggle on/off
+            aimlock: true,
+            aimAssist: true,
+            headTracking: true,
+            noRecoil: true,
+            aimFOV: 90 // Default FOV
+        };
+
+        // Toggle Aimbot power
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                injectAimbot(); // Inject settings when enabled
+            } else {
+                toggleSwitch.classList.remove('active');
+                // Optionally send a command to disable aimbot if needed
+            }
+        }
+
+        // Inject Aimbot Settings into Free Fire
+        function injectAimbot() {
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV } = aimbot;
+            const injectURL = `freefire://injectAimbotFov?aimlock=${aimlock}&aimAssist=${aimAssist}&headTracking=${headTracking}&noRecoil=${noRecoil}&fov=${aimFOV}`;
+            window.location.href = injectURL;
+        }
+
+        // Particle Animation Setup
         document.addEventListener("DOMContentLoaded", () => {
             const particleContainer = document.querySelector(".particle-bg");
             for (let i = 0; i < 50; i++) {
@@ -148,47 +174,27 @@
                 particleContainer.appendChild(particle);
             }
         });
-
-        const aimbot = {
-            enabled: true,
-            aimlock: true,
-            headTracking: true,
-            noRecoil: true,
-            aimFOV: 90, // Default value in degrees
-            aimAssist: true
-        };
-
-        function updateAimbot(value) {
-            aimbot.aimFOV = value; // Adjust Aim Field of View
-            console.log(`Aimbot updated:`, aimbot);
-
-            // Trigger Free Fire Injection
-            window.location.href = `freefire://injectAimbotFov?fov=${value}`;
-        }
-
-        function applySettings() {
-            alert("Aimbot settings applied!");
-            console.log("Applied settings:", aimbot);
-        }
     </script>
 </head>
 <body>
 
     <div class="particle-bg"></div>
-    <div class="title">PREMIUM ™</div>
-    <div class="subtitle">MOD MENU</div>
+    <div class="title">RG</div>
+    <div class="subtitle">Free Version</div>
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
+
+        <!-- Toggle for Aimbot -->
         <label>
-            Aimbot Strength (FOV): 
-            <span class="slider-value" id="aimbot-value">90°</span>
+            Enable Aimbot:
+            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+                <span></span>
+            </div>
         </label>
-        <input type="range" id="aimbot" min="10" max="180" value="90" oninput="updateAimbot(this.value); document.getElementById('aimbot-value').innerText = `${this.value}°`;">
-        <button class="apply-button" onclick="applySettings()">Apply Aimbot</button>
     </div>
 
-    <div class="footer">PREMIUM ™ | Developed by @iOSrazielOFC</div>
+    <div class="footer">Free Version</div>
 
 </body>
 </html>
