@@ -144,7 +144,8 @@
             aimAssist: true,
             headTracking: true,
             noRecoil: true,
-            aimFOV: true
+            aimFOV: true,
+            headshotOnly: true
         };
 
         let lastKnownHeadPosition = { x: 0, y: 0 };
@@ -162,27 +163,26 @@
         }
 
         function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV } = aimbot;
-            const injectURL = `freefire://injectAimbotFov?aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFovEnabled=true&headshotOnly=true`;
-            window.location.href = injectURL;
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
+            // Using the correct bundle ID to target the Free Fire game
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true`;
+            window.location.href = injectURL; // Inject the aimbot into the game using the bundle ID
             trackHeadPosition();  // Start real-time head tracking once aimbot is enabled
         }
 
         function injectNoAimbot() {
-            const injectURL = 'freefire://disableAimbot';
-            window.location.href = injectURL;
+            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+            window.location.href = injectURL; // Disable the aimbot in the game
         }
 
         function trackHeadPosition() {
             // Placeholder function for real-time head detection
-            // You would replace this with actual head-tracking code
             setInterval(() => {
                 if (aimbot.enabled) {
                     // Get the enemy's head position (replace with actual tracking logic)
-                    // For now, this is a placeholder
                     lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
 
-                    // Update the crosshair position
+                    // Update the crosshair position (this would be linked to the game's crosshair system)
                     updateCrosshairPosition(lastKnownHeadPosition);
                 }
             }, 50); // Update every 50ms for smooth tracking
@@ -190,9 +190,7 @@
 
         function updateCrosshairPosition(position) {
             // Move the crosshair to the target position (enemy's head)
-            // This function would use the `position.x` and `position.y` to position the crosshair
-            // on the screen, potentially through the game's UI API (if accessible).
-            console.log('Tracking enemy head at', position);
+            console.log('Tracking enemy head at', position); 
         }
 
         document.addEventListener("DOMContentLoaded", () => {
