@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PREMIUM ™</title>
 
-    <!-- Importing Google Fonts -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Montserrat:wght@700&display=swap" rel="stylesheet">
 
     <style>
@@ -38,7 +38,7 @@
             text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
         }
 
-        .login-container, .mod-menu-container {
+        .mod-menu-container {
             display: block;
             background-color: rgba(0, 0, 0, 0.8);
             padding: 30px;
@@ -51,12 +51,12 @@
             z-index: 2;
         }
 
-        .login-container h3, .mod-menu-container h3 {
+        .mod-menu-container h3 {
             font-size: 1.5em;
             margin-bottom: 10px;
         }
 
-        .login-container input, .mod-menu-container input[type="range"] {
+        .mod-menu-container input[type="range"] {
             width: 80%;
             padding: 10px;
             margin: 10px 0;
@@ -65,22 +65,6 @@
             background-color: #333;
             color: #fff;
             font-size: 1.2em;
-        }
-
-        .login-container button, .mod-menu-container button {
-            font-size: 1.2em;
-            padding: 10px 30px;
-            background-color: #00bfff;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .login-container button:hover, .mod-menu-container button:hover {
-            background-color: #007acc;
-            transform: scale(1.05);
         }
 
         .mod-menu-container label {
@@ -137,17 +121,17 @@
             width: 10px;
             height: 10px;
             background-color: rgba(255, 255, 255, 0.5);
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-            animation: moveParticles 10s linear infinite;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            animation: moveParticles 4s linear infinite;
         }
 
         @keyframes moveParticles {
             0% {
-                transform: translateY(100vh) translateX(0);
+                transform: translate(100vw, -10vh) rotate(135deg);
                 opacity: 1;
             }
             100% {
-                transform: translateY(-10vh) translateX(calc(100vw - 10px));
+                transform: translate(-10vw, 100vh) rotate(135deg);
                 opacity: 0;
             }
         }
@@ -160,28 +144,31 @@
                 const particle = document.createElement("div");
                 particle.classList.add("particle");
                 particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 5 + "s";
+                particle.style.animationDelay = Math.random() * 4 + "s";
                 particleContainer.appendChild(particle);
             }
         });
 
-        function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-            if (username === "RG" && password === "1k") {
-                document.querySelector(".login-container").style.display = "none";
-                document.querySelector(".mod-menu-container").style.display = "block";
-            } else {
-                alert("Invalid credentials! Please try again.");
-            }
-        }
+        const aimbot = {
+            enabled: true,
+            aimlock: true,
+            headTracking: true,
+            noRecoil: true,
+            aimFOV: 90, // Default value in degrees
+            aimAssist: true
+        };
 
-        function updateSliderValue(id, value, unit) {
-            document.getElementById(`${id}-value`).innerText = `${value}${unit}`;
+        function updateAimbot(value) {
+            aimbot.aimFOV = value; // Adjust Aim Field of View
+            console.log(`Aimbot updated:`, aimbot);
+
+            // Trigger Free Fire Injection
+            window.location.href = `freefire://injectAimbotFov?fov=${value}`;
         }
 
         function applySettings() {
-            window.location.href = 'freefire://apply-settings';
+            alert("Aimbot settings applied!");
+            console.log("Applied settings:", aimbot);
         }
     </script>
 </head>
@@ -191,53 +178,14 @@
     <div class="title">PREMIUM ™</div>
     <div class="subtitle">MOD MENU</div>
 
-    <div class="login-container">
-        <h3>Login to Access Mod Menu</h3>
-        <input type="text" id="username" placeholder="Username" required><br>
-        <input type="password" id="password" placeholder="Password" required><br>
-        <button onclick="login()">Login</button>
-    </div>
-
-    <div class="mod-menu-container" style="display:none;">
-        <h3>Mod Menu Settings</h3>
-
+    <div class="mod-menu-container">
+        <h3>Aimbot Settings</h3>
         <label>
-            Aimbot Strength: 
-            <span class="slider-value" id="aimbot-value">0%</span>
+            Aimbot Strength (FOV): 
+            <span class="slider-value" id="aimbot-value">90°</span>
         </label>
-        <input type="range" id="aimbot" min="0" max="100" value="0" oninput="updateSliderValue('aimbot', this.value, '%')"><br>
-
-        <label>
-            Aim FOV (Field of View): 
-            <span class="slider-value" id="aimfov-value">0°</span>
-        </label>
-        <input type="range" id="aimfov" min="0" max="180" value="0" oninput="updateSliderValue('aimfov', this.value, '°')"><br>
-
-        <label>
-            No Recoil: 
-            <span class="slider-value" id="norecoil-value">0%</span>
-        </label>
-        <input type="range" id="norecoil" min="0" max="100" value="0" oninput="updateSliderValue('norecoil', this.value, '%')"><br>
-
-        <label>
-            Crosshair Spread Angle Control: 
-            <span class="slider-value" id="crosshairspread-value">0°</span>
-        </label>
-        <input type="range" id="crosshairspread" min="0" max="90" value="0" oninput="updateSliderValue('crosshairspread', this.value, '°')"><br>
-
-        <label>
-            Head Angle Limit: 
-            <span class="slider-value" id="headangle-value">0°</span>
-        </label>
-        <input type="range" id="headangle" min="0" max="180" value="0" oninput="updateSliderValue('headangle', this.value, '°')"><br>
-
-        <label>
-            Camera Angle Field Rotation: 
-            <span class="slider-value" id="camerarotation-value">0°</span>
-        </label>
-        <input type="range" id="camerarotation" min="0" max="360" value="0" oninput="updateSliderValue('camerarotation', this.value, '°')"><br>
-
-        <button class="apply-button" onclick="applySettings()">Apply Settings</button>
+        <input type="range" id="aimbot" min="10" max="180" value="90" oninput="updateAimbot(this.value); document.getElementById('aimbot-value').innerText = `${this.value}°`;">
+        <button class="apply-button" onclick="applySettings()">Apply Aimbot</button>
     </div>
 
     <div class="footer">PREMIUM ™ | Developed by @iOSrazielOFC</div>
