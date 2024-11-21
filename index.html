@@ -16,7 +16,7 @@
             overflow: hidden;
             text-align: center;
             height: 100vh;
-            background-color: white; /* White background */
+            background-color: white;
             color: #333;
             display: flex;
             flex-direction: column;
@@ -25,8 +25,8 @@
 
         .title {
             font-family: 'Lora', serif;
-            font-size: 4em; /* Adjusted size for better fitting */
-            color: black; /* Changed to black */
+            font-size: 4em;
+            color: black;
             margin-top: 20px;
             text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
             display: inline-block;
@@ -34,8 +34,8 @@
 
         .subtitle {
             font-family: 'Poppins', sans-serif;
-            font-size: 2.2em; /* Adjusted subtitle size */
-            color: black; /* Changed to black */
+            font-size: 2.2em;
+            color: black;
             margin-top: 5px;
             text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
             display: inline-block;
@@ -52,13 +52,13 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
             position: relative;
             z-index: 2;
-            margin-top: 20px; /* Adjusted margin for menu */
+            margin-top: 20px;
         }
 
         .mod-menu-container h3 {
             font-size: 1.5em;
             margin-bottom: 10px;
-            color: white; /* White color for headings */
+            color: white;
         }
 
         .mod-menu-container label {
@@ -100,14 +100,12 @@
         }
 
         .footer {
-            font-size: 1em; /* Smaller font size for footer */
-            color: black; /* Black footer text */
+            font-size: 1em;
+            color: black;
             margin-bottom: 10px;
             margin-top: 20px;
-            display: inline-block;
         }
 
-        /* Particle Animation Setup */
         .particle-bg {
             position: absolute;
             top: 0;
@@ -122,7 +120,7 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: black; /* Fully black particles */
+            background-color: black;
             clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
             animation: moveParticles 4s linear infinite;
         }
@@ -140,44 +138,63 @@
     </style>
 
     <script>
-        // Default Aimbot Configuration
         const aimbot = {
-            enabled: false, // Aimbot toggle on/off
-            aimlock: true,   // Aimlock function
-            aimAssist: true, // Aim Assist function
-            headTracking: true, // Headtracking function
-            noRecoil: true,   // No Recoil function
-            aimFOV: true      // True instead of 100 for enabling full FOV
+            enabled: false,
+            aimlock: true,
+            aimAssist: true,
+            headTracking: true,
+            noRecoil: true,
+            aimFOV: true
         };
 
-        // Toggle Aimbot power
+        let lastKnownHeadPosition = { x: 0, y: 0 };
+
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
                 toggleSwitch.classList.add('active');
-                injectAimbot(); // Inject settings when enabled
+                injectAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                injectNoAimbot(); // Disable Aimbot when turned off
+                injectNoAimbot();
             }
         }
 
-        // Inject Aimbot Settings into Free Fire when enabled
         function injectAimbot() {
             const { aimlock, aimAssist, headTracking, noRecoil, aimFOV } = aimbot;
-            // Enabling automatic headshot targeting by injecting aimlock and head tracking
             const injectURL = `freefire://injectAimbotFov?aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFovEnabled=true&headshotOnly=true`;
-            window.location.href = injectURL;  // Premature injection for immediate effect
+            window.location.href = injectURL;
+            trackHeadPosition();  // Start real-time head tracking once aimbot is enabled
         }
 
-        // Inject No Aimbot Settings into Free Fire when disabled
         function injectNoAimbot() {
-            const injectURL = 'freefire://disableAimbot'; // URL to disable aimbot
+            const injectURL = 'freefire://disableAimbot';
             window.location.href = injectURL;
         }
 
-        // Particle Animation Setup
+        function trackHeadPosition() {
+            // Placeholder function for real-time head detection
+            // You would replace this with actual head-tracking code
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    // Get the enemy's head position (replace with actual tracking logic)
+                    // For now, this is a placeholder
+                    lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
+
+                    // Update the crosshair position
+                    updateCrosshairPosition(lastKnownHeadPosition);
+                }
+            }, 50); // Update every 50ms for smooth tracking
+        }
+
+        function updateCrosshairPosition(position) {
+            // Move the crosshair to the target position (enemy's head)
+            // This function would use the `position.x` and `position.y` to position the crosshair
+            // on the screen, potentially through the game's UI API (if accessible).
+            console.log('Tracking enemy head at', position);
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             const particleContainer = document.querySelector(".particle-bg");
             for (let i = 0; i < 50; i++) {
@@ -199,7 +216,6 @@
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
 
-        <!-- Toggle for Aimbot -->
         <label>
             Enable Aimbot:
             <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
