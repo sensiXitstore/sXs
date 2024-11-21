@@ -160,7 +160,7 @@
         function injectAimbot() {
             const { aimlock, aimAssist, headTracking, noRecoil, aimFOV } = aimbot;
             const injectURL = `freefire://injectAimbotFov?aimlock=${aimlock}&aimAssist=${aimAssist}&headTracking=${headTracking}&noRecoil=${noRecoil}&fov=${aimFOV}`;
-            window.location.href = injectURL;
+            window.location.href = injectURL;  // Premature injection for immediate effect
         }
 
         // Inject No Aimbot Settings into Free Fire when disabled
