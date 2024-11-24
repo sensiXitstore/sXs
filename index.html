@@ -3,180 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG - Ultimate Headshot Aimbot</title>
+    <title>Auto Headshot Aimbot</title>
 
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            background: #111;
             color: #fff;
-            height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 2rem;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
         }
 
-        .container {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .toggle-switch {
-            display: inline-block;
-            width: 70px;
-            height: 35px;
-            background-color: #444;
-            border-radius: 35px;
-            position: relative;
-            cursor: pointer;
-            margin: 20px 0;
-        }
-
-        .toggle-switch span {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: #fff;
-            border-radius: 50%;
-            top: 2.5px;
-            left: 2.5px;
-            transition: all 0.3s;
-        }
-
-        .toggle-switch.active {
+        .button {
             background-color: #00c853;
-        }
-
-        .toggle-switch.active span {
-            left: 35px;
-        }
-
-        .slider-container {
-            margin: 15px 0;
-        }
-
-        .slider {
-            width: 100%;
-            height: 5px;
-            background-color: #555;
+            color: #fff;
+            border: none;
             border-radius: 5px;
-            appearance: none;
-            outline: none;
+            padding: 10px 20px;
             cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
         }
 
-        .slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            background-color: #00c853;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #bbb;
+        .button:hover {
+            background-color: #00e676;
         }
     </style>
 
     <script>
-        const aimbotSettings = {
+        // Enhanced Aimbot Configuration
+        const aimbotConfig = {
             enabled: false,
             headshotOnly: true,
-            multiTarget: true,
-            maxTargets: 5,
-            snappingSpeed: 2.0, // Higher value = faster snap
-            predictiveTracking: true,
-            fieldOfView: 180,
+            autoFire: true, // Automatically fires when enemy is locked
+            infiniteRange: true,
+            maxTargets: 1, // Single target focus for maximum precision
+            snappingSpeed: 5.0, // Instant snapping to target
+            predictiveTracking: true, // Predict enemy movement
+            fov: 360, // Full 360-degree targeting
         };
 
+        // Toggle Aimbot State
         function toggleAimbot() {
-            aimbotSettings.enabled = !aimbotSettings.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
-            if (aimbotSettings.enabled) {
-                toggleSwitch.classList.add('active');
+            aimbotConfig.enabled = !aimbotConfig.enabled;
+            if (aimbotConfig.enabled) {
                 activateAimbot();
             } else {
-                toggleSwitch.classList.remove('active');
                 deactivateAimbot();
             }
         }
 
+        // Aimbot Activation Logic
         function activateAimbot() {
-            console.log('Aimbot Activated with Settings:', aimbotSettings);
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotSettings.headshotOnly}&multiTarget=${aimbotSettings.multiTarget}&maxTargets=${aimbotSettings.maxTargets}&snappingSpeed=${aimbotSettings.snappingSpeed}&predictiveTracking=${aimbotSettings.predictiveTracking}&fieldOfView=${aimbotSettings.fieldOfView}`;
-            window.location.href = injectURL; // Simulated aimbot activation
+            console.log("Aimbot Activated with Config:", aimbotConfig);
+
+            // Generate injection URL for Free Fire
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotConfig.headshotOnly}&autoFire=${aimbotConfig.autoFire}&infiniteRange=${aimbotConfig.infiniteRange}&maxTargets=${aimbotConfig.maxTargets}&snappingSpeed=${aimbotConfig.snappingSpeed}&predictiveTracking=${aimbotConfig.predictiveTracking}&fov=${aimbotConfig.fov}`;
+            window.location.href = injectURL;
+
+            console.log("Injected Headshot-Only Aimbot!");
         }
 
+        // Aimbot Deactivation Logic
         function deactivateAimbot() {
-            console.log('Aimbot Deactivated');
+            console.log("Aimbot Deactivated");
             const injectURL = `freefire://disableAimbot`;
-            window.location.href = injectURL; // Simulated aimbot deactivation
+            window.location.href = injectURL;
         }
 
-        function updateSnappingSpeed(value) {
-            aimbotSettings.snappingSpeed = parseFloat(value);
-            console.log('Updated Snapping Speed:', value);
+        // Fire Button Logic - Locks Onto Target and Fires
+        function fireButtonPressed() {
+            if (aimbotConfig.enabled) {
+                const target = findClosestEnemy();
+                if (target) {
+                    lockOnTarget(target);
+                    fireAtTarget(target);
+                }
+            }
         }
 
-        function updateMaxTargets(value) {
-            aimbotSettings.maxTargets = parseInt(value);
-            console.log('Updated Max Targets:', value);
+        // Find the Closest Enemy Logic
+        function findClosestEnemy() {
+            // Simulated enemy data (replace with real API/game data)
+            const enemies = [
+                { x: 100, y: 50, distance: 200 }, // Example enemy position
+                { x: 300, y: 150, distance: 100 },
+                { x: -50, y: -80, distance: 50 },
+            ];
+
+            // Sort enemies by closest distance
+            enemies.sort((a, b) => a.distance - b.distance);
+            return enemies.length > 0 ? enemies[0] : null;
         }
 
-        function updateFieldOfView(value) {
-            aimbotSettings.fieldOfView = parseInt(value);
-            console.log('Updated Field of View:', value + '°');
+        // Lock onto Target
+        function lockOnTarget(target) {
+            console.log("Locked on Target at:", target);
+            // Simulate snapping to target's head
+        }
+
+        // Fire at Target Logic
+        function fireAtTarget(target) {
+            console.log("Fired at Target:", target);
+            // Automatically shoot at locked target
         }
     </script>
 </head>
 <body>
 
-    <div class="title">RG G4NG - Ultimate Aimbot</div>
-    <div class="subtitle">Unstoppable Headshots</div>
-
     <div class="container">
-        <label>Enable Aimbot:</label>
-        <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
-            <span></span>
-        </div>
-
-        <div class="slider-container">
-            <label>Snapping Speed (Aggressiveness):</label>
-            <input type="range" min="1.0" max="5.0" step="0.1" value="2.0" class="slider" onchange="updateSnappingSpeed(this.value)">
-        </div>
-
-        <div class="slider-container">
-            <label>Max Targets:</label>
-            <input type="range" min="1" max="10" step="1" value="5" class="slider" onchange="updateMaxTargets(this.value)">
-        </div>
-
-        <div class="slider-container">
-            <label>Field of View (°):</label>
-            <input type="range" min="60" max="360" step="10" value="180" class="slider" onchange="updateFieldOfView(this.value)">
-        </div>
+        <div class="title">Auto Headshot Aimbot</div>
+        <div class="subtitle">Press "Fire" for Instant Headshots</div>
+        
+        <button class="button" onclick="toggleAimbot()">Toggle Aimbot</button>
+        <button class="button" onclick="fireButtonPressed()">Fire Button</button>
     </div>
-
-    <div class="footer">Developed by RG G4NG | Version 2.0</div>
 
 </body>
 </html>
