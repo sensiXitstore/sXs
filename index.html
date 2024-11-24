@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414 - Adjustable Aimbot</title>
+    <title>RG G4NG 414 - Multi-Target Aimbot</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
         body {
@@ -15,7 +15,7 @@
             padding: 0;
             text-align: center;
             height: 100vh;
-            background-color: #121212;
+            background-color: #1e1e1e;
             color: #ffffff;
             display: flex;
             flex-direction: column;
@@ -23,30 +23,25 @@
         }
 
         .title {
-            font-family: 'Lora', serif;
-            font-size: 3.5em;
-            color: #ff5722;
-            margin: 20px;
+            font-size: 3em;
+            color: #e91e63;
+            margin-bottom: 10px;
         }
 
         .subtitle {
             font-size: 1.5em;
-            color: #ffa500;
+            color: #f06292;
+            margin-bottom: 20px;
         }
 
         .mod-menu-container {
-            background-color: rgba(50, 50, 50, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 600px;
-            margin: 20px auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
-        }
-
-        .control-label {
-            margin-top: 15px;
-            color: #ddd;
+            background-color: rgba(40, 40, 40, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
         }
 
         .slider-container {
@@ -55,19 +50,21 @@
 
         .slider {
             width: 100%;
-            max-width: 400px;
             height: 5px;
-            background-color: #444;
+            background-color: #555;
             border-radius: 5px;
             appearance: none;
-            margin: 10px auto;
             outline: none;
+            cursor: pointer;
         }
 
-        .footer {
-            margin-top: 20px;
-            color: #888;
-            font-size: 0.9em;
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            background-color: #e91e63;
+            border-radius: 50%;
+            cursor: pointer;
         }
 
         .toggle-switch {
@@ -93,22 +90,27 @@
         }
 
         .toggle-switch.active {
-            background-color: #32cd32;
+            background-color: #4caf50;
         }
 
         .toggle-switch.active span {
             left: 30px;
-            background-color: #00ff00;
+            background-color: #76ff03;
+        }
+
+        .footer {
+            margin-top: 20px;
+            color: #999;
         }
     </style>
 
     <script>
         const aimbotSettings = {
             enabled: false,
-            sensitivity: 0.8, // Higher means faster tracking
-            headshotProbability: 100, // Percentage of headshots
-            trackingSpeed: 1, // Speed multiplier for following targets
-            fieldOfView: 90, // Adjustable range of view
+            headshotOnly: true,
+            pullStrength: 1.5, // Higher means more aggressive pull to head
+            maxTargets: 3, // Number of enemies to target simultaneously
+            fieldOfView: 120, // Degrees
         };
 
         function toggleAimbot() {
@@ -124,34 +126,28 @@
         }
 
         function enableAimbot() {
-            console.log('Aimbot Enabled', aimbotSettings);
-            // Simulate activating the aimbot
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&sensitivity=${aimbotSettings.sensitivity}&headshotProbability=${aimbotSettings.headshotProbability}&trackingSpeed=${aimbotSettings.trackingSpeed}&fov=${aimbotSettings.fieldOfView}`;
-            window.location.href = injectURL; // Example injection URL
+            console.log('Aimbot Enabled:', aimbotSettings);
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotSettings.headshotOnly}&pullStrength=${aimbotSettings.pullStrength}&maxTargets=${aimbotSettings.maxTargets}&fieldOfView=${aimbotSettings.fieldOfView}`;
+            window.location.href = injectURL; // Simulated injection URL
         }
 
         function disableAimbot() {
             console.log('Aimbot Disabled');
             const injectURL = `freefire://disableAimbot`;
-            window.location.href = injectURL; // Example disable URL
+            window.location.href = injectURL; // Simulated disable URL
         }
 
-        function updateSensitivity(value) {
-            aimbotSettings.sensitivity = parseFloat(value);
-            console.log('Updated Sensitivity:', value);
+        function updatePullStrength(value) {
+            aimbotSettings.pullStrength = parseFloat(value);
+            console.log('Updated Pull Strength:', value);
         }
 
-        function updateHeadshotProbability(value) {
-            aimbotSettings.headshotProbability = parseInt(value);
-            console.log('Updated Headshot Probability:', value + '%');
+        function updateMaxTargets(value) {
+            aimbotSettings.maxTargets = parseInt(value);
+            console.log('Updated Max Targets:', value);
         }
 
-        function updateTrackingSpeed(value) {
-            aimbotSettings.trackingSpeed = parseFloat(value);
-            console.log('Updated Tracking Speed:', value);
-        }
-
-        function updateFOV(value) {
+        function updateFieldOfView(value) {
             aimbotSettings.fieldOfView = parseInt(value);
             console.log('Updated Field of View:', value + '°');
         }
@@ -160,36 +156,31 @@
 <body>
 
     <div class="title">RG G4NG 414</div>
-    <div class="subtitle">Adjustable Aimbot Settings</div>
+    <div class="subtitle">Multi-Target Aimbot</div>
 
     <div class="mod-menu-container">
-        <label class="control-label">Enable Aimbot:</label>
+        <label>Enable Aimbot:</label>
         <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
             <span></span>
         </div>
 
         <div class="slider-container">
-            <label class="control-label">Sensitivity:</label>
-            <input type="range" min="0.1" max="2.0" step="0.1" value="0.8" class="slider" onchange="updateSensitivity(this.value)">
+            <label>Crosshair Pull Strength:</label>
+            <input type="range" min="0.5" max="3.0" step="0.1" value="1.5" class="slider" onchange="updatePullStrength(this.value)">
         </div>
 
         <div class="slider-container">
-            <label class="control-label">Headshot Probability (%):</label>
-            <input type="range" min="0" max="100" step="10" value="100" class="slider" onchange="updateHeadshotProbability(this.value)">
+            <label>Max Targets:</label>
+            <input type="range" min="1" max="5" step="1" value="3" class="slider" onchange="updateMaxTargets(this.value)">
         </div>
 
         <div class="slider-container">
-            <label class="control-label">Tracking Speed:</label>
-            <input type="range" min="0.5" max="2.0" step="0.1" value="1" class="slider" onchange="updateTrackingSpeed(this.value)">
-        </div>
-
-        <div class="slider-container">
-            <label class="control-label">Field of View (°):</label>
-            <input type="range" min="60" max="180" step="10" value="90" class="slider" onchange="updateFOV(this.value)">
+            <label>Field of View (°):</label>
+            <input type="range" min="60" max="180" step="10" value="120" class="slider" onchange="updateFieldOfView(this.value)">
         </div>
     </div>
 
-    <div class="footer">Developed by RG G4NG | Extreme Control</div>
+    <div class="footer">Developed by RG G4NG | Ultimate Control</div>
 
 </body>
 </html>
