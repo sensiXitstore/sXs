@@ -3,45 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414 - Multi-Target Aimbot</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>RG G4NG - Ultimate Headshot Aimbot</title>
 
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             text-align: center;
+            background: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+            color: #fff;
             height: 100vh;
-            background-color: #1e1e1e;
-            color: #ffffff;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .title {
-            font-size: 3em;
-            color: #e91e63;
+            font-size: 3rem;
             margin-bottom: 10px;
         }
 
         .subtitle {
-            font-size: 1.5em;
-            color: #f06292;
-            margin-bottom: 20px;
+            font-size: 1.5rem;
+            margin-bottom: 30px;
         }
 
-        .mod-menu-container {
-            background-color: rgba(40, 40, 40, 0.9);
+        .container {
+            background-color: rgba(0, 0, 0, 0.8);
             padding: 20px;
             border-radius: 10px;
             width: 90%;
             max-width: 500px;
-            margin: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
+            margin: 0 auto;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            width: 70px;
+            height: 35px;
+            background-color: #444;
+            border-radius: 35px;
+            position: relative;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .toggle-switch span {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+            border-radius: 50%;
+            top: 2.5px;
+            left: 2.5px;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: #00c853;
+        }
+
+        .toggle-switch.active span {
+            left: 35px;
         }
 
         .slider-container {
@@ -62,45 +86,15 @@
             appearance: none;
             width: 15px;
             height: 15px;
-            background-color: #e91e63;
+            background-color: #00c853;
             border-radius: 50%;
             cursor: pointer;
-        }
-
-        .toggle-switch {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            background-color: #555;
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .toggle-switch span {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: #fff;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            transition: left 0.3s, background-color 0.3s;
-        }
-
-        .toggle-switch.active {
-            background-color: #4caf50;
-        }
-
-        .toggle-switch.active span {
-            left: 30px;
-            background-color: #76ff03;
         }
 
         .footer {
             margin-top: 20px;
-            color: #999;
+            font-size: 0.9rem;
+            color: #bbb;
         }
     </style>
 
@@ -108,9 +102,11 @@
         const aimbotSettings = {
             enabled: false,
             headshotOnly: true,
-            pullStrength: 1.5, // Higher means more aggressive pull to head
-            maxTargets: 3, // Number of enemies to target simultaneously
-            fieldOfView: 120, // Degrees
+            multiTarget: true,
+            maxTargets: 5,
+            snappingSpeed: 2.0, // Higher value = faster snap
+            predictiveTracking: true,
+            fieldOfView: 180,
         };
 
         function toggleAimbot() {
@@ -118,28 +114,28 @@
             const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbotSettings.enabled) {
                 toggleSwitch.classList.add('active');
-                enableAimbot();
+                activateAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                disableAimbot();
+                deactivateAimbot();
             }
         }
 
-        function enableAimbot() {
-            console.log('Aimbot Enabled:', aimbotSettings);
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotSettings.headshotOnly}&pullStrength=${aimbotSettings.pullStrength}&maxTargets=${aimbotSettings.maxTargets}&fieldOfView=${aimbotSettings.fieldOfView}`;
-            window.location.href = injectURL; // Simulated injection URL
+        function activateAimbot() {
+            console.log('Aimbot Activated with Settings:', aimbotSettings);
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotSettings.headshotOnly}&multiTarget=${aimbotSettings.multiTarget}&maxTargets=${aimbotSettings.maxTargets}&snappingSpeed=${aimbotSettings.snappingSpeed}&predictiveTracking=${aimbotSettings.predictiveTracking}&fieldOfView=${aimbotSettings.fieldOfView}`;
+            window.location.href = injectURL; // Simulated aimbot activation
         }
 
-        function disableAimbot() {
-            console.log('Aimbot Disabled');
+        function deactivateAimbot() {
+            console.log('Aimbot Deactivated');
             const injectURL = `freefire://disableAimbot`;
-            window.location.href = injectURL; // Simulated disable URL
+            window.location.href = injectURL; // Simulated aimbot deactivation
         }
 
-        function updatePullStrength(value) {
-            aimbotSettings.pullStrength = parseFloat(value);
-            console.log('Updated Pull Strength:', value);
+        function updateSnappingSpeed(value) {
+            aimbotSettings.snappingSpeed = parseFloat(value);
+            console.log('Updated Snapping Speed:', value);
         }
 
         function updateMaxTargets(value) {
@@ -155,32 +151,32 @@
 </head>
 <body>
 
-    <div class="title">RG G4NG 414</div>
-    <div class="subtitle">Multi-Target Aimbot</div>
+    <div class="title">RG G4NG - Ultimate Aimbot</div>
+    <div class="subtitle">Unstoppable Headshots</div>
 
-    <div class="mod-menu-container">
+    <div class="container">
         <label>Enable Aimbot:</label>
         <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
             <span></span>
         </div>
 
         <div class="slider-container">
-            <label>Crosshair Pull Strength:</label>
-            <input type="range" min="0.5" max="3.0" step="0.1" value="1.5" class="slider" onchange="updatePullStrength(this.value)">
+            <label>Snapping Speed (Aggressiveness):</label>
+            <input type="range" min="1.0" max="5.0" step="0.1" value="2.0" class="slider" onchange="updateSnappingSpeed(this.value)">
         </div>
 
         <div class="slider-container">
             <label>Max Targets:</label>
-            <input type="range" min="1" max="5" step="1" value="3" class="slider" onchange="updateMaxTargets(this.value)">
+            <input type="range" min="1" max="10" step="1" value="5" class="slider" onchange="updateMaxTargets(this.value)">
         </div>
 
         <div class="slider-container">
             <label>Field of View (°):</label>
-            <input type="range" min="60" max="180" step="10" value="120" class="slider" onchange="updateFieldOfView(this.value)">
+            <input type="range" min="60" max="360" step="10" value="180" class="slider" onchange="updateFieldOfView(this.value)">
         </div>
     </div>
 
-    <div class="footer">Developed by RG G4NG | Ultimate Control</div>
+    <div class="footer">Developed by RG G4NG | Version 2.0</div>
 
 </body>
 </html>
