@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIMBOT X5</title>
+    <title>Extreme Aimbot 💉</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
@@ -16,8 +16,8 @@
             overflow: hidden;
             text-align: center;
             height: 100vh;
-            background-color: white;
-            color: #333;
+            background-color: #121212;
+            color: #f1f1f1;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -25,56 +25,47 @@
 
         .title {
             font-family: 'Lora', serif;
-            font-size: 4em;
-            color: black;
+            font-size: 4.5em;
+            color: #ff3333;
             margin-top: 20px;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            text-shadow: 4px 4px 15px rgba(255, 50, 50, 0.8);
             display: inline-block;
         }
 
         .subtitle {
             font-family: 'Poppins', sans-serif;
-            font-size: 2.2em;
-            color: black;
+            font-size: 2.5em;
+            color: #ffa500;
             margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            text-shadow: 3px 3px 10px rgba(255, 165, 0, 0.7);
             display: inline-block;
         }
 
         .mod-menu-container {
-            display: block;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(50, 50, 50, 0.9);
             padding: 30px;
             border-radius: 15px;
             width: 80%;
             max-width: 600px;
             margin: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             position: relative;
             z-index: 2;
             margin-top: 20px;
         }
 
         .mod-menu-container h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: white;
-        }
-
-        .mod-menu-container label {
-            font-size: 1.1em;
-            color: #d3d3d3;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #00ff7f;
         }
 
         .toggle-switch {
             display: inline-block;
-            width: 60px;
-            height: 30px;
-            background-color: #ccc;
-            border-radius: 30px;
+            width: 70px;
+            height: 35px;
+            background-color: #555;
+            border-radius: 35px;
             position: relative;
             cursor: pointer;
         }
@@ -83,57 +74,45 @@
             position: absolute;
             top: 50%;
             left: 5px;
-            width: 25px;
-            height: 25px;
+            width: 30px;
+            height: 30px;
             background-color: #fff;
             border-radius: 50%;
             transform: translateY(-50%);
-            transition: left 0.3s;
+            transition: left 0.3s, background-color 0.3s;
         }
 
         .toggle-switch.active {
-            background-color: #00bfff;
+            background-color: #32cd32;
         }
 
         .toggle-switch.active span {
-            left: 30px;
+            left: 35px;
+            background-color: #00ff00;
+        }
+
+        .slider-container {
+            margin-top: 20px;
+            color: #ccc;
+        }
+
+        .slider {
+            width: 100%;
+            max-width: 400px;
+            height: 5px;
+            background-color: #444;
+            border-radius: 5px;
+            position: relative;
+            outline: none;
+            appearance: none;
+            margin: 10px auto;
         }
 
         .footer {
-            font-size: 1em;
-            color: black;
-            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #aaa;
+            margin-bottom: 15px;
             margin-top: 20px;
-        }
-
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: black;
-            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-            animation: moveParticles 4s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% {
-                transform: translate(100vw, -10vh) rotate(135deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-10vw, 100vh) rotate(135deg);
-                opacity: 0;
-            }
         }
     </style>
 
@@ -141,87 +120,81 @@
         const aimbot = {
             enabled: false,
             aimlock: true,
-            aimAssist: true,
-            headTracking: true,
+            predictiveTracking: true,
+            headshotOnly: true,
+            rapidFire: false,
             noRecoil: true,
-            aimFOV: true,
-            headshotOnly: true
+            aimFOV: 90, // Default field of view
         };
 
-        const weaponsRecoil = {
-            rifle: 0.1,
-            sniper: 0.05,
-            shotgun: 0.2,
-            smg: 0.15
-        };
+        let enemies = [];
+        let currentWeapon = 'rifle';
+        const recoilSettings = { rifle: 0.1, sniper: 0.05, shotgun: 0.15, smg: 0.2 };
 
-        let currentWeapon = 'rifle'; // Default weapon
-        let lastKnownHeadPosition = { x: 0, y: 0 };
-
+        // Toggle aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
                 toggleSwitch.classList.add('active');
-                injectAimbot();
+                startAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                injectNoAimbot();
+                stopAimbot();
             }
         }
 
-        function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=${weaponsRecoil[currentWeapon]}&aimFov=true&headshotOnly=true`;
+        function startAimbot() {
+            const injectURL = `freefire://inject?aimlock=${aimbot.aimlock}&tracking=${aimbot.predictiveTracking}&noRecoil=${recoilSettings[currentWeapon]}&fov=${aimbot.aimFOV}&headshotOnly=${aimbot.headshotOnly}&rapidFire=${aimbot.rapidFire}`;
             window.location.href = injectURL;
-            trackHeadPosition();
+            trackEnemies();
         }
 
-        function injectNoAimbot() {
-            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+        function stopAimbot() {
+            const injectURL = 'freefire://disableAimbot';
             window.location.href = injectURL;
+            console.log("Aimbot disabled.");
         }
 
-        function trackHeadPosition() {
+        // Simulated enemy tracking logic
+        function trackEnemies() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
-                    updateCrosshairPosition(lastKnownHeadPosition);
+                    enemies = generateMockEnemies();
+                    const target = prioritizeTarget(enemies);
+                    if (target) aimAt(target);
                 }
             }, 50);
         }
 
-        function updateCrosshairPosition(position) {
-            console.log('Tracking enemy head at', position);
+        function generateMockEnemies() {
+            return [
+                { id: 1, x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 },
+                { id: 2, x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 },
+            ];
         }
 
-        function switchWeapon(weaponType) {
-            if (weaponsRecoil[weaponType]) {
-                currentWeapon = weaponType;
-                console.log(`Switched to ${weaponType}, recoil adjustment: ${weaponsRecoil[weaponType]}`);
-            }
+        function prioritizeTarget(enemies) {
+            return enemies.sort((a, b) => a.distance - b.distance)[0];
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 4 + "s";
-                particleContainer.appendChild(particle);
-            }
-        });
+        function aimAt(target) {
+            console.log('Aiming at target:', target);
+        }
+
+        function adjustFOV(value) {
+            aimbot.aimFOV = value;
+            console.log('FOV adjusted to:', value);
+        }
     </script>
 </head>
 <body>
 
-    <div class="particle-bg"></div>
-    <div class="title">AIMBOT X5</div>
-    <div class="subtitle">Free Version</div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">Extreme Aimbot</div>
 
     <div class="mod-menu-container">
-        <h3>Aimbot Settings</h3>
+        <h3>Aimbot Control</h3>
 
         <label>
             Enable Aimbot:
@@ -230,18 +203,13 @@
             </div>
         </label>
 
-        <label>
-            Current Weapon:
-            <select onchange="switchWeapon(this.value)">
-                <option value="rifle">Rifle</option>
-                <option value="sniper">Sniper</option>
-                <option value="shotgun">Shotgun</option>
-                <option value="smg">SMG</option>
-            </select>
-        </label>
+        <div class="slider-container">
+            Adjust Field of View (FOV):
+            <input type="range" min="60" max="180" value="90" class="slider" onchange="adjustFOV(this.value)">
+        </div>
     </div>
 
-    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
+    <div class="footer">AIMBOT | Developed by RG G4NG Devs</div>
 
 </body>
 </html>
