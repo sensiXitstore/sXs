@@ -3,192 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Aimbot - Max Headshots</title>
+    <title>Advanced Aimbot Mod Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #111;
-            color: white;
-            text-align: center;
-            height: 100vh;
             margin: 0;
+            padding: 0;
+            background: #181818;
+            color: white;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .mod-menu {
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
         }
 
         .title {
-            font-size: 3rem;
+            font-size: 2rem;
+            text-align: center;
             margin-bottom: 20px;
         }
 
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .slider-container {
+            width: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            margin: 0 10px;
+        }
+
         .button {
-            background: #ff4500;
+            width: 100%;
+            background: #00c853;
             border: none;
             color: white;
-            padding: 10px 20px;
-            font-size: 1.2rem;
+            padding: 10px;
             border-radius: 5px;
+            font-size: 1rem;
             cursor: pointer;
-            margin: 10px;
-            transition: all 0.3s ease;
+            text-align: center;
+            margin-top: 15px;
+            transition: background 0.3s;
         }
 
         .button:hover {
-            background: #ff6347;
-        }
-
-        .status {
-            font-size: 1.5rem;
-            margin-top: 20px;
-        }
-
-        .reticle {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border: 3px solid red;
-            border-radius: 50%;
-            background: rgba(255, 0, 0, 0.3);
-            z-index: 9999;
-            pointer-events: none;
-            animation: pulse 1s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1.5);
-                opacity: 0;
-            }
+            background: #00e676;
         }
     </style>
+
     <script>
-        let aimbotEnabled = false;
-        const settings = {
+        // Aimbot Configuration Object
+        const aimbotConfig = {
+            enabled: false,
             headshotOnly: true,
-            multiTarget: true,
+            multiTarget: false,
+            maxTargets: 1,
+            fov: 360, // Degrees
+            snappingSpeed: 5, // Lower is faster
+            aimAssistStrength: 50, // % Strength
             autoFire: true,
-            predictionEnabled: true,
-            lockSpeed: "instant", // No delay in snapping
-            range: "unlimited",
+            predictiveTracking: true,
+            humanize: true // Add random offsets for human-like behavior
         };
 
-        // Toggle Aimbot Functionality
+        // Toggle Aimbot State
         function toggleAimbot() {
-            aimbotEnabled = !aimbotEnabled;
-            document.querySelector(".status").textContent = aimbotEnabled
-                ? "Aimbot: Enabled"
-                : "Aimbot: Disabled";
+            aimbotConfig.enabled = !aimbotConfig.enabled;
+            alert(aimbotConfig.enabled ? "Aimbot Enabled!" : "Aimbot Disabled");
+            injectAimbot();
+        }
 
-            if (aimbotEnabled) {
-                startAimbot();
-            } else {
-                stopAimbot();
+        // Inject Aimbot Logic
+        function injectAimbot() {
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotConfig.headshotOnly}&multiTarget=${aimbotConfig.multiTarget}&maxTargets=${aimbotConfig.maxTargets}&fov=${aimbotConfig.fov}&snappingSpeed=${aimbotConfig.snappingSpeed}&autoFire=${aimbotConfig.autoFire}&predictiveTracking=${aimbotConfig.predictiveTracking}&humanize=${aimbotConfig.humanize}`;
+            window.location.href = injectURL;
+            console.log("Aimbot injected with settings:", aimbotConfig);
+        }
+
+        // Update Aimbot Settings
+        function updateSetting(key, value) {
+            aimbotConfig[key] = value;
+            console.log(`Updated ${key} to ${value}`);
+        }
+
+        // Fire Button Logic
+        function fireButtonPressed() {
+            if (aimbotConfig.enabled) {
+                lockAndFire();
             }
         }
 
-        // Start Aimbot Logic
-        function startAimbot() {
-            console.log("Aimbot activated with settings:", settings);
-            trackEnemies();
+        // Lock-On and Fire Logic
+        function lockAndFire() {
+            // Simulate finding enemies and locking on
+            const targets = findEnemies();
+            if (targets.length > 0) {
+                targets.slice(0, aimbotConfig.maxTargets).forEach(target => {
+                    console.log("Locked on target:", target);
+                    fireAtTarget(target);
+                });
+            }
         }
 
-        // Stop Aimbot Logic
-        function stopAimbot() {
-            console.log("Aimbot deactivated");
-            clearCrosshair();
-        }
-
-        // Simulate Enemy Tracking and Targeting
-        function trackEnemies() {
-            if (!aimbotEnabled) return;
-
-            const enemies = simulateEnemies(); // Replace with actual in-game API
-            const targets = settings.multiTarget
-                ? enemies
-                : [findClosestEnemy(enemies)];
-
-            targets.forEach((enemy) => {
-                lockOnTarget(enemy);
-                if (settings.autoFire) fireAtTarget(enemy);
-            });
-
-            requestAnimationFrame(trackEnemies); // Repeat until aimbot disabled
-        }
-
-        // Simulate Enemy Data (replace with game data)
-        function simulateEnemies() {
+        // Find Enemies (Mock Data for Simulation)
+        function findEnemies() {
             return [
-                { id: 1, x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
-                { id: 2, x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight },
+                { x: 100, y: 50, distance: 150, head: { x: 102, y: 52 } }, // Example
+                { x: 300, y: 150, distance: 200, head: { x: 302, y: 152 } }
             ];
         }
 
-        // Find Closest Enemy Logic
-        function findClosestEnemy(enemies) {
-            return enemies.reduce((closest, enemy) => {
-                const distance = Math.hypot(
-                    enemy.x - window.innerWidth / 2,
-                    enemy.y - window.innerHeight / 2
-                );
-                return distance < closest.distance ? { ...enemy, distance } : closest;
-            }, { distance: Infinity });
-        }
-
-        // Lock on to Target and Show Reticle
-        function lockOnTarget(enemy) {
-            const reticle = document.querySelector(".reticle") || createReticle();
-            reticle.style.left = `${enemy.x}px`;
-            reticle.style.top = `${enemy.y}px`;
-            console.log("Locked on to enemy:", enemy);
-        }
-
-        // Fire at Target
-        function fireAtTarget(enemy) {
-            console.log(`Firing at enemy ${enemy.id}!`);
-            showHeadshotBanner();
-        }
-
-        // Show Reticle on Screen
-        function createReticle() {
-            const reticle = document.createElement("div");
-            reticle.classList.add("reticle");
-            document.body.appendChild(reticle);
-            return reticle;
-        }
-
-        // Clear Reticle
-        function clearCrosshair() {
-            const reticle = document.querySelector(".reticle");
-            if (reticle) reticle.remove();
-        }
-
-        // Show "HEADSHOT!" Banner
-        function showHeadshotBanner() {
-            const banner = document.createElement("div");
-            banner.textContent = "HEADSHOT!";
-            banner.style.position = "fixed";
-            banner.style.top = "20%";
-            banner.style.left = "50%";
-            banner.style.transform = "translateX(-50%)";
-            banner.style.color = "red";
-            banner.style.fontSize = "2rem";
-            banner.style.fontWeight = "bold";
-            banner.style.textShadow = "2px 2px black";
-            document.body.appendChild(banner);
-
-            setTimeout(() => banner.remove(), 1000);
+        // Simulate Fire at Target
+        function fireAtTarget(target) {
+            console.log("Firing at target head position:", target.head);
         }
     </script>
 </head>
 <body>
-    <div class="title">Ultra Aimbot - Max Headshots</div>
-    <button class="button" onclick="toggleAimbot()">Toggle Aimbot</button>
-    <div class="status">Aimbot: Disabled</div>
+    <div class="mod-menu">
+        <div class="title">Aimbot Mod Menu</div>
+        
+        <div class="option">
+            Enable Aimbot:
+            <button class="button" onclick="toggleAimbot()">Toggle</button>
+        </div>
+
+        <div class="option">
+            Headshot Only:
+            <input type="checkbox" checked onchange="updateSetting('headshotOnly', this.checked)">
+        </div>
+
+        <div class="option">
+            Multi-Target Mode:
+            <input type="checkbox" onchange="updateSetting('multiTarget', this.checked)">
+        </div>
+
+        <div class="slider-container">
+            FOV:
+            <input type="range" min="10" max="360" value="360" oninput="updateSetting('fov', this.value)">
+        </div>
+
+        <div class="slider-container">
+            Snapping Speed:
+            <input type="range" min="1" max="10" value="5" oninput="updateSetting('snappingSpeed', this.value)">
+        </div>
+
+        <div class="slider-container">
+            Aim Assist Strength:
+            <input type="range" min="0" max="100" value="50" oninput="updateSetting('aimAssistStrength', this.value)">
+        </div>
+
+        <button class="button" onclick="fireButtonPressed()">Fire Button</button>
+    </div>
 </body>
 </html>
