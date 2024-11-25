@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unstoppable Aimbot V2</title>
+    <title>Ultimate Aimbot System</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
             background: #121212;
             color: white;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,23 +18,24 @@
         }
 
         .mod-menu {
-            background: linear-gradient(145deg, #202020, #1a1a1a);
+            background: linear-gradient(145deg, #1c1c1c, #292929);
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
             padding: 20px;
             width: 90%;
-            max-width: 700px;
+            max-width: 800px;
             text-align: center;
         }
 
         .title {
-            font-size: 2rem;
+            font-size: 2.5rem;
             margin-bottom: 20px;
             color: #ff1744;
         }
 
         .slider-container {
-            margin: 15px 0;
+            margin: 20px 0;
+            text-align: left;
         }
 
         .slider-label {
@@ -67,124 +68,128 @@
             font-size: 1rem;
             color: #e0e0e0;
         }
+
+        select, input {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+            width: 50%;
+        }
     </style>
 
     <script>
-        const extremeAimbotConfig = {
+        const aimbotConfig = {
             enabled: false,
-            headshotsPerSecond: 10,
+            aimAssistStrength: 100, // Percentage
+            aimlockSpeed: 10, // Pixels per frame
+            headtracking: true,
+            aimFOV: 120, // Degrees
+            aimbotHeadshotsPerSecond: 10,
             multiTargetCount: 5,
-            lockOnRadius: 360,
-            recoilControl: "zero", // Options: zero, burst
-            targetPriority: "distance", // Options: health, distance, visibility
-            rageMode: false,
             crosshairPullIntensity: 100,
+            targetPriority: "visibility",
+            recoilControl: "zero", // Options: zero, burst
+            rageMode: false,
         };
 
-        // Toggle Aimbot
-        function toggleExtremeAimbot() {
-            extremeAimbotConfig.enabled = !extremeAimbotConfig.enabled;
-            alert(extremeAimbotConfig.enabled ? "Extreme Aimbot Activated!" : "Aimbot Deactivated!");
-            injectExtremeAimbot();
+        function toggleAimbot() {
+            aimbotConfig.enabled = !aimbotConfig.enabled;
+            alert(aimbotConfig.enabled ? "Aimbot Activated!" : "Aimbot Deactivated!");
+            injectAimbot();
         }
 
-        // Inject Aimbot Logic
-        function injectExtremeAimbot() {
-            const { headshotsPerSecond, multiTargetCount, lockOnRadius, recoilControl, targetPriority, rageMode, crosshairPullIntensity } = extremeAimbotConfig;
-            const injectURL = `freefire://injectExtremeAimbot?bundle=com.dts.freefireth&headshotsPerSecond=${headshotsPerSecond}&multiTargetCount=${multiTargetCount}&lockOnRadius=${lockOnRadius}&recoilControl=${recoilControl}&targetPriority=${targetPriority}&rageMode=${rageMode}&crosshairPullIntensity=${crosshairPullIntensity}`;
+        function injectAimbot() {
+            const { enabled, aimAssistStrength, aimlockSpeed, headtracking, aimFOV, aimbotHeadshotsPerSecond, multiTargetCount, crosshairPullIntensity, targetPriority, recoilControl, rageMode } = aimbotConfig;
+            const injectURL = `freefire://injectAimbot?enabled=${enabled}&aimAssistStrength=${aimAssistStrength}&aimlockSpeed=${aimlockSpeed}&headtracking=${headtracking}&aimFOV=${aimFOV}&headshotsPerSecond=${aimbotHeadshotsPerSecond}&multiTargetCount=${multiTargetCount}&crosshairPullIntensity=${crosshairPullIntensity}&targetPriority=${targetPriority}&recoilControl=${recoilControl}&rageMode=${rageMode}`;
             window.location.href = injectURL;
-            console.log("Injected Extreme Aimbot with Settings:", extremeAimbotConfig);
+            console.log("Injected Aimbot Config:", aimbotConfig);
         }
 
-        // Update Aimbot Settings
-        function updateExtremeSetting(key, value) {
-            extremeAimbotConfig[key] = value;
+        function updateSetting(key, value) {
+            aimbotConfig[key] = isNaN(value) ? value : parseFloat(value);
             console.log(`Updated ${key} to ${value}`);
         }
 
-        // Extreme Recoil Logic
-        function handleRecoil() {
-            if (extremeAimbotConfig.recoilControl === "zero") {
-                console.log("Recoil eliminated.");
-            } else if (extremeAimbotConfig.recoilControl === "burst") {
-                console.log("Recoil bursts activated for chaos mode.");
-            }
+        function simulateAimbotLogic() {
+            if (!aimbotConfig.enabled) return;
+
+            console.log("Aimbot Engaged!");
+
+            const enemies = findEnemiesInFOV();
+            enemies.slice(0, aimbotConfig.multiTargetCount).forEach(enemy => {
+                lockOnTarget(enemy);
+                simulateHeadshot(enemy);
+            });
         }
 
-        // Simulate Multi-Target Extreme Aimbot
-        function simulateExtremeAimbot() {
-            if (extremeAimbotConfig.enabled) {
-                console.log("Scanning for targets...");
-                const enemies = findAllVisibleEnemies();
-                if (enemies.length) {
-                    console.log(`Locked onto ${enemies.length} enemies!`);
-                    enemies.forEach(enemy => fireAtEnemyHead(enemy));
-                }
-            }
-        }
-
-        // Find All Visible Enemies
-        function findAllVisibleEnemies() {
-            return Array.from({ length: extremeAimbotConfig.multiTargetCount }, (_, i) => ({
+        function findEnemiesInFOV() {
+            console.log(`Scanning ${aimbotConfig.aimFOV}° FOV for targets...`);
+            return Array.from({ length: 10 }, (_, i) => ({
                 id: `Enemy-${i + 1}`,
-                headPosition: { x: Math.random() * 100, y: Math.random() * 100 }
-            }));
+                position: { x: Math.random() * 100, y: Math.random() * 100 },
+                visibility: Math.random() > 0.5,
+            })).filter(enemy => enemy.visibility);
         }
 
-        // Fire at Enemy Head
-        function fireAtEnemyHead(enemy) {
-            console.log(`Fired headshot at ${enemy.id} at position ${enemy.headPosition.x}, ${enemy.headPosition.y}`);
+        function lockOnTarget(enemy) {
+            console.log(`Locked on ${enemy.id} at position (${enemy.position.x}, ${enemy.position.y})`);
+        }
+
+        function simulateHeadshot(enemy) {
+            console.log(`Headshot fired at ${enemy.id}`);
         }
     </script>
 </head>
 <body>
     <div class="mod-menu">
-        <div class="title">Extreme Aimbot V2</div>
-
-        <button class="button" onclick="toggleExtremeAimbot()">Toggle Aimbot</button>
+        <div class="title">Ultimate Aimbot Mod Menu</div>
+        <button class="button" onclick="toggleAimbot()">Toggle Aimbot</button>
 
         <div class="slider-container">
-            <div class="slider-label">
-                Headshots Per Second: <span id="headshotsValue">10</span>
-            </div>
-            <input type="range" min="1" max="50" value="10" class="slider" onchange="updateExtremeSetting('headshotsPerSecond', this.value); document.getElementById('headshotsValue').textContent = this.value;">
+            <label>Aim Assist Strength: <span id="aimAssistValue">100%</span></label>
+            <input type="range" min="50" max="200" value="100" class="slider" onchange="updateSetting('aimAssistStrength', this.value); document.getElementById('aimAssistValue').textContent = this.value + '%'">
         </div>
 
         <div class="slider-container">
-            <div class="slider-label">
-                Multi-Target Count: <span id="multiTargetValue">5</span>
-            </div>
-            <input type="range" min="1" max="20" value="5" class="slider" onchange="updateExtremeSetting('multiTargetCount', this.value); document.getElementById('multiTargetValue').textContent = this.value;">
+            <label>Aimlock Speed: <span id="aimlockSpeedValue">10</span></label>
+            <input type="range" min="1" max="50" value="10" class="slider" onchange="updateSetting('aimlockSpeed', this.value); document.getElementById('aimlockSpeedValue').textContent = this.value">
         </div>
 
         <div class="slider-container">
-            <div class="slider-label">
-                Lock-On Radius: <span id="lockOnRadiusValue">360</span>°
-            </div>
-            <input type="range" min="10" max="360" value="360" class="slider" onchange="updateExtremeSetting('lockOnRadius', this.value); document.getElementById('lockOnRadiusValue').textContent = this.value;">
+            <label>Field of View (FOV): <span id="fovValue">120°</span></label>
+            <input type="range" min="30" max="180" value="120" class="slider" onchange="updateSetting('aimFOV', this.value); document.getElementById('fovValue').textContent = this.value + '°'">
         </div>
 
         <div class="slider-container">
-            <div class="slider-label">
-                Crosshair Pull Intensity: <span id="pullIntensityValue">100</span>
-            </div>
-            <input type="range" min="10" max="200" value="100" class="slider" onchange="updateExtremeSetting('crosshairPullIntensity', this.value); document.getElementById('pullIntensityValue').textContent = this.value;">
+            <label>Headshots Per Second: <span id="headshotsValue">10</span></label>
+            <input type="range" min="1" max="50" value="10" class="slider" onchange="updateSetting('aimbotHeadshotsPerSecond', this.value); document.getElementById('headshotsValue').textContent = this.value">
         </div>
 
         <div class="slider-container">
-            Recoil Control:
-            <select onchange="updateExtremeSetting('recoilControl', this.value)">
+            <label>Multi-Target Count: <span id="multiTargetValue">5</span></label>
+            <input type="range" min="1" max="20" value="5" class="slider" onchange="updateSetting('multiTargetCount', this.value); document.getElementById('multiTargetValue').textContent = this.value">
+        </div>
+
+        <div class="slider-container">
+            <label>Crosshair Pull Intensity: <span id="pullIntensityValue">100</span></label>
+            <input type="range" min="10" max="200" value="100" class="slider" onchange="updateSetting('crosshairPullIntensity', this.value); document.getElementById('pullIntensityValue').textContent = this.value">
+        </div>
+
+        <div class="slider-container">
+            <label>Recoil Control:</label>
+            <select onchange="updateSetting('recoilControl', this.value)">
                 <option value="zero" selected>Zero Recoil</option>
                 <option value="burst">Recoil Burst</option>
             </select>
         </div>
 
         <div class="slider-container">
-            Target Priority:
-            <select onchange="updateExtremeSetting('targetPriority', this.value)">
-                <option value="distance" selected>Closest Distance</option>
+            <label>Target Priority:</label>
+            <select onchange="updateSetting('targetPriority', this.value)">
+                <option value="visibility" selected>Visibility</option>
+                <option value="distance">Closest Distance</option>
                 <option value="health">Lowest Health</option>
-                <option value="visibility">Most Visible</option>
             </select>
         </div>
 
