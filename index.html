@@ -5,12 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ultimate Aimbot Mod Menu</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #111;
-            color: white;
+        /* General Reset */
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e1e, #333);
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -18,26 +23,27 @@
         }
 
         .mod-menu {
-            background: #222;
-            border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid #00bfff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
             width: 90%;
-            max-width: 800px;
+            max-width: 700px;
+            padding: 30px;
             text-align: center;
         }
 
-        .title {
+        .mod-menu .title {
             font-size: 2.5em;
-            margin-bottom: 10px;
-            text-transform: uppercase;
+            font-weight: bold;
             color: #00bfff;
+            margin-bottom: 10px;
         }
 
-        .subtitle {
-            font-size: 1.5em;
-            margin-bottom: 20px;
+        .mod-menu .subtitle {
+            font-size: 1.2em;
             color: #bbb;
+            margin-bottom: 20px;
         }
 
         .function {
@@ -45,34 +51,40 @@
             justify-content: space-between;
             align-items: center;
             margin: 15px 0;
-            padding: 10px 15px;
+            padding: 15px;
+            background: #222;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+
+        .function:hover {
             background: #333;
-            border-radius: 8px;
         }
 
         .function span {
-            font-size: 1.2em;
+            font-size: 1.1em;
         }
 
         .toggle {
-            width: 50px;
-            height: 25px;
+            width: 60px;
+            height: 30px;
             background: #ccc;
             border-radius: 15px;
             position: relative;
             cursor: pointer;
+            transition: background 0.3s;
         }
 
         .toggle:before {
             content: '';
             position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
+            top: 5%;
+            left: 5%;
+            width: 22px;
+            height: 22px;
             background: white;
             border-radius: 50%;
-            transition: 0.3s;
+            transition: transform 0.3s;
         }
 
         .toggle.active {
@@ -80,7 +92,7 @@
         }
 
         .toggle.active:before {
-            left: 26px;
+            transform: translateX(30px);
         }
 
         .footer {
@@ -97,6 +109,7 @@
             headTracking: false,
             aimFOV: false,
             noRecoil: false,
+            autoHeadshot: false,
         };
 
         function toggleFunction(key) {
@@ -117,39 +130,42 @@
             const params = `&function=${key}&enable=${enable}`;
             const fullURL = baseURL + params;
 
-            // Execute function logic
+            // Individual logic for each function
             switch (key) {
                 case 'aimbot':
-                    console.log(enable ? 'Aimbot Enabled' : 'Aimbot Disabled');
+                    console.log(enable ? 'Aimbot Activated: Automatically adjusts aim to lock onto enemy heads.' : 'Aimbot Deactivated');
                     break;
                 case 'aimAssist':
-                    console.log(enable ? 'Aim Assist Enabled' : 'Aim Assist Disabled');
+                    console.log(enable ? 'Aim Assist: Smoothly guides aim toward enemy targets.' : 'Aim Assist Disabled');
                     break;
                 case 'aimLock':
-                    console.log(enable ? 'Aim Lock Enabled' : 'Aim Lock Disabled');
+                    console.log(enable ? 'Aim Lock: Locks crosshair to target, preventing manual movement.' : 'Aim Lock Disabled');
                     break;
                 case 'headTracking':
-                    console.log(enable ? 'Head Tracking Enabled' : 'Head Tracking Disabled');
+                    console.log(enable ? 'Head Tracking: Tracks enemy head position dynamically.' : 'Head Tracking Disabled');
                     break;
                 case 'aimFOV':
-                    console.log(enable ? 'Aim FOV Enabled' : 'Aim FOV Disabled');
+                    console.log(enable ? 'Aim FOV Enabled: Expands field of view for enemy detection.' : 'Aim FOV Disabled');
                     break;
                 case 'noRecoil':
-                    console.log(enable ? 'No Recoil Enabled' : 'No Recoil Disabled');
+                    console.log(enable ? 'No Recoil Enabled: Eliminates bullet spread and recoil.' : 'No Recoil Disabled');
+                    break;
+                case 'autoHeadshot':
+                    console.log(enable ? 'Auto Headshot Activated: Ensures all shots hit the head directly.' : 'Auto Headshot Disabled');
                     break;
                 default:
                     console.log('Unknown Function');
             }
 
-            // Simulate execution via URL (in real-world scenarios, this would be handled by the app)
+            // Simulate execution via URL
             window.location.href = fullURL;
         }
     </script>
 </head>
 <body>
     <div class="mod-menu">
-        <div class="title">Ultimate Aimbot</div>
-        <div class="subtitle">For Free Fire (Bundle: com.dts.freefireth)</div>
+        <div class="title">Ultimate Mod Menu</div>
+        <div class="subtitle">For Free Fire (com.dts.freefireth)</div>
 
         <div class="function">
             <span>1. Aimbot</span>
@@ -179,6 +195,11 @@
         <div class="function">
             <span>6. No Recoil</span>
             <div class="toggle" id="noRecoil-toggle" onclick="toggleFunction('noRecoil')"></div>
+        </div>
+
+        <div class="function">
+            <span>7. Auto Headshot</span>
+            <div class="toggle" id="autoHeadshot-toggle" onclick="toggleFunction('autoHeadshot')"></div>
         </div>
 
         <div class="footer">Developed by @iOSrazielOFC | Powered by Free Fire</div>
