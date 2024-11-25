@@ -3,15 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Aimbot Mod Menu</title>
+    <title>Ultimate Free Fire Mod Menu</title>
     <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1e1e1e, #333);
@@ -54,155 +47,86 @@
             padding: 15px;
             background: #222;
             border-radius: 10px;
-            transition: background 0.3s;
         }
 
-        .function:hover {
-            background: #333;
-        }
-
-        .function span {
-            font-size: 1.1em;
-        }
-
-        .toggle {
-            width: 60px;
-            height: 30px;
-            background: #ccc;
-            border-radius: 15px;
-            position: relative;
+        .install-button {
+            background: #00bfff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 10px;
             cursor: pointer;
             transition: background 0.3s;
         }
 
-        .toggle:before {
-            content: '';
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            width: 22px;
-            height: 22px;
-            background: white;
-            border-radius: 50%;
-            transition: transform 0.3s;
-        }
-
-        .toggle.active {
-            background: #00bfff;
-        }
-
-        .toggle.active:before {
-            transform: translateX(30px);
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 0.9em;
-            color: #888;
+        .install-button:hover {
+            background: #008fcc;
         }
     </style>
     <script>
         const modFunctions = {
-            aimbot: false,
-            aimAssist: false,
-            aimLock: false,
-            headTracking: false,
-            aimFOV: false,
-            noRecoil: false,
-            autoHeadshot: false,
+            aimbot: true,
+            aimAssist: true,
+            aimLock: true,
+            headTracking: true,
+            aimFOV: true,
+            noRecoil: true,
+            autoHeadshot: true,
         };
 
-        function toggleFunction(key) {
-            modFunctions[key] = !modFunctions[key];
-            const toggleElement = document.getElementById(`${key}-toggle`);
+        // Function to install the full mod menu into the target app
+        function installModMenu() {
+            const bundleID = 'com.dts.freefireth';
+            const installURL = `freefire://install?bundle=${bundleID}&functions=${encodeURIComponent(JSON.stringify(modFunctions))}`;
 
-            if (modFunctions[key]) {
-                toggleElement.classList.add('active');
-                installFunction(key, true);
-            } else {
-                toggleElement.classList.remove('active');
-                installFunction(key, false);
-            }
-        }
+            // Simulate the installation process
+            console.log('Installing Mod Menu into Free Fire...');
+            console.log('Target Bundle:', bundleID);
+            console.log('Included Functions:', modFunctions);
 
-        function installFunction(key, enable) {
-            const baseURL = 'freefire://install?bundle=com.dts.freefireth';
-            const params = `&function=${key}&install=${enable}`;
-            const fullURL = baseURL + params;
+            // Redirect to trigger installation
+            window.location.href = installURL;
 
-            // Individual logic for each function
-            switch (key) {
-                case 'aimbot':
-                    console.log(enable ? 'Aimbot Installed: Automatically adjusts aim to lock onto enemy heads.' : 'Aimbot Uninstalled');
-                    break;
-                case 'aimAssist':
-                    console.log(enable ? 'Aim Assist Installed: Smoothly guides aim toward enemy targets.' : 'Aim Assist Uninstalled');
-                    break;
-                case 'aimLock':
-                    console.log(enable ? 'Aim Lock Installed: Locks crosshair to target, preventing manual movement.' : 'Aim Lock Uninstalled');
-                    break;
-                case 'headTracking':
-                    console.log(enable ? 'Head Tracking Installed: Tracks enemy head position dynamically.' : 'Head Tracking Uninstalled');
-                    break;
-                case 'aimFOV':
-                    console.log(enable ? 'Aim FOV Installed: Expands field of view for enemy detection.' : 'Aim FOV Uninstalled');
-                    break;
-                case 'noRecoil':
-                    console.log(enable ? 'No Recoil Installed: Eliminates bullet spread and recoil.' : 'No Recoil Uninstalled');
-                    break;
-                case 'autoHeadshot':
-                    console.log(enable ? 'Auto Headshot Installed: Ensures all shots hit the head directly.' : 'Auto Headshot Uninstalled');
-                    break;
-                default:
-                    console.log('Unknown Function');
-            }
-
-            // Simulate installation process via URL
-            window.location.href = fullURL;
+            alert('Mod Menu installation initiated. Check Free Fire for updates!');
         }
     </script>
 </head>
 <body>
     <div class="mod-menu">
         <div class="title">Ultimate Mod Menu</div>
-        <div class="subtitle">For Free Fire (com.dts.freefireth)</div>
+        <div class="subtitle">For Free Fire (Bundle ID: com.dts.freefireth)</div>
 
         <div class="function">
-            <span>1. Aimbot</span>
-            <div class="toggle" id="aimbot-toggle" onclick="toggleFunction('aimbot')"></div>
+            <span>Aimbot</span>
+            <span>Enabled</span>
         </div>
-
         <div class="function">
-            <span>2. Aim Assist</span>
-            <div class="toggle" id="aimAssist-toggle" onclick="toggleFunction('aimAssist')"></div>
+            <span>Aim Assist</span>
+            <span>Enabled</span>
         </div>
-
         <div class="function">
-            <span>3. Aim Lock</span>
-            <div class="toggle" id="aimLock-toggle" onclick="toggleFunction('aimLock')"></div>
+            <span>Aim Lock</span>
+            <span>Enabled</span>
         </div>
-
         <div class="function">
-            <span>4. Head Tracking</span>
-            <div class="toggle" id="headTracking-toggle" onclick="toggleFunction('headTracking')"></div>
+            <span>Head Tracking</span>
+            <span>Enabled</span>
         </div>
-
         <div class="function">
-            <span>5. Aim FOV</span>
-            <div class="toggle" id="aimFOV-toggle" onclick="toggleFunction('aimFOV')"></div>
+            <span>Aim FOV</span>
+            <span>Enabled</span>
         </div>
-
         <div class="function">
-            <span>6. No Recoil</span>
-            <div class="toggle" id="noRecoil-toggle" onclick="toggleFunction('noRecoil')"></div>
+            <span>No Recoil</span>
+            <span>Enabled</span>
         </div>
-
         <div class="function">
-            <span>7. Auto Headshot</span>
-            <div class="toggle" id="autoHeadshot-toggle" onclick="toggleFunction('autoHeadshot')"></div>
+            <span>Auto Headshot</span>
+            <span>Enabled</span>
         </div>
 
-        <div class="footer">Developed by @iOSrazielOFC | Powered by Free Fire</div>
+        <button class="install-button" onclick="installModMenu()">Install Mod Menu</button>
     </div>
 </body>
 </html>
