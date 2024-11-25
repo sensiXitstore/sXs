@@ -3,176 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Aimbot Mod Menu</title>
+    <title>Unstoppable Aimbot Mod Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background: #181818;
+            background: #121212;
             color: white;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: center;
             height: 100vh;
         }
 
         .mod-menu {
-            background: #222;
+            background: linear-gradient(145deg, #202020, #1a1a1a);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             padding: 20px;
-            border-radius: 10px;
             width: 90%;
-            max-width: 600px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+            max-width: 700px;
+            text-align: center;
         }
 
         .title {
             font-size: 2rem;
-            text-align: center;
             margin-bottom: 20px;
-        }
-
-        .option {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .slider-container {
-            width: 100%;
-            display: flex;
-            align-items: center;
-        }
-
-        .slider-container input[type="range"] {
-            flex: 1;
-            margin: 0 10px;
+            color: #00e5ff;
         }
 
         .button {
-            width: 100%;
-            background: #00c853;
-            border: none;
+            background: #ff1744;
             color: white;
-            padding: 10px;
+            border: none;
+            padding: 10px 15px;
+            margin: 10px 0;
             border-radius: 5px;
-            font-size: 1rem;
             cursor: pointer;
-            text-align: center;
-            margin-top: 15px;
-            transition: background 0.3s;
+            transition: 0.3s;
         }
 
         .button:hover {
-            background: #00e676;
+            background: #ff5252;
+        }
+
+        .option {
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider {
+            width: 70%;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-container input {
+            margin-left: 10px;
+        }
+
+        .output {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #e0e0e0;
         }
     </style>
 
     <script>
-        // Aimbot Configuration Object
-        const aimbotConfig = {
+        const extremeAimbotConfig = {
             enabled: false,
-            headshotOnly: true,
-            multiTarget: false,
-            maxTargets: 1,
-            fov: 360, // Degrees
-            snappingSpeed: 5, // Lower is faster
-            aimAssistStrength: 50, // % Strength
-            autoFire: true,
-            predictiveTracking: true,
-            humanize: true // Add random offsets for human-like behavior
+            instantHeadshot: true,
+            multiTarget: true,
+            maxTargets: 5,
+            fov: 360,
+            autoRageMode: true,
+            xrayVision: true,
+            fireRateBoost: true,
+            unlimitedRange: true,
         };
 
-        // Toggle Aimbot State
-        function toggleAimbot() {
-            aimbotConfig.enabled = !aimbotConfig.enabled;
-            alert(aimbotConfig.enabled ? "Aimbot Enabled!" : "Aimbot Disabled");
-            injectAimbot();
+        // Toggle Aimbot
+        function toggleExtremeAimbot() {
+            extremeAimbotConfig.enabled = !extremeAimbotConfig.enabled;
+            alert(extremeAimbotConfig.enabled ? "Extreme Aimbot Activated!" : "Aimbot Deactivated!");
+            injectExtremeAimbot();
         }
 
         // Inject Aimbot Logic
-        function injectAimbot() {
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&headshotOnly=${aimbotConfig.headshotOnly}&multiTarget=${aimbotConfig.multiTarget}&maxTargets=${aimbotConfig.maxTargets}&fov=${aimbotConfig.fov}&snappingSpeed=${aimbotConfig.snappingSpeed}&autoFire=${aimbotConfig.autoFire}&predictiveTracking=${aimbotConfig.predictiveTracking}&humanize=${aimbotConfig.humanize}`;
+        function injectExtremeAimbot() {
+            const { instantHeadshot, multiTarget, maxTargets, fov, autoRageMode, xrayVision, fireRateBoost, unlimitedRange } = extremeAimbotConfig;
+            const injectURL = `freefire://injectExtremeAimbot?bundle=com.dts.freefireth&instantHeadshot=${instantHeadshot}&multiTarget=${multiTarget}&maxTargets=${maxTargets}&fov=${fov}&autoRageMode=${autoRageMode}&xrayVision=${xrayVision}&fireRateBoost=${fireRateBoost}&unlimitedRange=${unlimitedRange}`;
             window.location.href = injectURL;
-            console.log("Aimbot injected with settings:", aimbotConfig);
+            console.log("Injected Extreme Aimbot with Settings:", extremeAimbotConfig);
         }
 
         // Update Aimbot Settings
-        function updateSetting(key, value) {
-            aimbotConfig[key] = value;
+        function updateExtremeSetting(key, value) {
+            extremeAimbotConfig[key] = value;
             console.log(`Updated ${key} to ${value}`);
         }
 
-        // Fire Button Logic
-        function fireButtonPressed() {
-            if (aimbotConfig.enabled) {
-                lockAndFire();
+        // Simulate 360° Instant Headshots
+        function simulateExtremeAimbot() {
+            if (extremeAimbotConfig.enabled) {
+                console.log("Scanning for targets...");
+                const enemies = findAllVisibleEnemies();
+                if (enemies.length) {
+                    console.log(`Locked onto ${enemies.length} enemies!`);
+                    enemies.forEach(enemy => fireAtEnemyHead(enemy));
+                }
             }
         }
 
-        // Lock-On and Fire Logic
-        function lockAndFire() {
-            // Simulate finding enemies and locking on
-            const targets = findEnemies();
-            if (targets.length > 0) {
-                targets.slice(0, aimbotConfig.maxTargets).forEach(target => {
-                    console.log("Locked on target:", target);
-                    fireAtTarget(target);
-                });
-            }
+        // Find All Visible Enemies
+        function findAllVisibleEnemies() {
+            return Array.from({ length: extremeAimbotConfig.maxTargets }, (_, i) => ({
+                id: `Enemy-${i + 1}`,
+                headPosition: { x: Math.random() * 100, y: Math.random() * 100 }
+            }));
         }
 
-        // Find Enemies (Mock Data for Simulation)
-        function findEnemies() {
-            return [
-                { x: 100, y: 50, distance: 150, head: { x: 102, y: 52 } }, // Example
-                { x: 300, y: 150, distance: 200, head: { x: 302, y: 152 } }
-            ];
-        }
-
-        // Simulate Fire at Target
-        function fireAtTarget(target) {
-            console.log("Firing at target head position:", target.head);
+        // Fire at Enemy Head
+        function fireAtEnemyHead(enemy) {
+            console.log(`Fired headshot at ${enemy.id} at position ${enemy.headPosition.x}, ${enemy.headPosition.y}`);
         }
     </script>
 </head>
 <body>
     <div class="mod-menu">
-        <div class="title">Aimbot Mod Menu</div>
-        
-        <div class="option">
-            Enable Aimbot:
-            <button class="button" onclick="toggleAimbot()">Toggle</button>
-        </div>
+        <div class="title">Extreme Aimbot Mod Menu</div>
+
+        <button class="button" onclick="toggleExtremeAimbot()">Toggle Aimbot</button>
 
         <div class="option">
-            Headshot Only:
-            <input type="checkbox" checked onchange="updateSetting('headshotOnly', this.checked)">
+            Instant Headshots:
+            <input type="checkbox" checked onchange="updateExtremeSetting('instantHeadshot', this.checked)">
         </div>
 
         <div class="option">
             Multi-Target Mode:
-            <input type="checkbox" onchange="updateSetting('multiTarget', this.checked)">
+            <input type="checkbox" checked onchange="updateExtremeSetting('multiTarget', this.checked)">
         </div>
 
-        <div class="slider-container">
-            FOV:
-            <input type="range" min="10" max="360" value="360" oninput="updateSetting('fov', this.value)">
+        <div class="option">
+            Maximum Targets:
+            <input type="range" class="slider" min="1" max="10" value="5" oninput="updateExtremeSetting('maxTargets', this.value)">
         </div>
 
-        <div class="slider-container">
-            Snapping Speed:
-            <input type="range" min="1" max="10" value="5" oninput="updateSetting('snappingSpeed', this.value)">
+        <div class="option">
+            FOV (Field of View):
+            <input type="range" class="slider" min="10" max="360" value="360" oninput="updateExtremeSetting('fov', this.value)">
         </div>
 
-        <div class="slider-container">
-            Aim Assist Strength:
-            <input type="range" min="0" max="100" value="50" oninput="updateSetting('aimAssistStrength', this.value)">
+        <div class="option">
+            Auto Rage Mode:
+            <input type="checkbox" checked onchange="updateExtremeSetting('autoRageMode', this.checked)">
         </div>
 
-        <button class="button" onclick="fireButtonPressed()">Fire Button</button>
+        <div class="option">
+            X-Ray Vision:
+            <input type="checkbox" checked onchange="updateExtremeSetting('xrayVision', this.checked)">
+        </div>
+
+        <div class="option">
+            Fire Rate Boost:
+            <input type="checkbox" checked onchange="updateExtremeSetting('fireRateBoost', this.checked)">
+        </div>
+
+        <div class="output">
+            Click the "Toggle Aimbot" button to activate these settings.
+        </div>
     </div>
 </body>
 </html>
