@@ -118,46 +118,46 @@
 
             if (modFunctions[key]) {
                 toggleElement.classList.add('active');
-                executeFunction(key, true);
+                installFunction(key, true);
             } else {
                 toggleElement.classList.remove('active');
-                executeFunction(key, false);
+                installFunction(key, false);
             }
         }
 
-        function executeFunction(key, enable) {
-            const baseURL = 'freefire://execute?bundle=com.dts.freefireth';
-            const params = `&function=${key}&enable=${enable}`;
+        function installFunction(key, enable) {
+            const baseURL = 'freefire://install?bundle=com.dts.freefireth';
+            const params = `&function=${key}&install=${enable}`;
             const fullURL = baseURL + params;
 
             // Individual logic for each function
             switch (key) {
                 case 'aimbot':
-                    console.log(enable ? 'Aimbot Activated: Automatically adjusts aim to lock onto enemy heads.' : 'Aimbot Deactivated');
+                    console.log(enable ? 'Aimbot Installed: Automatically adjusts aim to lock onto enemy heads.' : 'Aimbot Uninstalled');
                     break;
                 case 'aimAssist':
-                    console.log(enable ? 'Aim Assist: Smoothly guides aim toward enemy targets.' : 'Aim Assist Disabled');
+                    console.log(enable ? 'Aim Assist Installed: Smoothly guides aim toward enemy targets.' : 'Aim Assist Uninstalled');
                     break;
                 case 'aimLock':
-                    console.log(enable ? 'Aim Lock: Locks crosshair to target, preventing manual movement.' : 'Aim Lock Disabled');
+                    console.log(enable ? 'Aim Lock Installed: Locks crosshair to target, preventing manual movement.' : 'Aim Lock Uninstalled');
                     break;
                 case 'headTracking':
-                    console.log(enable ? 'Head Tracking: Tracks enemy head position dynamically.' : 'Head Tracking Disabled');
+                    console.log(enable ? 'Head Tracking Installed: Tracks enemy head position dynamically.' : 'Head Tracking Uninstalled');
                     break;
                 case 'aimFOV':
-                    console.log(enable ? 'Aim FOV Enabled: Expands field of view for enemy detection.' : 'Aim FOV Disabled');
+                    console.log(enable ? 'Aim FOV Installed: Expands field of view for enemy detection.' : 'Aim FOV Uninstalled');
                     break;
                 case 'noRecoil':
-                    console.log(enable ? 'No Recoil Enabled: Eliminates bullet spread and recoil.' : 'No Recoil Disabled');
+                    console.log(enable ? 'No Recoil Installed: Eliminates bullet spread and recoil.' : 'No Recoil Uninstalled');
                     break;
                 case 'autoHeadshot':
-                    console.log(enable ? 'Auto Headshot Activated: Ensures all shots hit the head directly.' : 'Auto Headshot Disabled');
+                    console.log(enable ? 'Auto Headshot Installed: Ensures all shots hit the head directly.' : 'Auto Headshot Uninstalled');
                     break;
                 default:
                     console.log('Unknown Function');
             }
 
-            // Simulate execution via URL
+            // Simulate installation process via URL
             window.location.href = fullURL;
         }
     </script>
