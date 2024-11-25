@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enhanced Aimbot Mod Menu</title>
+    <title>Ultimate Aimbot Mod Menu</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #202020;
+            background: #111;
             color: white;
             margin: 0;
             padding: 0;
@@ -18,7 +18,7 @@
         }
 
         .mod-menu {
-            background: #333;
+            background: #222;
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
             padding: 20px;
@@ -28,176 +28,160 @@
         }
 
         .title {
-            font-size: 2rem;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            color: #00bfff;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
             margin-bottom: 20px;
-            color: #ff1744;
+            color: #bbb;
         }
 
-        .toggle-container {
-            text-align: left;
-            margin: 15px 0;
-        }
-
-        .toggle-container label {
+        .function {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 10px 0;
+            margin: 15px 0;
+            padding: 10px 15px;
+            background: #333;
+            border-radius: 8px;
         }
 
-        .toggle-switch {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            background-color: #555;
-            border-radius: 30px;
+        .function span {
+            font-size: 1.2em;
+        }
+
+        .toggle {
+            width: 50px;
+            height: 25px;
+            background: #ccc;
+            border-radius: 15px;
             position: relative;
             cursor: pointer;
-            transition: background 0.3s;
         }
 
-        .toggle-switch.active {
-            background-color: #00e676;
-        }
-
-        .toggle-switch span {
+        .toggle:before {
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: white;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
             border-radius: 50%;
-            transform: translateY(-50%);
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.active span {
-            left: 30px;
-        }
-
-        .button {
-            background: #00b0ff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            margin: 10px 5px;
-            border-radius: 5px;
-            cursor: pointer;
             transition: 0.3s;
         }
 
-        .button:hover {
-            background: #007bb5;
+        .toggle.active {
+            background: #00bfff;
+        }
+
+        .toggle.active:before {
+            left: 26px;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
         }
     </style>
-
     <script>
-        const aimbotConfig = {
-            enabled: false,
+        const modFunctions = {
+            aimbot: false,
             aimAssist: false,
-            aimlock: false,
-            headtracking: false,
+            aimLock: false,
+            headTracking: false,
             aimFOV: false,
-            recoilControl: false,
-            crosshairPullIntensity: 100, // Default to maximum
+            noRecoil: false,
         };
 
-        // Function to toggle feature on/off
-        function toggleFeature(feature) {
-            aimbotConfig[feature] = !aimbotConfig[feature];
-            document.getElementById(`${feature}-toggle`).classList.toggle('active', aimbotConfig[feature]);
-            console.log(`${feature} is now ${aimbotConfig[feature] ? "enabled" : "disabled"}`);
-        }
+        function toggleFunction(key) {
+            modFunctions[key] = !modFunctions[key];
+            const toggleElement = document.getElementById(`${key}-toggle`);
 
-        // Inject the aimbot config into the Free Fire game
-        function injectAimbot() {
-            if (!aimbotConfig.enabled) {
-                alert("Enable the Aimbot first!");
-                return;
-            }
-
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimAssist=${aimbotConfig.aimAssist}&aimlock=${aimbotConfig.aimlock}&headtracking=${aimbotConfig.headtracking}&aimFOV=${aimbotConfig.aimFOV}&recoilControl=${aimbotConfig.recoilControl}&crosshairPullIntensity=${aimbotConfig.crosshairPullIntensity}`;
-            window.location.href = injectURL;
-            console.log("Aimbot Config Injected:", aimbotConfig);
-        }
-
-        // Simulate enhanced crosshair logic to automatically lock to the head
-        function simulateCrosshairLogic() {
-            if (!aimbotConfig.enabled) return;
-
-            console.log("Enhanced Crosshair Logic Running...");
-            const enemy = findClosestEnemy();
-            if (enemy) {
-                lockCrosshairOnHead(enemy);
+            if (modFunctions[key]) {
+                toggleElement.classList.add('active');
+                executeFunction(key, true);
+            } else {
+                toggleElement.classList.remove('active');
+                executeFunction(key, false);
             }
         }
 
-        // Mock enemy detection (replace with actual game data)
-        function findClosestEnemy() {
-            const enemy = {
-                id: "Enemy-1",
-                position: { x: Math.random() * 100, y: Math.random() * 100 },
-            };
-            console.log(`Detected enemy: ${enemy.id} at position (${enemy.position.x}, ${enemy.position.y})`);
-            return enemy;
+        function executeFunction(key, enable) {
+            const baseURL = 'freefire://execute?bundle=com.dts.freefireth';
+            const params = `&function=${key}&enable=${enable}`;
+            const fullURL = baseURL + params;
+
+            // Execute function logic
+            switch (key) {
+                case 'aimbot':
+                    console.log(enable ? 'Aimbot Enabled' : 'Aimbot Disabled');
+                    break;
+                case 'aimAssist':
+                    console.log(enable ? 'Aim Assist Enabled' : 'Aim Assist Disabled');
+                    break;
+                case 'aimLock':
+                    console.log(enable ? 'Aim Lock Enabled' : 'Aim Lock Disabled');
+                    break;
+                case 'headTracking':
+                    console.log(enable ? 'Head Tracking Enabled' : 'Head Tracking Disabled');
+                    break;
+                case 'aimFOV':
+                    console.log(enable ? 'Aim FOV Enabled' : 'Aim FOV Disabled');
+                    break;
+                case 'noRecoil':
+                    console.log(enable ? 'No Recoil Enabled' : 'No Recoil Disabled');
+                    break;
+                default:
+                    console.log('Unknown Function');
+            }
+
+            // Simulate execution via URL (in real-world scenarios, this would be handled by the app)
+            window.location.href = fullURL;
         }
-
-        // Lock crosshair directly on the enemy's head (simulated logic)
-        function lockCrosshairOnHead(enemy) {
-            console.log(`Crosshair locked onto head of ${enemy.id}`);
-            // In a real environment, update the crosshair position to enemy.head
-        }
-
-        // Continuous update for crosshair logic
-        setInterval(simulateCrosshairLogic, 50);
-
     </script>
 </head>
 <body>
     <div class="mod-menu">
-        <div class="title">Enhanced Aimbot Mod Menu</div>
+        <div class="title">Ultimate Aimbot</div>
+        <div class="subtitle">For Free Fire (Bundle: com.dts.freefireth)</div>
 
-        <div class="toggle-container">
-            <label>
-                Aimbot Enabled:
-                <div class="toggle-switch" id="enabled-toggle" onclick="toggleFeature('enabled')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Aim Assist:
-                <div class="toggle-switch" id="aimAssist-toggle" onclick="toggleFeature('aimAssist')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Aimlock:
-                <div class="toggle-switch" id="aimlock-toggle" onclick="toggleFeature('aimlock')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Headtracking:
-                <div class="toggle-switch" id="headtracking-toggle" onclick="toggleFeature('headtracking')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Aim FOV:
-                <div class="toggle-switch" id="aimFOV-toggle" onclick="toggleFeature('aimFOV')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Recoil Control:
-                <div class="toggle-switch" id="recoilControl-toggle" onclick="toggleFeature('recoilControl')">
-                    <span></span>
-                </div>
-            </label>
+        <div class="function">
+            <span>1. Aimbot</span>
+            <div class="toggle" id="aimbot-toggle" onclick="toggleFunction('aimbot')"></div>
         </div>
 
-        <button class="button" onclick="injectAimbot()">Inject Aimbot</button>
+        <div class="function">
+            <span>2. Aim Assist</span>
+            <div class="toggle" id="aimAssist-toggle" onclick="toggleFunction('aimAssist')"></div>
+        </div>
+
+        <div class="function">
+            <span>3. Aim Lock</span>
+            <div class="toggle" id="aimLock-toggle" onclick="toggleFunction('aimLock')"></div>
+        </div>
+
+        <div class="function">
+            <span>4. Head Tracking</span>
+            <div class="toggle" id="headTracking-toggle" onclick="toggleFunction('headTracking')"></div>
+        </div>
+
+        <div class="function">
+            <span>5. Aim FOV</span>
+            <div class="toggle" id="aimFOV-toggle" onclick="toggleFunction('aimFOV')"></div>
+        </div>
+
+        <div class="function">
+            <span>6. No Recoil</span>
+            <div class="toggle" id="noRecoil-toggle" onclick="toggleFunction('noRecoil')"></div>
+        </div>
+
+        <div class="footer">Developed by @iOSrazielOFC | Powered by Free Fire</div>
     </div>
 </body>
 </html>
