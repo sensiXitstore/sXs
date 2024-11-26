@@ -3,116 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Aimbot Mod Menu</title>
+    <title>Free Fire Aimbot Tweak Injector</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #181818;
+            background-color: #212121;
             color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .mod-menu {
-            background: #333;
-            border-radius: 15px;
-            padding: 20px;
-            width: 90%;
-            max-width: 800px;
             text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease-in-out;
+            padding: 50px;
         }
-
-        .title {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #ff1744;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        h1 {
+            color: #FF0000;
         }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-            font-weight: 300;
-            font-style: italic;
-        }
-
-        .button {
-            background: #00b0ff;
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            margin: 12px 5px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            width: 100%;
-        }
-
-        .button:hover {
-            background: #007bb5;
-        }
-
-        .footer {
+        .container {
             margin-top: 20px;
-            font-size: 1rem;
-            color: #ff1744;
         }
-
-        input[type="file"] {
-            background: #222;
+        .button {
+            background-color: #FF4500;
+            border: none;
             color: white;
-            border: 2px solid #555;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 20px 0;
-            width: 100%;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
             cursor: pointer;
+            border-radius: 5px;
         }
-
-        input[type="file"]:hover {
-            border-color: #00b0ff;
+        .button:hover {
+            background-color: #FF6347;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #999;
+        }
+        .footer a {
+            color: #FF4500;
+            text-decoration: none;
         }
     </style>
-
-    <script>
-        function injectTweak() {
-            const fileInput = document.getElementById("tweakFile");
-            if (fileInput.files.length === 0) {
-                alert("Please select a tweak file first!");
-                return;
-            }
-
-            const tweakFile = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const tweakData = event.target.result;
-                const injectURL = `freefire://injectTweak?bundle=com.dts.freefireth&tweak=${encodeURIComponent(tweakData)}`;
-                window.location.href = injectURL;
-                console.log("Injected Tweak File:", tweakData);
-            };
-            reader.readAsText(tweakFile);
-        }
-    </script>
 </head>
 <body>
-    <div class="mod-menu">
-        <div class="title">Advanced Aimbot Mod Menu</div>
-        <div class="subtitle">Inject your aimbot tweaks seamlessly into Free Fire</div>
 
-        <input type="file" id="tweakFile" accept=".txt,.py" />
-
+    <h1>Free Fire Aimbot & Tweak Injector</h1>
+    <p>Welcome to the Free Fire Aimbot Injector Tool</p>
+    <div class="container">
+        <button class="button" onclick="injectAimbot('AWM')">Activate AWM Aimbot</button>
+        <button class="button" onclick="injectAimbot('Standard')">Activate Standard Aimbot</button>
         <button class="button" onclick="injectTweak()">Inject Tweak</button>
-
-        <div class="footer">Created by @iOSrazielOFC</div>
     </div>
+
+    <div class="footer">
+        <p>By @iOSrazielOFC</p>
+    </div>
+
+    <script>
+        function injectAimbot(aimbotType) {
+            const url = `freefire://injectAimbot?aimbotConfig=${aimbotType}&bundle=com.dts.freefireth`;
+            window.location.href = url; // Sends command to the Python server
+            console.log(`Sending Aimbot injection request: ${url}`);
+        }
+
+        function injectTweak() {
+            const url = `freefire://injectTweak?tweak=enabled&bundle=com.dts.freefireth`;
+            window.location.href = url; // Sends command to the Python server
+            console.log(`Sending Tweak injection request: ${url}`);
+        }
+    </script>
+
 </body>
 </html>
