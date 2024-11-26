@@ -3,96 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Aimbot & Tweak Injector</title>
+    <title>RG G4NG 414</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #212121;
-            color: white;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
             text-align: center;
-            padding: 50px;
+            height: 100vh;
+            background-color: white;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        h1 {
-            color: #FF0000;
+
+        .title {
+            font-family: 'Lora', serif;
+            font-size: 4em;
+            color: black;
+            margin-top: 20px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            display: inline-block;
         }
-        .container {
+
+        .subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2em;
+            color: black;
+            margin-top: 5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            display: inline-block;
+        }
+
+        .mod-menu-container {
+            display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
             margin-top: 20px;
         }
-        .button {
-            background-color: #FF4500;
-            border: none;
+
+        .mod-menu-container h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
             color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
+        }
+
+        .mod-menu-container label {
+            font-size: 1.1em;
+            color: #d3d3d3;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .toggle-switch {
             display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 30px;
+            position: relative;
             cursor: pointer;
-            border-radius: 5px;
         }
-        .button:hover {
-            background-color: #FF6347;
+
+        .toggle-switch span {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: left 0.3s;
         }
+
+        .toggle-switch.active {
+            background-color: #00bfff;
+        }
+
+        .toggle-switch.active span {
+            left: 30px;
+        }
+
         .footer {
-            margin-top: 30px;
-            font-size: 12px;
-            color: #999;
+            font-size: 1em;
+            color: black;
+            margin-bottom: 10px;
+            margin-top: 20px;
         }
-        .footer a {
-            color: #FF4500;
-            text-decoration: none;
+
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
         }
-        input[type="file"] {
-            margin: 20px 0;
-            color: white;
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            animation: moveParticles 4s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            0% {
+                transform: translate(100vw, -10vh) rotate(135deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-10vw, 100vh) rotate(135deg);
+                opacity: 0;
+            }
         }
     </style>
+
+    <script>
+        const aimbot = {
+            enabled: false,
+            aimlock: true,
+            aimAssist: true,
+            headTracking: true,
+            noRecoil: true,
+            aimFOV: true,
+            headshotOnly: true
+        };
+
+        let lastKnownHeadPosition = { x: 0, y: 0 };
+
+        // Custom logic for injection
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                injectAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                injectNoAimbot();
+            }
+        }
+
+        // Simulated aimbot injection for Free Fire with the correct bundle ID
+        function injectAimbot() {
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true`;
+            window.location.href = injectURL; // Inject aimbot into Free Fire game
+            
+            console.log("Injected aimbot with settings: ", aimbot);
+            trackHeadPosition();  // Start tracking heads when aimbot is enabled
+        }
+
+        // Simulate disabling the aimbot
+        function injectNoAimbot() {
+            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+            window.location.href = injectURL; // Disable aimbot in Free Fire game
+            console.log("Aimbot disabled.");
+        }
+
+        // Simulated head tracking for demonstration (replace with real tracking in a real environment)
+        function trackHeadPosition() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    // Simulating head position (replace this with actual head detection logic)
+                    lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
+                    updateCrosshairPosition(lastKnownHeadPosition); // Update crosshair position
+                }
+            }, 50); // Updates every 50ms for smooth tracking
+        }
+
+        // Function to update the crosshair position (simulate tracking)
+        function updateCrosshairPosition(position) {
+            console.log('Tracking enemy head at', position);
+            // Here you would modify the game's crosshair position using game APIs or UI hooks
+            // For now, this is just a placeholder to log the tracking status.
+        }
+
+        // Particle effect for background (keeps the UI interesting)
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 4 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
+    </script>
 </head>
 <body>
 
-    <h1>Free Fire Aimbot & Tweak Injector</h1>
-    <p>Welcome to the Free Fire Aimbot Injector Tool</p>
-    <div class="container">
-        <button class="button" onclick="injectAimbot('AWM')">Activate AWM Aimbot</button>
-        <button class="button" onclick="injectAimbot('Standard')">Activate Standard Aimbot</button>
-        
-        <!-- File input for selecting a Tweak .dylib file -->
-        <input type="file" id="tweakFile" accept=".dylib">
-        <button class="button" onclick="injectTweak()">Inject Tweak</button>
+    <div class="particle-bg"></div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">Free Version Aimbot</div>
+
+    <div class="mod-menu-container">
+        <h3>Aimbot Settings</h3>
+
+        <label>
+            Enable Aimbot:
+            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+                <span></span>
+            </div>
+        </label>
     </div>
 
-    <div class="footer">
-        <p>By @iOSrazielOFC</p>
-    </div>
-
-    <script>
-        // Function to send the Aimbot injection command
-        function injectAimbot(aimbotType) {
-            const url = `freefire://injectAimbot?aimbotConfig=${aimbotType}&bundle=com.dts.freefireth`;
-            window.location.href = url; // Sends command to the Python server
-            console.log(`Sending Aimbot injection request: ${url}`);
-        }
-
-        // Function to inject the selected Tweak file
-        function injectTweak() {
-            const fileInput = document.getElementById("tweakFile");
-            if (fileInput.files.length === 0) {
-                alert("Please select a tweak file first!");
-                return;
-            }
-
-            const tweakFile = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const tweakData = event.target.result;
-                const url = `freefire://injectTweak?tweak=${encodeURIComponent(tweakData)}&bundle=com.dts.freefireth`;
-                window.location.href = url; // Sends command to the Python server
-                console.log(`Sending Tweak injection request: ${url}`);
-            };
-            reader.readAsArrayBuffer(tweakFile);  // Reads the file as binary data
-        }
-    </script>
+    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
 
 </body>
 </html>
