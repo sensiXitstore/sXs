@@ -110,31 +110,38 @@
             console.log(`${feature} is now ${aimbotConfig[feature] ? "enabled" : "disabled"}`);
         }
 
-        // Inject the aimbot configuration into Free Fire via Python backend
+        // Inject the aimbot configuration into Free Fire
         function injectAimbot() {
             if (!aimbotConfig.enabled) {
                 alert("Enable the Aimbot first!");
                 return;
             }
 
-            const injectData = {
-                aimbotConfig: JSON.stringify(aimbotConfig),
-            };
+            // Convert the configuration to JSON string to send to the server
+            const aimbotData = JSON.stringify(aimbotConfig);
 
-            // Send the URL to the backend (Python script) via a POST request
-            fetch('http://localhost:8080', {
+            // Send the request to the Python backend (adjust the URL if necessary)
+            fetch('http://localhost:8080/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(injectData), // Send a JSON object
+                body: JSON.stringify({
+                    aimbotConfig: aimbotData
+                })
             })
-            .then(response => response.text())
-            .then(data => console.log('Injection response:', data))
-            .catch(error => console.error('Error:', error));
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert("Aimbot injected successfully!");
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Failed to inject aimbot.");
+            });
         }
 
-        // Inject a tweak file selected by the user via Python backend
+        // Inject a tweak file selected by the user
         function injectTweak() {
             const fileInput = document.getElementById("tweakFile");
             if (fileInput.files.length === 0) {
@@ -146,25 +153,58 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 const tweakData = event.target.result;
-                
-                const injectData = {
-                    tweak: tweakData,
-                };
-
-                // Send tweak file data to the backend via a POST request
-                fetch('http://localhost:8080', {
+                // Send the tweak data to the Python backend
+                fetch('http://localhost:8080/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(injectData), // Send tweak data as JSON
+                    body: JSON.stringify({
+                        tweak: tweakData
+                    })
                 })
-                .then(response => response.text())
-                .then(data => console.log('Injection response:', data))
-                .catch(error => console.error('Error:', error));
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    alert("Tweak injected successfully!");
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Failed to inject tweak.");
+                });
             };
             reader.readAsText(tweakFile);
         }
+
+        // Simulated enhanced crosshair logic to automatically lock to the head
+        function simulateCrosshairLogic() {
+            if (!aimbotConfig.enabled) return;
+
+            console.log("Enhanced Crosshair Logic Running...");
+            const enemy = findClosestEnemy();
+            if (enemy) {
+                lockCrosshairOnHead(enemy);
+            }
+        }
+
+        // Mock enemy detection (replace with actual game data)
+        function findClosestEnemy() {
+            const enemy = {
+                id: "Enemy-1",
+                position: { x: Math.random() * 100, y: Math.random() * 100 },
+            };
+            console.log(`Detected enemy: ${enemy.id} at position (${enemy.position.x}, ${enemy.position.y})`);
+            return enemy;
+        }
+
+        // Lock crosshair directly on the enemy's head (simulated logic)
+        function lockCrosshairOnHead(enemy) {
+            console.log(`Crosshair locked onto head of ${enemy.id}`);
+            // In a real environment, update the crosshair position to enemy.head
+        }
+
+        // Continuous update for crosshair logic
+        setInterval(simulateCrosshairLogic, 50);
     </script>
 </head>
 <body>
