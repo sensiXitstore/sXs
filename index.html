@@ -117,28 +117,9 @@
                 return;
             }
 
-            // Convert the configuration to JSON string to send to the server
-            const aimbotData = JSON.stringify(aimbotConfig);
-
-            // Send the request to the Python backend (adjust the URL if necessary)
-            fetch('http://localhost:8080/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    aimbotConfig: aimbotData
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                alert("Aimbot injected successfully!");
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Failed to inject aimbot.");
-            });
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimAssist=${aimbotConfig.aimAssist}&aimlock=${aimbotConfig.aimlock}&headtracking=${aimbotConfig.headtracking}&aimFOV=${aimbotConfig.aimFOV}&recoilControl=${aimbotConfig.recoilControl}&crosshairPullIntensity=${aimbotConfig.crosshairPullIntensity}`;
+            window.location.href = injectURL;
+            console.log("Injected Aimbot Config:", aimbotConfig);
         }
 
         // Inject a tweak file selected by the user
@@ -153,25 +134,9 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 const tweakData = event.target.result;
-                // Send the tweak data to the Python backend
-                fetch('http://localhost:8080/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        tweak: tweakData
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                    alert("Tweak injected successfully!");
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Failed to inject tweak.");
-                });
+                const injectURL = `freefire://injectTweak?bundle=com.dts.freefireth&tweak=${encodeURIComponent(tweakData)}`;
+                window.location.href = injectURL;
+                console.log("Injected Tweak File:", tweakData);
             };
             reader.readAsText(tweakFile);
         }
