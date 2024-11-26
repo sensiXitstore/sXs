@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Aimbot Tweak Injector</title>
+    <title>Free Fire Aimbot & Tweak Injector</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -43,6 +43,10 @@
             color: #FF4500;
             text-decoration: none;
         }
+        input[type="file"] {
+            margin: 20px 0;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -52,6 +56,9 @@
     <div class="container">
         <button class="button" onclick="injectAimbot('AWM')">Activate AWM Aimbot</button>
         <button class="button" onclick="injectAimbot('Standard')">Activate Standard Aimbot</button>
+        
+        <!-- File input for selecting a Tweak .dylib file -->
+        <input type="file" id="tweakFile" accept=".dylib">
         <button class="button" onclick="injectTweak()">Inject Tweak</button>
     </div>
 
@@ -60,16 +67,30 @@
     </div>
 
     <script>
+        // Function to send the Aimbot injection command
         function injectAimbot(aimbotType) {
             const url = `freefire://injectAimbot?aimbotConfig=${aimbotType}&bundle=com.dts.freefireth`;
             window.location.href = url; // Sends command to the Python server
             console.log(`Sending Aimbot injection request: ${url}`);
         }
 
+        // Function to inject the selected Tweak file
         function injectTweak() {
-            const url = `freefire://injectTweak?tweak=enabled&bundle=com.dts.freefireth`;
-            window.location.href = url; // Sends command to the Python server
-            console.log(`Sending Tweak injection request: ${url}`);
+            const fileInput = document.getElementById("tweakFile");
+            if (fileInput.files.length === 0) {
+                alert("Please select a tweak file first!");
+                return;
+            }
+
+            const tweakFile = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const tweakData = event.target.result;
+                const url = `freefire://injectTweak?tweak=${encodeURIComponent(tweakData)}&bundle=com.dts.freefireth`;
+                window.location.href = url; // Sends command to the Python server
+                console.log(`Sending Tweak injection request: ${url}`);
+            };
+            reader.readAsArrayBuffer(tweakFile);  // Reads the file as binary data
         }
     </script>
 
