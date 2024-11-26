@@ -110,19 +110,7 @@
             console.log(`${feature} is now ${aimbotConfig[feature] ? "enabled" : "disabled"}`);
         }
 
-        // Inject the aimbot configuration into Free Fire
-        function injectAimbot() {
-            if (!aimbotConfig.enabled) {
-                alert("Enable the Aimbot first!");
-                return;
-            }
-
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimAssist=${aimbotConfig.aimAssist}&aimlock=${aimbotConfig.aimlock}&headtracking=${aimbotConfig.headtracking}&aimFOV=${aimbotConfig.aimFOV}&recoilControl=${aimbotConfig.recoilControl}&crosshairPullIntensity=${aimbotConfig.crosshairPullIntensity}`;
-            window.location.href = injectURL;
-            console.log("Injected Aimbot Config:", aimbotConfig);
-        }
-
-        // Inject a tweak file selected by the user
+        // Inject the tweak file into Free Fire
         function injectTweak() {
             const fileInput = document.getElementById("tweakFile");
             if (fileInput.files.length === 0) {
@@ -141,35 +129,17 @@
             reader.readAsText(tweakFile);
         }
 
-        // Simulated enhanced crosshair logic to automatically lock to the head
-        function simulateCrosshairLogic() {
-            if (!aimbotConfig.enabled) return;
-
-            console.log("Enhanced Crosshair Logic Running...");
-            const enemy = findClosestEnemy();
-            if (enemy) {
-                lockCrosshairOnHead(enemy);
+        // Inject the aimbot with the selected config
+        function injectAimbot() {
+            if (!aimbotConfig.enabled) {
+                alert("Enable the Aimbot first!");
+                return;
             }
-        }
 
-        // Mock enemy detection (replace with actual game data)
-        function findClosestEnemy() {
-            const enemy = {
-                id: "Enemy-1",
-                position: { x: Math.random() * 100, y: Math.random() * 100 },
-            };
-            console.log(`Detected enemy: ${enemy.id} at position (${enemy.position.x}, ${enemy.position.y})`);
-            return enemy;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimbotConfig=${encodeURIComponent(JSON.stringify(aimbotConfig))}`;
+            window.location.href = injectURL;
+            console.log("Injected Aimbot Config:", aimbotConfig);
         }
-
-        // Lock crosshair directly on the enemy's head (simulated logic)
-        function lockCrosshairOnHead(enemy) {
-            console.log(`Crosshair locked onto head of ${enemy.id}`);
-            // In a real environment, update the crosshair position to enemy.head
-        }
-
-        // Continuous update for crosshair logic
-        setInterval(simulateCrosshairLogic, 50);
     </script>
 </head>
 <body>
