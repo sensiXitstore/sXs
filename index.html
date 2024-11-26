@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #1b1b1b;
+            background: #181818;
             color: white;
             margin: 0;
             padding: 0;
@@ -25,92 +25,65 @@
             max-width: 800px;
             text-align: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
         }
 
         .title {
-            font-size: 2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
             color: #ff1744;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
-        .toggle-container {
-            text-align: left;
-            margin: 15px 0;
-        }
-
-        .toggle-container label {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-        }
-
-        .toggle-switch {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            background-color: #555;
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .toggle-switch.active {
-            background-color: #00e676;
-        }
-
-        .toggle-switch span {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: white;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.active span {
-            left: 30px;
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 300;
+            font-style: italic;
         }
 
         .button {
             background: #00b0ff;
             color: white;
             border: none;
-            padding: 10px 15px;
-            margin: 10px 5px;
-            border-radius: 5px;
+            padding: 12px 18px;
+            margin: 12px 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1.2rem;
             transition: 0.3s;
+            width: 100%;
         }
 
         .button:hover {
             background: #007bb5;
         }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #ff1744;
+        }
+
+        input[type="file"] {
+            background: #222;
+            color: white;
+            border: 2px solid #555;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 20px 0;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover {
+            border-color: #00b0ff;
+        }
     </style>
 
     <script>
-        const aimbotConfig = {
-            enabled: false,
-            aimAssist: false,
-            aimlock: false,
-            headtracking: false,
-            aimFOV: false,
-            recoilControl: false,
-            crosshairPullIntensity: 100, // Default maximum
-        };
-
-        // Toggles each feature on/off
-        function toggleFeature(feature) {
-            aimbotConfig[feature] = !aimbotConfig[feature];
-            document.getElementById(`${feature}-toggle`).classList.toggle('active', aimbotConfig[feature]);
-            console.log(`${feature} is now ${aimbotConfig[feature] ? "enabled" : "disabled"}`);
-        }
-
-        // Inject the tweak file into Free Fire
         function injectTweak() {
             const fileInput = document.getElementById("tweakFile");
             if (fileInput.files.length === 0) {
@@ -128,66 +101,18 @@
             };
             reader.readAsText(tweakFile);
         }
-
-        // Inject the aimbot with the selected config
-        function injectAimbot() {
-            if (!aimbotConfig.enabled) {
-                alert("Enable the Aimbot first!");
-                return;
-            }
-
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimbotConfig=${encodeURIComponent(JSON.stringify(aimbotConfig))}`;
-            window.location.href = injectURL;
-            console.log("Injected Aimbot Config:", aimbotConfig);
-        }
     </script>
 </head>
 <body>
     <div class="mod-menu">
         <div class="title">Advanced Aimbot Mod Menu</div>
+        <div class="subtitle">Inject your aimbot tweaks seamlessly into Free Fire</div>
 
-        <div class="toggle-container">
-            <label>
-                Aimbot Enabled:
-                <div class="toggle-switch" id="enabled-toggle" onclick="toggleFeature('enabled')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Aim Assist:
-                <div class="toggle-switch" id="aimAssist-toggle" onclick="toggleFeature('aimAssist')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Aimlock:
-                <div class="toggle-switch" id="aimlock-toggle" onclick="toggleFeature('aimlock')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Headtracking:
-                <div class="toggle-switch" id="headtracking-toggle" onclick="toggleFeature('headtracking')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Aim FOV:
-                <div class="toggle-switch" id="aimFOV-toggle" onclick="toggleFeature('aimFOV')">
-                    <span></span>
-                </div>
-            </label>
-            <label>
-                Recoil Control:
-                <div class="toggle-switch" id="recoilControl-toggle" onclick="toggleFeature('recoilControl')">
-                    <span></span>
-                </div>
-            </label>
-        </div>
+        <input type="file" id="tweakFile" accept=".txt,.py" />
 
-        <input type="file" id="tweakFile" style="margin: 20px 0; color: white;">
         <button class="button" onclick="injectTweak()">Inject Tweak</button>
-        <button class="button" onclick="injectAimbot()">Inject Aimbot</button>
+
+        <div class="footer">Created by @iOSrazielOFC</div>
     </div>
 </body>
 </html>
