@@ -3,87 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Aimbot Mod Menu</title>
+    <title>Free Fire Tweak Injector</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #181818;
-            color: white;
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .mod-menu {
-            background: #333;
-            border-radius: 15px;
-            padding: 20px;
-            width: 90%;
-            max-width: 800px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .title {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #ff1744;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            color: #ffffff;
-            font-weight: 300;
-            font-style: italic;
-        }
-
-        .button {
-            background: #00b0ff;
+            background: url('IMG_8958.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
             color: white;
+            text-align: center;
+        }
+        .overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        .container {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #ff4500;
+            font-size: 2.5em;
+        }
+        input[type="file"] {
+            margin: 20px auto;
+            display: block;
+            padding: 10px;
+            color: #fff;
+            background-color: rgba(255, 69, 0, 0.8);
             border: none;
-            padding: 12px 18px;
-            margin: 12px 5px;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: 0.3s;
-            width: 100%;
+            font-size: 16px;
         }
-
-        .button:hover {
-            background: #007bb5;
+        input[type="file"]::-webkit-file-upload-button {
+            visibility: hidden;
         }
-
+        input[type="file"]:hover {
+            background-color: rgba(255, 99, 71, 0.8);
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff4500;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #ff6347;
+        }
         .footer {
             margin-top: 20px;
-            font-size: 1rem;
-            color: #ff1744;
+            font-size: 1.2em;
         }
-
-        input[type="file"] {
-            background: #222;
-            color: white;
-            border: 2px solid #555;
-            padding: 10px;
-            border-radius: 8px;
-            margin: 20px 0;
-            width: 100%;
-            cursor: pointer;
-        }
-
-        input[type="file"]:hover {
-            border-color: #00b0ff;
+        .footer p {
+            margin: 0;
+            color: #ff4500;
         }
     </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+        <h1>Free Fire Tweak Injector</h1>
+        <input type="file" id="tweakFile" accept=".dylib">
+        <button onclick="injectTweak()">Inject Tweak</button>
+        <div class="footer">
+            <p>By @iOSrazielOFC</p>
+        </div>
+    </div>
 
     <script>
+        // Function to inject the selected Tweak file
         function injectTweak() {
             const fileInput = document.getElementById("tweakFile");
             if (fileInput.files.length === 0) {
@@ -95,24 +96,12 @@
             const reader = new FileReader();
             reader.onload = function(event) {
                 const tweakData = event.target.result;
-                const injectURL = `freefire://injectTweak?bundle=com.dts.freefireth&tweak=${encodeURIComponent(tweakData)}`;
-                window.location.href = injectURL;
-                console.log("Injected Tweak File:", tweakData);
+                const url = `freefire://injectTweak?tweak=${encodeURIComponent(tweakData)}&bundle=com.dts.freefireth`;
+                window.location.href = url; // Sends command to the Python server
+                console.log(`Sending Tweak injection request: ${url}`);
             };
-            reader.readAsText(tweakFile);
+            reader.readAsArrayBuffer(tweakFile); // Reads the file as binary data
         }
     </script>
-</head>
-<body>
-    <div class="mod-menu">
-        <div class="title">Advanced Aimbot Mod Menu</div>
-        <div class="subtitle">Inject your aimbot tweaks seamlessly into Free Fire</div>
-
-        <input type="file" id="tweakFile" accept=".txt,.py" />
-
-        <button class="button" onclick="injectTweak()">Inject Tweak</button>
-
-        <div class="footer">Created by @iOSrazielOFC</div>
-    </div>
 </body>
 </html>
