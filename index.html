@@ -3,69 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG Mod Menu</title>
+    <title>Raziel G Mod Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        /* General Page Styles */
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: black;
-            color: white;
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #000; /* Black background */
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
         }
-        #modMenu {
-            background-color: rgba(0, 0, 0, 0.6);
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Title Styling with 3D effect */
+        .title {
+            font-family: 'Bangers', sans-serif;
+            font-size: 4em; /* Slightly smaller font */
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.5), 
+                4px 4px 8px rgba(0, 0, 0, 0.4),
+                6px 6px 12px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite; /* Floating effect */
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Tab navigation */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .tab-button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            border-radius: 10px;
+            transition: 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #555;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            width: 300px;
-            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
         }
-        #modMenu h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
+
+        /* Show the active tab */
+        .active-tab {
+            display: block;
         }
-        #modMenu p {
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        input[type="file"] {
-            margin-bottom: 20px;
-        }
-        button {
-            background-color: gray;
-            border: none;
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: white;
-            color: black;
-        }
-        #username {
-            font-size: 14px;
+
+        /* Subtitle Styling */
+        .subtitle {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #ffffff;
             margin-top: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Buttons and File Upload */
+        .upload-button {
+            background-color: #333333; /* Dark gray background */
+            color: #ffffff;
+            border: none;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            margin-top: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-button:hover {
+            background-color: #555555; /* Lighter gray on hover */
+        }
+
+        /* File upload input */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* File upload label */
+        .file-label {
+            display: block;
+            margin-top: 20px;
+            color: #ffffff;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            font-size: 1em;
+            color: #ffffff;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-    <div id="modMenu">
-        <h1>Raziel G</h1>
-        <p>Injectable Tweak 💉</p>
-        <input type="file" id="tweakFile">
-        <br>
-        <button onclick="injectTweak()">Inject Tweak</button>
-        <p id="username"><a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">Follow @iOSrazielOFC</a></p>
+
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Title "Raziel G" with 3D effect -->
+        <div class="title">Raziel G</div>
+
+        <!-- Subtitle -->
+        <div class="subtitle">Injectable Tweak</div>
+
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button" onclick="showTab('injectTab')">Inject Tweak</button>
+            <button class="tab-button" onclick="showTab('settingsTab')">Settings</button>
+            <button class="tab-button" onclick="showTab('creditsTab')">Credits</button>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="injectTab" class="tab-content active-tab">
+            <input type="file" id="tweakFile" accept=".dylib,.py">
+            <label for="tweakFile" class="file-label">Choose Tweak File</label>
+            <button class="upload-button" onclick="injectTweak()">Inject Tweak</button>
+        </div>
+
+        <div id="settingsTab" class="tab-content">
+            <h2 style="color: white;">Settings Page</h2>
+            <p style="color: white;">Customize your experience.</p>
+        </div>
+
+        <div id="creditsTab" class="tab-content">
+            <h2 style="color: white;">Credits</h2>
+            <p style="color: white;">Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a></p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a>
+        </div>
     </div>
 
     <script>
+        // Show active tab content
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+
+            const activeTab = document.getElementById(tabId);
+            activeTab.classList.add('active-tab');
+        }
+
         // Function to inject the selected tweak
         function injectTweak() {
             const fileInput = document.getElementById("tweakFile");
@@ -85,5 +227,6 @@
             reader.readAsArrayBuffer(tweakFile); // Reads the file as binary data
         }
     </script>
+
 </body>
 </html>
