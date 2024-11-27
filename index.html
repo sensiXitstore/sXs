@@ -3,232 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
-
+    <title>Advanced Aimbot Mod Menu</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
+            background: #181818;
+            color: white;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            text-align: center;
-            height: 100vh;
-            background-color: white;
-            color: #333;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .mod-menu {
+            background: #333;
+            border-radius: 15px;
+            padding: 20px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease-in-out;
         }
 
         .title {
-            font-family: 'Lora', serif;
-            font-size: 4em;
-            color: black;
-            margin-top: 20px;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
-            display: inline-block;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #ff1744;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
         .subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.2em;
-            color: black;
-            margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-            display: inline-block;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+            font-weight: 300;
+            font-style: italic;
         }
 
-        .mod-menu-container {
-            display: block;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 15px;
-            width: 80%;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 2;
-            margin-top: 20px;
-        }
-
-        .mod-menu-container h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
+        .button {
+            background: #00b0ff;
             color: white;
-        }
-
-        .mod-menu-container label {
-            font-size: 1.1em;
-            color: #d3d3d3;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        .toggle-switch {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            background-color: #ccc;
-            border-radius: 30px;
-            position: relative;
+            border: none;
+            padding: 12px 18px;
+            margin: 12px 5px;
+            border-radius: 8px;
             cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            width: 100%;
         }
 
-        .toggle-switch span {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: #fff;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.active {
-            background-color: #00bfff;
-        }
-
-        .toggle-switch.active span {
-            left: 30px;
+        .button:hover {
+            background: #007bb5;
         }
 
         .footer {
-            font-size: 1em;
-            color: black;
-            margin-bottom: 10px;
             margin-top: 20px;
+            font-size: 1rem;
+            color: #ff1744;
         }
 
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
+        input[type="file"] {
+            background: #222;
+            color: white;
+            border: 2px solid #555;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 20px 0;
             width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
+            cursor: pointer;
         }
 
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: black;
-            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-            animation: moveParticles 4s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% {
-                transform: translate(100vw, -10vh) rotate(135deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-10vw, 100vh) rotate(135deg);
-                opacity: 0;
-            }
+        input[type="file"]:hover {
+            border-color: #00b0ff;
         }
     </style>
 
     <script>
-        const aimbot = {
-            enabled: false,
-            aimlock: true,
-            aimAssist: true,
-            headTracking: true,
-            noRecoil: true,
-            aimFOV: true,
-            headshotOnly: true
-        };
-
-        let lastKnownHeadPosition = { x: 0, y: 0 };
-
-        // Custom logic for injection
-        function toggleAimbot() {
-            aimbot.enabled = !aimbot.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
-            if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
-                injectAimbot();
-            } else {
-                toggleSwitch.classList.remove('active');
-                injectNoAimbot();
+        function injectTweak() {
+            const fileInput = document.getElementById("tweakFile");
+            if (fileInput.files.length === 0) {
+                alert("Please select a tweak file first!");
+                return;
             }
-        }
 
-        // Simulated aimbot injection for Free Fire with the correct bundle ID
-        function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true`;
-            window.location.href = injectURL; // Inject aimbot into Free Fire game
-            
-            console.log("Injected aimbot with settings: ", aimbot);
-            trackHeadPosition();  // Start tracking heads when aimbot is enabled
+            const tweakFile = fileInput.files[0];
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const tweakData = event.target.result;
+                const injectURL = `freefire://injectTweak?bundle=com.dts.freefireth&tweak=${encodeURIComponent(tweakData)}`;
+                window.location.href = injectURL;
+                console.log("Injected Tweak File:", tweakData);
+            };
+            reader.readAsText(tweakFile);
         }
-
-        // Simulate disabling the aimbot
-        function injectNoAimbot() {
-            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
-            window.location.href = injectURL; // Disable aimbot in Free Fire game
-            console.log("Aimbot disabled.");
-        }
-
-        // Simulated head tracking for demonstration (replace with real tracking in a real environment)
-        function trackHeadPosition() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    // Simulating head position (replace this with actual head detection logic)
-                    lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
-                    updateCrosshairPosition(lastKnownHeadPosition); // Update crosshair position
-                }
-            }, 50); // Updates every 50ms for smooth tracking
-        }
-
-        // Function to update the crosshair position (simulate tracking)
-        function updateCrosshairPosition(position) {
-            console.log('Tracking enemy head at', position);
-            // Here you would modify the game's crosshair position using game APIs or UI hooks
-            // For now, this is just a placeholder to log the tracking status.
-        }
-
-        // Particle effect for background (keeps the UI interesting)
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 4 + "s";
-                particleContainer.appendChild(particle);
-            }
-        });
     </script>
 </head>
 <body>
+    <div class="mod-menu">
+        <div class="title">Advanced Aimbot Mod Menu</div>
+        <div class="subtitle">Inject your aimbot tweaks seamlessly into Free Fire</div>
 
-    <div class="particle-bg"></div>
-    <div class="title">RG G4NG 414</div>
-    <div class="subtitle">Free Version Aimbot</div>
+        <input type="file" id="tweakFile" accept=".txt,.py" />
 
-    <div class="mod-menu-container">
-        <h3>Aimbot Settings</h3>
+        <button class="button" onclick="injectTweak()">Inject Tweak</button>
 
-        <label>
-            Enable Aimbot:
-            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
-                <span></span>
-            </div>
-        </label>
+        <div class="footer">Created by @iOSrazielOFC</div>
     </div>
-
-    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
-
 </body>
 </html>
