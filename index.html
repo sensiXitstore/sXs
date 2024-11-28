@@ -29,6 +29,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             padding: 20px;
             text-align: center;
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 90vh; /* Limit the container's height */
         }
 
         /* Title */
@@ -111,11 +113,12 @@
             color: #fff;
         }
 
+        /* Switches Styles */
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 26px;
+            width: 30px;  /* Smaller switch width */
+            height: 16px;  /* Smaller switch height */
         }
 
         .switch input {
@@ -133,18 +136,18 @@
             bottom: 0;
             background-color: #ccc;
             transition: 0.4s;
-            border-radius: 26px;
+            border-radius: 16px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 20px;
-            width: 20px;
+            height: 12px;  /* Smaller slider */
+            width: 12px;   /* Smaller slider */
             border-radius: 50%;
             background-color: white;
-            bottom: 3px;
-            left: 3px;
+            bottom: 2px;   /* Adjusted to center vertically */
+            left: 2px;     /* Adjusted to center horizontally */
             transition: 0.4s;
         }
 
@@ -153,7 +156,7 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(24px);
+            transform: translateX(14px); /* Adjusted translation for smaller size */
         }
 
         /* Footer */
