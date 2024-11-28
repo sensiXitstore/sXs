@@ -15,7 +15,7 @@
             color: #ffffff;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             height: 100%;
             overflow: hidden;
         }
@@ -23,7 +23,7 @@
         /* Main Container */
         .container {
             width: 95%;
-            max-width: 600px;
+            max-width: 800px;
             background: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
@@ -49,7 +49,45 @@
             margin-bottom: 20px;
         }
 
-        /* Modernized Upload Area */
+        /* Tab Styles */
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: #2a2a3b;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            font-size: 1.1em;
+            color: #fff;
+            cursor: pointer;
+            text-align: center;
+            background: #333;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .tab:hover {
+            background: #444;
+        }
+
+        .active-tab {
+            background: #FFD700;
+            color: #333;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Upload Section */
         .upload-section {
             margin: 30px 0;
         }
@@ -188,8 +226,23 @@
             <button class="upload-button" onclick="loadPlist()">Upload and Load Functions</button>
         </div>
 
-        <!-- Functions Container -->
-        <div id="functions-container" class="functions-container"></div>
+        <!-- Tabs -->
+        <div class="tabs">
+            <div class="tab active-tab" onclick="switchTab('tab1')">Aimbot</div>
+            <div class="tab" onclick="switchTab('tab2')">Recoil Control</div>
+            <div class="tab" onclick="switchTab('tab3')">Headshots</div>
+        </div>
+
+        <!-- Tab Contents -->
+        <div id="tab1" class="tab-content active">
+            <div id="functions-container-1" class="functions-container"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div id="functions-container-2" class="functions-container"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div id="functions-container-3" class="functions-container"></div>
+        </div>
 
         <!-- Footer -->
         <div class="footer">
@@ -228,10 +281,12 @@
             renderFunctions();
         }
 
-        // Render function toggles
+        // Render function toggles based on tab
         function renderFunctions() {
-            const container = document.getElementById("functions-container");
-            container.innerHTML = '';
+            // Clear previous content in each tab
+            document.getElementById("functions-container-1").innerHTML = '';
+            document.getElementById("functions-container-2").innerHTML = '';
+            document.getElementById("functions-container-3").innerHTML = '';
 
             plistData.forEach(functionName => {
                 const functionItem = document.createElement('div');
@@ -254,12 +309,30 @@
                 switchContainer.appendChild(input);
                 switchContainer.appendChild(slider);
                 functionItem.appendChild(name);
-                functionItem.appendChild(switchContainer);
 
-                container.appendChild(functionItem);
+                if (functionName.includes('Aimbot')) {
+                    document.getElementById("functions-container-1").appendChild(functionItem);
+                } else if (functionName.includes('Recoil')) {
+                    document.getElementById("functions-container-2").appendChild(functionItem);
+                } else if (functionName.includes('Headshot')) {
+                    document.getElementById("functions-container-3").appendChild(functionItem);
+                }
             });
         }
 
+        // Switch between tabs
+        function switchTab(tabId) {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+            contents.forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`[onclick="switchTab('${tabId}')"]`).classList.add('active-tab');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Toggle function on/off
         function toggleFunction(name, isActive) {
             console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
             if (name === "launchFreeFire" && isActive) {
