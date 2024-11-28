@@ -6,25 +6,27 @@
     <title>Raziel G Mod Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <style>
+        /* General Page Styles */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: 'Open Sans', sans-serif;
-            background-color: #000;
+            background-color: #000; /* Black background */
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            overflow: hidden; /* Prevent scrolling */
         }
 
+        /* Main Container */
         .container {
             width: 90%;
             max-width: 800px;
             height: 80%;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8);
+            background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
             text-align: center;
@@ -32,55 +34,59 @@
             animation: fadeIn 0.5s ease-in-out;
         }
 
+        /* Title Styling with 3D effect */
         .title {
             font-family: 'Bangers', sans-serif;
-            font-size: 4em;
+            font-size: 4em; /* Slightly smaller font */
             font-weight: 700;
             color: #ffffff;
             text-transform: uppercase;
             letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            animation: float 3s ease-in-out infinite;
+            text-shadow: 
+                2px 2px 4px rgba(0, 0, 0, 0.5), 
+                4px 4px 8px rgba(0, 0, 0, 0.4),
+                6px 6px 12px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite; /* Floating effect */
         }
 
         @keyframes float {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
         }
 
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .tab-button {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            border: none;
-            cursor: pointer;
-            margin: 0 10px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .tab-button:hover { background-color: #555; }
-
-        .tab-content { display: none; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.7); }
-
-        .active-tab { display: block; }
-
+        /* Subtitle Styling */
         .subtitle {
             font-family: 'Open Sans', sans-serif;
             font-size: 1.8em;
             font-weight: 600;
             color: #ffffff;
             margin-top: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
         }
 
+        /* File upload input */
+        input[type="file"] {
+            display: none;
+        }
+
+        /* File upload label */
+        .file-label {
+            display: block;
+            margin-top: 20px;
+            color: #ffffff;
+            font-size: 1.2em;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Footer */
         .footer {
             font-size: 1em;
             color: #ffffff;
@@ -88,10 +94,16 @@
             text-align: center;
         }
 
-        .footer a { color: #ffffff; text-decoration: none; }
+        .footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
 
-        .footer a:hover { text-decoration: underline; }
+        .footer a:hover {
+            text-decoration: underline;
+        }
 
+        /* Switches */
         .switch {
             position: relative;
             display: inline-block;
@@ -99,7 +111,11 @@
             height: 34px;
         }
 
-        .switch input { opacity: 0; width: 0; height: 0; }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
 
         .slider {
             position: absolute;
@@ -109,7 +125,7 @@
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            transition: 0.4s;
+            transition: .4s;
             border-radius: 34px;
         }
 
@@ -122,132 +138,118 @@
             left: 4px;
             bottom: 4px;
             background-color: white;
-            transition: 0.4s;
+            transition: .4s;
         }
 
-        input:checked + .slider { background-color: #2196F3; }
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
 
-        input:checked + .slider:before { transform: translateX(26px); }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
     </style>
 </head>
 <body>
 
+    <!-- Main Content Container -->
     <div class="container">
+        <!-- Title "Raziel G" with 3D effect -->
         <div class="title">Raziel G</div>
+
+        <!-- Subtitle -->
         <div class="subtitle">Injectable Tweak</div>
 
-        <div class="tabs">
-            <button class="tab-button" onclick="showTab('injectTab')">Inject Tweak</button>
-            <button class="tab-button" onclick="showTab('settingsTab')">Settings</button>
-            <button class="tab-button" onclick="showTab('creditsTab')">Credits</button>
+        <!-- Upload File -->
+        <input type="file" id="plistFile" accept=".plist">
+        <label for="plistFile" class="file-label">Choose Plist File</label>
+
+        <!-- Switches to activate functions from plist -->
+        <div id="modFunctions">
+            <!-- Switches will be added here dynamically after uploading .plist file -->
         </div>
 
-        <div id="injectTab" class="tab-content active-tab">
-            <input type="file" id="tweakFile" accept=".py">
-            <label for="tweakFile" class="file-label">Choose Tweak File</label>
-            <button class="upload-button" onclick="uploadTweak()">Upload Tweak</button>
-        </div>
-
-        <div id="settingsTab" class="tab-content">
-            <h2>Settings</h2>
-            <p>Toggle functions below:</p>
-            <label>Activate Aimbot:
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFunction('aimbot', this)">
-                    <span class="slider"></span>
-                </label>
-            </label><br><br>
-
-            <label>Activate Recoil Control:
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFunction('recoil', this)">
-                    <span class="slider"></span>
-                </label>
-            </label><br><br>
-
-            <label>Activate Speed Hack:
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFunction('speed', this)">
-                    <span class="slider"></span>
-                </label>
-            </label><br><br>
-
-            <label>Activate Auto Headshot:
-                <label class="switch">
-                    <input type="checkbox" onchange="toggleFunction('headshot', this)">
-                    <span class="slider"></span>
-                </label>
-            </label><br><br>
-        </div>
-
-        <div id="creditsTab" class="tab-content">
-            <h2>Credits</h2>
-            <p>Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a></p>
-        </div>
-
+        <!-- Footer -->
         <div class="footer">
             Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a>
         </div>
     </div>
 
     <script>
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active-tab'));
-            document.getElementById(tabId).classList.add('active-tab');
-        }
+        document.getElementById("plistFile").addEventListener("change", handleFileUpload);
 
-        function uploadTweak() {
-            const fileInput = document.getElementById("tweakFile");
-            if (fileInput.files.length === 0) {
-                alert("Please select a tweak file first!");
-                return;
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (file && file.name.endsWith('.plist')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const plistData = e.target.result;
+                    parsePlist(plistData);
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Please upload a valid .plist file.");
             }
+        }
 
-            const formData = new FormData();
-            formData.append('file', fileInput.files[0]);
+        function parsePlist(plistData) {
+            // Here, you would parse the .plist data.
+            // For now, I'll simulate extracting some function data from the .plist.
 
-            fetch('http://localhost:8080/upload', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("Tweak uploaded successfully!");
-                } else {
-                    alert("Failed to upload tweak: " + data.message);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Error uploading tweak.");
+            const functions = [
+                { name: "Aimbot", id: "aimbot" },
+                { name: "Recoil Control", id: "recoilControl" },
+                { name: "Auto Headshot", id: "autoHeadshot" }
+            ];
+
+            updateSwitches(functions);
+        }
+
+        function updateSwitches(functions) {
+            const modFunctionsDiv = document.getElementById("modFunctions");
+            modFunctionsDiv.innerHTML = ""; // Clear previous switches
+
+            functions.forEach(func => {
+                const switchDiv = document.createElement("div");
+                switchDiv.className = "switch-container";
+                switchDiv.innerHTML = `
+                    <label>${func.name}</label>
+                    <label class="switch">
+                        <input type="checkbox" id="${func.id}">
+                        <span class="slider"></span>
+                    </label>
+                `;
+                modFunctionsDiv.appendChild(switchDiv);
+
+                // Add event listener to the switch
+                document.getElementById(func.id).addEventListener("change", function() {
+                    toggleFunction(func.id, this.checked);
+                });
             });
         }
 
-        function toggleFunction(functionName, switchElement) {
-            const isActive = switchElement.checked;
-            fetch("http://localhost:8080/execute", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ functionName, active: isActive })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(`${functionName} toggled ${isActive ? "ON" : "OFF"} successfully!`);
-                } else {
-                    alert(`Failed to toggle ${functionName}: ${data.message}`);
-                    switchElement.checked = !isActive; // Revert the switch on error
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Error toggling function.");
-                switchElement.checked = !isActive; // Revert the switch on error
-            });
+        function toggleFunction(functionId, isChecked) {
+            if (isChecked) {
+                // Trigger the function to be activated
+                alert(`${functionId} is now activated!`);
+                openFreeFire(); // Open Free Fire when a function is activated
+            } else {
+                // Trigger the function to be deactivated
+                alert(`${functionId} is now deactivated.`);
+            }
+        }
+
+        // Function to open Free Fire using URL scheme (if applicable)
+        function openFreeFire() {
+            // Assuming Free Fire has a custom URL scheme that can launch the app
+            window.location.href = "freefire://"; // Replace with correct URL scheme for Free Fire
+
+            // Optional: Delay to ensure the app opens (on some devices)
+            setTimeout(function() {
+                window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // Fallback to Play Store if app is not found
+            }, 500);
         }
     </script>
-
 </body>
 </html>
