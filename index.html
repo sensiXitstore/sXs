@@ -4,167 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mod Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <style>
         /* General Page Styles */
         body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+            background-color: #0f0f0f; /* Dark background */
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
             overflow: hidden;
         }
 
         /* Main Container */
         .container {
-            width: 95%;
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            width: 90%;
+            max-width: 800px;
+            height: 80%;
             padding: 20px;
+            background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
             text-align: center;
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* Title */
+        /* Title Styling with 3D effect */
         .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5em;
+            font-family: 'Bangers', sans-serif;
+            font-size: 3em;
             font-weight: 700;
+            color: #ffffff;
             text-transform: uppercase;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-            margin: 10px 0;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
         }
 
         /* Subtitle */
         .subtitle {
-            font-size: 1.2em;
-            color: #b3b3b3;
-            margin-bottom: 20px;
-        }
-
-        /* Modernized Upload Area */
-        .upload-section {
-            margin: 30px 0;
-        }
-
-        .file-label {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #2196F3;
+            font-size: 1.5em;
             color: #fff;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
+            margin-top: 10px;
         }
 
-        .file-label:hover {
-            background: #176db4;
-        }
-
-        #plistFile {
-            display: none;
-        }
-
-        .upload-button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #00c853, #009624);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-        }
-
-        .upload-button:hover {
-            background: linear-gradient(135deg, #009624, #00c853);
-        }
-
-        /* Function Toggles */
-        .functions-container {
+        /* Input Styles */
+        .input-container {
             margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .function-item {
+        .input-container input,
+        .input-container select {
+            margin: 10px 0;
+            padding: 8px;
+            width: 60%;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .switch-container {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #444;
-        }
-
-        .function-item:last-child {
-            border-bottom: none;
-        }
-
-        .function-name {
-            font-size: 1.1em;
-            color: #fff;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 50px;
-            height: 26px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 26px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            border-radius: 50%;
-            background-color: white;
-            bottom: 3px;
-            left: 3px;
-            transition: 0.4s;
-        }
-
-        input:checked + .slider {
-            background-color: #4CAF50;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(24px);
+            margin-top: 20px;
+            width: 100%;
         }
 
         /* Footer */
         .footer {
-            font-size: 0.9em;
-            color: #bbb;
+            font-size: 1em;
+            color: #ffffff;
             margin-top: 20px;
+            text-align: center;
         }
 
         .footer a {
-            color: #FFD700;
+            color: #ffffff;
             text-decoration: none;
         }
 
@@ -176,20 +98,68 @@
 <body>
 
     <div class="container">
-        <!-- Title -->
         <div class="title">Mod Menu</div>
-        <!-- Subtitle -->
         <div class="subtitle">Injectable Plist</div>
 
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <label for="plistFile" class="file-label">Choose Plist File</label>
+        <!-- File Upload -->
+        <div class="input-container">
             <input type="file" id="plistFile" accept=".plist">
-            <button class="upload-button" onclick="loadPlist()">Upload and Load Functions</button>
+            <button onclick="loadPlist()">Upload and Load Functions</button>
         </div>
 
-        <!-- Functions Container -->
-        <div id="functions-container" class="functions-container"></div>
+        <!-- Aimbot Settings -->
+        <div id="aimbotSettings" style="display:none;">
+            <div class="input-container">
+                <label for="aimbotEnabled">Enable Aimbot</label>
+                <input type="checkbox" id="aimbotEnabled">
+            </div>
+            <div class="input-container">
+                <label for="aimbotMode">Aimbot Mode</label>
+                <select id="aimbotMode">
+                    <option value="Headshot">Headshot</option>
+                    <option value="Bodyshot">Bodyshot</option>
+                    <option value="ClosestTarget">Closest Target</option>
+                </select>
+            </div>
+            <div class="input-container">
+                <label for="aimbotPrecision">Precision (1.0 = Max)</label>
+                <input type="number" id="aimbotPrecision" min="0.1" max="1.0" step="0.1" value="1.0">
+            </div>
+            <div class="input-container">
+                <label for="targetAcquisitionSpeed">Target Acquisition Speed</label>
+                <input type="number" id="targetAcquisitionSpeed" min="0.1" max="1.0" step="0.1" value="0.1">
+            </div>
+            <div class="input-container">
+                <label for="targetLockDuration">Target Lock Duration (seconds)</label>
+                <input type="number" id="targetLockDuration" min="0.5" max="5.0" step="0.5" value="2.0">
+            </div>
+            <div class="input-container">
+                <label for="maxAimbotRange">Max Aimbot Range (meters)</label>
+                <input type="number" id="maxAimbotRange" min="50" max="500" value="300">
+            </div>
+        </div>
+
+        <!-- Debugging Options -->
+        <div id="debugOptions" style="display:none;">
+            <div class="switch-container">
+                <div>
+                    <label for="showTargetIndicator">Show Targeting Indicator</label>
+                    <input type="checkbox" id="showTargetIndicator">
+                </div>
+                <div>
+                    <label for="logTargetInfo">Log Target Info</label>
+                    <input type="checkbox" id="logTargetInfo">
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Integration -->
+        <div id="gameIntegration" style="display:none;">
+            <div class="input-container">
+                <label for="launchGameAutomatically">Launch Game Automatically</label>
+                <input type="checkbox" id="launchGameAutomatically" checked>
+            </div>
+        </div>
 
         <!-- Footer -->
         <div class="footer">
@@ -198,14 +168,13 @@
     </div>
 
     <script>
-        let plistData = null;
+        let plistData = null; // To store the parsed plist data
 
-        // Function to load and parse plist file
         function loadPlist() {
             const fileInput = document.getElementById('plistFile');
             const file = fileInput.files[0];
 
-            if (file) {
+            if (file && file.type === "application/xml") {
                 const reader = new FileReader();
                 reader.onload = function(event) {
                     const plistContent = event.target.result;
@@ -213,58 +182,36 @@
                 };
                 reader.readAsText(file);
             } else {
-                alert("Please choose a valid .plist file.");
+                alert("Please upload a valid .plist file.");
             }
         }
 
-        // Parse plist content
         function parsePlist(plistContent) {
             const parser = new DOMParser();
             const xmlDoc = parser.parseFromString(plistContent, "application/xml");
-            const functionsDict = xmlDoc.getElementsByTagName("dict")[0];
-            const keys = functionsDict.getElementsByTagName("key");
+            const aimbotDict = xmlDoc.getElementsByTagName("dict")[0];
 
-            plistData = Array.from(keys).map(key => key.textContent);
-            renderFunctions();
-        }
+            const aimbotEnabled = aimbotDict.getElementsByTagName("key")[0].textContent === "EnableAimbot" && 
+                                  aimbotDict.getElementsByTagName("true").length > 0;
 
-        // Render function toggles
-        function renderFunctions() {
-            const container = document.getElementById("functions-container");
-            container.innerHTML = '';
+            const aimbotMode = aimbotDict.getElementsByTagName("key")[1].textContent;
+            const precision = parseFloat(aimbotDict.getElementsByTagName("real")[0].textContent);
+            const targetSpeed = parseFloat(aimbotDict.getElementsByTagName("real")[1].textContent);
+            const targetLock = parseFloat(aimbotDict.getElementsByTagName("real")[2].textContent);
+            const maxRange = parseInt(aimbotDict.getElementsByTagName("integer")[0].textContent);
 
-            plistData.forEach(functionName => {
-                const functionItem = document.createElement('div');
-                functionItem.className = 'function-item';
+            // Set the UI with the parsed data
+            document.getElementById("aimbotEnabled").checked = aimbotEnabled;
+            document.getElementById("aimbotMode").value = aimbotMode;
+            document.getElementById("aimbotPrecision").value = precision;
+            document.getElementById("targetAcquisitionSpeed").value = targetSpeed;
+            document.getElementById("targetLockDuration").value = targetLock;
+            document.getElementById("maxAimbotRange").value = maxRange;
 
-                const name = document.createElement('span');
-                name.className = 'function-name';
-                name.textContent = functionName;
-
-                const switchContainer = document.createElement('label');
-                switchContainer.className = 'switch';
-
-                const input = document.createElement('input');
-                input.type = 'checkbox';
-                input.addEventListener('change', () => toggleFunction(functionName, input.checked));
-
-                const slider = document.createElement('span');
-                slider.className = 'slider';
-
-                switchContainer.appendChild(input);
-                switchContainer.appendChild(slider);
-                functionItem.appendChild(name);
-                functionItem.appendChild(switchContainer);
-
-                container.appendChild(functionItem);
-            });
-        }
-
-        function toggleFunction(name, isActive) {
-            console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
-            if (name === "launchFreeFire" && isActive) {
-                window.location.href = "freefire://";
-            }
+            // Show relevant sections
+            document.getElementById('aimbotSettings').style.display = 'block';
+            document.getElementById('debugOptions').style.display = 'block';
+            document.getElementById('gameIntegration').style.display = 'block';
         }
     </script>
 
