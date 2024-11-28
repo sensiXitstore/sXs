@@ -248,7 +248,7 @@
         function toggleFunction(name, isActive) {
             console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
 
-            // Add custom logic to activate/deactivate functions here
+            // Check if the function name matches and activate/deactivate accordingly
             if (name === "launchFreeFire" && isActive) {
                 window.location.href = "freefire://";
             }
