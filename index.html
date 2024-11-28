@@ -3,112 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raziel G Mod Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <title>Mod Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         /* General Page Styles */
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            font-family: 'Open Sans', sans-serif;
-            background-color: #000; /* Black background */
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
             color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Prevent scrolling */
+            height: 100%;
+            overflow: hidden;
         }
 
         /* Main Container */
         .container {
-            width: 90%;
-            max-width: 800px;
-            height: 80%;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+            width: 95%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            padding: 20px;
             text-align: center;
-            overflow-y: auto;
-            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* Title Styling with 3D effect */
+        /* Title */
         .title {
-            font-family: 'Bangers', sans-serif;
-            font-size: 4em; /* Slightly smaller font */
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
             font-weight: 700;
-            color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 
-                2px 2px 4px rgba(0, 0, 0, 0.5), 
-                4px 4px 8px rgba(0, 0, 0, 0.4),
-                6px 6px 12px rgba(0, 0, 0, 0.3);
-            animation: float 3s ease-in-out infinite; /* Floating effect */
+            color: #FFD700;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            margin: 10px 0;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        /* Subtitle Styling */
+        /* Subtitle */
         .subtitle {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.8em;
-            font-weight: 600;
-            color: #ffffff;
-            margin-top: 10px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+            font-size: 1.2em;
+            color: #b3b3b3;
+            margin-bottom: 20px;
         }
 
-        /* File upload input */
-        input[type="file"] {
+        /* Modernized Upload Area */
+        .upload-section {
+            margin: 30px 0;
+        }
+
+        .file-label {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #2196F3;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .file-label:hover {
+            background: #176db4;
+        }
+
+        #plistFile {
             display: none;
         }
 
-        /* File upload label */
-        .file-label {
-            display: block;
-            margin-top: 20px;
-            color: #ffffff;
-            font-size: 1.2em;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        /* Footer */
-        .footer {
+        .upload-button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #00c853, #009624);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
             font-size: 1em;
-            color: #ffffff;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .upload-button:hover {
+            background: linear-gradient(135deg, #009624, #00c853);
+        }
+
+        /* Function Toggles */
+        .functions-container {
             margin-top: 20px;
-            text-align: center;
         }
 
-        .footer a {
-            color: #ffffff;
-            text-decoration: none;
+        .function-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
+        .function-item:last-child {
+            border-bottom: none;
         }
 
-        /* Switches */
+        .function-name {
+            font-size: 1.1em;
+            color: #fff;
+        }
+
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 34px;
+            width: 50px;
+            height: 26px;
         }
 
         .switch input {
@@ -125,50 +132,64 @@
             right: 0;
             bottom: 0;
             background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
+            transition: 0.4s;
+            border-radius: 26px;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
+            height: 20px;
+            width: 20px;
             border-radius: 50%;
-            left: 4px;
-            bottom: 4px;
             background-color: white;
-            transition: .4s;
+            bottom: 3px;
+            left: 3px;
+            transition: 0.4s;
         }
 
         input:checked + .slider {
-            background-color: #2196F3;
+            background-color: #4CAF50;
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(24px);
         }
 
+        /* Footer */
+        .footer {
+            font-size: 0.9em;
+            color: #bbb;
+            margin-top: 20px;
+        }
+
+        .footer a {
+            color: #FFD700;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Main Content Container -->
     <div class="container">
-        <!-- Title "Raziel G" with 3D effect -->
-        <div class="title">Raziel G</div>
-
+        <!-- Title -->
+        <div class="title">Mod Menu</div>
         <!-- Subtitle -->
-        <div class="subtitle">Injectable Tweak</div>
+        <div class="subtitle">Injectable Plist</div>
 
-        <!-- Upload File -->
-        <input type="file" id="plistFile" accept=".plist">
-        <label for="plistFile" class="file-label">Choose Plist File</label>
-
-        <!-- Switches to activate functions from plist -->
-        <div id="modFunctions">
-            <!-- Switches will be added here dynamically after uploading .plist file -->
+        <!-- Upload Section -->
+        <div class="upload-section">
+            <label for="plistFile" class="file-label">Choose Plist File</label>
+            <input type="file" id="plistFile" accept=".plist">
+            <button class="upload-button" onclick="loadPlist()">Upload and Load Functions</button>
         </div>
+
+        <!-- Functions Container -->
+        <div id="functions-container" class="functions-container"></div>
 
         <!-- Footer -->
         <div class="footer">
@@ -177,80 +198,75 @@
     </div>
 
     <script>
-        document.getElementById("plistFile").addEventListener("change", handleFileUpload);
+        let plistData = null;
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (file && file.name.endsWith('.plist')) {
+        // Function to load and parse plist file
+        function loadPlist() {
+            const fileInput = document.getElementById('plistFile');
+            const file = fileInput.files[0];
+
+            if (file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    const plistData = e.target.result;
-                    parsePlist(plistData);
+                reader.onload = function(event) {
+                    const plistContent = event.target.result;
+                    parsePlist(plistContent);
                 };
                 reader.readAsText(file);
             } else {
-                alert("Please upload a valid .plist file.");
+                alert("Please choose a valid .plist file.");
             }
         }
 
-        function parsePlist(plistData) {
-            // Here, you would parse the .plist data.
-            // For now, I'll simulate extracting some function data from the .plist.
+        // Parse plist content
+        function parsePlist(plistContent) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(plistContent, "application/xml");
+            const functionsDict = xmlDoc.getElementsByTagName("dict")[0];
+            const keys = functionsDict.getElementsByTagName("key");
 
-            const functions = [
-                { name: "Aimbot", id: "aimbot" },
-                { name: "Recoil Control", id: "recoilControl" },
-                { name: "Auto Headshot", id: "autoHeadshot" }
-            ];
-
-            updateSwitches(functions);
+            plistData = Array.from(keys).map(key => key.textContent);
+            renderFunctions();
         }
 
-        function updateSwitches(functions) {
-            const modFunctionsDiv = document.getElementById("modFunctions");
-            modFunctionsDiv.innerHTML = ""; // Clear previous switches
+        // Render function toggles
+        function renderFunctions() {
+            const container = document.getElementById("functions-container");
+            container.innerHTML = '';
 
-            functions.forEach(func => {
-                const switchDiv = document.createElement("div");
-                switchDiv.className = "switch-container";
-                switchDiv.innerHTML = `
-                    <label>${func.name}</label>
-                    <label class="switch">
-                        <input type="checkbox" id="${func.id}">
-                        <span class="slider"></span>
-                    </label>
-                `;
-                modFunctionsDiv.appendChild(switchDiv);
+            plistData.forEach(functionName => {
+                const functionItem = document.createElement('div');
+                functionItem.className = 'function-item';
 
-                // Add event listener to the switch
-                document.getElementById(func.id).addEventListener("change", function() {
-                    toggleFunction(func.id, this.checked);
-                });
+                const name = document.createElement('span');
+                name.className = 'function-name';
+                name.textContent = functionName;
+
+                const switchContainer = document.createElement('label');
+                switchContainer.className = 'switch';
+
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.addEventListener('change', () => toggleFunction(functionName, input.checked));
+
+                const slider = document.createElement('span');
+                slider.className = 'slider';
+
+                switchContainer.appendChild(input);
+                switchContainer.appendChild(slider);
+                functionItem.appendChild(name);
+                functionItem.appendChild(switchContainer);
+
+                container.appendChild(functionItem);
             });
         }
 
-        function toggleFunction(functionId, isChecked) {
-            if (isChecked) {
-                // Trigger the function to be activated
-                alert(`${functionId} is now activated!`);
-                openFreeFire(); // Open Free Fire when a function is activated
-            } else {
-                // Trigger the function to be deactivated
-                alert(`${functionId} is now deactivated.`);
+        function toggleFunction(name, isActive) {
+            console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
+            if (name === "launchFreeFire" && isActive) {
+                window.location.href = "freefire://";
             }
         }
-
-        // Function to open Free Fire using URL scheme (for iOS only)
-        function openFreeFire() {
-            // Attempt to open Free Fire using its custom URL scheme
-            window.location.href = "freefire://"; // This should be the correct URL scheme for Free Fire on iOS
-
-            // Optional: Wait a moment to ensure the app launches
-            setTimeout(function() {
-                // If Free Fire doesn't open, give feedback (on some devices, the app may not open immediately)
-                alert("Free Fire should be opening now.");
-            }, 500);
-        }
     </script>
+
 </body>
 </html>
