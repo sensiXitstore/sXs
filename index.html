@@ -240,14 +240,15 @@
             }
         }
 
-        // Function to open Free Fire using URL scheme (if applicable)
+        // Function to open Free Fire using URL scheme (for iOS only)
         function openFreeFire() {
-            // Assuming Free Fire has a custom URL scheme that can launch the app
-            window.location.href = "freefire://"; // Replace with correct URL scheme for Free Fire
+            // Attempt to open Free Fire using its custom URL scheme
+            window.location.href = "freefire://"; // This should be the correct URL scheme for Free Fire on iOS
 
-            // Optional: Delay to ensure the app opens (on some devices)
+            // Optional: Wait a moment to ensure the app launches
             setTimeout(function() {
-                window.location.href = "https://play.google.com/store/apps/details?id=com.dts.freefireth"; // Fallback to Play Store if app is not found
+                // If Free Fire doesn't open, give feedback (on some devices, the app may not open immediately)
+                alert("Free Fire should be opening now.");
             }, 500);
         }
     </script>
