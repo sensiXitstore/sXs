@@ -6,110 +6,124 @@
     <title>Raziel G Mod Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Page Styles */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             font-family: 'Poppins', sans-serif;
-            background-color: #000; /* Black background */
+            background-color: #000;
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Prevent scrolling */
         }
 
-        /* Main Container */
         .container {
             width: 90%;
             max-width: 800px;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.9); /* Transparent black */
+            background-color: rgba(0, 0, 0, 0.9);
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
             text-align: center;
         }
 
-        /* Title Styling */
         .title {
             font-family: 'Bangers', sans-serif;
             font-size: 3.5em;
             color: #ffffff;
-            text-transform: uppercase;
-            letter-spacing: 2px;
             text-shadow: 2px 2px 5px #333;
         }
 
-        /* Subtitle */
         .subtitle {
-            font-size: 1.4em;
-            font-weight: 600;
-            color: #ffffff;
+            font-size: 1.2em;
             margin-bottom: 20px;
-            text-shadow: 1px 1px 3px #555;
         }
 
-        /* Toggle Switch Styling */
-        .switch-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-            padding: 10px 20px;
+        /* Custom File Upload Style */
+        .file-upload {
+            margin: 20px 0;
             background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            width: 90%;
+            text-align: left;
+        }
+
+        .file-upload .file-label {
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            background: #00cc66;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: none;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background-color: #00aa55;
+        }
+
+        .switch-container {
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .switch {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 10px 0;
+            background-color: #333;
+            padding: 10px 20px;
             border-radius: 10px;
         }
 
         .switch-label {
             font-size: 1.2em;
-            color: #fff;
         }
 
-        .switch {
+        .toggle-switch {
             position: relative;
-            display: inline-block;
             width: 50px;
-            height: 24px;
-        }
-
-        .switch input {
-            display: none;
-        }
-
-        .slider {
-            position: absolute;
+            height: 25px;
+            background: #555;
+            border-radius: 50px;
             cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #555;
-            border-radius: 24px;
-            transition: 0.4s;
+            transition: background 0.3s;
         }
 
-        .slider:before {
-            position: absolute;
+        .toggle-switch::before {
             content: "";
-            height: 20px;
-            width: 20px;
-            left: 2px;
-            bottom: 2px;
-            background-color: #fff;
+            position: absolute;
+            width: 23px;
+            height: 23px;
+            background: #fff;
             border-radius: 50%;
-            transition: 0.4s;
+            top: 1px;
+            left: 1px;
+            transition: 0.3s;
         }
 
-        input:checked + .slider {
-            background-color: #00cc66;
+        .toggle-switch.active {
+            background: #00cc66;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(26px);
+        .toggle-switch.active::before {
+            transform: translateX(25px);
         }
 
-        /* Footer */
         .footer {
             margin-top: 20px;
             font-size: 0.9em;
@@ -118,11 +132,6 @@
 
         .footer a {
             color: #00cc66;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
         }
     </style>
 </head>
@@ -130,47 +139,38 @@
     <div class="container">
         <!-- Title -->
         <div class="title">Raziel G</div>
-        <div class="subtitle">Injectable Tweak</div>
+        <div class="subtitle">Upload and Control Your Tweak</div>
 
-        <!-- Toggle Switches -->
-        <div class="switch-container">
-            <span class="switch-label">Auto Headshot</span>
-            <label class="switch">
-                <input type="checkbox" id="autoHeadshot" onclick="sendCommand('autoHeadshot')">
-                <span class="slider"></span>
-            </label>
+        <!-- File Upload Section -->
+        <div class="file-upload">
+            <label class="file-label" for="tweakFile">Choose your Python (.py) tweak file:</label>
+            <input type="file" id="tweakFile" class="file-input" accept=".py">
+            <button class="upload-btn" onclick="uploadTweak()">Upload Tweak</button>
         </div>
 
+        <!-- Switches for Functions -->
         <div class="switch-container">
-            <span class="switch-label">Aim Lock</span>
-            <label class="switch">
-                <input type="checkbox" id="aimLock" onclick="sendCommand('aimLock')">
-                <span class="slider"></span>
-            </label>
-        </div>
+            <h3>Activate Functions</h3>
 
-        <div class="switch-container">
-            <span class="switch-label">Recoil Control</span>
-            <label class="switch">
-                <input type="checkbox" id="recoilControl" onclick="sendCommand('recoilControl')">
-                <span class="slider"></span>
-            </label>
-        </div>
+            <div class="switch">
+                <span class="switch-label">Auto Headshot</span>
+                <div class="toggle-switch" id="autoHeadshotSwitch" onclick="toggleFunction('autoHeadshot', this)"></div>
+            </div>
 
-        <div class="switch-container">
-            <span class="switch-label">Aim Assist</span>
-            <label class="switch">
-                <input type="checkbox" id="aimAssist" onclick="sendCommand('aimAssist')">
-                <span class="slider"></span>
-            </label>
-        </div>
+            <div class="switch">
+                <span class="switch-label">Aim Assist</span>
+                <div class="toggle-switch" id="aimAssistSwitch" onclick="toggleFunction('aimAssist', this)"></div>
+            </div>
 
-        <div class="switch-container">
-            <span class="switch-label">FOV Adjustment</span>
-            <label class="switch">
-                <input type="checkbox" id="fovAdjustment" onclick="sendCommand('fovAdjustment')">
-                <span class="slider"></span>
-            </label>
+            <div class="switch">
+                <span class="switch-label">Recoil Control</span>
+                <div class="toggle-switch" id="recoilControlSwitch" onclick="toggleFunction('recoilControl', this)"></div>
+            </div>
+
+            <div class="switch">
+                <span class="switch-label">Fast Aim</span>
+                <div class="toggle-switch" id="fastAimSwitch" onclick="toggleFunction('fastAim', this)"></div>
+            </div>
         </div>
 
         <!-- Footer -->
@@ -180,11 +180,75 @@
     </div>
 
     <script>
-        // Sends a command when a toggle is activated
-        function sendCommand(command) {
-            console.log(`Command sent: ${command}`);
-            const url = `freefire://${command}`;
-            window.location.href = url;
+        let uploadedFileName = "";
+
+        function uploadTweak() {
+            const fileInput = document.getElementById("tweakFile");
+            if (fileInput.files.length === 0) {
+                alert("Please select a tweak file first!");
+                return;
+            }
+
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const tweakContent = event.target.result;
+                uploadedFileName = file.name;
+
+                fetch("http://localhost:8080/upload", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ tweak: tweakContent, fileName: uploadedFileName }),
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            alert("Tweak successfully uploaded!");
+                        } else {
+                            alert("Failed to upload tweak: " + data.message);
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        alert("Error uploading tweak.");
+                    });
+            };
+
+            reader.readAsText(file);
+        }
+
+        function toggleFunction(functionName, switchElement) {
+            const isActive = switchElement.classList.toggle("active");
+
+            fetch("http://localhost:8080/execute", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ functionName, fileName: uploadedFileName, active: isActive }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert(`${functionName} toggled ${isActive ? "ON" : "OFF"} successfully!`);
+                        // Launch FreeFire once a function is toggled
+                        launchFreeFire(functionName, isActive);
+                    } else {
+                        alert(`Failed to toggle ${functionName}: ${data.message}`);
+                        switchElement.classList.toggle("active"); // Rollback toggle if there's an error
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Error toggling function.");
+                    switchElement.classList.toggle("active"); // Rollback toggle if there's an error
+                });
+        }
+
+        function launchFreeFire(functionName, isActive) {
+            // Construct deep link to FreeFire with the appropriate command
+            const deepLink = `freefire://activateFunction?function=${functionName}&status=${isActive ? "on" : "off"}`;
+            window.location.href = deepLink;
+            console.log(`Launching FreeFire with function: ${functionName}, Status: ${isActive ? "ON" : "OFF"}`);
         }
     </script>
 </body>
