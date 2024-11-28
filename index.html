@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raziel G Mod Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* General Page Styles */
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background-color: #000; /* Black background */
-            color: #ffffff;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,132 +24,100 @@
         .container {
             width: 90%;
             max-width: 800px;
-            height: 80%;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.8); /* Transparent black background */
+            background-color: rgba(0, 0, 0, 0.9); /* Transparent black */
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
             text-align: center;
-            overflow-y: auto;
-            animation: fadeIn 0.5s ease-in-out;
         }
 
-        /* Title Styling with 3D effect */
+        /* Title Styling */
         .title {
             font-family: 'Bangers', sans-serif;
-            font-size: 4em;
-            font-weight: 700;
+            font-size: 3.5em;
             color: #ffffff;
             text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 
-                2px 2px 4px rgba(0, 0, 0, 0.5), 
-                4px 4px 8px rgba(0, 0, 0, 0.4),
-                6px 6px 12px rgba(0, 0, 0, 0.3);
-            animation: float 3s ease-in-out infinite; /* Floating effect */
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 5px #333;
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-            100% {
-                transform: translateY(0);
-            }
-        }
-
-        /* Tab navigation */
-        .tabs {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .tab-button {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            border: none;
-            cursor: pointer;
-            margin: 0 10px;
-            border-radius: 10px;
-            transition: 0.3s;
-        }
-
-        .tab-button:hover {
-            background-color: #555;
-        }
-
-        /* Tab Content */
-        .tab-content {
-            display: none;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        /* Show the active tab */
-        .active-tab {
-            display: block;
-        }
-
-        /* Subtitle Styling */
+        /* Subtitle */
         .subtitle {
-            font-family: 'Open Sans', sans-serif;
-            font-size: 1.8em;
+            font-size: 1.4em;
             font-weight: 600;
             color: #ffffff;
-            margin-top: 10px;
-            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.6);
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px #555;
         }
 
-        /* Buttons and File Upload */
-        .upload-button {
-            background-color: #333333; /* Dark gray background */
-            color: #ffffff;
-            border: none;
-            padding: 15px 25px;
-            font-size: 1.2em;
-            margin-top: 20px;
+        /* Toggle Switch Styling */
+        .switch-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #222;
             border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
-        .upload-button:hover {
-            background-color: #555555; /* Lighter gray on hover */
+        .switch-label {
+            font-size: 1.2em;
+            color: #fff;
         }
 
-        /* File upload input */
-        input[type="file"] {
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
             display: none;
         }
 
-        /* File upload label */
-        .file-label {
-            display: block;
-            margin-top: 20px;
-            color: #ffffff;
-            font-size: 1.2em;
+        .slider {
+            position: absolute;
             cursor: pointer;
-            text-decoration: underline;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555;
+            border-radius: 24px;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 2px;
+            bottom: 2px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #00cc66;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         /* Footer */
         .footer {
-            font-size: 1em;
-            color: #ffffff;
             margin-top: 20px;
-            text-align: center;
+            font-size: 0.9em;
+            color: #fff;
         }
 
         .footer a {
-            color: #ffffff;
+            color: #00cc66;
             text-decoration: none;
         }
 
@@ -159,43 +127,50 @@
     </style>
 </head>
 <body>
-
-    <!-- Main Content Container -->
     <div class="container">
-        <!-- Title "Raziel G" with 3D effect -->
+        <!-- Title -->
         <div class="title">Raziel G</div>
-
-        <!-- Subtitle -->
         <div class="subtitle">Injectable Tweak</div>
 
-        <!-- Tab Navigation -->
-        <div class="tabs">
-            <button class="tab-button" onclick="showTab('injectTab')">Inject Tweak</button>
-            <button class="tab-button" onclick="showTab('settingsTab')">Settings</button>
-            <button class="tab-button" onclick="showTab('aimbotTab')">Aimbot</button>
-            <button class="tab-button" onclick="showTab('creditsTab')">Credits</button>
+        <!-- Toggle Switches -->
+        <div class="switch-container">
+            <span class="switch-label">Auto Headshot</span>
+            <label class="switch">
+                <input type="checkbox" id="autoHeadshot" onclick="sendCommand('autoHeadshot')">
+                <span class="slider"></span>
+            </label>
         </div>
 
-        <!-- Tab Contents -->
-        <div id="injectTab" class="tab-content active-tab">
-            <input type="file" id="tweakFile" accept=".dylib,.py">
-            <label for="tweakFile" class="file-label">Choose Tweak File</label>
-            <button class="upload-button" onclick="injectTweak()">Inject Tweak</button>
+        <div class="switch-container">
+            <span class="switch-label">Aim Lock</span>
+            <label class="switch">
+                <input type="checkbox" id="aimLock" onclick="sendCommand('aimLock')">
+                <span class="slider"></span>
+            </label>
         </div>
 
-        <div id="settingsTab" class="tab-content">
-            <h2 style="color: white;">Settings Page</h2>
-            <p style="color: white;">Customize your experience.</p>
+        <div class="switch-container">
+            <span class="switch-label">Recoil Control</span>
+            <label class="switch">
+                <input type="checkbox" id="recoilControl" onclick="sendCommand('recoilControl')">
+                <span class="slider"></span>
+            </label>
         </div>
 
-        <div id="aimbotTab" class="tab-content">
-            <h2 style="color: white;">Aimbot Commands</h2>
-            <button class="upload-button" onclick="activateAutoHeadshot()">Auto Headshot</button>
+        <div class="switch-container">
+            <span class="switch-label">Aim Assist</span>
+            <label class="switch">
+                <input type="checkbox" id="aimAssist" onclick="sendCommand('aimAssist')">
+                <span class="slider"></span>
+            </label>
         </div>
 
-        <div id="creditsTab" class="tab-content">
-            <h2 style="color: white;">Credits</h2>
-            <p style="color: white;">Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a></p>
+        <div class="switch-container">
+            <span class="switch-label">FOV Adjustment</span>
+            <label class="switch">
+                <input type="checkbox" id="fovAdjustment" onclick="sendCommand('fovAdjustment')">
+                <span class="slider"></span>
+            </label>
         </div>
 
         <!-- Footer -->
@@ -205,41 +180,12 @@
     </div>
 
     <script>
-        // Show active tab content
-        function showTab(tabId) {
-            const tabs = document.querySelectorAll('.tab-content');
-            tabs.forEach(tab => tab.classList.remove('active-tab'));
-
-            const activeTab = document.getElementById(tabId);
-            activeTab.classList.add('active-tab');
-        }
-
-        // Function to inject the selected tweak
-        function injectTweak() {
-            const fileInput = document.getElementById("tweakFile");
-            if (fileInput.files.length === 0) {
-                alert("Please select a tweak file first!");
-                return;
-            }
-
-            const tweakFile = fileInput.files[0];
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const tweakData = event.target.result;
-                const url = `freefire://injectTweak?tweak=${encodeURIComponent(tweakData)}&bundle=com.dts.freefireth`;
-                window.location.href = url; // Sends command to the Python server
-                console.log(`Sending Tweak injection request: ${url}`);
-            };
-            reader.readAsArrayBuffer(tweakFile); // Reads the file as binary data
-        }
-
-        // Function to activate auto headshot logic
-        function activateAutoHeadshot() {
-            const url = "freefire://activateAutoHeadshot";
+        // Sends a command when a toggle is activated
+        function sendCommand(command) {
+            console.log(`Command sent: ${command}`);
+            const url = `freefire://${command}`;
             window.location.href = url;
-            console.log("Auto Headshot activated.");
         }
     </script>
-
 </body>
 </html>
