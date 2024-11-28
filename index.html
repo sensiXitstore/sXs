@@ -4,183 +4,198 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raziel G Mod Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             background-color: #000;
-            color: #fff;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .container {
             width: 90%;
             max-width: 800px;
+            height: 80%;
             padding: 20px;
-            background-color: rgba(0, 0, 0, 0.9);
+            background-color: rgba(0, 0, 0, 0.8);
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
             text-align: center;
+            overflow-y: auto;
+            animation: fadeIn 0.5s ease-in-out;
         }
 
         .title {
             font-family: 'Bangers', sans-serif;
-            font-size: 3.5em;
+            font-size: 4em;
+            font-weight: 700;
             color: #ffffff;
-            text-shadow: 2px 2px 5px #333;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
         }
 
-        .subtitle {
-            font-size: 1.2em;
-            margin-bottom: 20px;
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
         }
 
-        /* Custom File Upload Style */
-        .file-upload {
-            margin: 20px 0;
-            background: #222;
-            padding: 20px;
-            border-radius: 10px;
-            display: inline-block;
-            width: 90%;
-            text-align: left;
-        }
-
-        .file-upload .file-label {
-            font-size: 1.2em;
-            color: #fff;
-        }
-
-        .file-input {
-            display: none;
-        }
-
-        .upload-btn {
-            background: #00cc66;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            border: none;
-            font-size: 1.1em;
-            transition: background-color 0.3s ease;
-        }
-
-        .upload-btn:hover {
-            background-color: #00aa55;
-        }
-
-        .switch-container {
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .switch {
+        .tabs {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin: 10px 0;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .tab-button {
             background-color: #333;
+            color: #fff;
             padding: 10px 20px;
-            border-radius: 10px;
-        }
-
-        .switch-label {
             font-size: 1.2em;
-        }
-
-        .toggle-switch {
-            position: relative;
-            width: 50px;
-            height: 25px;
-            background: #555;
-            border-radius: 50px;
+            border: none;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .toggle-switch::before {
-            content: "";
-            position: absolute;
-            width: 23px;
-            height: 23px;
-            background: #fff;
-            border-radius: 50%;
-            top: 1px;
-            left: 1px;
+            margin: 0 10px;
+            border-radius: 10px;
             transition: 0.3s;
         }
 
-        .toggle-switch.active {
-            background: #00cc66;
-        }
+        .tab-button:hover { background-color: #555; }
 
-        .toggle-switch.active::before {
-            transform: translateX(25px);
+        .tab-content { display: none; padding: 20px; border-radius: 10px; background-color: rgba(0, 0, 0, 0.7); }
+
+        .active-tab { display: block; }
+
+        .subtitle {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #ffffff;
+            margin-top: 10px;
         }
 
         .footer {
+            font-size: 1em;
+            color: #ffffff;
             margin-top: 20px;
-            font-size: 0.9em;
-            color: #fff;
+            text-align: center;
         }
 
-        .footer a {
-            color: #00cc66;
+        .footer a { color: #ffffff; text-decoration: none; }
+
+        .footer a:hover { text-decoration: underline; }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
         }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider { background-color: #2196F3; }
+
+        input:checked + .slider:before { transform: translateX(26px); }
     </style>
 </head>
 <body>
+
     <div class="container">
-        <!-- Title -->
         <div class="title">Raziel G</div>
-        <div class="subtitle">Upload and Control Your Tweak</div>
+        <div class="subtitle">Injectable Tweak</div>
 
-        <!-- File Upload Section -->
-        <div class="file-upload">
-            <label class="file-label" for="tweakFile">Choose your Python (.py) tweak file:</label>
-            <input type="file" id="tweakFile" class="file-input" accept=".py">
-            <button class="upload-btn" onclick="uploadTweak()">Upload Tweak</button>
+        <div class="tabs">
+            <button class="tab-button" onclick="showTab('injectTab')">Inject Tweak</button>
+            <button class="tab-button" onclick="showTab('settingsTab')">Settings</button>
+            <button class="tab-button" onclick="showTab('creditsTab')">Credits</button>
         </div>
 
-        <!-- Switches for Functions -->
-        <div class="switch-container">
-            <h3>Activate Functions</h3>
-
-            <div class="switch">
-                <span class="switch-label">Auto Headshot</span>
-                <div class="toggle-switch" id="autoHeadshotSwitch" onclick="toggleFunction('autoHeadshot', this)"></div>
-            </div>
-
-            <div class="switch">
-                <span class="switch-label">Aim Assist</span>
-                <div class="toggle-switch" id="aimAssistSwitch" onclick="toggleFunction('aimAssist', this)"></div>
-            </div>
-
-            <div class="switch">
-                <span class="switch-label">Recoil Control</span>
-                <div class="toggle-switch" id="recoilControlSwitch" onclick="toggleFunction('recoilControl', this)"></div>
-            </div>
-
-            <div class="switch">
-                <span class="switch-label">Fast Aim</span>
-                <div class="toggle-switch" id="fastAimSwitch" onclick="toggleFunction('fastAim', this)"></div>
-            </div>
+        <div id="injectTab" class="tab-content active-tab">
+            <input type="file" id="tweakFile" accept=".py">
+            <label for="tweakFile" class="file-label">Choose Tweak File</label>
+            <button class="upload-button" onclick="uploadTweak()">Upload Tweak</button>
         </div>
 
-        <!-- Footer -->
+        <div id="settingsTab" class="tab-content">
+            <h2>Settings</h2>
+            <p>Toggle functions below:</p>
+            <label>Activate Aimbot:
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFunction('aimbot', this)">
+                    <span class="slider"></span>
+                </label>
+            </label><br><br>
+
+            <label>Activate Recoil Control:
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFunction('recoil', this)">
+                    <span class="slider"></span>
+                </label>
+            </label><br><br>
+
+            <label>Activate Speed Hack:
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFunction('speed', this)">
+                    <span class="slider"></span>
+                </label>
+            </label><br><br>
+
+            <label>Activate Auto Headshot:
+                <label class="switch">
+                    <input type="checkbox" onchange="toggleFunction('headshot', this)">
+                    <span class="slider"></span>
+                </label>
+            </label><br><br>
+        </div>
+
+        <div id="creditsTab" class="tab-content">
+            <h2>Credits</h2>
+            <p>Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a></p>
+        </div>
+
         <div class="footer">
             Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a>
         </div>
     </div>
 
     <script>
-        let uploadedFileName = "";
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active-tab'));
+            document.getElementById(tabId).classList.add('active-tab');
+        }
 
         function uploadTweak() {
             const fileInput = document.getElementById("tweakFile");
@@ -189,67 +204,50 @@
                 return;
             }
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
+            const formData = new FormData();
+            formData.append('file', fileInput.files[0]);
 
-            reader.onload = function(event) {
-                const tweakContent = event.target.result;
-                uploadedFileName = file.name;
-
-                fetch("http://localhost:8080/upload", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ tweak: tweakContent, fileName: uploadedFileName }),
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.success) {
-                            alert("Tweak successfully uploaded!");
-                        } else {
-                            alert("Failed to upload tweak: " + data.message);
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error:", error);
-                        alert("Error uploading tweak.");
-                    });
-            };
-
-            reader.readAsText(file);
+            fetch('http://localhost:8080/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Tweak uploaded successfully!");
+                } else {
+                    alert("Failed to upload tweak: " + data.message);
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error uploading tweak.");
+            });
         }
 
         function toggleFunction(functionName, switchElement) {
-            const isActive = switchElement.classList.toggle("active");
-
+            const isActive = switchElement.checked;
             fetch("http://localhost:8080/execute", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ functionName, fileName: uploadedFileName, active: isActive }),
+                body: JSON.stringify({ functionName, active: isActive })
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        alert(`${functionName} toggled ${isActive ? "ON" : "OFF"} successfully!`);
-                        // Launch FreeFire once a function is toggled
-                        launchFreeFire(functionName, isActive);
-                    } else {
-                        alert(`Failed to toggle ${functionName}: ${data.message}`);
-                        switchElement.classList.toggle("active"); // Rollback toggle if there's an error
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    alert("Error toggling function.");
-                    switchElement.classList.toggle("active"); // Rollback toggle if there's an error
-                });
-        }
-
-        function launchFreeFire(functionName, isActive) {
-            // Construct deep link to FreeFire with the appropriate command
-            const deepLink = `freefire://activateFunction?function=${functionName}&status=${isActive ? "on" : "off"}`;
-            window.location.href = deepLink;
-            console.log(`Launching FreeFire with function: ${functionName}, Status: ${isActive ? "ON" : "OFF"}`);
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`${functionName} toggled ${isActive ? "ON" : "OFF"} successfully!`);
+                } else {
+                    alert(`Failed to toggle ${functionName}: ${data.message}`);
+                    switchElement.checked = !isActive; // Revert the switch on error
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Error toggling function.");
+                switchElement.checked = !isActive; // Revert the switch on error
+            });
         }
     </script>
+
 </body>
 </html>
