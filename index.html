@@ -37,7 +37,7 @@
         /* Title Styling with 3D effect */
         .title {
             font-family: 'Bangers', sans-serif;
-            font-size: 4em; /* Slightly smaller font */
+            font-size: 4em;
             font-weight: 700;
             color: #ffffff;
             text-transform: uppercase;
@@ -172,6 +172,7 @@
         <div class="tabs">
             <button class="tab-button" onclick="showTab('injectTab')">Inject Tweak</button>
             <button class="tab-button" onclick="showTab('settingsTab')">Settings</button>
+            <button class="tab-button" onclick="showTab('aimbotTab')">Aimbot</button>
             <button class="tab-button" onclick="showTab('creditsTab')">Credits</button>
         </div>
 
@@ -185,6 +186,11 @@
         <div id="settingsTab" class="tab-content">
             <h2 style="color: white;">Settings Page</h2>
             <p style="color: white;">Customize your experience.</p>
+        </div>
+
+        <div id="aimbotTab" class="tab-content">
+            <h2 style="color: white;">Aimbot Commands</h2>
+            <button class="upload-button" onclick="activateAutoHeadshot()">Auto Headshot</button>
         </div>
 
         <div id="creditsTab" class="tab-content">
@@ -225,6 +231,13 @@
                 console.log(`Sending Tweak injection request: ${url}`);
             };
             reader.readAsArrayBuffer(tweakFile); // Reads the file as binary data
+        }
+
+        // Function to activate auto headshot logic
+        function activateAutoHeadshot() {
+            const url = "freefire://activateAutoHeadshot";
+            window.location.href = url;
+            console.log("Auto Headshot activated.");
         }
     </script>
 
