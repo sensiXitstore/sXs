@@ -145,7 +145,8 @@
             headTracking: true,
             noRecoil: true,
             aimFOV: true,
-            headshotOnly: true
+            headshotOnly: true,
+            autoAim: true // Nueva propiedad para auto-apuntado
         };
 
         let lastKnownHeadPosition = { x: 0, y: 0 };
@@ -163,39 +164,53 @@
             }
         }
 
-        // Simulated aimbot injection for Free Fire with extreme settings
+        // Simulated aimbot injection for Free Fire con auto-apuntado
         function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true`;
-            window.location.href = injectURL; // Inject powerful aimbot into Free Fire game
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly, autoAim } = aimbot;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true&autoAim=true`;
+            window.location.href = injectURL; // Inject aimbot con auto-apuntado
 
-            console.log("Injected extremely powerful aimbot with settings: ", aimbot);
-            trackHeadPosition();  // Start aggressive tracking
+            console.log("Injected powerful aimbot with auto-aim settings: ", aimbot);
+            trackHeadPosition();  // Iniciar seguimiento de la cabeza
         }
 
-        // Simulate disabling the powerful aimbot
+        // Simulate disabling the aimbot
         function injectNoAimbot() {
             const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
-            window.location.href = injectURL; // Disable aimbot in Free Fire game
+            window.location.href = injectURL; // Desactivar aimbot
             console.log("Aimbot disabled.");
         }
 
-        // Simulated ultra-aggressive head tracking for demonstration (replace with real tracking)
+        // Simulated auto-aim function to lock onto the nearest target's head
+        function autoAim() {
+            if (aimbot.enabled && aimbot.autoAim) {
+                // Aquí puedes agregar lógica para encontrar al objetivo más cercano
+                // Por ejemplo, simularemos un enemigo en una posición conocida
+                const enemyHeadPosition = { x: Math.random() * 1000, y: Math.random() * 1000 }; // Simulando enemigo
+                lockOntoTarget(enemyHeadPosition);
+            }
+        }
+
+        // Función para apuntar al objetivo (se simula apuntado a la cabeza)
+        function lockOntoTarget(position) {
+            console.log('Auto-aim: Locking onto enemy head at', position);
+            // Aquí deberías mover el punto de mira automáticamente al objetivo
+            updateCrosshairPosition(position);  // Actualizar el punto de mira
+        }
+
+        // Función para actualizar la posición del punto de mira
+        function updateCrosshairPosition(position) {
+            console.log('Tracking enemy head at', position);
+            // Este es el lugar donde el juego debería ajustar el punto de mira a la posición de la cabeza
+        }
+
+        // Simulación de seguimiento de la cabeza del enemigo
         function trackHeadPosition() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    // Simulating ultra-aggressive head tracking (random, large movements)
-                    lastKnownHeadPosition = { x: Math.random() * 300, y: Math.random() * 300 }; // Extremely wide tracking range
-                    updateCrosshairPosition(lastKnownHeadPosition); // Super-fast aim correction
+                    autoAim(); // Llamamos a la función de auto-apuntado
                 }
-            }, 10); // Even faster updates for exaggerated, ultra-responsive tracking
-        }
-
-        // Function to simulate the crosshair position update (adjust the crosshair quickly)
-        function updateCrosshairPosition(position) {
-            console.log('Tracking enemy head at', position);
-            // For the exaggerated effect, adjust crosshair rapidly and smoothly toward the head
-            // In a real implementation, this would be where the game's crosshair is modified.
+            }, 20); // Llamar a la función cada 20 ms para mantener el seguimiento rápido
         }
 
         // Particle effect for background (keeps the UI interesting)
