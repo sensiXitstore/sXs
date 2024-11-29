@@ -105,36 +105,6 @@
             margin-bottom: 10px;
             margin-top: 20px;
         }
-
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: black;
-            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-            animation: moveParticles 4s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% {
-                transform: translate(100vw, -10vh) rotate(135deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-10vw, 100vh) rotate(135deg);
-                opacity: 0;
-            }
-        }
     </style>
 
     <script>
@@ -146,12 +116,13 @@
             noRecoil: true,
             aimFOV: true,
             headshotOnly: true,
-            autoAim: true // Nueva propiedad para auto-apuntado
+            autoAim: true,
+            autoShoot: true // Nuevo: disparo automático al fijar un objetivo
         };
 
         let lastKnownHeadPosition = { x: 0, y: 0 };
 
-        // Custom logic for injection
+        // Toggle del aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
@@ -164,77 +135,88 @@
             }
         }
 
-        // Simulated aimbot injection for Free Fire con auto-apuntado
+        // Activar el aimbot
         function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly, autoAim } = aimbot;
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true&autoAim=true`;
-            window.location.href = injectURL; // Inject aimbot con auto-apuntado
-
-            console.log("Injected powerful aimbot with auto-aim settings: ", aimbot);
-            trackHeadPosition();  // Iniciar seguimiento de la cabeza
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly, autoAim, autoShoot } = aimbot;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true&autoAim=true&autoShoot=true`;
+            window.location.href = injectURL; // Simulación de la inyección en Free Fire
+            
+            console.log("Injected extreme aimbot with advanced auto-aim settings: ", aimbot);
+            startAimbotLogic(); // Inicia la lógica avanzada del aimbot
         }
 
-        // Simulate disabling the aimbot
+        // Desactivar el aimbot
         function injectNoAimbot() {
             const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
-            window.location.href = injectURL; // Desactivar aimbot
+            window.location.href = injectURL;
             console.log("Aimbot disabled.");
         }
 
-        // Simulated auto-aim function to lock onto the nearest target's head
-        function autoAim() {
-            if (aimbot.enabled && aimbot.autoAim) {
-                // Aquí puedes agregar lógica para encontrar al objetivo más cercano
-                // Por ejemplo, simularemos un enemigo en una posición conocida
-                const enemyHeadPosition = { x: Math.random() * 1000, y: Math.random() * 1000 }; // Simulando enemigo
-                lockOntoTarget(enemyHeadPosition);
-            }
-        }
-
-        // Función para apuntar al objetivo (se simula apuntado a la cabeza)
-        function lockOntoTarget(position) {
-            console.log('Auto-aim: Locking onto enemy head at', position);
-            // Aquí deberías mover el punto de mira automáticamente al objetivo
-            updateCrosshairPosition(position);  // Actualizar el punto de mira
-        }
-
-        // Función para actualizar la posición del punto de mira
-        function updateCrosshairPosition(position) {
-            console.log('Tracking enemy head at', position);
-            // Este es el lugar donde el juego debería ajustar el punto de mira a la posición de la cabeza
-        }
-
-        // Simulación de seguimiento de la cabeza del enemigo
-        function trackHeadPosition() {
+        // Lógica avanzada del aimbot
+        function startAimbotLogic() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    autoAim(); // Llamamos a la función de auto-apuntado
+                    autoAimAndShoot(); // Llamar a la función de auto-apuntado y disparo automático
                 }
-            }, 20); // Llamar a la función cada 20 ms para mantener el seguimiento rápido
+            }, 10); // Actualización cada 10ms para máxima precisión
         }
 
-        // Particle effect for background (keeps the UI interesting)
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 4 + "s";
-                particleContainer.appendChild(particle);
+        // Auto-apuntado y disparo automático
+        function autoAimAndShoot() {
+            // Simulación de detección del objetivo más cercano
+            const enemyPositions = simulateEnemyDetection();
+            if (enemyPositions.length > 0) {
+                const nearestEnemy = getNearestEnemy(enemyPositions);
+                lockOntoTarget(nearestEnemy);
+                if (aimbot.autoShoot) {
+                    simulateAutoShoot(nearestEnemy);
+                }
             }
-        });
+        }
+
+        // Simulación de detección de enemigos
+        function simulateEnemyDetection() {
+            // Devuelve una lista de enemigos detectados (coordenadas aleatorias para la simulación)
+            return [
+                { x: Math.random() * 800, y: Math.random() * 600 },
+                { x: Math.random() * 800, y: Math.random() * 600 }
+            ];
+        }
+
+        // Obtener el enemigo más cercano basado en la posición
+        function getNearestEnemy(enemies) {
+            return enemies.reduce((nearest, current) => {
+                const nearestDistance = Math.sqrt(nearest.x ** 2 + nearest.y ** 2);
+                const currentDistance = Math.sqrt(current.x ** 2 + current.y ** 2);
+                return currentDistance < nearestDistance ? current : nearest;
+            });
+        }
+
+        // Apuntar al objetivo
+        function lockOntoTarget(position) {
+            console.log('Aimbot: Locking onto enemy at', position);
+            updateCrosshairPosition(position); // Ajustar el punto de mira
+        }
+
+        // Disparo automático
+        function simulateAutoShoot(position) {
+            console.log('Aimbot: Auto-shooting at', position);
+            // Aquí se debería llamar a la API de disparo del juego
+        }
+
+        // Actualizar el punto de mira
+        function updateCrosshairPosition(position) {
+            console.log('Aimbot: Crosshair updated to', position);
+            // Aquí se ajustaría el punto de mira en el juego
+        }
     </script>
 </head>
 <body>
-
-    <div class="particle-bg"></div>
     <div class="title">RG G4NG 414</div>
-    <div class="subtitle">Free Version Aimbot</div>
+    <div class="subtitle">Exaggerated Aimbot</div>
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
-
         <label>
             Enable Aimbot:
             <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
@@ -244,6 +226,5 @@
     </div>
 
     <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
-
 </body>
 </html>
