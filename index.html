@@ -140,14 +140,12 @@
     <script>
         const aimbot = {
             enabled: false,
-            headTracking: true,
             autoAim: true,
-            instantHeadshots: true, // Nueva propiedad para asegurarse de que todos los tiros impacten la cabeza
+            instantHeadshots: true, // Tiros directos a la cabeza sin suavizado
         };
 
         let lastKnownHeadPosition = { x: 0, y: 0 };
 
-        // Alternar el estado del aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
@@ -160,44 +158,56 @@
             }
         }
 
-        // Habilitar el aimbot con auto-apuntado descarado
         function enableAimbot() {
-            console.log("Aimbot activado con configuración extrema: ", aimbot);
-            activateAutoAim(); // Inicia el auto-apuntado extremo
+            console.log("Aimbot activado con auto-apuntado extremo.");
+            injectAimbot(); // Abrir el juego con la configuración activada
+            activateAutoAim(); // Habilitar auto-apuntado directo
         }
 
-        // Deshabilitar el aimbot
         function disableAimbot() {
             console.log("Aimbot desactivado.");
+            injectNoAimbot();
         }
 
-        // Auto-apuntado extremo: apunte instantáneo a la cabeza
+        function injectAimbot() {
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&autoAim=true&headshotOnly=true`;
+            window.location.href = injectURL; // Abrir el juego con los ajustes
+            console.log("Configuración de aimbot inyectada.");
+        }
+
+        function injectNoAimbot() {
+            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+            window.location.href = injectURL;
+            console.log("Aimbot deshabilitado en el juego.");
+        }
+
         function activateAutoAim() {
-            if (aimbot.enabled && aimbot.autoAim) {
-                setInterval(() => {
-                    const enemyHeadPosition = getNearestEnemyHead(); // Simulación de posición del enemigo
-                    lockOntoHead(enemyHeadPosition); // Bloqueo inmediato en la cabeza del enemigo
-                }, 10); // Actualiza cada 10ms para máxima precisión
-            }
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    const enemyHeadPosition = getNearestEnemyHead();
+                    lockOntoHead(enemyHeadPosition);
+                }
+            }, 10); // Actualización ultra rápida cada 10ms
         }
 
-        // Simula obtener la posición de la cabeza del enemigo más cercano
         function getNearestEnemyHead() {
-            // Genera posiciones simuladas (esto debe integrarse con las API del juego)
             return { x: Math.random() * 1920, y: Math.random() * 1080 }; // Simulación de coordenadas de cabeza
         }
 
-        // Bloquear directamente en la cabeza del enemigo
         function lockOntoHead(position) {
-            console.log('Auto-aim extremo: Bloqueado en la cabeza en', position);
-            updateCrosshairPosition(position); // Ajusta el punto de mira a la cabeza
+            console.log('Bloqueado en la cabeza en', position);
         }
 
-        // Ajustar la posición del punto de mira (simulado)
-        function updateCrosshairPosition(position) {
-            // Aquí deberías mover el punto de mira directamente a la posición del enemigo
-            console.log('Punto de mira ajustado directamente a:', position);
-        }
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 4 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
     </script>
 </head>
 <body>
@@ -207,7 +217,6 @@
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
-
         <label>
             Enable Aimbot:
             <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
