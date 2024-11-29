@@ -3,47 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Mod Injector</title>
+    <title>Mod Menu</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* General Page Styles */
         body, html {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
-            color: #fff;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            height: 100%;
             overflow: hidden;
         }
 
+        /* Main Container */
         .container {
-            width: 90%;
+            width: 95%;
             max-width: 600px;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.85);
             border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             padding: 20px;
             text-align: center;
-            overflow-y: auto;
-            max-height: 90vh;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            overflow-y: auto; /* Enable vertical scrolling */
+            max-height: 90vh; /* Limit the container's height */
         }
 
+        /* Title */
         .title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3em;
+            font-size: 3.5em;
+            font-weight: 700;
+            text-transform: uppercase;
             color: #FFD700;
-            margin: 10px 0;
             text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+            margin: 10px 0;
         }
 
+        /* Subtitle */
         .subtitle {
-            color: #bbb;
+            font-size: 1.2em;
+            color: #b3b3b3;
             margin-bottom: 20px;
         }
 
+        /* Modernized Upload Area */
         .upload-section {
             margin: 30px 0;
         }
@@ -54,7 +62,9 @@
             background: #2196F3;
             color: #fff;
             border-radius: 5px;
+            font-size: 1em;
             cursor: pointer;
+            transition: background 0.3s ease-in-out;
         }
 
         .file-label:hover {
@@ -72,13 +82,16 @@
             color: #fff;
             border: none;
             border-radius: 5px;
+            font-size: 1em;
             cursor: pointer;
+            transition: background 0.3s ease-in-out;
         }
 
         .upload-button:hover {
             background: linear-gradient(135deg, #009624, #00c853);
         }
 
+        /* Function Toggles */
         .functions-container {
             margin-top: 20px;
         }
@@ -91,10 +104,66 @@
             border-bottom: 1px solid #444;
         }
 
+        .function-item:last-child {
+            border-bottom: none;
+        }
+
+        .function-name {
+            font-size: 1.1em;
+            color: #fff;
+        }
+
+        /* Switches Styles */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 30px;  /* Smaller switch width */
+            height: 16px;  /* Smaller switch height */
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 16px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;  /* Smaller slider */
+            width: 12px;   /* Smaller slider */
+            border-radius: 50%;
+            background-color: white;
+            bottom: 2px;   /* Adjusted to center vertically */
+            left: 2px;     /* Adjusted to center horizontally */
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #4CAF50;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(14px); /* Adjusted translation for smaller size */
+        }
+
+        /* Footer */
         .footer {
-            margin-top: 20px;
-            color: #bbb;
             font-size: 0.9em;
+            color: #bbb;
+            margin-top: 20px;
         }
 
         .footer a {
@@ -108,94 +177,116 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="title">Free Fire Injector</div>
-        <div class="subtitle">Inject Features Into Free Fire</div>
 
+    <div class="container">
+        <!-- Title -->
+        <div class="title">Mod Menu</div>
+        <!-- Subtitle -->
+        <div class="subtitle">Injectable Plist</div>
+
+        <!-- Upload Section -->
         <div class="upload-section">
             <label for="plistFile" class="file-label">Choose Plist File</label>
             <input type="file" id="plistFile" accept=".plist">
-            <button class="upload-button" onclick="loadPlist()">Load Features</button>
+            <button class="upload-button" onclick="loadPlist()">Upload and Load Functions</button>
         </div>
 
+        <!-- Functions Container -->
         <div id="functions-container" class="functions-container"></div>
 
-        <button class="upload-button" onclick="injectFeatures()">Inject Features & Launch</button>
+        <!-- Launch Button -->
+        <button class="upload-button" onclick="launchFreeFire()">Launch Free Fire with Activated Functions</button>
 
-        <div class="footer">Designed by <a href="#">YourName</a></div>
+        <!-- Footer -->
+        <div class="footer">
+            Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a>
+        </div>
     </div>
 
     <script>
         let plistData = null;
 
-        // Load and parse plist file
+        // Function to load and parse plist file
         function loadPlist() {
             const fileInput = document.getElementById('plistFile');
             const file = fileInput.files[0];
 
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function (event) {
+                reader.onload = function(event) {
                     const plistContent = event.target.result;
                     parsePlist(plistContent);
                 };
                 reader.readAsText(file);
             } else {
-                alert("Please select a valid .plist file.");
+                alert("Please choose a valid .plist file.");
             }
         }
 
-        // Parse plist file
+        // Parse plist content
         function parsePlist(plistContent) {
-            try {
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(plistContent, "application/xml");
-                const dictTags = xmlDoc.getElementsByTagName("key");
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(plistContent, "application/xml");
+            const functionsDict = xmlDoc.getElementsByTagName("dict")[0];
+            const keys = functionsDict.getElementsByTagName("key");
 
-                plistData = Array.from(dictTags).map(tag => tag.textContent);
-                renderFunctions();
-            } catch (error) {
-                alert("Invalid .plist file. Please ensure the file is properly formatted.");
-            }
+            plistData = Array.from(keys).map(key => key.textContent);
+            renderFunctions();
         }
 
-        // Render functions from plist
+        // Render function toggles
         function renderFunctions() {
             const container = document.getElementById("functions-container");
             container.innerHTML = '';
 
-            plistData.forEach((functionName) => {
+            plistData.forEach(functionName => {
                 const functionItem = document.createElement('div');
                 functionItem.className = 'function-item';
 
                 const name = document.createElement('span');
+                name.className = 'function-name';
                 name.textContent = functionName;
 
-                const toggle = document.createElement('input');
-                toggle.type = 'checkbox';
-                toggle.checked = true; // Default: Enabled
+                const switchContainer = document.createElement('label');
+                switchContainer.className = 'switch';
 
+                const input = document.createElement('input');
+                input.type = 'checkbox';
+                input.addEventListener('change', () => toggleFunction(functionName, input.checked));
+
+                const slider = document.createElement('span');
+                slider.className = 'slider';
+
+                switchContainer.appendChild(input);
+                switchContainer.appendChild(slider);
                 functionItem.appendChild(name);
-                functionItem.appendChild(toggle);
+                functionItem.appendChild(switchContainer);
+
                 container.appendChild(functionItem);
             });
         }
 
-        // Inject features into Free Fire
-        function injectFeatures() {
-            if (plistData && plistData.length > 0) {
-                console.log("Injecting the following features into Free Fire:");
-                console.log(plistData);
+        // Toggle function status
+        function toggleFunction(name, isActive) {
+            console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
+            if (name === "LaunchFreeFire" && isActive) {
+                launchFreeFire();
+            }
+        }
 
-                // Simulate injection process
-                alert("Features injected successfully!");
-
-                // Launch Free Fire via URL Scheme
+        // Launch Free Fire with activated features
+        function launchFreeFire() {
+            const plistFile = document.getElementById('plistFile').files[0];
+            if (plistFile) {
+                // Code to apply the plist functions into the game here...
+                console.log("Activating functions and launching Free Fire...");
+                // Open Free Fire with the URL scheme
                 window.location.href = "freefire://";
             } else {
-                alert("No features loaded. Please upload a valid .plist file.");
+                alert("Please upload a plist file first.");
             }
         }
     </script>
+
 </body>
 </html>
