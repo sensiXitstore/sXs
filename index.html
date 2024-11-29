@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414</title>
+    <title>AIMBOT</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
@@ -140,97 +140,70 @@
     <script>
         const aimbot = {
             enabled: false,
-            aimlock: true,
-            aimAssist: true,
             headTracking: true,
-            noRecoil: true,
-            aimFOV: true,
-            headshotOnly: true,
-            autoAim: true // Nueva propiedad para auto-apuntado
+            autoAim: true,
+            instantHeadshots: true, // Nueva propiedad para asegurarse de que todos los tiros impacten la cabeza
         };
 
         let lastKnownHeadPosition = { x: 0, y: 0 };
 
-        // Custom logic for injection
+        // Alternar el estado del aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
                 toggleSwitch.classList.add('active');
-                injectAimbot();
+                enableAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                injectNoAimbot();
+                disableAimbot();
             }
         }
 
-        // Simulated aimbot injection for Free Fire con auto-apuntado
-        function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly, autoAim } = aimbot;
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true&autoAim=true`;
-            window.location.href = injectURL; // Inject aimbot con auto-apuntado
-
-            console.log("Injected powerful aimbot with auto-aim settings: ", aimbot);
-            trackHeadPosition();  // Iniciar seguimiento de la cabeza
+        // Habilitar el aimbot con auto-apuntado descarado
+        function enableAimbot() {
+            console.log("Aimbot activado con configuración extrema: ", aimbot);
+            activateAutoAim(); // Inicia el auto-apuntado extremo
         }
 
-        // Simulate disabling the aimbot
-        function injectNoAimbot() {
-            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
-            window.location.href = injectURL; // Desactivar aimbot
-            console.log("Aimbot disabled.");
+        // Deshabilitar el aimbot
+        function disableAimbot() {
+            console.log("Aimbot desactivado.");
         }
 
-        // Simulated auto-aim function to lock onto the nearest target's head
-        function autoAim() {
+        // Auto-apuntado extremo: apunte instantáneo a la cabeza
+        function activateAutoAim() {
             if (aimbot.enabled && aimbot.autoAim) {
-                // Aquí puedes agregar lógica para encontrar al objetivo más cercano
-                // Por ejemplo, simularemos un enemigo en una posición conocida
-                const enemyHeadPosition = { x: Math.random() * 1000, y: Math.random() * 1000 }; // Simulando enemigo
-                lockOntoTarget(enemyHeadPosition);
+                setInterval(() => {
+                    const enemyHeadPosition = getNearestEnemyHead(); // Simulación de posición del enemigo
+                    lockOntoHead(enemyHeadPosition); // Bloqueo inmediato en la cabeza del enemigo
+                }, 10); // Actualiza cada 10ms para máxima precisión
             }
         }
 
-        // Función para apuntar al objetivo (se simula apuntado a la cabeza)
-        function lockOntoTarget(position) {
-            console.log('Auto-aim: Locking onto enemy head at', position);
-            // Aquí deberías mover el punto de mira automáticamente al objetivo
-            updateCrosshairPosition(position);  // Actualizar el punto de mira
+        // Simula obtener la posición de la cabeza del enemigo más cercano
+        function getNearestEnemyHead() {
+            // Genera posiciones simuladas (esto debe integrarse con las API del juego)
+            return { x: Math.random() * 1920, y: Math.random() * 1080 }; // Simulación de coordenadas de cabeza
         }
 
-        // Función para actualizar la posición del punto de mira
+        // Bloquear directamente en la cabeza del enemigo
+        function lockOntoHead(position) {
+            console.log('Auto-aim extremo: Bloqueado en la cabeza en', position);
+            updateCrosshairPosition(position); // Ajusta el punto de mira a la cabeza
+        }
+
+        // Ajustar la posición del punto de mira (simulado)
         function updateCrosshairPosition(position) {
-            console.log('Tracking enemy head at', position);
-            // Este es el lugar donde el juego debería ajustar el punto de mira a la posición de la cabeza
+            // Aquí deberías mover el punto de mira directamente a la posición del enemigo
+            console.log('Punto de mira ajustado directamente a:', position);
         }
-
-        // Simulación de seguimiento de la cabeza del enemigo
-        function trackHeadPosition() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    autoAim(); // Llamamos a la función de auto-apuntado
-                }
-            }, 20); // Llamar a la función cada 20 ms para mantener el seguimiento rápido
-        }
-
-        // Particle effect for background (keeps the UI interesting)
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 4 + "s";
-                particleContainer.appendChild(particle);
-            }
-        });
     </script>
 </head>
 <body>
-
     <div class="particle-bg"></div>
-    <div class="title">RG G4NG 414</div>
-    <div class="subtitle">Free Version Aimbot</div>
+    <div class="title">AIMBOT</div>
+    <div class="subtitle">Version Gratuita</div>
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
@@ -244,6 +217,5 @@
     </div>
 
     <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
-
 </body>
 </html>
