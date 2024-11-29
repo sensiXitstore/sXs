@@ -3,227 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
-
+    <title>Auto Crosshair Lock</title>
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
             margin: 0;
             padding: 0;
-            overflow: hidden;
-            text-align: center;
-            height: 100vh;
-            background-color: white;
-            color: #333;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
+            height: 100vh;
         }
 
-        .title {
-            font-family: 'Lora', serif;
-            font-size: 4em;
-            color: black;
-            margin-top: 20px;
-            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
-            display: inline-block;
-        }
-
-        .subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2.2em;
-            color: black;
-            margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
-            display: inline-block;
-        }
-
-        .mod-menu-container {
-            display: block;
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            border-radius: 15px;
+        .container {
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             width: 80%;
-            max-width: 600px;
-            margin: auto;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-            position: relative;
-            z-index: 2;
-            margin-top: 20px;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
-        .mod-menu-container h3 {
-            font-size: 1.5em;
-            margin-bottom: 10px;
-            color: white;
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
         }
 
-        .mod-menu-container label {
-            font-size: 1.1em;
-            color: #d3d3d3;
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        .toggle-switch {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-            background-color: #ccc;
-            border-radius: 30px;
-            position: relative;
-            cursor: pointer;
-        }
-
-        .toggle-switch span {
-            position: absolute;
-            top: 50%;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: #fff;
-            border-radius: 50%;
-            transform: translateY(-50%);
-            transition: left 0.3s;
-        }
-
-        .toggle-switch.active {
+        button {
             background-color: #00bfff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            color: #fff;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 10px 0;
         }
 
-        .toggle-switch.active span {
-            left: 30px;
+        button:hover {
+            background-color: #008ecc;
         }
 
-        .footer {
-            font-size: 1em;
-            color: black;
-            margin-bottom: 10px;
+        .status {
             margin-top: 20px;
-        }
-
-        .particle-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: black;
-            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
-            animation: moveParticles 4s linear infinite;
-        }
-
-        @keyframes moveParticles {
-            0% {
-                transform: translate(100vw, -10vh) rotate(135deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-10vw, 100vh) rotate(135deg);
-                opacity: 0;
-            }
+            font-size: 1.2em;
+            color: #0f0;
         }
     </style>
-
     <script>
         const aimbot = {
             enabled: false,
-            autoAim: true,
-            lockOntoHead: true, // Bloqueo completo a la cabeza
-            exaggeratedTracking: true, // Movimiento exagerado hacia la cabeza
+            autoHeadLock: true, // Bloqueo automático a la cabeza
         };
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
-                enableAimbot();
+                document.querySelector(".status").textContent = "Aimbot Activado.";
+                activateAutoAim();
             } else {
-                toggleSwitch.classList.remove('active');
-                disableAimbot();
+                document.querySelector(".status").textContent = "Aimbot Desactivado.";
             }
         }
 
-        function enableAimbot() {
-            console.log("Aimbot activado con seguimiento extremo.");
-            injectAimbot(); // Abrir el juego con la configuración activada
-            activateHeadLock(); // Activar bloqueo continuo en la cabeza
+        function activateAutoAim() {
+            document.addEventListener("mousedown", handleFireButton); // Escucha del botón de disparo
         }
 
-        function disableAimbot() {
-            console.log("Aimbot desactivado.");
-            injectNoAimbot();
-        }
-
-        function injectAimbot() {
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&lockOntoHead=true&headshotOnly=true`;
-            window.location.href = injectURL; // Abrir el juego con los ajustes
-            console.log("Configuración de aimbot inyectada.");
-        }
-
-        function injectNoAimbot() {
-            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
-            window.location.href = injectURL;
-            console.log("Aimbot deshabilitado en el juego.");
-        }
-
-        function activateHeadLock() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    const enemyHeadPosition = getNearestEnemyHead();
-                    lockOntoHead(enemyHeadPosition);
-                }
-            }, 1); // Actualización ultra rápida cada 1ms
+        function handleFireButton(event) {
+            if (event.button === 0 && aimbot.enabled) { // Botón izquierdo del mouse o disparo
+                const enemyHeadPosition = getNearestEnemyHead();
+                moveCrosshairToHead(enemyHeadPosition);
+                console.log("Auto apuntado a la cabeza: ", enemyHeadPosition);
+            }
         }
 
         function getNearestEnemyHead() {
-            return { x: Math.random() * 1920, y: Math.random() * 1080 }; // Simulación de coordenadas de cabeza
+            // Simulación de detección de cabeza. Aquí deberías reemplazar con datos reales.
+            return { x: Math.random() * 1920, y: Math.random() * 1080 };
         }
 
-        function lockOntoHead(position) {
-            console.log('Bloqueo total en la cabeza en', position);
+        function moveCrosshairToHead(position) {
+            console.log(`Crosshair movido a la cabeza en posición (${position.x}, ${position.y})`);
+            // Aquí deberías integrar la lógica para mover la mira directamente en el juego.
         }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const particleContainer = document.querySelector(".particle-bg");
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement("div");
-                particle.classList.add("particle");
-                particle.style.left = Math.random() * 100 + "vw";
-                particle.style.animationDelay = Math.random() * 4 + "s";
-                particleContainer.appendChild(particle);
-            }
-        });
     </script>
 </head>
 <body>
-    <div class="particle-bg"></div>
-    <div class="title">RG G4NG 414</div>
-    <div class="subtitle">Free Version Aimbot</div>
-
-    <div class="mod-menu-container">
-        <h3>Aimbot Settings</h3>
-        <label>
-            Enable Aimbot:
-            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
-                <span></span>
-            </div>
-        </label>
+    <div class="container">
+        <h1>Mod Menu</h1>
+        <button onclick="toggleAimbot()">Activar/Desactivar Aimbot</button>
+        <div class="status">Aimbot Desactivado.</div>
     </div>
-
-    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
 </body>
 </html>
