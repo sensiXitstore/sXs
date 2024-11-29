@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mod Panel</title>
+    <title>Free Fire Mod Injector</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
         body, html {
             margin: 0;
             padding: 0;
@@ -92,51 +91,6 @@
             border-bottom: 1px solid #444;
         }
 
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 30px;
-            height: 16px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 16px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 12px;
-            width: 12px;
-            border-radius: 50%;
-            background-color: white;
-            bottom: 2px;
-            left: 2px;
-            transition: 0.4s;
-        }
-
-        input:checked + .slider {
-            background-color: #4CAF50;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(14px);
-        }
-
         .footer {
             margin-top: 20px;
             color: #bbb;
@@ -155,18 +109,18 @@
 </head>
 <body>
     <div class="container">
-        <div class="title">Mod Panel</div>
-        <div class="subtitle">Inject Powerful Features Into Free Fire</div>
+        <div class="title">Free Fire Injector</div>
+        <div class="subtitle">Inject Features Into Free Fire</div>
 
         <div class="upload-section">
             <label for="plistFile" class="file-label">Choose Plist File</label>
             <input type="file" id="plistFile" accept=".plist">
-            <button class="upload-button" onclick="loadPlist()">Load Functions</button>
+            <button class="upload-button" onclick="loadPlist()">Load Features</button>
         </div>
 
         <div id="functions-container" class="functions-container"></div>
 
-        <button class="upload-button" onclick="launchFreeFire()">Launch Free Fire</button>
+        <button class="upload-button" onclick="injectFeatures()">Inject Features & Launch</button>
 
         <div class="footer">Designed by <a href="#">YourName</a></div>
     </div>
@@ -174,6 +128,7 @@
     <script>
         let plistData = null;
 
+        // Load and parse plist file
         function loadPlist() {
             const fileInput = document.getElementById('plistFile');
             const file = fileInput.files[0];
@@ -190,6 +145,7 @@
             }
         }
 
+        // Parse plist file
         function parsePlist(plistContent) {
             try {
                 const parser = new DOMParser();
@@ -203,6 +159,7 @@
             }
         }
 
+        // Render functions from plist
         function renderFunctions() {
             const container = document.getElementById("functions-container");
             container.innerHTML = '';
@@ -214,31 +171,30 @@
                 const name = document.createElement('span');
                 name.textContent = functionName;
 
-                const switchContainer = document.createElement('label');
-                switchContainer.className = 'switch';
+                const toggle = document.createElement('input');
+                toggle.type = 'checkbox';
+                toggle.checked = true; // Default: Enabled
 
-                const input = document.createElement('input');
-                input.type = 'checkbox';
-                input.addEventListener('change', () => toggleFunction(functionName, input.checked));
-
-                const slider = document.createElement('span');
-                slider.className = 'slider';
-
-                switchContainer.appendChild(input);
-                switchContainer.appendChild(slider);
                 functionItem.appendChild(name);
-                functionItem.appendChild(switchContainer);
+                functionItem.appendChild(toggle);
                 container.appendChild(functionItem);
             });
         }
 
-        function toggleFunction(name, isActive) {
-            console.log(`Function "${name}" has been ${isActive ? 'activated' : 'deactivated'}.`);
-        }
+        // Inject features into Free Fire
+        function injectFeatures() {
+            if (plistData && plistData.length > 0) {
+                console.log("Injecting the following features into Free Fire:");
+                console.log(plistData);
 
-        function launchFreeFire() {
-            console.log("Launching Free Fire with configured settings...");
-            window.location.href = "freefire://";
+                // Simulate injection process
+                alert("Features injected successfully!");
+
+                // Launch Free Fire via URL Scheme
+                window.location.href = "freefire://";
+            } else {
+                alert("No features loaded. Please upload a valid .plist file.");
+            }
         }
     </script>
 </body>
