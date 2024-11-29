@@ -3,55 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mod Menu</title>
+    <title>Mod Panel</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* General Page Styles */
+        /* General Styles */
         body, html {
             margin: 0;
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
-            color: #ffffff;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100%;
+            height: 100vh;
             overflow: hidden;
         }
 
-        /* Main Container */
         .container {
-            width: 95%;
+            width: 90%;
             max-width: 600px;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.9);
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             padding: 20px;
             text-align: center;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 90vh; /* Limit the container's height */
+            overflow-y: auto;
+            max-height: 90vh;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
-        /* Title */
         .title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5em;
-            font-weight: 700;
-            text-transform: uppercase;
+            font-size: 3em;
             color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
             margin: 10px 0;
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
         }
 
-        /* Subtitle */
         .subtitle {
-            font-size: 1.2em;
-            color: #b3b3b3;
+            color: #bbb;
             margin-bottom: 20px;
         }
 
-        /* Modernized Upload Area */
         .upload-section {
             margin: 30px 0;
         }
@@ -62,9 +55,7 @@
             background: #2196F3;
             color: #fff;
             border-radius: 5px;
-            font-size: 1em;
             cursor: pointer;
-            transition: background 0.3s ease-in-out;
         }
 
         .file-label:hover {
@@ -82,16 +73,13 @@
             color: #fff;
             border: none;
             border-radius: 5px;
-            font-size: 1em;
             cursor: pointer;
-            transition: background 0.3s ease-in-out;
         }
 
         .upload-button:hover {
             background: linear-gradient(135deg, #009624, #00c853);
         }
 
-        /* Function Toggles */
         .functions-container {
             margin-top: 20px;
         }
@@ -104,21 +92,11 @@
             border-bottom: 1px solid #444;
         }
 
-        .function-item:last-child {
-            border-bottom: none;
-        }
-
-        .function-name {
-            font-size: 1.1em;
-            color: #fff;
-        }
-
-        /* Switches Styles */
         .switch {
             position: relative;
             display: inline-block;
-            width: 30px;  /* Smaller switch width */
-            height: 16px;  /* Smaller switch height */
+            width: 30px;
+            height: 16px;
         }
 
         .switch input {
@@ -142,12 +120,12 @@
         .slider:before {
             position: absolute;
             content: "";
-            height: 12px;  /* Smaller slider */
-            width: 12px;   /* Smaller slider */
+            height: 12px;
+            width: 12px;
             border-radius: 50%;
             background-color: white;
-            bottom: 2px;   /* Adjusted to center vertically */
-            left: 2px;     /* Adjusted to center horizontally */
+            bottom: 2px;
+            left: 2px;
             transition: 0.4s;
         }
 
@@ -156,14 +134,13 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(14px); /* Adjusted translation for smaller size */
+            transform: translateX(14px);
         }
 
-        /* Footer */
         .footer {
-            font-size: 0.9em;
-            color: #bbb;
             margin-top: 20px;
+            color: #bbb;
+            font-size: 0.9em;
         }
 
         .footer a {
@@ -177,74 +154,64 @@
     </style>
 </head>
 <body>
-
     <div class="container">
-        <!-- Title -->
-        <div class="title">Mod Menu</div>
-        <!-- Subtitle -->
-        <div class="subtitle">Injectable Plist</div>
+        <div class="title">Mod Panel</div>
+        <div class="subtitle">Inject Powerful Features Into Free Fire</div>
 
-        <!-- Upload Section -->
         <div class="upload-section">
             <label for="plistFile" class="file-label">Choose Plist File</label>
             <input type="file" id="plistFile" accept=".plist">
-            <button class="upload-button" onclick="loadPlist()">Upload and Load Functions</button>
+            <button class="upload-button" onclick="loadPlist()">Load Functions</button>
         </div>
 
-        <!-- Functions Container -->
         <div id="functions-container" class="functions-container"></div>
 
-        <!-- Launch Button -->
-        <button class="upload-button" onclick="launchFreeFire()">Launch Free Fire with Activated Functions</button>
+        <button class="upload-button" onclick="launchFreeFire()">Launch Free Fire</button>
 
-        <!-- Footer -->
-        <div class="footer">
-            Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a>
-        </div>
+        <div class="footer">Designed by <a href="#">YourName</a></div>
     </div>
 
     <script>
         let plistData = null;
 
-        // Function to load and parse plist file
         function loadPlist() {
             const fileInput = document.getElementById('plistFile');
             const file = fileInput.files[0];
 
             if (file) {
                 const reader = new FileReader();
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     const plistContent = event.target.result;
                     parsePlist(plistContent);
                 };
                 reader.readAsText(file);
             } else {
-                alert("Please choose a valid .plist file.");
+                alert("Please select a valid .plist file.");
             }
         }
 
-        // Parse plist content
         function parsePlist(plistContent) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(plistContent, "application/xml");
-            const functionsDict = xmlDoc.getElementsByTagName("dict")[0];
-            const keys = functionsDict.getElementsByTagName("key");
+            try {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(plistContent, "application/xml");
+                const dictTags = xmlDoc.getElementsByTagName("key");
 
-            plistData = Array.from(keys).map(key => key.textContent);
-            renderFunctions();
+                plistData = Array.from(dictTags).map(tag => tag.textContent);
+                renderFunctions();
+            } catch (error) {
+                alert("Invalid .plist file. Please ensure the file is properly formatted.");
+            }
         }
 
-        // Render function toggles
         function renderFunctions() {
             const container = document.getElementById("functions-container");
             container.innerHTML = '';
 
-            plistData.forEach(functionName => {
+            plistData.forEach((functionName) => {
                 const functionItem = document.createElement('div');
                 functionItem.className = 'function-item';
 
                 const name = document.createElement('span');
-                name.className = 'function-name';
                 name.textContent = functionName;
 
                 const switchContainer = document.createElement('label');
@@ -261,32 +228,18 @@
                 switchContainer.appendChild(slider);
                 functionItem.appendChild(name);
                 functionItem.appendChild(switchContainer);
-
                 container.appendChild(functionItem);
             });
         }
 
-        // Toggle function status
         function toggleFunction(name, isActive) {
-            console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
-            if (name === "LaunchFreeFire" && isActive) {
-                launchFreeFire();
-            }
+            console.log(`Function "${name}" has been ${isActive ? 'activated' : 'deactivated'}.`);
         }
 
-        // Launch Free Fire with activated features
         function launchFreeFire() {
-            const plistFile = document.getElementById('plistFile').files[0];
-            if (plistFile) {
-                // Code to apply the plist functions into the game here...
-                console.log("Activating functions and launching Free Fire...");
-                // Open Free Fire with the URL scheme
-                window.location.href = "freefire://";
-            } else {
-                alert("Please upload a plist file first.");
-            }
+            console.log("Launching Free Fire with configured settings...");
+            window.location.href = "freefire://";
         }
     </script>
-
 </body>
 </html>
