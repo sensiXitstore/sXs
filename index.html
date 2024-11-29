@@ -3,290 +3,232 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mod Menu</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>RG G4NG 414</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+
     <style>
-        /* General Page Styles */
-        body, html {
+        body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #1e1e2f, #3a3a5f);
-            color: #ffffff;
+            overflow: hidden;
+            text-align: center;
+            height: 100vh;
+            background-color: white;
+            color: #333;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .title {
+            font-family: 'Lora', serif;
+            font-size: 4em;
+            color: black;
+            margin-top: 20px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            display: inline-block;
+        }
+
+        .subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2em;
+            color: black;
+            margin-top: 5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            display: inline-block;
+        }
+
+        .mod-menu-container {
+            display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            margin-top: 20px;
+        }
+
+        .mod-menu-container h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .mod-menu-container label {
+            font-size: 1.1em;
+            color: #d3d3d3;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .toggle-switch span {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            transition: left 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: #00bfff;
+        }
+
+        .toggle-switch.active span {
+            left: 30px;
+        }
+
+        .footer {
+            font-size: 1em;
+            color: black;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
+            z-index: 1;
             overflow: hidden;
         }
 
-        /* Main Container */
-        .container {
-            width: 95%;
-            max-width: 600px;
-            background: rgba(0, 0, 0, 0.85);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            text-align: center;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 90vh; /* Limit the container's height */
-        }
-
-        /* Title */
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5em;
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #FFD700;
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
-            margin: 10px 0;
-        }
-
-        /* Subtitle */
-        .subtitle {
-            font-size: 1.2em;
-            color: #b3b3b3;
-            margin-bottom: 20px;
-        }
-
-        /* Modernized Upload Area */
-        .upload-section {
-            margin: 30px 0;
-        }
-
-        .file-label {
-            display: inline-block;
-            padding: 10px 20px;
-            background: #2196F3;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-        }
-
-        .file-label:hover {
-            background: #176db4;
-        }
-
-        #plistFile {
-            display: none;
-        }
-
-        .upload-button {
-            margin-top: 15px;
-            padding: 10px 20px;
-            background: linear-gradient(135deg, #00c853, #009624);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease-in-out;
-        }
-
-        .upload-button:hover {
-            background: linear-gradient(135deg, #009624, #00c853);
-        }
-
-        /* Function Toggles */
-        .functions-container {
-            margin-top: 20px;
-        }
-
-        .function-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #444;
-        }
-
-        .function-item:last-child {
-            border-bottom: none;
-        }
-
-        .function-name {
-            font-size: 1.1em;
-            color: #fff;
-        }
-
-        /* Switches Styles */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 30px;  /* Smaller switch width */
-            height: 16px;  /* Smaller switch height */
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
+        .particle {
             position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: 0.4s;
-            border-radius: 16px;
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            animation: moveParticles 4s linear infinite;
         }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 12px;  /* Smaller slider */
-            width: 12px;   /* Smaller slider */
-            border-radius: 50%;
-            background-color: white;
-            bottom: 2px;   /* Adjusted to center vertically */
-            left: 2px;     /* Adjusted to center horizontally */
-            transition: 0.4s;
-        }
-
-        input:checked + .slider {
-            background-color: #4CAF50;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(14px); /* Adjusted translation for smaller size */
-        }
-
-        /* Footer */
-        .footer {
-            font-size: 0.9em;
-            color: #bbb;
-            margin-top: 20px;
-        }
-
-        .footer a {
-            color: #FFD700;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
+        @keyframes moveParticles {
+            0% {
+                transform: translate(100vw, -10vh) rotate(135deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-10vw, 100vh) rotate(135deg);
+                opacity: 0;
+            }
         }
     </style>
+
+    <script>
+        const aimbot = {
+            enabled: false,
+            aimlock: true,
+            aimAssist: true,
+            headTracking: true,
+            noRecoil: true,
+            aimFOV: true,
+            headshotOnly: true
+        };
+
+        let lastKnownHeadPosition = { x: 0, y: 0 };
+
+        // Custom logic for injection
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                injectAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                injectNoAimbot();
+            }
+        }
+
+        // Simulated aimbot injection for Free Fire with the correct bundle ID
+        function injectAimbot() {
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly } = aimbot;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true`;
+            window.location.href = injectURL; // Inject aimbot into Free Fire game
+            
+            console.log("Injected aimbot with settings: ", aimbot);
+            trackHeadPosition();  // Start tracking heads when aimbot is enabled
+        }
+
+        // Simulate disabling the aimbot
+        function injectNoAimbot() {
+            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+            window.location.href = injectURL; // Disable aimbot in Free Fire game
+            console.log("Aimbot disabled.");
+        }
+
+        // Simulated head tracking for demonstration (replace with real tracking in a real environment)
+        function trackHeadPosition() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    // Simulating head position (replace this with actual head detection logic)
+                    lastKnownHeadPosition = { x: Math.random() * 100, y: Math.random() * 100 };
+                    updateCrosshairPosition(lastKnownHeadPosition); // Update crosshair position
+                }
+            }, 50); // Updates every 50ms for smooth tracking
+        }
+
+        // Function to update the crosshair position (simulate tracking)
+        function updateCrosshairPosition(position) {
+            console.log('Tracking enemy head at', position);
+            // Here you would modify the game's crosshair position using game APIs or UI hooks
+            // For now, this is just a placeholder to log the tracking status.
+        }
+
+        // Particle effect for background (keeps the UI interesting)
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 4 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
+    </script>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Title -->
-        <div class="title">Mod Menu</div>
-        <!-- Subtitle -->
-        <div class="subtitle">Injectable Plist</div>
+    <div class="particle-bg"></div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">Free Version Aimbot</div>
 
-        <!-- Upload Section -->
-        <div class="upload-section">
-            <label for="plistFile" class="file-label">Choose Plist File</label>
-            <input type="file" id="plistFile" accept=".plist">
-            <button class="upload-button" onclick="loadPlist()">Upload and Load Functions</button>
-        </div>
+    <div class="mod-menu-container">
+        <h3>Aimbot Settings</h3>
 
-        <!-- Functions Container -->
-        <div id="functions-container" class="functions-container"></div>
-
-        <!-- Launch Button -->
-        <button class="upload-button" onclick="launchFreeFire()">Launch Free Fire with Activated Functions</button>
-
-        <!-- Footer -->
-        <div class="footer">
-            Designed by <a href="https://www.youtube.com/@iOSrazielOFC" target="_blank">@iOSrazielOFC</a>
-        </div>
+        <label>
+            Enable Aimbot:
+            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+                <span></span>
+            </div>
+        </label>
     </div>
 
-    <script>
-        let plistData = null;
-
-        // Function to load and parse plist file
-        function loadPlist() {
-            const fileInput = document.getElementById('plistFile');
-            const file = fileInput.files[0];
-
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const plistContent = event.target.result;
-                    parsePlist(plistContent);
-                };
-                reader.readAsText(file);
-            } else {
-                alert("Please choose a valid .plist file.");
-            }
-        }
-
-        // Parse plist content
-        function parsePlist(plistContent) {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(plistContent, "application/xml");
-            const functionsDict = xmlDoc.getElementsByTagName("dict")[0];
-            const keys = functionsDict.getElementsByTagName("key");
-
-            plistData = Array.from(keys).map(key => key.textContent);
-            renderFunctions();
-        }
-
-        // Render function toggles
-        function renderFunctions() {
-            const container = document.getElementById("functions-container");
-            container.innerHTML = '';
-
-            plistData.forEach(functionName => {
-                const functionItem = document.createElement('div');
-                functionItem.className = 'function-item';
-
-                const name = document.createElement('span');
-                name.className = 'function-name';
-                name.textContent = functionName;
-
-                const switchContainer = document.createElement('label');
-                switchContainer.className = 'switch';
-
-                const input = document.createElement('input');
-                input.type = 'checkbox';
-                input.addEventListener('change', () => toggleFunction(functionName, input.checked));
-
-                const slider = document.createElement('span');
-                slider.className = 'slider';
-
-                switchContainer.appendChild(input);
-                switchContainer.appendChild(slider);
-                functionItem.appendChild(name);
-                functionItem.appendChild(switchContainer);
-
-                container.appendChild(functionItem);
-            });
-        }
-
-        // Toggle function status
-        function toggleFunction(name, isActive) {
-            console.log(`${name} ${isActive ? 'activated' : 'deactivated'}`);
-            if (name === "LaunchFreeFire" && isActive) {
-                launchFreeFire();
-            }
-        }
-
-        // Launch Free Fire with activated features
-        function launchFreeFire() {
-            const plistFile = document.getElementById('plistFile').files[0];
-            if (plistFile) {
-                // Code to apply the plist functions into the game here...
-                console.log("Activating functions and launching Free Fire...");
-                // Open Free Fire with the URL scheme
-                window.location.href = "freefire://";
-            } else {
-                alert("Please upload a plist file first.");
-            }
-        }
-    </script>
+    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
 
 </body>
 </html>
