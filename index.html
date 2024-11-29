@@ -3,95 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Advanced Mod Menu</title>
+    <title>RG G4NG 414</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+
     <style>
         body {
-            font-family: 'Open Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(45deg, #0c0c0c, #161616);
-            color: #e3e3e3;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             overflow: hidden;
-        }
-
-        .mod-menu-container {
-            width: 80%;
-            max-width: 800px;
-            background: rgba(0, 0, 0, 0.85);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            position: relative;
+            text-align: center;
+            height: 100vh;
+            background-color: white;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .title {
-            font-size: 3em;
-            color: #00d4ff;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
-        }
-
-        .tab-button {
-            background-color: #212121;
-            color: #fff;
-            padding: 12px 20px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            margin-right: 10px;
-            cursor: pointer;
-            border: none;
-            transition: background 0.3s;
-        }
-
-        .tab-button:hover {
-            background-color: #00d4ff;
-        }
-
-        .tab-content {
-            display: none;
+            font-family: 'Lora', serif;
+            font-size: 4em;
+            color: black;
             margin-top: 20px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.6);
-            border-radius: 10px;
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            display: inline-block;
         }
 
-        .tab-content.active {
+        .subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-size: 2.2em;
+            color: black;
+            margin-top: 5px;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            display: inline-block;
+        }
+
+        .mod-menu-container {
             display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            margin-top: 20px;
         }
 
-        .slider-container {
+        .mod-menu-container h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .mod-menu-container label {
+            font-size: 1.1em;
+            color: #d3d3d3;
             display: flex;
             justify-content: space-between;
-            margin-bottom: 20px;
-        }
-
-        .slider-container label {
-            font-size: 1.1em;
-            color: #e3e3e3;
-        }
-
-        .slider {
-            width: 80%;
-            height: 8px;
-            background-color: #ccc;
-            border-radius: 5px;
-            appearance: none;
-            outline: none;
-        }
-
-        .slider::-webkit-slider-thumb {
-            width: 20px;
-            height: 20px;
-            background: #00d4ff;
-            border-radius: 50%;
-            cursor: pointer;
+            margin-top: 15px;
         }
 
         .toggle-switch {
@@ -102,7 +77,6 @@
             border-radius: 30px;
             position: relative;
             cursor: pointer;
-            margin: 10px 0;
         }
 
         .toggle-switch span {
@@ -118,7 +92,7 @@
         }
 
         .toggle-switch.active {
-            background-color: #00d4ff;
+            background-color: #00bfff;
         }
 
         .toggle-switch.active span {
@@ -127,100 +101,149 @@
 
         .footer {
             font-size: 1em;
-            text-align: center;
-            color: #b3d4fc;
-            margin-top: 30px;
+            color: black;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .particle-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            clip-path: polygon(50% 100%, 0% 0%, 100% 0%);
+            animation: moveParticles 4s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            0% {
+                transform: translate(100vw, -10vh) rotate(135deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-10vw, 100vh) rotate(135deg);
+                opacity: 0;
+            }
         }
     </style>
 
     <script>
-        let aimbot = {
+        const aimbot = {
             enabled: false,
-            autoAim: false,
-            recoilControl: true,
-            fov: 90
+            aimlock: true,
+            aimAssist: true,
+            headTracking: true,
+            noRecoil: true,
+            aimFOV: true,
+            headshotOnly: true,
+            autoAim: true // Nueva propiedad para auto-apuntado
         };
 
-        function toggleTab(tabId) {
-            const contents = document.querySelectorAll('.tab-content');
-            contents.forEach(content => {
-                content.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-        }
+        let lastKnownHeadPosition = { x: 0, y: 0 };
 
+        // Custom logic for injection
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
-            toggleSwitch.classList.toggle('active');
-            injectAimbot();
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                injectAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                injectNoAimbot();
+            }
         }
 
-        function toggleAutoAim() {
-            aimbot.autoAim = !aimbot.autoAim;
-            const toggleSwitch = document.getElementById('auto-aim-toggle');
-            toggleSwitch.classList.toggle('active');
-        }
-
-        function toggleRecoilControl() {
-            aimbot.recoilControl = !aimbot.recoilControl;
-            const toggleSwitch = document.getElementById('recoil-toggle');
-            toggleSwitch.classList.toggle('active');
-        }
-
-        function changeFov(value) {
-            aimbot.fov = value;
-            document.getElementById('fov-value').innerText = value;
-        }
-
+        // Simulated aimbot injection for Free Fire con auto-apuntado
         function injectAimbot() {
-            const injectURL = `freefire://injectAimbot?enabled=${aimbot.enabled}&autoAim=${aimbot.autoAim}&recoilControl=${aimbot.recoilControl}&fov=${aimbot.fov}`;
-            window.location.href = injectURL;
-            alert("Aimbot activado con los ajustes actuales.");
+            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly, autoAim } = aimbot;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true&autoAim=true`;
+            window.location.href = injectURL; // Inject aimbot con auto-apuntado
+
+            console.log("Injected powerful aimbot with auto-aim settings: ", aimbot);
+            trackHeadPosition();  // Iniciar seguimiento de la cabeza
         }
+
+        // Simulate disabling the aimbot
+        function injectNoAimbot() {
+            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+            window.location.href = injectURL; // Desactivar aimbot
+            console.log("Aimbot disabled.");
+        }
+
+        // Simulated auto-aim function to lock onto the nearest target's head
+        function autoAim() {
+            if (aimbot.enabled && aimbot.autoAim) {
+                // Aquí puedes agregar lógica para encontrar al objetivo más cercano
+                // Por ejemplo, simularemos un enemigo en una posición conocida
+                const enemyHeadPosition = { x: Math.random() * 1000, y: Math.random() * 1000 }; // Simulando enemigo
+                lockOntoTarget(enemyHeadPosition);
+            }
+        }
+
+        // Función para apuntar al objetivo (se simula apuntado a la cabeza)
+        function lockOntoTarget(position) {
+            console.log('Auto-aim: Locking onto enemy head at', position);
+            // Aquí deberías mover el punto de mira automáticamente al objetivo
+            updateCrosshairPosition(position);  // Actualizar el punto de mira
+        }
+
+        // Función para actualizar la posición del punto de mira
+        function updateCrosshairPosition(position) {
+            console.log('Tracking enemy head at', position);
+            // Este es el lugar donde el juego debería ajustar el punto de mira a la posición de la cabeza
+        }
+
+        // Simulación de seguimiento de la cabeza del enemigo
+        function trackHeadPosition() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    autoAim(); // Llamamos a la función de auto-apuntado
+                }
+            }, 20); // Llamar a la función cada 20 ms para mantener el seguimiento rápido
+        }
+
+        // Particle effect for background (keeps the UI interesting)
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleContainer = document.querySelector(".particle-bg");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.classList.add("particle");
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDelay = Math.random() * 4 + "s";
+                particleContainer.appendChild(particle);
+            }
+        });
     </script>
 </head>
 <body>
+
+    <div class="particle-bg"></div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">Free Version Aimbot</div>
+
     <div class="mod-menu-container">
-        <div class="title">Free Fire Advanced Mod Menu</div>
-        <div>
-            <button class="tab-button" onclick="toggleTab('tab-aimbot')">Aimbot</button>
-            <button class="tab-button" onclick="toggleTab('tab-visuals')">Visuals</button>
-            <button class="tab-button" onclick="toggleTab('tab-settings')">Settings</button>
-        </div>
+        <h3>Aimbot Settings</h3>
 
-        <div id="tab-aimbot" class="tab-content active">
-            <h3>Aimbot Settings</h3>
-            <div>
-                <label>Activar Aimbot</label>
-                <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()"><span></span></div>
+        <label>
+            Enable Aimbot:
+            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+                <span></span>
             </div>
-            <div>
-                <label>Auto Aim</label>
-                <div class="toggle-switch" id="auto-aim-toggle" onclick="toggleAutoAim()"><span></span></div>
-            </div>
-            <div>
-                <label>Control de Retroceso</label>
-                <div class="toggle-switch" id="recoil-toggle" onclick="toggleRecoilControl()"><span></span></div>
-            </div>
-        </div>
-
-        <div id="tab-visuals" class="tab-content">
-            <h3>Visual Settings</h3>
-            <label>FOV (Campo de Visión)</label>
-            <div class="slider-container">
-                <span>60</span>
-                <input type="range" min="60" max="120" value="90" class="slider" id="fov-slider" oninput="changeFov(this.value)">
-                <span id="fov-value">90</span>
-            </div>
-        </div>
-
-        <div id="tab-settings" class="tab-content">
-            <h3>Game Settings</h3>
-            <button class="button" onclick="injectAimbot()">Aplicar Cambios</button>
-        </div>
+        </label>
     </div>
 
-    <div class="footer">Mod Menu | Desarrollado por @TuUsuario</div>
+    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
+
 </body>
 </html>
