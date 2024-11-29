@@ -3,154 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Mod Menu</title>
+    <title>Free Fire Advanced Mod Menu</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Open Sans', sans-serif;
             margin: 0;
             padding: 0;
-            background: radial-gradient(circle, #000428, #004e92);
-            color: white;
+            background: linear-gradient(45deg, #0c0c0c, #161616);
+            color: #e3e3e3;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            overflow: hidden;
         }
 
         .mod-menu-container {
+            width: 80%;
+            max-width: 800px;
             background: rgba(0, 0, 0, 0.85);
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
-            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            position: relative;
         }
 
         .title {
-            font-size: 2.5em;
+            font-size: 3em;
             color: #00d4ff;
-            margin-bottom: 10px;
+            text-align: center;
+            margin-bottom: 20px;
             text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
         }
 
-        .subtitle {
+        .tab-button {
+            background-color: #212121;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 5px;
             font-size: 1.2em;
-            color: #b3d4fc;
+            margin-right: 10px;
+            cursor: pointer;
+            border: none;
+            transition: background 0.3s;
+        }
+
+        .tab-button:hover {
+            background-color: #00d4ff;
+        }
+
+        .tab-content {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .slider-container {
+            display: flex;
+            justify-content: space-between;
             margin-bottom: 20px;
         }
 
-        .toggle-switch {
-            position: relative;
-            width: 70px;
-            height: 35px;
-            background: #ddd;
-            border-radius: 50px;
+        .slider-container label {
+            font-size: 1.1em;
+            color: #e3e3e3;
+        }
+
+        .slider {
+            width: 80%;
+            height: 8px;
+            background-color: #ccc;
+            border-radius: 5px;
+            appearance: none;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+            background: #00d4ff;
+            border-radius: 50%;
             cursor: pointer;
-            margin: 20px auto;
-            transition: background 0.3s;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+            margin: 10px 0;
         }
 
         .toggle-switch span {
             position: absolute;
             top: 50%;
             left: 5px;
-            width: 30px;
-            height: 30px;
-            background: white;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
             border-radius: 50%;
             transform: translateY(-50%);
             transition: left 0.3s;
         }
 
         .toggle-switch.active {
-            background: #00d4ff;
+            background-color: #00d4ff;
         }
 
         .toggle-switch.active span {
-            left: 35px;
+            left: 30px;
         }
 
-        .button {
-            display: inline-block;
-            background: #00d4ff;
-            color: white;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .button:hover {
-            background: #00b0cc;
-        }
-
-        .button:active {
-            transform: scale(0.95);
-            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.4);
+        .footer {
+            font-size: 1em;
+            text-align: center;
+            color: #b3d4fc;
+            margin-top: 30px;
         }
     </style>
 
     <script>
-        const aimbot = {
+        let aimbot = {
             enabled: false,
+            autoAim: false,
+            recoilControl: true,
+            fov: 90
         };
+
+        function toggleTab(tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+        }
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
-            if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
-                injectAimbot();
-            } else {
-                toggleSwitch.classList.remove('active');
-                injectNoAimbot();
-            }
+            toggleSwitch.classList.toggle('active');
+            injectAimbot();
+        }
+
+        function toggleAutoAim() {
+            aimbot.autoAim = !aimbot.autoAim;
+            const toggleSwitch = document.getElementById('auto-aim-toggle');
+            toggleSwitch.classList.toggle('active');
+        }
+
+        function toggleRecoilControl() {
+            aimbot.recoilControl = !aimbot.recoilControl;
+            const toggleSwitch = document.getElementById('recoil-toggle');
+            toggleSwitch.classList.toggle('active');
+        }
+
+        function changeFov(value) {
+            aimbot.fov = value;
+            document.getElementById('fov-value').innerText = value;
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&headLock=true`;
-            window.location.href = injectionURL;
-            alert("Aimbot activado con seguimiento extremo a la cabeza.");
-        }
-
-        function injectNoAimbot() {
-            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL;
-            alert("Aimbot desactivado.");
-        }
-
-        function testAutoAim() {
-            if (!aimbot.enabled) {
-                alert("Por favor activa el aimbot primero.");
-                return;
-            }
-            alert("Auto-apuntado activado. Apuntando directamente a la cabeza.");
-            // Aquí se podría simular el puntero ajustándose al enemigo.
+            const injectURL = `freefire://injectAimbot?enabled=${aimbot.enabled}&autoAim=${aimbot.autoAim}&recoilControl=${aimbot.recoilControl}&fov=${aimbot.fov}`;
+            window.location.href = injectURL;
+            alert("Aimbot activado con los ajustes actuales.");
         }
     </script>
 </head>
 <body>
     <div class="mod-menu-container">
-        <div class="title">Free Fire Mod Menu</div>
-        <div class="subtitle">Controla el Aimbot y más</div>
-
+        <div class="title">Free Fire Advanced Mod Menu</div>
         <div>
-            <h3>Activar Aimbot</h3>
-            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
-                <span></span>
+            <button class="tab-button" onclick="toggleTab('tab-aimbot')">Aimbot</button>
+            <button class="tab-button" onclick="toggleTab('tab-visuals')">Visuals</button>
+            <button class="tab-button" onclick="toggleTab('tab-settings')">Settings</button>
+        </div>
+
+        <div id="tab-aimbot" class="tab-content active">
+            <h3>Aimbot Settings</h3>
+            <div>
+                <label>Activar Aimbot</label>
+                <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()"><span></span></div>
+            </div>
+            <div>
+                <label>Auto Aim</label>
+                <div class="toggle-switch" id="auto-aim-toggle" onclick="toggleAutoAim()"><span></span></div>
+            </div>
+            <div>
+                <label>Control de Retroceso</label>
+                <div class="toggle-switch" id="recoil-toggle" onclick="toggleRecoilControl()"><span></span></div>
             </div>
         </div>
 
-        <button class="button" onclick="testAutoAim()">Prueba de Auto-Aim</button>
+        <div id="tab-visuals" class="tab-content">
+            <h3>Visual Settings</h3>
+            <label>FOV (Campo de Visión)</label>
+            <div class="slider-container">
+                <span>60</span>
+                <input type="range" min="60" max="120" value="90" class="slider" id="fov-slider" oninput="changeFov(this.value)">
+                <span id="fov-value">90</span>
+            </div>
+        </div>
+
+        <div id="tab-settings" class="tab-content">
+            <h3>Game Settings</h3>
+            <button class="button" onclick="injectAimbot()">Aplicar Cambios</button>
+        </div>
     </div>
+
+    <div class="footer">Mod Menu | Desarrollado por @TuUsuario</div>
 </body>
 </html>
