@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIMBOT</title>
+    <title>RG G4NG 414</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
@@ -141,10 +141,9 @@
         const aimbot = {
             enabled: false,
             autoAim: true,
-            instantHeadshots: true, // Tiros directos a la cabeza sin suavizado
+            lockOntoHead: true, // Bloqueo completo a la cabeza
+            exaggeratedTracking: true, // Movimiento exagerado hacia la cabeza
         };
-
-        let lastKnownHeadPosition = { x: 0, y: 0 };
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
@@ -159,9 +158,9 @@
         }
 
         function enableAimbot() {
-            console.log("Aimbot activado con auto-apuntado extremo.");
+            console.log("Aimbot activado con seguimiento extremo.");
             injectAimbot(); // Abrir el juego con la configuración activada
-            activateAutoAim(); // Habilitar auto-apuntado directo
+            activateHeadLock(); // Activar bloqueo continuo en la cabeza
         }
 
         function disableAimbot() {
@@ -170,7 +169,7 @@
         }
 
         function injectAimbot() {
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&autoAim=true&headshotOnly=true`;
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&lockOntoHead=true&headshotOnly=true`;
             window.location.href = injectURL; // Abrir el juego con los ajustes
             console.log("Configuración de aimbot inyectada.");
         }
@@ -181,13 +180,13 @@
             console.log("Aimbot deshabilitado en el juego.");
         }
 
-        function activateAutoAim() {
+        function activateHeadLock() {
             setInterval(() => {
                 if (aimbot.enabled) {
                     const enemyHeadPosition = getNearestEnemyHead();
                     lockOntoHead(enemyHeadPosition);
                 }
-            }, 10); // Actualización ultra rápida cada 10ms
+            }, 1); // Actualización ultra rápida cada 1ms
         }
 
         function getNearestEnemyHead() {
@@ -195,7 +194,7 @@
         }
 
         function lockOntoHead(position) {
-            console.log('Bloqueado en la cabeza en', position);
+            console.log('Bloqueo total en la cabeza en', position);
         }
 
         document.addEventListener("DOMContentLoaded", () => {
@@ -212,8 +211,8 @@
 </head>
 <body>
     <div class="particle-bg"></div>
-    <div class="title">AIMBOT</div>
-    <div class="subtitle">Free Version</div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">Free Version Aimbot</div>
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
@@ -225,6 +224,6 @@
         </label>
     </div>
 
-    <div class="footer">Aimbot | Developed by @iOSrazielOFC</div>
+    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
 </body>
 </html>
