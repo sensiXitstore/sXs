@@ -3,87 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414</title>
+    <title>GPT H4CK X1T</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
+        /* Estilo general */
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            text-align: center;
             height: 100vh;
-            background-color: #111;
-            color: white;
+            background: radial-gradient(circle, #1a1a1a, #000);
+            color: #fff;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: space-between;
+            text-align: center;
+            overflow: hidden;
         }
 
+        /* Títulos */
         .title {
             font-family: 'Lora', serif;
-            font-size: 4em;
+            font-size: 5em;
+            color: #ff1a75;
             margin-top: 20px;
-            text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.8);
+            text-shadow: 0 0 30px rgba(255, 26, 117, 0.8), 0 0 50px rgba(255, 0, 127, 0.6);
+            animation: glow 2s infinite alternate;
         }
 
         .subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2em;
-            margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(255, 255, 0, 0.7);
+            font-size: 1.8em;
+            margin-top: 10px;
+            color: #ffff33;
+            text-shadow: 0 0 10px rgba(255, 255, 51, 0.8);
         }
 
+        /* Caja del menú */
         .mod-menu-container {
-            background-color: rgba(255, 0, 0, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            margin: auto;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            width: 85%;
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.7), 0 0 40px rgba(255, 255, 51, 0.5);
         }
 
+        .mod-menu-container h3 {
+            font-size: 2em;
+            color: #00ff99;
+            text-shadow: 0 0 20px #00ff99;
+            margin-bottom: 20px;
+        }
+
+        /* Switch */
         .toggle-switch {
-            display: inline-block;
-            width: 70px;
-            height: 30px;
-            background-color: #555;
-            border-radius: 30px;
-            position: relative;
+            width: 100px;
+            height: 50px;
+            background: #555;
+            border-radius: 25px;
             cursor: pointer;
-        }
-
-        .toggle-switch.active {
-            background-color: lime;
+            position: relative;
+            margin: 0 auto;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
         }
 
         .toggle-switch span {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 20px;
-            height: 20px;
-            background-color: white;
+            width: 40px;
+            height: 40px;
+            background: #fff;
             border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
             transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .toggle-switch.active {
+            background: linear-gradient(90deg, #ff4d4d, #ff1a75);
         }
 
         .toggle-switch.active span {
-            left: 45px;
+            left: 55px;
+            background: #ffcccc;
         }
 
+        /* Partículas de fondo */
+        .particle-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff007f;
+            border-radius: 50%;
+            animation: float 6s linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 20px rgba(255, 26, 117, 0.8), 0 0 40px rgba(255, 0, 127, 0.6);
+            }
+            to {
+                text-shadow: 0 0 40px rgba(255, 26, 117, 1), 0 0 80px rgba(255, 0, 127, 0.8);
+            }
+        }
+
+        /* Footer */
         .footer {
-            font-size: 1em;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #bbb;
         }
     </style>
     <script>
         const aimbot = {
             enabled: false,
-            hyperPrecision: true,
             autoAim: true,
             autoShoot: true,
+            maxPrecision: true,
             noRecoil: true,
-            targetOnlyHead: true,
-            instantKill: true
+            headshotMode: true,
+            instantTargeting: true,
         };
 
         function toggleAimbot() {
@@ -91,48 +154,51 @@
             const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
                 toggleSwitch.classList.add('active');
-                activateAimbot();
+                injectAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                deactivateAimbot();
+                disableAimbot();
             }
         }
 
-        function activateAimbot() {
-            console.log("Aimbot activado con máxima fuerza");
-            injectAimbot();
-        }
-
-        function deactivateAimbot() {
-            console.log("Aimbot desactivado");
-            injectNoAimbot();
-        }
-
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&autoShoot=true&noRecoil=true&headshotOnly=true&instantKill=true`;
-            window.location.href = injectionURL; // Inyección directa
-            console.log("Inyectado a Free Fire con configuración extrema");
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&autoShoot=true&maxPrecision=true&noRecoil=true&headshotMode=true&instantTargeting=true`;
+            window.location.href = injectionURL;
+            console.log("Aimbot activado: Configuración máxima.");
         }
 
-        function injectNoAimbot() {
+        function disableAimbot() {
             const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL; // Desactiva el aimbot en Free Fire
-            console.log("Inyección desactivada");
+            window.location.href = injectionURL;
+            console.log("Aimbot desactivado.");
         }
+
+        // Efectos de partículas
+        document.addEventListener("DOMContentLoaded", () => {
+            const particleBg = document.querySelector('.particle-bg');
+            for (let i = 0; i < 80; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                particleBg.appendChild(particle);
+            }
+        });
     </script>
 </head>
 <body>
-    <div class="title">RG G4NG 414</div>
-    <div class="subtitle">AIMBOT EXTREMO</div>
+    <div class="particle-bg"></div>
+    <div class="title">GPT H4CK X1T</div>
+    <div class="subtitle">by @iOSrazielOFC</div>
     <div class="mod-menu-container">
-        <h3>Aimbot Settings</h3>
+        <h3>Configuración de Aimbot</h3>
         <label>
-            Enable Aimbot:
+            Activar Aimbot:
             <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
                 <span></span>
             </div>
         </label>
     </div>
-    <div class="footer">AIMBOT | Powered by RG Dev Team</div>
+    <div class="footer">Desarrollado por @iOSrazielOFC | Exclusivo</div>
 </body>
 </html>
