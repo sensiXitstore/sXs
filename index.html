@@ -82,11 +82,13 @@
             headshotOnly: true,
             instantKill: true,
             noRecoil: true,
-            tracking: true, // Hacer seguimiento de los enemigos
-            instantShooting: true, // Disparo instantáneo al apuntar
-            targetHeadOnly: true, // Solo cabeza
-            preciseAiming: true, // Apuntado muy preciso
-            aggressiveTracking: true // Rastreo agresivo
+            tracking: true,
+            instantShooting: true,
+            targetHeadOnly: true,
+            preciseAiming: true,
+            aggressiveTracking: true,
+            maximumTrackingDistance: 1000, // Distancia máxima para apuntar y disparar
+            constantHeadTracking: true // Mantener el rastreo de la cabeza de manera continua
         };
 
         function toggleAimbot() {
@@ -104,7 +106,7 @@
         function activateAimbot() {
             console.log("Aimbot activado con todas las características");
             injectAimbot();
-            trackEnemies();  // Hacer seguimiento de todos los enemigos
+            trackEnemies(); 
         }
 
         function deactivateAimbot() {
@@ -113,47 +115,48 @@
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&headshotOnly=true&instantKill=true&noRecoil=true&targetHeadOnly=true&preciseAiming=true&aggressiveTracking=true`;
-            window.location.href = injectionURL; // Inyección directa
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&headshotOnly=true&instantKill=true&noRecoil=true&targetHeadOnly=true&preciseAiming=true&aggressiveTracking=true&maximumTrackingDistance=1000`;
+            window.location.href = injectionURL; 
             console.log("Inyectado a Free Fire con configuración extrema");
         }
 
         function injectNoAimbot() {
             const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL; // Desactiva el aimbot en Free Fire
+            window.location.href = injectionURL; 
             console.log("Inyección desactivada");
         }
 
-        // Función para hacer seguimiento de enemigos
+        // Función para hacer seguimiento constante de los enemigos y sus cabezas
         function trackEnemies() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    const target = getClosestEnemy(); // Encuentra al enemigo más cercano
+                    const target = getClosestEnemy(); 
                     if (target) {
-                        adjustAim(target); // Ajusta la mira hacia la cabeza
+                        adjustAim(target); 
                         if (aimbot.instantShooting) {
-                            shoot(target); // Disparo instantáneo a la cabeza
+                            shoot(target); 
                         }
                     }
                 }
-            }, 1); // Se actualiza cada milisegundo para precisión extrema
+            }, 1); 
         }
 
-        // Simulación de encontrar al enemigo más cercano (reemplazar con lógica real)
+        // Encontrar al enemigo más cercano
         function getClosestEnemy() {
-            return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas aleatorias
+            // Simulación de enemigos en el campo
+            return { x: Math.random() * 1000, y: Math.random() * 1000 }; 
         }
 
-        // Ajuste preciso de la mira al objetivo (solo cabeza)
+        // Ajustar la mira de forma precisa
         function adjustAim(target) {
             console.log(`Ajustando la mira a la cabeza del enemigo en: ${target.x}, ${target.y}`);
-            // Aquí ajusta la mira en el juego, para que siempre apunte a la cabeza
+            // Ajustar la posición de la mira aquí de manera precisa
         }
 
-        // Disparo instantáneo cuando la mira está en la cabeza
+        // Disparo instantáneo
         function shoot(target) {
-            console.log(`Disparando automáticamente a la cabeza en: ${target.x}, ${target.y}`);
-            // Aquí se realizaría el disparo en el juego, dirigido solo a la cabeza
+            console.log(`Disparando a la cabeza en: ${target.x}, ${target.y}`);
+            // Lógica de disparo aquí, dirigido siempre a la cabeza
         }
     </script>
 </head>
