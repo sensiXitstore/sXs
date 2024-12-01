@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIMBOT</title>
+    <title>RG G4NG 414</title>
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
@@ -110,19 +110,16 @@
     <script>
         const aimbot = {
             enabled: false,
-            aimlock: true,
-            aimAssist: true,
-            headTracking: true,
-            noRecoil: true,
-            aimFOV: true,
-            headshotOnly: true,
             autoAim: true,
-            autoShoot: true // Nuevo: disparo automático al fijar un objetivo
+            autoShoot: true,
+            headTracking: true,
+            headshotOnly: true,
+            noRecoil: true,
+            maxPrecision: true, // Configuración extrema
+            instantKill: true   // Golpea al enemigo al instante
         };
 
-        let lastKnownHeadPosition = { x: 0, y: 0 };
-
-        // Toggle del aimbot
+        // Habilitar o deshabilitar el aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
@@ -131,89 +128,68 @@
                 injectAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                injectNoAimbot();
+                disableAimbot();
             }
         }
 
-        // Activar el aimbot
+        // Activar aimbot avanzado
         function injectAimbot() {
-            const { aimlock, aimAssist, headTracking, noRecoil, aimFOV, headshotOnly, autoAim, autoShoot } = aimbot;
-            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&aimAssist=true&headTracking=true&noRecoil=true&aimFov=true&headshotOnly=true&autoAim=true&autoShoot=true`;
-            window.location.href = injectURL; // Simulación de la inyección en Free Fire
-            
-            console.log("Injected extreme aimbot with advanced auto-aim settings: ", aimbot);
-            startAimbotLogic(); // Inicia la lógica avanzada del aimbot
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&autoShoot=true&headTracking=true&headshotOnly=true&noRecoil=true&maxPrecision=true&instantKill=true`;
+            window.location.href = injectURL; // Simulación de inyección
+            console.log("Aimbot activado con configuración máxima", aimbot);
+            startAutoAim(); // Comenzar con la lógica
         }
 
-        // Desactivar el aimbot
-        function injectNoAimbot() {
+        // Desactivar aimbot
+        function disableAimbot() {
             const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
             window.location.href = injectURL;
-            console.log("Aimbot disabled.");
+            console.log("Aimbot desactivado.");
         }
 
-        // Lógica avanzada del aimbot
-        function startAimbotLogic() {
+        // Lógica extrema del aimbot
+        function startAutoAim() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    autoAimAndShoot(); // Llamar a la función de auto-apuntado y disparo automático
+                    lockOntoNearestTarget();
                 }
-            }, 10); // Actualización cada 10ms para máxima precisión
+            }, 5); // Recalcula cada 5ms para máxima precisión
         }
 
-        // Auto-apuntado y disparo automático
-        function autoAimAndShoot() {
-            // Simulación de detección del objetivo más cercano
-            const enemyPositions = simulateEnemyDetection();
-            if (enemyPositions.length > 0) {
-                const nearestEnemy = getNearestEnemy(enemyPositions);
-                lockOntoTarget(nearestEnemy);
+        // Fijar el objetivo más cercano
+        function lockOntoNearestTarget() {
+            const target = getNearestTarget();
+            if (target) {
+                console.log("Fijando objetivo:", target);
+                updateCrosshair(target); // Fija el punto de mira al objetivo
                 if (aimbot.autoShoot) {
-                    simulateAutoShoot(nearestEnemy);
+                    shootTarget(target); // Dispara automáticamente
                 }
             }
         }
 
-        // Simulación de detección de enemigos
-        function simulateEnemyDetection() {
-            // Devuelve una lista de enemigos detectados (coordenadas aleatorias para la simulación)
-            return [
-                { x: Math.random() * 800, y: Math.random() * 600 },
-                { x: Math.random() * 800, y: Math.random() * 600 }
-            ];
-        }
-
-        // Obtener el enemigo más cercano basado en la posición
-        function getNearestEnemy(enemies) {
-            return enemies.reduce((nearest, current) => {
-                const nearestDistance = Math.sqrt(nearest.x ** 2 + nearest.y ** 2);
-                const currentDistance = Math.sqrt(current.x ** 2 + current.y ** 2);
-                return currentDistance < nearestDistance ? current : nearest;
-            });
+        // Obtener el objetivo más cercano
+        function getNearestTarget() {
+            // Aquí iría la detección real usando APIs o datos del juego.
+            return { x: 500, y: 300 }; // Coordenadas simuladas para un objetivo detectado
         }
 
         // Apuntar al objetivo
-        function lockOntoTarget(position) {
-            console.log('Aimbot: Locking onto enemy at', position);
-            updateCrosshairPosition(position); // Ajustar el punto de mira
+        function updateCrosshair(target) {
+            console.log("Actualizando punto de mira a:", target);
+            // Aquí usarías las APIs del juego para ajustar la posición del punto de mira
         }
 
-        // Disparo automático
-        function simulateAutoShoot(position) {
-            console.log('Aimbot: Auto-shooting at', position);
-            // Aquí se debería llamar a la API de disparo del juego
-        }
-
-        // Actualizar el punto de mira
-        function updateCrosshairPosition(position) {
-            console.log('Aimbot: Crosshair updated to', position);
-            // Aquí se ajustaría el punto de mira en el juego
+        // Disparar al objetivo automáticamente
+        function shootTarget(target) {
+            console.log("Disparando automáticamente al objetivo:", target);
+            // Aquí se invocaría la API de disparo del juego para realizar un disparo
         }
     </script>
 </head>
 <body>
-    <div class="title">AIMBOT</div>
-    <div class="subtitle">Free Version</div>
+    <div class="title">RG G4NG 414</div>
+    <div class="subtitle">EXTREME AIMBOT</div>
 
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
