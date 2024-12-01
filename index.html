@@ -78,14 +78,15 @@
     <script>
         const aimbot = {
             enabled: false,
-            hyperPrecision: true,
             autoAim: true,
-            autoShoot: true,
-            noRecoil: true,
-            targetOnlyHead: true,
+            headshotOnly: true,
             instantKill: true,
-            enemyTracking: true, // Seguimiento continuo de enemigos
-            instantAimAdjustment: true // Ajuste instantáneo de la mira
+            noRecoil: true,
+            tracking: true, // Hacer seguimiento de los enemigos
+            instantShooting: true, // Disparo instantáneo al apuntar
+            targetHeadOnly: true, // Solo cabeza
+            preciseAiming: true, // Apuntado muy preciso
+            aggressiveTracking: true // Rastreo agresivo
         };
 
         function toggleAimbot() {
@@ -101,9 +102,9 @@
         }
 
         function activateAimbot() {
-            console.log("Aimbot activado con configuración máxima");
+            console.log("Aimbot activado con todas las características");
             injectAimbot();
-            trackEnemies();  // Activar el seguimiento de enemigos
+            trackEnemies();  // Hacer seguimiento de todos los enemigos
         }
 
         function deactivateAimbot() {
@@ -112,7 +113,7 @@
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&autoShoot=true&noRecoil=true&headshotOnly=true&instantKill=true&enemyTracking=true&instantAimAdjustment=true`;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&headshotOnly=true&instantKill=true&noRecoil=true&targetHeadOnly=true&preciseAiming=true&aggressiveTracking=true`;
             window.location.href = injectionURL; // Inyección directa
             console.log("Inyectado a Free Fire con configuración extrema");
         }
@@ -123,42 +124,42 @@
             console.log("Inyección desactivada");
         }
 
-        // Seguimiento de enemigos en tiempo real
+        // Función para hacer seguimiento de enemigos
         function trackEnemies() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    const target = getClosestEnemy();
+                    const target = getClosestEnemy(); // Encuentra al enemigo más cercano
                     if (target) {
-                        adjustAim(target);
-                        if (aimbot.autoShoot) {
-                            shoot(target);
+                        adjustAim(target); // Ajusta la mira hacia la cabeza
+                        if (aimbot.instantShooting) {
+                            shoot(target); // Disparo instantáneo a la cabeza
                         }
                     }
                 }
-            }, 1); // Actualización cada 1 ms para máxima precisión
+            }, 1); // Se actualiza cada milisegundo para precisión extrema
         }
 
-        // Simulación de encontrar al enemigo más cercano
+        // Simulación de encontrar al enemigo más cercano (reemplazar con lógica real)
         function getClosestEnemy() {
-            return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas aleatorias del enemigo
+            return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas aleatorias
         }
 
-        // Ajuste instantáneo de la mira al objetivo
+        // Ajuste preciso de la mira al objetivo (solo cabeza)
         function adjustAim(target) {
-            console.log(`Apuntando a la cabeza del enemigo en: ${target.x}, ${target.y}`);
-            // Código para ajustar la mira en el juego
+            console.log(`Ajustando la mira a la cabeza del enemigo en: ${target.x}, ${target.y}`);
+            // Aquí ajusta la mira en el juego, para que siempre apunte a la cabeza
         }
 
-        // Disparo automático cuando la mira está ajustada al objetivo
+        // Disparo instantáneo cuando la mira está en la cabeza
         function shoot(target) {
             console.log(`Disparando automáticamente a la cabeza en: ${target.x}, ${target.y}`);
-            // Código para disparar en el juego
+            // Aquí se realizaría el disparo en el juego, dirigido solo a la cabeza
         }
     </script>
 </head>
 <body>
     <div class="title">RG G4NG 414</div>
-    <div class="subtitle">AIMBOT EXTREMO + SEGUIMIENTO DE ENEMIGOS</div>
+    <div class="subtitle">AIMBOT EXTREMO | SOLO CABEZA</div>
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
         <label>
