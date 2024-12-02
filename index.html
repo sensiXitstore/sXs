@@ -85,7 +85,8 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 99999, // Velocidad máxima para seguimiento instantáneo
+            maxTargets: 5,
+            trackingSpeed: 100000, // Velocidad extrema para seguimiento instantáneo
         };
 
         function toggleAimbot() {
@@ -103,7 +104,7 @@
         function activateAimbot() {
             console.log("Aimbot activado: Auto Aim + FOV infinito + Aimlock + Recoil Off + Auto Shoot");
             injectAimbot();
-            autoAimFeature();
+            autoAimLogic();
         }
 
         function deactivateAimbot() {
@@ -123,36 +124,53 @@
             console.log("Aimbot desactivado en Free Fire.");
         }
 
-        function autoAimFeature() {
+        function autoAimLogic() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    const target = getClosestEnemy();
-                    if (target) {
-                        lockAimOnTarget(target);
-                        if (aimbot.autoShoot) {
-                            shootAtTarget(target);
+                    const targets = detectEnemies();
+                    if (targets.length > 0) {
+                        const closestTarget = prioritizeTargets(targets);
+                        if (closestTarget) {
+                            lockAimOnTarget(closestTarget);
+                            if (aimbot.autoShoot) {
+                                shootAtTarget(closestTarget);
+                            }
                         }
                     }
                 }
             }, 1); // Intervalo extremadamente rápido para detección continua
         }
 
-        function getClosestEnemy() {
-            return { x: Math.random() * 100, y: Math.random() * 100 }; // Simulación de enemigo (sustituir con detección real)
+        function detectEnemies() {
+            // Simulación de detección de enemigos (reemplazar con lógica real)
+            const enemies = [];
+            for (let i = 0; i < aimbot.maxTargets; i++) {
+                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 500 });
+            }
+            console.log("Enemigos detectados: ", enemies);
+            return enemies;
+        }
+
+        function prioritizeTargets(enemies) {
+            // Priorizar enemigos más cercanos y con mejor ángulo
+            const sortedEnemies = enemies.sort((a, b) => a.distance - b.distance);
+            return sortedEnemies[0]; // Seleccionar el más cercano
         }
 
         function lockAimOnTarget(target) {
             console.log(`Bloqueando aim en el enemigo en: ${target.x}, ${target.y}`);
+            // Aquí se actualizaría la posición del crosshair en el juego
         }
 
         function shootAtTarget(target) {
-            console.log(`Disparando automáticamente a: ${target.x}, ${target.y}`);
+            console.log(`Disparando automáticamente a la cabeza del enemigo en: ${target.x}, ${target.y}`);
+            // Aquí se ejecutaría el comando de disparo en el juego
         }
     </script>
 </head>
 <body>
     <div class="title">RG G4NG ULTRA</div>
-    <div class="subtitle">AIMBOT MÁXIMO | AUTO AIM | FOV INFINITO</div>
+    <div class="subtitle">AIMBOT SUPREMO | AUTO AIM TOTAL</div>
     <div class="mod-menu-container">
         <h3>Configuraciones de Aimbot</h3>
         <label>
@@ -162,6 +180,6 @@
             </div>
         </label>
     </div>
-    <div class="footer">Desarrollado por @iOSrazielOFC | Versión ULTRA</div>
+    <div class="footer">Desarrollado por @iOSrazielOFC | Versión SUPREMA</div>
 </body>
 </html>
