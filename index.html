@@ -4,16 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RG G4NG 414</title>
+
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
+            overflow: hidden;
             text-align: center;
             height: 100vh;
-            background-color: #111;
-            color: white;
+            background-color: white;
+            color: #333;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -22,143 +26,171 @@
         .title {
             font-family: 'Lora', serif;
             font-size: 4em;
+            color: black;
             margin-top: 20px;
-            text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.8);
+            text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.8);
+            display: inline-block;
         }
 
         .subtitle {
             font-family: 'Poppins', sans-serif;
-            font-size: 2em;
+            font-size: 2.2em;
+            color: black;
             margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(255, 255, 0, 0.7);
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+            display: inline-block;
         }
 
         .mod-menu-container {
-            background-color: rgba(255, 0, 0, 0.9);
-            padding: 20px;
-            border-radius: 10px;
+            display: block;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
             margin: auto;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 2;
+            margin-top: 20px;
+        }
+
+        .mod-menu-container h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: white;
+        }
+
+        .mod-menu-container label {
+            font-size: 1.1em;
+            color: #d3d3d3;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
         }
 
         .toggle-switch {
             display: inline-block;
-            width: 70px;
+            width: 60px;
             height: 30px;
-            background-color: #555;
+            background-color: #ccc;
             border-radius: 30px;
             position: relative;
             cursor: pointer;
         }
 
-        .toggle-switch.active {
-            background-color: lime;
-        }
-
         .toggle-switch span {
             position: absolute;
-            top: 5px;
+            top: 50%;
             left: 5px;
-            width: 20px;
-            height: 20px;
-            background-color: white;
+            width: 25px;
+            height: 25px;
+            background-color: #fff;
             border-radius: 50%;
-            transition: all 0.3s ease-in-out;
+            transform: translateY(-50%);
+            transition: left 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: #00bfff;
         }
 
         .toggle-switch.active span {
-            left: 45px;
+            left: 30px;
         }
 
         .footer {
             font-size: 1em;
-            margin-bottom: 20px;
+            color: black;
+            margin-bottom: 10px;
+            margin-top: 20px;
         }
     </style>
+
     <script>
         const aimbot = {
             enabled: false,
-            hyperPrecision: true,
             autoAim: true,
             autoShoot: true,
+            headTracking: true,
+            headshotOnly: true,
             noRecoil: true,
-            targetOnlyHead: true,
-            instantKill: true,
-            enemyTracking: true, // Seguimiento continuo de enemigos
-            instantAimAdjustment: true // Ajuste instantáneo de la mira
+            maxPrecision: true, // Configuración extrema
+            instantKill: true   // Golpea al enemigo al instante
         };
 
+        // Habilitar o deshabilitar el aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
                 toggleSwitch.classList.add('active');
-                activateAimbot();
+                injectAimbot();
             } else {
                 toggleSwitch.classList.remove('active');
-                deactivateAimbot();
+                disableAimbot();
             }
         }
 
-        function activateAimbot() {
-            console.log("Aimbot activado con configuración máxima");
-            injectAimbot();
-            trackEnemies();  // Activar el seguimiento de enemigos
-        }
-
-        function deactivateAimbot() {
-            console.log("Aimbot desactivado");
-            injectNoAimbot();
-        }
-
+        // Activar aimbot avanzado
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&autoShoot=true&noRecoil=true&headshotOnly=true&instantKill=true&enemyTracking=true&instantAimAdjustment=true`;
-            window.location.href = injectionURL; // Inyección directa
-            console.log("Inyectado a Free Fire con configuración extrema");
+            const injectURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&autoShoot=true&headTracking=true&headshotOnly=true&noRecoil=true&maxPrecision=true&instantKill=true`;
+            window.location.href = injectURL; // Simulación de inyección
+            console.log("Aimbot activado con configuración máxima", aimbot);
+            startAutoAim(); // Comenzar con la lógica
         }
 
-        function injectNoAimbot() {
-            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL; // Desactiva el aimbot en Free Fire
-            console.log("Inyección desactivada");
+        // Desactivar aimbot
+        function disableAimbot() {
+            const injectURL = 'freefire://disableAimbot?bundle=com.dts.freefireth';
+            window.location.href = injectURL;
+            console.log("Aimbot desactivado.");
         }
 
-        // Seguimiento de enemigos en tiempo real
-        function trackEnemies() {
+        // Lógica extrema del aimbot
+        function startAutoAim() {
             setInterval(() => {
                 if (aimbot.enabled) {
-                    const target = getClosestEnemy();
-                    if (target) {
-                        adjustAim(target);
-                        if (aimbot.autoShoot) {
-                            shoot(target);
-                        }
-                    }
+                    lockOntoNearestTarget();
                 }
-            }, 1); // Actualización cada 1 ms para máxima precisión
+            }, 5); // Recalcula cada 5ms para máxima precisión
         }
 
-        // Simulación de encontrar al enemigo más cercano
-        function getClosestEnemy() {
-            return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas aleatorias del enemigo
+        // Fijar el objetivo más cercano
+        function lockOntoNearestTarget() {
+            const target = getNearestTarget();
+            if (target) {
+                console.log("Fijando objetivo:", target);
+                updateCrosshair(target); // Fija el punto de mira al objetivo
+                if (aimbot.autoShoot) {
+                    shootTarget(target); // Dispara automáticamente
+                }
+            }
         }
 
-        // Ajuste instantáneo de la mira al objetivo
-        function adjustAim(target) {
-            console.log(`Apuntando a la cabeza del enemigo en: ${target.x}, ${target.y}`);
-            // Código para ajustar la mira en el juego
+        // Obtener el objetivo más cercano
+        function getNearestTarget() {
+            // Aquí iría la detección real usando APIs o datos del juego.
+            return { x: 500, y: 300 }; // Coordenadas simuladas para un objetivo detectado
         }
 
-        // Disparo automático cuando la mira está ajustada al objetivo
-        function shoot(target) {
-            console.log(`Disparando automáticamente a la cabeza en: ${target.x}, ${target.y}`);
-            // Código para disparar en el juego
+        // Apuntar al objetivo
+        function updateCrosshair(target) {
+            console.log("Actualizando punto de mira a:", target);
+            // Aquí usarías las APIs del juego para ajustar la posición del punto de mira
+        }
+
+        // Disparar al objetivo automáticamente
+        function shootTarget(target) {
+            console.log("Disparando automáticamente al objetivo:", target);
+            // Aquí se invocaría la API de disparo del juego para realizar un disparo
         }
     </script>
 </head>
 <body>
     <div class="title">RG G4NG 414</div>
-    <div class="subtitle">AIMBOT EXTREMO + SEGUIMIENTO DE ENEMIGOS</div>
+    <div class="subtitle">EXTREME AIMBOT</div>
+
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
         <label>
@@ -168,6 +200,7 @@
             </div>
         </label>
     </div>
-    <div class="footer">AIMBOT | Powered by RG Dev Team</div>
+
+    <div class="footer">AIMBOT | Developed by @iOSrazielOFC</div>
 </body>
 </html>
