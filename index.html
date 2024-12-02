@@ -209,9 +209,10 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.001, // Muy rápido
-            aimPriority: 'head', // Siempre a la cabeza
-            maxTargets: 10, // Puede detectar más enemigos
+            trackingSpeed: 0.005, // Aumentado para más control sobre la cabeza
+            aimPriority: 'head', // Apuntar siempre a la cabeza
+            maxTargets: 10, // Detección de múltiples enemigos
+            lockStrength: 10, // Mayor "pegajosidad" para bloquear la cabeza
         };
 
         // Verificación de login
@@ -251,7 +252,7 @@
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true`;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}`;
             window.location.href = injectionURL;
             console.log("Aimbot inyectado en Free Fire.");
         }
@@ -276,11 +277,10 @@
                         }
                     }
                 }
-            }, 50); // Detección más rápida
+            }, 10); // Detección y disparo más rápidos
         }
 
         function detectEnemies() {
-            // Simulando detección de enemigos
             const enemies = [];
             for (let i = 0; i < aimbot.maxTargets; i++) {
                 enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
