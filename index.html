@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RE4L1NS4NE MOD MENU</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* General body styling */
         body {
@@ -75,6 +75,7 @@
             margin-bottom: 40px;
             font-size: 1.2em;
             color: #bbb;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .login-container input {
@@ -88,6 +89,7 @@
             color: #333;
             background-color: rgba(255, 255, 255, 0.1);
             transition: border 0.3s;
+            font-family: 'Roboto', sans-serif;
         }
 
         .login-container input:focus {
@@ -104,6 +106,7 @@
             font-size: 1.2em;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
             transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .login-container button:hover {
@@ -142,6 +145,7 @@
             margin: 20px 0;
             font-size: 1.5em;
             color: #ccc;
+            font-family: 'Roboto', sans-serif;
         }
 
         .toggle-switch {
@@ -182,6 +186,7 @@
             text-align: center;
             color: #bbb;
             font-size: 0.9em;
+            font-family: 'Montserrat', sans-serif;
         }
 
         footer a {
@@ -217,7 +222,6 @@
             if (username === "TOP" && password === "1") {
                 document.querySelector('.login-container').style.display = 'none';
                 document.querySelector('.mod-menu-container').style.display = 'flex';
-                activateAimbot(); // Activar Aimbot directamente al login exitoso
             } else {
                 alert("Usuario o contraseña incorrectos.");
             }
