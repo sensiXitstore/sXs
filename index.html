@@ -3,53 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG ULTRA PRO AIMBOT</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <title>RE4L1NS4NE MOD MENU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* General body styling */
         body {
-            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #000, #ff0000);
-            color: white;
+            overflow: hidden;
+            background: #121212;
+            position: relative;
+        }
+
+        /* Bolitas de fondo */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .ball {
+            position: absolute;
+            width: 25px; /* Tamaño aumentado */
+            height: 25px;
+            background-color: rgba(30, 144, 255, 0.8); /* Azul */
+            border-radius: 50%;
+            animation: moveUp 3s infinite ease-in-out;
+        }
+
+        @keyframes moveUp {
+            0% {
+                transform: translateY(100vh);
+            }
+            100% {
+                transform: translateY(-10vh);
+            }
+        }
+
+        /* Login Container */
+        .login-container {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+            width: 350px;
+            text-align: center;
+            z-index: 1;
+            transition: all 0.3s;
         }
 
-        .title {
-            font-family: 'Lora', serif;
-            font-size: 4em;
-            margin-top: 20px;
-            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #1e90ff; /* Azul */
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .subtitle {
-            font-family: 'Poppins', sans-serif;
-            font-size: 2em;
-            margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(255, 0, 0, 0.7);
+        .login-container p {
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            color: #bbb;
         }
 
-        .mod-menu-container {
-            background-color: rgba(0, 0, 0, 0.9);
-            padding: 30px;
+        .login-container input {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #1e90ff; /* Azul */
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-            margin: auto;
+            outline: none;
+            font-size: 1em;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: border 0.3s;
+        }
+
+        .login-container input:focus {
+            border-color: #1e90ff;
+        }
+
+        .login-container button {
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+        }
+
+        .login-container button:hover {
+            background: linear-gradient(135deg, #4682b4, #1e90ff);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Mod Menu Styling */
+        .mod-menu-container {
+            display: none;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
             width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            color: #fff;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mod-menu-container h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: #1e90ff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+        }
+
+        .mod-menu-container label {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            font-size: 1.5em;
+            color: #ccc;
         }
 
         .toggle-switch {
             display: inline-block;
             width: 70px;
-            height: 30px;
+            height: 35px;
             background-color: #555;
-            border-radius: 30px;
+            border-radius: 35px;
             position: relative;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
         .toggle-switch.active {
@@ -60,23 +161,39 @@
             position: absolute;
             top: 5px;
             left: 5px;
-            width: 20px;
-            height: 20px;
+            width: 25px;
+            height: 25px;
             background-color: white;
             border-radius: 50%;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.3s;
         }
 
         .toggle-switch.active span {
-            left: 45px;
+            left: 35px;
         }
 
-        .footer {
-            font-size: 1em;
-            margin-bottom: 20px;
+        /* Footer Styling */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #4682b4;
         }
     </style>
     <script>
+        // Aimbot configuration
         const aimbot = {
             enabled: false,
             autoAim: true,
@@ -85,10 +202,23 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.001, // Rápido e instantáneo
-            aimPriority: 'head', // Siempre apuntar a la cabeza
-            maxTargets: 10, // Soporta más enemigos al mismo tiempo
+            trackingSpeed: 0.001,
+            aimPriority: 'head',
+            maxTargets: 10,
         };
+
+        // Verificación de login
+        function verifyLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "TOP" && password === "1") {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.mod-menu-container').style.display = 'flex';
+            } else {
+                alert("Usuario o contraseña incorrectos.");
+            }
+        }
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
@@ -143,7 +273,6 @@
         }
 
         function detectEnemies() {
-            // Simulación de detección (reemplazar con la lógica real)
             const enemies = [];
             for (let i = 0; i < aimbot.maxTargets; i++) {
                 enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
@@ -166,17 +295,43 @@
     </script>
 </head>
 <body>
-    <div class="title">RG G4NG ULTRA</div>
-    <div class="subtitle">AUTO AIM EXTREMO</div>
+    <!-- Fondo con bolitas -->
+    <div class="background">
+        <div class="ball" style="left: 10%; animation-duration: 3s;"></div>
+        <div class="ball" style="left: 20%; animation-duration: 2.5s;"></div>
+        <div class="ball" style="left: 30%; animation-duration: 3.5s;"></div>
+        <div class="ball" style="left: 40%; animation-duration: 2.8s;"></div>
+        <div class="ball" style="left: 50%; animation-duration: 3.2s;"></div>
+        <div class="ball" style="left: 60%; animation-duration: 3.4s;"></div>
+        <div class="ball" style="left: 70%; animation-duration: 2.9s;"></div>
+        <div class="ball" style="left: 80%; animation-duration: 3.1s;"></div>
+        <div class="ball" style="left: 90%; animation-duration: 3.6s;"></div>
+    </div>
+
+    <!-- Login -->
+    <div class="login-container">
+        <h1>RE4L1NS4NE</h1>
+        <p>MOD MENU</p>
+        <input type="text" id="username" placeholder="Usuario">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="verifyLogin()">Iniciar sesión</button>
+    </div>
+
+    <!-- Mod Menu -->
     <div class="mod-menu-container">
-        <h3>Configuraciones de Aimbot</h3>
+        <h1>RE4L1NS4NE</h1>
+        <p>MOD MENU</p>
         <label>
-            Habilitar Aimbot:
+            Aimbot:
             <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
                 <span></span>
             </div>
         </label>
     </div>
-    <div class="footer">Desarrollado por @iOSrazielOFC | Versión PRO</div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 RE4L1NS4NE. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
+    </footer>
 </body>
 </html>
