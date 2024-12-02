@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG MAX AIMBOT</title>
+    <title>RG G4NG ULTRA AIMBOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -83,9 +83,9 @@
             aimlock: true,
             noRecoil: true,
             autoShoot: true,
-            expandedFOV: true,
+            infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 999, // Máxima velocidad para seguir enemigos
+            trackingSpeed: 99999, // Velocidad máxima para seguimiento instantáneo
         };
 
         function toggleAimbot() {
@@ -101,9 +101,9 @@
         }
 
         function activateAimbot() {
-            console.log("Aimbot activado: Auto Aim + Aimlock + Recoil Off + Auto Shoot");
+            console.log("Aimbot activado: Auto Aim + FOV infinito + Aimlock + Recoil Off + Auto Shoot");
             injectAimbot();
-            autoAimFeature(); // Activa el sistema de auto apuntado mejorado
+            autoAimFeature();
         }
 
         function deactivateAimbot() {
@@ -112,7 +112,7 @@
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&expandedFOV=true&headshotOnly=true`;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true`;
             window.location.href = injectionURL;
             console.log("Aimbot inyectado en Free Fire.");
         }
@@ -123,7 +123,6 @@
             console.log("Aimbot desactivado en Free Fire.");
         }
 
-        // Sistema mejorado de auto apuntado y aimlock
         function autoAimFeature() {
             setInterval(() => {
                 if (aimbot.enabled) {
@@ -135,27 +134,25 @@
                         }
                     }
                 }
-            }, 5); // Revisión constante (cada 5ms)
+            }, 1); // Intervalo extremadamente rápido para detección continua
         }
 
         function getClosestEnemy() {
-            return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas simuladas del enemigo
+            return { x: Math.random() * 100, y: Math.random() * 100 }; // Simulación de enemigo (sustituir con detección real)
         }
 
         function lockAimOnTarget(target) {
             console.log(`Bloqueando aim en el enemigo en: ${target.x}, ${target.y}`);
-            // Apunta directamente a la cabeza del enemigo
         }
 
         function shootAtTarget(target) {
             console.log(`Disparando automáticamente a: ${target.x}, ${target.y}`);
-            // Disparo inmediato y automático
         }
     </script>
 </head>
 <body>
-    <div class="title">RG G4NG MAX</div>
-    <div class="subtitle">AIMBOT | AUTO AIMLOCK | RECOIL OFF</div>
+    <div class="title">RG G4NG ULTRA</div>
+    <div class="subtitle">AIMBOT MÁXIMO | AUTO AIM | FOV INFINITO</div>
     <div class="mod-menu-container">
         <h3>Configuraciones de Aimbot</h3>
         <label>
@@ -165,6 +162,6 @@
             </div>
         </label>
     </div>
-    <div class="footer">POWERED BY RG Dev Team</div>
+    <div class="footer">Desarrollado por @iOSrazielOFC | Versión ULTRA</div>
 </body>
 </html>
