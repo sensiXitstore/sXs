@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RE4L1NS4NE MOD MENU</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* General body styling */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,11 +33,11 @@
 
         .ball {
             position: absolute;
-            width: 25px; /* Tamaño aumentado */
-            height: 25px;
+            width: 30px; /* Tamaño más grande */
+            height: 30px;
             background-color: rgba(30, 144, 255, 0.8); /* Azul */
             border-radius: 50%;
-            animation: moveUp 3s infinite ease-in-out;
+            animation: moveUp 2s infinite ease-in-out; /* Bolitas más rápidas */
         }
 
         @keyframes moveUp {
@@ -65,9 +65,10 @@
 
         .login-container h1 {
             margin-bottom: 20px;
-            font-size: 2.5em;
+            font-size: 3em;
             color: #1e90ff; /* Azul */
             text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Poppins', sans-serif;
         }
 
         .login-container p {
@@ -132,6 +133,7 @@
             font-size: 3em;
             color: #1e90ff;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            font-family: 'Poppins', sans-serif;
         }
 
         .mod-menu-container label {
@@ -202,7 +204,7 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.001,
+            trackingSpeed: 0.001, // Hacerlo rápido
             aimPriority: 'head',
             maxTargets: 10,
         };
@@ -215,6 +217,7 @@
             if (username === "TOP" && password === "1") {
                 document.querySelector('.login-container').style.display = 'none';
                 document.querySelector('.mod-menu-container').style.display = 'flex';
+                activateAimbot(); // Activar Aimbot directamente al login exitoso
             } else {
                 alert("Usuario o contraseña incorrectos.");
             }
@@ -269,7 +272,7 @@
                         }
                     }
                 }
-            }, 1); // Detección y disparo prácticamente instantáneo
+            }, 100); // Detección más rápida
         }
 
         function detectEnemies() {
@@ -277,12 +280,11 @@
             for (let i = 0; i < aimbot.maxTargets; i++) {
                 enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
             }
-            console.log("Enemigos detectados: ", enemies);
             return enemies;
         }
 
         function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Más cercano primero
+            return enemies.sort((a, b) => a.distance - b.distance)[0];
         }
 
         function aimAtTarget(target) {
@@ -297,15 +299,15 @@
 <body>
     <!-- Fondo con bolitas -->
     <div class="background">
-        <div class="ball" style="left: 10%; animation-duration: 3s;"></div>
-        <div class="ball" style="left: 20%; animation-duration: 2.5s;"></div>
-        <div class="ball" style="left: 30%; animation-duration: 3.5s;"></div>
-        <div class="ball" style="left: 40%; animation-duration: 2.8s;"></div>
-        <div class="ball" style="left: 50%; animation-duration: 3.2s;"></div>
-        <div class="ball" style="left: 60%; animation-duration: 3.4s;"></div>
-        <div class="ball" style="left: 70%; animation-duration: 2.9s;"></div>
-        <div class="ball" style="left: 80%; animation-duration: 3.1s;"></div>
-        <div class="ball" style="left: 90%; animation-duration: 3.6s;"></div>
+        <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
+        <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
+        <div class="ball" style="left: 30%; animation-duration: 1.8s;"></div>
+        <div class="ball" style="left: 40%; animation-duration: 2.2s;"></div>
+        <div class="ball" style="left: 50%; animation-duration: 1.7s;"></div>
+        <div class="ball" style="left: 60%; animation-duration: 2.3s;"></div>
+        <div class="ball" style="left: 70%; animation-duration: 1.6s;"></div>
+        <div class="ball" style="left: 80%; animation-duration: 2.1s;"></div>
+        <div class="ball" style="left: 90%; animation-duration: 2.4s;"></div>
     </div>
 
     <!-- Login -->
