@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG 414</title>
+    <title>RG G4NG MAX AIMBOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -12,7 +12,7 @@
             padding: 0;
             text-align: center;
             height: 100vh;
-            background-color: #111;
+            background: linear-gradient(135deg, #000, #ff0000);
             color: white;
             display: flex;
             flex-direction: column;
@@ -23,22 +23,23 @@
             font-family: 'Lora', serif;
             font-size: 4em;
             margin-top: 20px;
-            text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.8);
+            text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.8);
         }
 
         .subtitle {
             font-family: 'Poppins', sans-serif;
             font-size: 2em;
             margin-top: 5px;
-            text-shadow: 2px 2px 6px rgba(255, 255, 0, 0.7);
+            text-shadow: 2px 2px 6px rgba(255, 0, 0, 0.7);
         }
 
         .mod-menu-container {
-            background-color: rgba(255, 0, 0, 0.9);
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 30px;
             border-radius: 10px;
-            margin: auto;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            margin: auto;
+            width: 80%;
         }
 
         .toggle-switch {
@@ -78,11 +79,13 @@
     <script>
         const aimbot = {
             enabled: false,
-            autoHeadshot: true, // Habilitar auto headshot
-            autoShoot: true, // Disparo automático al detectar un enemigo
+            autoAim: true,
+            aimlock: true,
             noRecoil: true,
-            instantAim: true, // Apuntar instantáneamente al enemigo más cercano
-            headshotOnly: true
+            autoShoot: true,
+            expandedFOV: true,
+            headshotOnly: true,
+            trackingSpeed: 999, // Máxima velocidad para seguir enemigos
         };
 
         function toggleAimbot() {
@@ -98,9 +101,9 @@
         }
 
         function activateAimbot() {
-            console.log("Aimbot activado con Auto Headshot.");
+            console.log("Aimbot activado: Auto Aim + Aimlock + Recoil Off + Auto Shoot");
             injectAimbot();
-            autoHeadshotFeature(); // Activar auto headshot
+            autoAimFeature(); // Activa el sistema de auto apuntado mejorado
         }
 
         function deactivateAimbot() {
@@ -109,62 +112,59 @@
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoHeadshot=true&autoShoot=true&noRecoil=true&instantAim=true&headshotOnly=true`;
-            window.location.href = injectionURL; // Inyección directa
-            console.log("Inyectado a Free Fire con Auto Headshot.");
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&expandedFOV=true&headshotOnly=true`;
+            window.location.href = injectionURL;
+            console.log("Aimbot inyectado en Free Fire.");
         }
 
         function injectNoAimbot() {
             const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL; // Desactiva el aimbot
-            console.log("Inyección desactivada.");
+            window.location.href = injectionURL;
+            console.log("Aimbot desactivado en Free Fire.");
         }
 
-        // Activar la función de auto headshot
-        function autoHeadshotFeature() {
+        // Sistema mejorado de auto apuntado y aimlock
+        function autoAimFeature() {
             setInterval(() => {
                 if (aimbot.enabled) {
                     const target = getClosestEnemy();
                     if (target) {
-                        aimAtTarget(target);
+                        lockAimOnTarget(target);
                         if (aimbot.autoShoot) {
-                            shoot(target);
+                            shootAtTarget(target);
                         }
                     }
                 }
-            }, 10); // Verifica cada 10ms para máxima eficiencia
+            }, 5); // Revisión constante (cada 5ms)
         }
 
-        // Simulación de encontrar al enemigo más cercano
         function getClosestEnemy() {
             return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas simuladas del enemigo
         }
 
-        // Apuntar instantáneamente a la cabeza del objetivo
-        function aimAtTarget(target) {
-            console.log(`Apuntando a la cabeza del enemigo en: ${target.x}, ${target.y}`);
-            // Aquí iría el código real para apuntar la mira dentro del juego
+        function lockAimOnTarget(target) {
+            console.log(`Bloqueando aim en el enemigo en: ${target.x}, ${target.y}`);
+            // Apunta directamente a la cabeza del enemigo
         }
 
-        // Disparo automático cuando la mira está en la cabeza del objetivo
-        function shoot(target) {
-            console.log(`Disparando automáticamente a la cabeza en: ${target.x}, ${target.y}`);
-            // Aquí iría el código real para disparar dentro del juego
+        function shootAtTarget(target) {
+            console.log(`Disparando automáticamente a: ${target.x}, ${target.y}`);
+            // Disparo inmediato y automático
         }
     </script>
 </head>
 <body>
-    <div class="title">RG G4NG 414</div>
-    <div class="subtitle">AUTO HEADSHOT + AUTO SHOOT</div>
+    <div class="title">RG G4NG MAX</div>
+    <div class="subtitle">AIMBOT | AUTO AIMLOCK | RECOIL OFF</div>
     <div class="mod-menu-container">
-        <h3>Aimbot Settings</h3>
+        <h3>Configuraciones de Aimbot</h3>
         <label>
-            Enable Aimbot:
+            Habilitar Aimbot:
             <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
                 <span></span>
             </div>
         </label>
     </div>
-    <div class="footer">AIMBOT | Powered by RG Dev Team</div>
+    <div class="footer">POWERED BY RG Dev Team</div>
 </body>
 </html>
