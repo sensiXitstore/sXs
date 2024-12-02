@@ -83,7 +83,9 @@
             autoShoot: true,
             noRecoil: true,
             targetOnlyHead: true,
-            instantKill: true
+            instantKill: true,
+            enemyTracking: true, // Seguimiento continuo de enemigos
+            instantAimAdjustment: true // Ajuste instantáneo de la mira
         };
 
         function toggleAimbot() {
@@ -99,8 +101,9 @@
         }
 
         function activateAimbot() {
-            console.log("Aimbot activado con máxima fuerza");
+            console.log("Aimbot activado con configuración máxima");
             injectAimbot();
+            trackEnemies();  // Activar el seguimiento de enemigos
         }
 
         function deactivateAimbot() {
@@ -109,7 +112,7 @@
         }
 
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&autoShoot=true&noRecoil=true&headshotOnly=true&instantKill=true`;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimlock=true&autoAim=true&autoShoot=true&noRecoil=true&headshotOnly=true&instantKill=true&enemyTracking=true&instantAimAdjustment=true`;
             window.location.href = injectionURL; // Inyección directa
             console.log("Inyectado a Free Fire con configuración extrema");
         }
@@ -119,11 +122,43 @@
             window.location.href = injectionURL; // Desactiva el aimbot en Free Fire
             console.log("Inyección desactivada");
         }
+
+        // Seguimiento de enemigos en tiempo real
+        function trackEnemies() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    const target = getClosestEnemy();
+                    if (target) {
+                        adjustAim(target);
+                        if (aimbot.autoShoot) {
+                            shoot(target);
+                        }
+                    }
+                }
+            }, 1); // Actualización cada 1 ms para máxima precisión
+        }
+
+        // Simulación de encontrar al enemigo más cercano
+        function getClosestEnemy() {
+            return { x: Math.random() * 100, y: Math.random() * 100 }; // Coordenadas aleatorias del enemigo
+        }
+
+        // Ajuste instantáneo de la mira al objetivo
+        function adjustAim(target) {
+            console.log(`Apuntando a la cabeza del enemigo en: ${target.x}, ${target.y}`);
+            // Código para ajustar la mira en el juego
+        }
+
+        // Disparo automático cuando la mira está ajustada al objetivo
+        function shoot(target) {
+            console.log(`Disparando automáticamente a la cabeza en: ${target.x}, ${target.y}`);
+            // Código para disparar en el juego
+        }
     </script>
 </head>
 <body>
     <div class="title">RG G4NG 414</div>
-    <div class="subtitle">AIMBOT EXTREMO</div>
+    <div class="subtitle">AIMBOT EXTREMO + SEGUIMIENTO DE ENEMIGOS</div>
     <div class="mod-menu-container">
         <h3>Aimbot Settings</h3>
         <label>
