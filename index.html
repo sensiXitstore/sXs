@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RG G4NG ULTRA AIMBOT</title>
+    <title>RG G4NG ULTRA PRO AIMBOT</title>
     <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Poppins:wght@400;600&family=Roboto:wght@500&display=swap" rel="stylesheet">
     <style>
         body {
@@ -85,8 +85,9 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            maxTargets: 5,
-            trackingSpeed: 100000, // Velocidad extrema para seguimiento instantáneo
+            trackingSpeed: 0.001, // Rápido e instantáneo
+            aimPriority: 'head', // Siempre apuntar a la cabeza
+            maxTargets: 10, // Soporta más enemigos al mismo tiempo
         };
 
         function toggleAimbot() {
@@ -102,7 +103,7 @@
         }
 
         function activateAimbot() {
-            console.log("Aimbot activado: Auto Aim + FOV infinito + Aimlock + Recoil Off + Auto Shoot");
+            console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
             injectAimbot();
             autoAimLogic();
         }
@@ -129,48 +130,44 @@
                 if (aimbot.enabled) {
                     const targets = detectEnemies();
                     if (targets.length > 0) {
-                        const closestTarget = prioritizeTargets(targets);
-                        if (closestTarget) {
-                            lockAimOnTarget(closestTarget);
+                        const bestTarget = prioritizeTargets(targets);
+                        if (bestTarget) {
+                            aimAtTarget(bestTarget);
                             if (aimbot.autoShoot) {
-                                shootAtTarget(closestTarget);
+                                shoot(bestTarget);
                             }
                         }
                     }
                 }
-            }, 1); // Intervalo extremadamente rápido para detección continua
+            }, 1); // Detección y disparo prácticamente instantáneo
         }
 
         function detectEnemies() {
-            // Simulación de detección de enemigos (reemplazar con lógica real)
+            // Simulación de detección (reemplazar con la lógica real)
             const enemies = [];
             for (let i = 0; i < aimbot.maxTargets; i++) {
-                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 500 });
+                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
             }
             console.log("Enemigos detectados: ", enemies);
             return enemies;
         }
 
         function prioritizeTargets(enemies) {
-            // Priorizar enemigos más cercanos y con mejor ángulo
-            const sortedEnemies = enemies.sort((a, b) => a.distance - b.distance);
-            return sortedEnemies[0]; // Seleccionar el más cercano
+            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Más cercano primero
         }
 
-        function lockAimOnTarget(target) {
-            console.log(`Bloqueando aim en el enemigo en: ${target.x}, ${target.y}`);
-            // Aquí se actualizaría la posición del crosshair en el juego
+        function aimAtTarget(target) {
+            console.log(`Apuntando automáticamente al enemigo en (${target.x}, ${target.y}).`);
         }
 
-        function shootAtTarget(target) {
-            console.log(`Disparando automáticamente a la cabeza del enemigo en: ${target.x}, ${target.y}`);
-            // Aquí se ejecutaría el comando de disparo en el juego
+        function shoot(target) {
+            console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
         }
     </script>
 </head>
 <body>
     <div class="title">RG G4NG ULTRA</div>
-    <div class="subtitle">AIMBOT SUPREMO | AUTO AIM TOTAL</div>
+    <div class="subtitle">AUTO AIM EXTREMO</div>
     <div class="mod-menu-container">
         <h3>Configuraciones de Aimbot</h3>
         <label>
@@ -180,6 +177,6 @@
             </div>
         </label>
     </div>
-    <div class="footer">Desarrollado por @iOSrazielOFC | Versión SUPREMA</div>
+    <div class="footer">Desarrollado por @iOSrazielOFC | Versión PRO</div>
 </body>
 </html>
