@@ -6,7 +6,7 @@
     <title>RE4L1NS4NE MOD MENU</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* General body styling */
+        /* Estilos generales */
         body {
             margin: 0;
             padding: 0;
@@ -20,7 +20,7 @@
             position: relative;
         }
 
-        /* Bolitas de fondo */
+        /* Fondo con bolitas */
         .background {
             position: absolute;
             top: 0;
@@ -33,7 +33,7 @@
 
         .ball {
             position: absolute;
-            width: 30px; /* Tamaño más grande */
+            width: 30px;
             height: 30px;
             background-color: rgba(30, 144, 255, 0.8); /* Azul */
             border-radius: 50%;
@@ -209,9 +209,9 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.001, // Hacerlo rápido
-            aimPriority: 'head',
-            maxTargets: 10,
+            trackingSpeed: 0.001, // Muy rápido
+            aimPriority: 'head', // Siempre a la cabeza
+            maxTargets: 10, // Puede detectar más enemigos
         };
 
         // Verificación de login
@@ -276,10 +276,11 @@
                         }
                     }
                 }
-            }, 100); // Detección más rápida
+            }, 50); // Detección más rápida
         }
 
         function detectEnemies() {
+            // Simulando detección de enemigos
             const enemies = [];
             for (let i = 0; i < aimbot.maxTargets; i++) {
                 enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
@@ -292,7 +293,7 @@
         }
 
         function aimAtTarget(target) {
-            console.log(`Apuntando automáticamente al enemigo en (${target.x}, ${target.y}).`);
+            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
         }
 
         function shoot(target) {
@@ -301,7 +302,6 @@
     </script>
 </head>
 <body>
-    <!-- Fondo con bolitas -->
     <div class="background">
         <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
         <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
