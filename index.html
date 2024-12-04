@@ -209,11 +209,11 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.003, // Incremento en la velocidad para mejorar el seguimiento
+            trackingSpeed: 0.005, // Más rápido
             aimPriority: 'head', // Apuntar siempre a la cabeza
             maxTargets: 10, // Detección de múltiples enemigos
-            lockStrength: 20, // Aumento en la pegajosidad para bloquear aún más fuerte
-            aimSnapStrength: 10, // Aumento de la fuerza para que el crosshair se "enganche" más rápido a la cabeza
+            lockStrength: 25, // Aumento de la pegajosidad
+            aimSnapStrength: 20, // Aumento para enganchar más rápido
         };
 
         // Verificación de login
@@ -290,7 +290,7 @@
         }
 
         function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0];
+            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Prioriza al más cercano
         }
 
         function aimAtTarget(target) {
