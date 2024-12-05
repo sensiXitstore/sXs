@@ -124,8 +124,8 @@
             infiniteFOV: true,
             headshotOnly: true,
             trackingSpeed: 0.002,
-            lockStrength: 50,
-            aimSnapStrength: 40,
+            lockStrength: 100,  // Más fuerte lockeo en la cabeza
+            aimSnapStrength: 70, // Mayor precisión al apuntar
             aimPriority: 'head',
             maxTargets: 10,
             prediction: true,
@@ -200,7 +200,8 @@
         }
 
         function aimAtHead(target) {
-            console.log(`Lockeo directo a la cabeza: (${target.headX}, ${target.headY}).`);
+            // Bloqueo del crosshair directamente en la cabeza
+            console.log(`Lockeo directo a la cabeza: (${target.headX}, ${target.headY})`);
         }
 
         function shoot(target) {
