@@ -3,338 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RE4L1NS4NE MOD MENU</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <title>MOD MENU</title>
     <style>
-        /* Estilos generales */
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            background: black;
             overflow: hidden;
-            background: #121212;
-            position: relative;
+            color: white;
         }
-
-        /* Fondo con bolitas */
-        .background {
-            position: absolute;
+        canvas {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
             z-index: -1;
-            pointer-events: none;
         }
-
-        .ball {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: rgba(30, 144, 255, 0.8); /* Azul */
-            border-radius: 50%;
-            animation: moveUp 2s infinite ease-in-out; /* Bolitas más rápidas */
+        .login-container, .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
-
-        @keyframes moveUp {
-            0% {
-                transform: translateY(100vh);
-            }
-            100% {
-                transform: translateY(-10vh);
-            }
-        }
-
-        /* Login Container */
         .login-container {
-            display: flex;
-            flex-direction: column;
             background: rgba(0, 0, 0, 0.8);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
-            width: 350px;
-            text-align: center;
-            z-index: 1;
-            transition: all 0.3s;
         }
-
-        .login-container h1 {
-            margin-bottom: 20px;
-            font-size: 3em;
-            color: #1e90ff; /* Azul */
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .login-container p {
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            color: #bbb;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .login-container input {
-            width: 90%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 2px solid #1e90ff; /* Azul */
-            border-radius: 10px;
-            outline: none;
-            font-size: 1em;
-            color: #333;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: border 0.3s;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .login-container input:focus {
-            border-color: #1e90ff;
-        }
-
-        .login-container button {
-            background: linear-gradient(135deg, #1e90ff, #4682b4);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2em;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .login-container button:hover {
-            background: linear-gradient(135deg, #4682b4, #1e90ff);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        }
-
-        /* Mod Menu Styling */
-        .mod-menu-container {
+        .menu-container {
             display: none;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            z-index: 1;
-            color: #fff;
-            text-align: center;
-            transition: all 0.3s;
         }
-
-        .mod-menu-container h1 {
-            margin-bottom: 20px;
-            font-size: 3em;
-            color: #1e90ff;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-            font-family: 'Poppins', sans-serif;
+        h1 {
+            color: white;
+            text-transform: uppercase;
+            font-size: 2rem;
         }
-
-        .mod-menu-container label {
-            display: flex;
-            justify-content: space-between;
+        .input-field {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+        }
+        .button {
             margin: 20px 0;
-            font-size: 1.5em;
-            color: #ccc;
-            font-family: 'Roboto', sans-serif;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: #1a73e8;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
         }
-
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: gray;
+            font-size: 12px;
+        }
         .toggle-switch {
-            display: inline-block;
-            width: 70px;
-            height: 35px;
-            background-color: #555;
-            border-radius: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .toggle-switch div {
+            width: 60px;
+            height: 30px;
+            background: #555;
+            border-radius: 15px;
             position: relative;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background 0.3s;
         }
-
-        .toggle-switch.active {
-            background-color: lime;
+        .toggle-switch div.active {
+            background: #1a73e8;
         }
-
-        .toggle-switch span {
+        .toggle-switch div::after {
+            content: '';
             position: absolute;
             top: 5px;
             left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: white;
+            width: 20px;
+            height: 20px;
+            background: white;
             border-radius: 50%;
-            transition: all 0.3s;
+            transition: left 0.3s;
         }
-
-        .toggle-switch.active span {
+        .toggle-switch div.active::after {
             left: 35px;
         }
-
-        /* Footer Styling */
-        footer {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: #bbb;
-            font-size: 0.9em;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        footer a {
-            color: #1e90ff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        footer a:hover {
-            color: #4682b4;
-        }
     </style>
-<script>
-    const aimbot = {
-        enabled: false,
-        autoAim: true,
-        aimlock: true,
-        noRecoil: true,
-        autoShoot: true,
-        infiniteFOV: true,
-        headshotOnly: true,
-        trackingSpeed: 0.002, // Más rápido para seguimiento instantáneo.
-        lockStrength: 50,    // Intensidad del lockeo al objetivo.
-        aimSnapStrength: 40, // Ajuste inmediato al objetivo.
-        aimPriority: 'head', // Exclusivamente apuntar a la cabeza.
-        maxTargets: 10,      // Soporte para múltiples enemigos.
-        prediction: true,    // Predicción del movimiento del objetivo.
-    };
+</head>
+<body>
+    <canvas id="background"></canvas>
+    <div class="login-container" id="login">
+        <h1>MOD MENU</h1>
+        <p>Ingresa tus credenciales:</p>
+        <input type="text" id="username" class="input-field" placeholder="Usuario">
+        <input type="password" id="password" class="input-field" placeholder="Contraseña">
+        <button class="button" onclick="login()">Entrar</button>
+    </div>
+    <div class="menu-container" id="menu">
+        <h1>MOD MENU</h1>
+        <p>Opciones:</p>
+        <div class="toggle-switch">
+            <div id="aimbot-toggle" onclick="toggleAimbot()"></div>
+        </div>
+    </div>
+    <div class="footer">Desarrollado por RE4L1NS4NE</div>
 
-    function toggleAimbot() {
-        aimbot.enabled = !aimbot.enabled;
-        const toggleSwitch = document.getElementById('aimbot-toggle');
-        if (aimbot.enabled) {
-            toggleSwitch.classList.add('active');
-            activateAimbot();
-        } else {
-            toggleSwitch.classList.remove('active');
-            deactivateAimbot();
-        }
-    }
+    <script>
+        const aimbot = {
+            enabled: false,
+            autoAim: true,
+            aimlock: true,
+            noRecoil: true,
+            autoShoot: true,
+            infiniteFOV: true,
+            headshotOnly: true,
+            trackingSpeed: 0.002,
+            lockStrength: 50,
+            aimSnapStrength: 40,
+            aimPriority: 'head',
+            maxTargets: 10,
+            prediction: true,
+        };
 
-    function activateAimbot() {
-        console.log("Aimbot activado: lockeo + auto apuntado + headshots.");
-        injectAimbot();
-        autoAimLogic();
-    }
-
-    function deactivateAimbot() {
-        console.log("Aimbot desactivado.");
-        injectNoAimbot();
-    }
-
-    function injectAimbot() {
-        const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
-        window.location.href = injectionURL;
-        console.log("Aimbot inyectado en Free Fire.");
-    }
-
-    function injectNoAimbot() {
-        const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-        window.location.href = injectionURL;
-        console.log("Aimbot desactivado en Free Fire.");
-    }
-
-    function autoAimLogic() {
-        setInterval(() => {
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
             if (aimbot.enabled) {
-                const targets = detectEnemies();
-                if (targets.length > 0) {
-                    const bestTarget = prioritizeTargets(targets);
-                    if (bestTarget) {
-                        aimAtHead(bestTarget); // Apunta directamente a la cabeza.
-                        if (aimbot.autoShoot) {
-                            shoot(bestTarget);
+                toggleSwitch.classList.add('active');
+                activateAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                deactivateAimbot();
+            }
+        }
+
+        function activateAimbot() {
+            console.log("Aimbot activado.");
+            injectAimbot();
+            autoAimLogic();
+        }
+
+        function deactivateAimbot() {
+            console.log("Aimbot desactivado.");
+            injectNoAimbot();
+        }
+
+        function injectAimbot() {
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
+            window.location.href = injectionURL;
+        }
+
+        function injectNoAimbot() {
+            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+            window.location.href = injectionURL;
+        }
+
+        function autoAimLogic() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    const targets = detectEnemies();
+                    if (targets.length > 0) {
+                        const bestTarget = prioritizeTargets(targets);
+                        if (bestTarget) {
+                            aimAtHead(bestTarget);
+                            if (aimbot.autoShoot) {
+                                shoot(bestTarget);
+                            }
                         }
                     }
                 }
-            }
-        }, 5); // Detección y disparo más rápidos.
-    }
+            }, 5);
+        }
 
-    function detectEnemies() {
-        // Simulación de detección de enemigos.
-        const enemies = [];
-        for (let i = 0; i < aimbot.maxTargets; i++) {
-            enemies.push({
-                x: Math.random() * 100,
-                y: Math.random() * 100,
-                headX: Math.random() * 100, // Coordenada específica de la cabeza.
-                headY: Math.random() * 100,
-                distance: Math.random() * 100
+        function detectEnemies() {
+            const enemies = [];
+            for (let i = 0; i < aimbot.maxTargets; i++) {
+                enemies.push({
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    headX: Math.random() * 100,
+                    headY: Math.random() * 100,
+                    distance: Math.random() * 100
+                });
+            }
+            return enemies;
+        }
+
+        function prioritizeTargets(enemies) {
+            return enemies.sort((a, b) => a.distance - b.distance)[0];
+        }
+
+        function aimAtHead(target) {
+            console.log(`Lockeo directo a la cabeza: (${target.headX}, ${target.headY}).`);
+        }
+
+        function shoot(target) {
+            console.log(`Disparo automático a la cabeza: (${target.headX}, ${target.headY}).`);
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === "TOP" && password === "1") {
+                document.getElementById('login').style.display = "none";
+                document.getElementById('menu').style.display = "flex";
+            } else {
+                alert("Credenciales incorrectas.");
+            }
+        }
+
+        // Canvas Animation
+        const canvas = document.getElementById("background");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3,
+                speed: Math.random() * 1 + 0.5,
             });
         }
-        return enemies;
-    }
 
-    function prioritizeTargets(enemies) {
-        // Priorizar el enemigo más cercano a la cabeza.
-        return enemies.sort((a, b) => a.distance - b.distance)[0];
-    }
-
-    function aimAtHead(target) {
-        // Ajusta el crosshair directamente a la cabeza.
-        console.log(`Lockeo directo a la cabeza del enemigo en (${target.headX}, ${target.headY}).`);
-    }
-
-    function shoot(target) {
-        console.log(`Disparo automático a la cabeza del enemigo en (${target.headX}, ${target.headY}).`);
-    }
-</script>
-</head>
-<body>
-    <div class="background">
-        <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
-        <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
-        <div class="ball" style="left: 30%; animation-duration: 1.8s;"></div>
-        <div class="ball" style="left: 40%; animation-duration: 2.2s;"></div>
-        <div class="ball" style="left: 50%; animation-duration: 1.7s;"></div>
-        <div class="ball" style="left: 60%; animation-duration: 2.3s;"></div>
-        <div class="ball" style="left: 70%; animation-duration: 1.6s;"></div>
-        <div class="ball" style="left: 80%; animation-duration: 2.1s;"></div>
-        <div class="ball" style="left: 90%; animation-duration: 2.4s;"></div>
-    </div>
-
-    <!-- Login -->
-    <div class="login-container">
-        <h1>RE4L1NS4NE</h1>
-        <p>MOD MENU</p>
-        <input type="text" id="username" placeholder="Usuario">
-        <input type="password" id="password" placeholder="Contraseña">
-        <button onclick="verifyLogin()">Iniciar sesión</button>
-    </div>
-
-    <!-- Mod Menu -->
-    <div class="mod-menu-container">
-        <h1>RE4L1NS4NE</h1>
-        <p>MOD MENU</p>
-        <label>
-            Aimbot:
-            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
-                <span></span>
-            </div>
-        </label>
-    </div>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 RE4L1NS4NE. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
-    </footer>
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particles) {
+                particle.y -= particle.speed;
+                if (particle.y < 0) particle.y = canvas.height;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                ctx.closePath();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
 </body>
 </html>
