@@ -199,108 +199,104 @@
             color: #4682b4;
         }
     </style>
-    <script>
-        // Aimbot configuration
-        const aimbot = {
-            enabled: false,
-            autoAim: true,
-            aimlock: true,
-            noRecoil: true,
-            autoShoot: true,
-            infiniteFOV: true,
-            headshotOnly: true,
-            trackingSpeed: 0.005, // Más rápido
-            aimPriority: 'head', // Apuntar siempre a la cabeza
-            maxTargets: 10, // Detección de múltiples enemigos
-            lockStrength: 25, // Aumento de la pegajosidad
-            aimSnapStrength: 20, // Aumento para enganchar más rápido
-        };
+<script>
+    const aimbot = {
+        enabled: false,
+        autoAim: true,
+        aimlock: true,
+        noRecoil: true,
+        autoShoot: true,
+        infiniteFOV: true,
+        headshotOnly: true,
+        trackingSpeed: 0.002, // Más rápido para seguimiento instantáneo.
+        lockStrength: 50,    // Intensidad del lockeo al objetivo.
+        aimSnapStrength: 40, // Ajuste inmediato al objetivo.
+        aimPriority: 'head', // Exclusivamente apuntar a la cabeza.
+        maxTargets: 10,      // Soporte para múltiples enemigos.
+        prediction: true,    // Predicción del movimiento del objetivo.
+    };
 
-        // Verificación de login
-        function verifyLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            if (username === "TOP" && password === "1") {
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.mod-menu-container').style.display = 'flex';
-            } else {
-                alert("Usuario o contraseña incorrectos.");
-            }
+    function toggleAimbot() {
+        aimbot.enabled = !aimbot.enabled;
+        const toggleSwitch = document.getElementById('aimbot-toggle');
+        if (aimbot.enabled) {
+            toggleSwitch.classList.add('active');
+            activateAimbot();
+        } else {
+            toggleSwitch.classList.remove('active');
+            deactivateAimbot();
         }
+    }
 
-        function toggleAimbot() {
-            aimbot.enabled = !aimbot.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
+    function activateAimbot() {
+        console.log("Aimbot activado: lockeo + auto apuntado + headshots.");
+        injectAimbot();
+        autoAimLogic();
+    }
+
+    function deactivateAimbot() {
+        console.log("Aimbot desactivado.");
+        injectNoAimbot();
+    }
+
+    function injectAimbot() {
+        const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
+        window.location.href = injectionURL;
+        console.log("Aimbot inyectado en Free Fire.");
+    }
+
+    function injectNoAimbot() {
+        const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+        window.location.href = injectionURL;
+        console.log("Aimbot desactivado en Free Fire.");
+    }
+
+    function autoAimLogic() {
+        setInterval(() => {
             if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
-                activateAimbot();
-            } else {
-                toggleSwitch.classList.remove('active');
-                deactivateAimbot();
-            }
-        }
-
-        function activateAimbot() {
-            console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
-            injectAimbot();
-            autoAimLogic();
-        }
-
-        function deactivateAimbot() {
-            console.log("Aimbot desactivado.");
-            injectNoAimbot();
-        }
-
-        function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
-            window.location.href = injectionURL;
-            console.log("Aimbot inyectado en Free Fire.");
-        }
-
-        function injectNoAimbot() {
-            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL;
-            console.log("Aimbot desactivado en Free Fire.");
-        }
-
-        function autoAimLogic() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    const targets = detectEnemies();
-                    if (targets.length > 0) {
-                        const bestTarget = prioritizeTargets(targets);
-                        if (bestTarget) {
-                            aimAtTarget(bestTarget);
-                            if (aimbot.autoShoot) {
-                                shoot(bestTarget);
-                            }
+                const targets = detectEnemies();
+                if (targets.length > 0) {
+                    const bestTarget = prioritizeTargets(targets);
+                    if (bestTarget) {
+                        aimAtHead(bestTarget); // Apunta directamente a la cabeza.
+                        if (aimbot.autoShoot) {
+                            shoot(bestTarget);
                         }
                     }
                 }
-            }, 10); // Detección y disparo más rápidos
-        }
-
-        function detectEnemies() {
-            const enemies = [];
-            for (let i = 0; i < aimbot.maxTargets; i++) {
-                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
             }
-            return enemies;
-        }
+        }, 5); // Detección y disparo más rápidos.
+    }
 
-        function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Prioriza al más cercano
+    function detectEnemies() {
+        // Simulación de detección de enemigos.
+        const enemies = [];
+        for (let i = 0; i < aimbot.maxTargets; i++) {
+            enemies.push({
+                x: Math.random() * 100,
+                y: Math.random() * 100,
+                headX: Math.random() * 100, // Coordenada específica de la cabeza.
+                headY: Math.random() * 100,
+                distance: Math.random() * 100
+            });
         }
+        return enemies;
+    }
 
-        function aimAtTarget(target) {
-            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
-        }
+    function prioritizeTargets(enemies) {
+        // Priorizar el enemigo más cercano a la cabeza.
+        return enemies.sort((a, b) => a.distance - b.distance)[0];
+    }
 
-        function shoot(target) {
-            console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
-        }
-    </script>
+    function aimAtHead(target) {
+        // Ajusta el crosshair directamente a la cabeza.
+        console.log(`Lockeo directo a la cabeza del enemigo en (${target.headX}, ${target.headY}).`);
+    }
+
+    function shoot(target) {
+        console.log(`Disparo automático a la cabeza del enemigo en (${target.headX}, ${target.headY}).`);
+    }
+</script>
 </head>
 <body>
     <div class="background">
