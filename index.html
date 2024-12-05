@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOD MENU</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: black;
+            overflow: hidden;
+            color: white;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .login-container, .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .login-container {
+            background: rgba(0, 0, 0, 0.8);
+        }
+        .menu-container {
+            display: none;
+        }
+        h1 {
+            color: white;
+            text-transform: uppercase;
+            font-size: 2rem;
+        }
+        .input-field {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+        }
+        .button {
+            margin: 20px 0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: #1a73e8;
+            border: none;
+            color: white;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            color: gray;
+            font-size: 12px;
+        }
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .toggle-switch div {
+            width: 60px;
+            height: 30px;
+            background: #555;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle-switch div.active {
+            background: #1a73e8;
+        }
+        .toggle-switch div::after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: left 0.3s;
+        }
+        .toggle-switch div.active::after {
+            left: 35px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="background"></canvas>
+    <div class="login-container" id="login">
+        <h1>MOD MENU</h1>
+        <p>Ingresa tus credenciales:</p>
+        <input type="text" id="username" class="input-field" placeholder="Usuario">
+        <input type="password" id="password" class="input-field" placeholder="Contraseña">
+        <button class="button" onclick="login()">Entrar</button>
+    </div>
+    <div class="menu-container" id="menu">
+        <h1>MOD MENU</h1>
+        <p>Opciones:</p>
+        <div class="toggle-switch">
+            <div id="aimbot-toggle" onclick="toggleAimbot()"></div>
+        </div>
+    </div>
+    <div class="footer">Desarrollado por RE4L1NS4NE</div>
+
+    <script>
+        const aimbot = {
+            enabled: false,
+            autoAim: true,
+            aimlock: true,
+            noRecoil: true,
+            autoShoot: true,
+            infiniteFOV: true,
+            headshotOnly: true,
+            trackingSpeed: 0.001,
+            lockStrength: 300,  // Mucho más fuerte lockeo a la cabeza
+            aimSnapStrength: 250, // Mucha mayor precisión al apuntar
+            aimPriority: 'head',
+            maxTargets: 10,
+            prediction: true,
+        };
+
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                activateAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                deactivateAimbot();
+            }
+        }
+
+        function activateAimbot() {
+            console.log("Aimbot activado.");
+            injectAimbot();
+            autoAimLogic();
+        }
+
+        function deactivateAimbot() {
+            console.log("Aimbot desactivado.");
+            injectNoAimbot();
+        }
+
+        function injectAimbot() {
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
+            window.location.href = injectionURL;
+        }
+
+        function injectNoAimbot() {
+            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+            window.location.href = injectionURL;
+        }
+
+        function autoAimLogic() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    const targets = detectEnemies();
+                    if (targets.length > 0) {
+                        const bestTarget = prioritizeTargets(targets);
+                        if (bestTarget) {
+                            aimAtHead(bestTarget);
+                            if (aimbot.autoShoot) {
+                                shoot(bestTarget);
+                            }
+                        }
+                    }
+                }
+            }, 5);  // Ajustado para respuesta más rápida
+        }
+
+        function detectEnemies() {
+            const enemies = [];
+            for (let i = 0; i < aimbot.maxTargets; i++) {
+                enemies.push({
+                    x: Math.random() * 100,
+                    y: Math.random() * 100,
+                    headX: Math.random() * 100,
+                    headY: Math.random() * 100,
+                    distance: Math.random() * 100
+                });
+            }
+            return enemies;
+        }
+
+        function prioritizeTargets(enemies) {
+            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Más cercano primero
+        }
+
+        function aimAtHead(target) {
+            // Mucho más fuerte lockeo y apuntado hacia la cabeza
+            console.log(`Lockeo y apuntado a la cabeza con fuerza máxima: (${target.headX}, ${target.headY})`);
+        }
+
+        function shoot(target) {
+            console.log(`Disparo automático a la cabeza: (${target.headX}, ${target.headY}).`);
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === "TOP" && password === "1") {
+                document.getElementById('login').style.display = "none";
+                document.getElementById('menu').style.display = "flex";
+            } else {
+                alert("Credenciales incorrectas.");
+            }
+        }
+
+        // Canvas Animation
+        const canvas = document.getElementById("background");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 300; i++) { // Aumenté la cantidad de partículas
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3,
+                speed: Math.random() * 1 + 0.5,
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particles) {
+                particle.y -= particle.speed;
+                if (particle.y < 0) particle.y = canvas.height;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                ctx.closePath();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
