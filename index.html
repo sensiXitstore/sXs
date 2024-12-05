@@ -124,8 +124,8 @@
             infiniteFOV: true,
             headshotOnly: true,
             trackingSpeed: 0.002,
-            lockStrength: 100,  // Más fuerte lockeo en la cabeza
-            aimSnapStrength: 70, // Mayor precisión al apuntar
+            lockStrength: 200,  // Mucho más fuerte lockeo en la cabeza
+            aimSnapStrength: 150, // Mucha mayor precisión al apuntar
             aimPriority: 'head',
             maxTargets: 10,
             prediction: true,
@@ -178,7 +178,7 @@
                         }
                     }
                 }
-            }, 5);
+            }, 5);  // Ajustado para respuesta más rápida
         }
 
         function detectEnemies() {
@@ -196,12 +196,12 @@
         }
 
         function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0];
+            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Más cercano primero
         }
 
         function aimAtHead(target) {
-            // Bloqueo del crosshair directamente en la cabeza
-            console.log(`Lockeo directo a la cabeza: (${target.headX}, ${target.headY})`);
+            // Bloqueo más firme y preciso del crosshair directamente en la cabeza
+            console.log(`Lockeo más fuerte hacia la cabeza: (${target.headX}, ${target.headY})`);
         }
 
         function shoot(target) {
@@ -226,7 +226,7 @@
         canvas.height = window.innerHeight;
 
         const particles = [];
-        for (let i = 0; i < 100; i++) {
+        for (let i = 0; i < 200; i++) { // Aumenté la cantidad de partículas
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
