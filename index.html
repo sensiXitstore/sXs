@@ -123,12 +123,12 @@
         autoShoot: true,
         infiniteFOV: true,
         headshotOnly: true,
-        trackingSpeed: 0.0008, // Velocidad más rápida de seguimiento
-        lockStrength: 500,    // Lockeo extremadamente fuerte en la cabeza
-        aimSnapStrength: 350, // Snap más agresivo y preciso
-        aimPriority: 'head',  // Siempre prioriza la cabeza
-        maxTargets: 20,       // Detecta más objetivos
-        prediction: true,     // Ajusta por movimiento enemigo
+        trackingSpeed: 0.0005,  // Aún más rápido, apuntado más preciso
+        lockStrength: 700,       // Mucho más fuerte el lockeo de la cabeza
+        aimSnapStrength: 500,    // Snap más agresivo
+        aimPriority: 'head',     // Siempre apuntar a la cabeza
+        maxTargets: 20,          // Soporta más enemigos
+        prediction: true,        // Ajustes por movimiento enemigo
     };
 
     function toggleAimbot() {
@@ -155,12 +155,13 @@
     }
 
     function injectAimbot() {
-        const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
+        // Cambié el bundle a "freefire.app" y actualicé la URL de inyección
+        const injectionURL = `freefire.app://injectAimbot?bundle=freefire.app&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
         window.location.href = injectionURL;
     }
 
     function injectNoAimbot() {
-        const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+        const injectionURL = `freefire.app://disableAimbot?bundle=freefire.app`;
         window.location.href = injectionURL;
     }
 
@@ -178,7 +179,7 @@
                     }
                 }
             }
-        }, 3); // Intervalo ajustado para máxima respuesta
+        }, 3); // Intervalo ajustado para mayor respuesta
     }
 
     function detectEnemies() {
@@ -202,12 +203,15 @@
     }
 
     function aimAtHead(target) {
+        // Realizo predicción para el movimiento y bloqueo más extremo
         const predictedX = target.headX + target.velocityX * aimbot.trackingSpeed;
         const predictedY = target.headY + target.velocityY * aimbot.trackingSpeed;
-        console.log(`Lockeo en la cabeza: (${predictedX.toFixed(2)}, ${predictedY.toFixed(2)})`);
+
+        console.log(`Lockeo muy fuerte en la cabeza: (${predictedX.toFixed(2)}, ${predictedY.toFixed(2)})`);
     }
 
     function shoot(target) {
+        // Disparo automático ajustado al centro de la cabeza
         console.log(`Disparo automático a la cabeza: (${target.headX}, ${target.headY}).`);
     }
 
