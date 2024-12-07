@@ -7,8 +7,8 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
+            font-family: 'Roboto', sans-serif;
+            background: black;
             color: white;
             overflow: hidden;
         }
@@ -29,18 +29,19 @@
             font-size: 3rem;
             font-weight: bold;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #ff0080, #00bfff);
+            background: linear-gradient(90deg, #ff0000, #6600cc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             text-align: center;
+            text-shadow: 0px 0px 15px #ff0000;
         }
         .input-field {
             margin: 10px 0;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid white;
-            background: #333;
+            background: #222;
             color: white;
             width: 80%;
             max-width: 300px;
@@ -50,12 +51,13 @@
             margin: 20px 0;
             padding: 15px 30px;
             border-radius: 5px;
-            background: linear-gradient(90deg, #ff0080, #00bfff);
+            background: linear-gradient(90deg, #ff0000, #6600cc);
             border: none;
             color: white;
             cursor: pointer;
             text-transform: uppercase;
             font-size: 1rem;
+            box-shadow: 0px 0px 10px #6600cc;
         }
         .button:hover {
             opacity: 0.9;
@@ -66,16 +68,21 @@
         .option {
             margin: 10px 0;
             padding: 10px;
-            background: #333;
+            background: #222;
             color: white;
             border-radius: 5px;
             cursor: pointer;
             width: 80%;
             max-width: 300px;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+        .option:hover {
+            background: linear-gradient(90deg, #6600cc, #ff0000);
+            box-shadow: 0px 0px 10px #ff0000;
         }
         .option.active {
-            background: linear-gradient(90deg, #ff0080, #00bfff);
+            background: linear-gradient(90deg, #ff0000, #6600cc);
         }
         .footer {
             position: fixed;
@@ -97,17 +104,22 @@
     </div>
     <div class="menu-container container" id="menu">
         <div class="header">MOD MENU</div>
-        <div class="option" id="aimbot-option" onclick="toggleAimbot()">Activar Auto Apuntado</div>
+        <div class="option" id="aimbot-option" onclick="toggleAimbot()">Activar Aimbot</div>
         <div class="option" id="auto-shoot-option" onclick="toggleAutoShoot()">Activar Disparo Automático</div>
+        <div class="option" id="visibility-option" onclick="toggleVisibility()">Activar Invisibilidad</div>
+        <div class="option" id="speed-option" onclick="toggleSpeed()">Aumentar Velocidad</div>
     </div>
-    <div class="footer">Desarrollado por Raziel G</div>
+    <div class="footer">Creado por Raziel G</div>
 
     <script>
         const aimbot = {
             enabled: false,
             autoShoot: false,
-            lockStrength: 1000,
+            invisibility: false,
+            speedBoost: false,
+            lockStrength: 1500,
             snapToHead: true,
+            injectionTarget: "freefire.app", // Bundle para inyección
         };
 
         function toggleAimbot() {
@@ -115,10 +127,10 @@
             const option = document.getElementById('aimbot-option');
             if (aimbot.enabled) {
                 option.classList.add('active');
-                activateAimbot();
+                injectAimbot();
             } else {
                 option.classList.remove('active');
-                deactivateAimbot();
+                injectNoAimbot();
             }
         }
 
@@ -134,24 +146,58 @@
             }
         }
 
-        function activateAimbot() {
-            console.log("Aimbot activado.");
-            const injectionURL = `freefire://injectAimbot?aimlock=true&snapToHead=true&lockStrength=${aimbot.lockStrength}`;
+        function toggleVisibility() {
+            aimbot.invisibility = !aimbot.invisibility;
+            const option = document.getElementById('visibility-option');
+            if (aimbot.invisibility) {
+                option.classList.add('active');
+                injectVisibility();
+            } else {
+                option.classList.remove('active');
+                removeVisibility();
+            }
+        }
+
+        function toggleSpeed() {
+            aimbot.speedBoost = !aimbot.speedBoost;
+            const option = document.getElementById('speed-option');
+            if (aimbot.speedBoost) {
+                option.classList.add('active');
+                injectSpeed();
+            } else {
+                option.classList.remove('active');
+                removeSpeed();
+            }
+        }
+
+        function injectAimbot() {
+            const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&lockStrength=${aimbot.lockStrength}`;
+            console.log(`Inyectando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
         }
 
-        function deactivateAimbot() {
-            console.log("Aimbot desactivado.");
-            const injectionURL = `freefire://disableAimbot`;
+        function injectNoAimbot() {
+            const injectionURL = `freefire://disableAimbot?bundle=${aimbot.injectionTarget}`;
+            console.log(`Desactivando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
         }
 
-        function activateAutoShoot() {
-            console.log("Disparo automático activado.");
+        function injectVisibility() {
+            const injectionURL = `freefire://injectVisibility?bundle=${aimbot.injectionTarget}`;
+            console.log(`Activando Invisibilidad: ${injectionURL}`);
+            window.location.href = injectionURL;
         }
 
-        function deactivateAutoShoot() {
-            console.log("Disparo automático desactivado.");
+        function injectSpeed() {
+            const injectionURL = `freefire://injectSpeedBoost?bundle=${aimbot.injectionTarget}`;
+            console.log(`Activando Boost de Velocidad: ${injectionURL}`);
+            window.location.href = injectionURL;
+        }
+
+        function removeSpeed() {
+            const injectionURL = `freefire://disableSpeedBoost?bundle=${aimbot.injectionTarget}`;
+            console.log(`Desactivando Boost de Velocidad: ${injectionURL}`);
+            window.location.href = injectionURL;
         }
 
         function login() {
@@ -165,26 +211,19 @@
             }
         }
 
-        function autoAimLogic() {
-            if (aimbot.enabled) {
-                console.log("Auto-apuntado activo.");
-                // Lógica para detectar enemigos y bloquear la mira a la cabeza.
-            }
-        }
-
-        // Canvas Background Animation
+        // Animación de fondo
         const canvas = document.getElementById('background');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const particles = [];
-        for (let i = 0; i < 150; i++) {
+        for (let i = 0; i < 200; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
                 radius: Math.random() * 3,
-                speed: Math.random() * 1 + 0.5,
+                speed: Math.random() * 2 + 1,
             });
         }
 
@@ -195,7 +234,7 @@
                 if (particle.y < 0) particle.y = canvas.height;
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'white';
+                ctx.fillStyle = 'red';
                 ctx.fill();
                 ctx.closePath();
             }
