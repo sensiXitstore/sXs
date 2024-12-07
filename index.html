@@ -106,8 +106,6 @@
         <div class="header">MOD MENU</div>
         <div class="option" id="aimbot-option" onclick="toggleAimbot()">Activar Aimbot</div>
         <div class="option" id="auto-shoot-option" onclick="toggleAutoShoot()">Activar Disparo Automático</div>
-        <div class="option" id="visibility-option" onclick="toggleVisibility()">Activar Invisibilidad</div>
-        <div class="option" id="speed-option" onclick="toggleSpeed()">Aumentar Velocidad</div>
     </div>
     <div class="footer">Creado por Raziel G</div>
 
@@ -115,8 +113,6 @@
         const aimbot = {
             enabled: false,
             autoShoot: false,
-            invisibility: false,
-            speedBoost: false,
             lockStrength: 1500,
             snapToHead: true,
             injectionTarget: "freefire.app", // Bundle para inyección
@@ -146,30 +142,6 @@
             }
         }
 
-        function toggleVisibility() {
-            aimbot.invisibility = !aimbot.invisibility;
-            const option = document.getElementById('visibility-option');
-            if (aimbot.invisibility) {
-                option.classList.add('active');
-                injectVisibility();
-            } else {
-                option.classList.remove('active');
-                removeVisibility();
-            }
-        }
-
-        function toggleSpeed() {
-            aimbot.speedBoost = !aimbot.speedBoost;
-            const option = document.getElementById('speed-option');
-            if (aimbot.speedBoost) {
-                option.classList.add('active');
-                injectSpeed();
-            } else {
-                option.classList.remove('active');
-                removeSpeed();
-            }
-        }
-
         function injectAimbot() {
             const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&lockStrength=${aimbot.lockStrength}`;
             console.log(`Inyectando Aimbot: ${injectionURL}`);
@@ -182,22 +154,40 @@
             window.location.href = injectionURL;
         }
 
-        function injectVisibility() {
-            const injectionURL = `freefire://injectVisibility?bundle=${aimbot.injectionTarget}`;
-            console.log(`Activando Invisibilidad: ${injectionURL}`);
-            window.location.href = injectionURL;
+        function activateAutoShoot() {
+            console.log("Disparo automático activado.");
+            autoShootLogic();
         }
 
-        function injectSpeed() {
-            const injectionURL = `freefire://injectSpeedBoost?bundle=${aimbot.injectionTarget}`;
-            console.log(`Activando Boost de Velocidad: ${injectionURL}`);
-            window.location.href = injectionURL;
+        function deactivateAutoShoot() {
+            console.log("Disparo automático desactivado.");
         }
 
-        function removeSpeed() {
-            const injectionURL = `freefire://disableSpeedBoost?bundle=${aimbot.injectionTarget}`;
-            console.log(`Desactivando Boost de Velocidad: ${injectionURL}`);
-            window.location.href = injectionURL;
+        function autoShootLogic() {
+            setInterval(() => {
+                if (aimbot.enabled && aimbot.autoShoot) {
+                    const target = detectEnemy();
+                    if (target) {
+                        lockToHead(target);
+                        shoot(target);
+                    }
+                }
+            }, 10);
+        }
+
+        function detectEnemy() {
+            return {
+                headX: Math.random() * 100,
+                headY: Math.random() * 100,
+            };
+        }
+
+        function lockToHead(target) {
+            console.log(`Lockeando Crosshair a la cabeza: (${target.headX}, ${target.headY}).`);
+        }
+
+        function shoot(target) {
+            console.log(`Disparando a la cabeza: (${target.headX}, ${target.headY}).`);
         }
 
         function login() {
