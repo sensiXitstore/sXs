@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOD MENU</title>
+    <title>@iOSrazielOFC</title>
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: black;
-            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #2d2d2d);
             color: white;
+            overflow: hidden;
         }
         canvas {
             position: fixed;
@@ -18,41 +18,64 @@
             left: 0;
             z-index: -1;
         }
-        .login-container, .menu-container {
+        .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
         }
-        .login-container {
-            background: rgba(0, 0, 0, 0.8);
-        }
-        .menu-container {
-            display: none;
-        }
-        h1 {
-            color: white;
+        .header {
+            font-size: 3rem;
+            font-weight: bold;
             text-transform: uppercase;
-            font-size: 2rem;
+            background: linear-gradient(90deg, #ff0080, #00bfff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            text-align: center;
         }
         .input-field {
             margin: 10px 0;
             padding: 10px;
             border-radius: 5px;
             border: 1px solid white;
-            background: transparent;
+            background: #333;
             color: white;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
         }
         .button {
             margin: 20px 0;
-            padding: 10px 20px;
+            padding: 15px 30px;
             border-radius: 5px;
-            background: #1a73e8;
+            background: linear-gradient(90deg, #ff0080, #00bfff);
             border: none;
             color: white;
             cursor: pointer;
             text-transform: uppercase;
+            font-size: 1rem;
+        }
+        .button:hover {
+            opacity: 0.9;
+        }
+        .menu-container {
+            display: none;
+        }
+        .option {
+            margin: 10px 0;
+            padding: 10px;
+            background: #333;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+        .option.active {
+            background: linear-gradient(90deg, #ff0080, #00bfff);
         }
         .footer {
             position: fixed;
@@ -62,162 +85,79 @@
             color: gray;
             font-size: 12px;
         }
-        .toggle-switch {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 20px 0;
-        }
-        .toggle-switch div {
-            width: 60px;
-            height: 30px;
-            background: #555;
-            border-radius: 15px;
-            position: relative;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .toggle-switch div.active {
-            background: #1a73e8;
-        }
-        .toggle-switch div::after {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: left 0.3s;
-        }
-        .toggle-switch div.active::after {
-            left: 35px;
-        }
     </style>
 </head>
 <body>
     <canvas id="background"></canvas>
-    <div class="login-container" id="login">
-        <h1>MOD MENU</h1>
-        <p>Ingresa tus credenciales:</p>
+    <div class="container" id="login">
+        <div class="header">@iOSrazielOFC</div>
         <input type="text" id="username" class="input-field" placeholder="Usuario">
         <input type="password" id="password" class="input-field" placeholder="Contraseña">
         <button class="button" onclick="login()">Entrar</button>
     </div>
-    <div class="menu-container" id="menu">
-        <h1>MOD MENU</h1>
-        <p>Opciones:</p>
-        <div class="toggle-switch">
-            <div id="aimbot-toggle" onclick="toggleAimbot()"></div>
-        </div>
+    <div class="menu-container container" id="menu">
+        <div class="header">MOD MENU</div>
+        <div class="option" id="aimbot-option" onclick="toggleAimbot()">Activar Auto Apuntado</div>
+        <div class="option" id="auto-shoot-option" onclick="toggleAutoShoot()">Activar Disparo Automático</div>
     </div>
     <div class="footer">Desarrollado por Raziel G</div>
 
     <script>
         const aimbot = {
             enabled: false,
-            autoAim: true,
-            aimlock: true,
-            noRecoil: true,
-            autoShoot: true,
-            infiniteFOV: true,
-            headshotOnly: true,
-            trackingSpeed: 0.001,
-            lockStrength: 1000,  // Fuerza máxima de lockeo
-            aimSnapStrength: 1000, // Máxima precisión al apuntar
-            aimPriority: 'head',
-            maxTargets: 10,
-            prediction: true,
-            trackingSpeedIncrease: 2, // Aumentado la velocidad de seguimiento
-            snapToHead: true, // Apunta siempre a la cabeza
-            autoHeadshots: true, // Asegura siempre disparar a la cabeza
-            distanceFactor: 2, // Factor para mejorar la selección de objetivos cercanos
+            autoShoot: false,
+            lockStrength: 1000,
+            snapToHead: true,
         };
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
+            const option = document.getElementById('aimbot-option');
             if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
+                option.classList.add('active');
                 activateAimbot();
             } else {
-                toggleSwitch.classList.remove('active');
+                option.classList.remove('active');
                 deactivateAimbot();
+            }
+        }
+
+        function toggleAutoShoot() {
+            aimbot.autoShoot = !aimbot.autoShoot;
+            const option = document.getElementById('auto-shoot-option');
+            if (aimbot.autoShoot) {
+                option.classList.add('active');
+                activateAutoShoot();
+            } else {
+                option.classList.remove('active');
+                deactivateAutoShoot();
             }
         }
 
         function activateAimbot() {
             console.log("Aimbot activado.");
-            injectAimbot();
-            autoAimLogic();
+            const injectionURL = `freefire://injectAimbot?aimlock=true&snapToHead=true&lockStrength=${aimbot.lockStrength}`;
+            window.location.href = injectionURL;
         }
 
         function deactivateAimbot() {
             console.log("Aimbot desactivado.");
-            injectNoAimbot();
-        }
-
-        function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}&snapToHead=${aimbot.snapToHead}&autoHeadshots=${aimbot.autoHeadshots}&distanceFactor=${aimbot.distanceFactor}`;
+            const injectionURL = `freefire://disableAimbot`;
             window.location.href = injectionURL;
         }
 
-        function injectNoAimbot() {
-            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL;
+        function activateAutoShoot() {
+            console.log("Disparo automático activado.");
         }
 
-        function autoAimLogic() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    const targets = detectEnemies();
-                    if (targets.length > 0) {
-                        const bestTarget = prioritizeTargets(targets);
-                        if (bestTarget) {
-                            aimAtHead(bestTarget);
-                            if (aimbot.autoShoot) {
-                                shoot(bestTarget);
-                            }
-                        }
-                    }
-                }
-            }, 5);  // Ajustado para respuesta más rápida
-        }
-
-        function detectEnemies() {
-            const enemies = [];
-            for (let i = 0; i < aimbot.maxTargets; i++) {
-                enemies.push({
-                    x: Math.random() * 100,
-                    y: Math.random() * 100,
-                    headX: Math.random() * 100,
-                    headY: Math.random() * 100,
-                    distance: Math.random() * 100
-                });
-            }
-            return enemies;
-        }
-
-        function prioritizeTargets(enemies) {
-            // Prioriza el objetivo más cercano usando la distancia
-            return enemies.sort((a, b) => (a.distance * aimbot.distanceFactor) - (b.distance * aimbot.distanceFactor))[0]; 
-        }
-
-        function aimAtHead(target) {
-            // Apunta y bloquea a la cabeza con el máximo nivel de precisión
-            console.log(`Lockeo y apuntado hacia la cabeza con fuerza máxima: (${target.headX}, ${target.headY})`);
-        }
-
-        function shoot(target) {
-            // Disparo automático a la cabeza
-            console.log(`Disparo automático a la cabeza: (${target.headX}, ${target.headY}).`);
+        function deactivateAutoShoot() {
+            console.log("Disparo automático desactivado.");
         }
 
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if (username === "TOP" && password === "1") {
+            if (username === "Raziel" && password === "1234") {
                 document.getElementById('login').style.display = "none";
                 document.getElementById('menu').style.display = "flex";
             } else {
@@ -225,14 +165,21 @@
             }
         }
 
-        // Canvas Animation
-        const canvas = document.getElementById("background");
-        const ctx = canvas.getContext("2d");
+        function autoAimLogic() {
+            if (aimbot.enabled) {
+                console.log("Auto-apuntado activo.");
+                // Lógica para detectar enemigos y bloquear la mira a la cabeza.
+            }
+        }
+
+        // Canvas Background Animation
+        const canvas = document.getElementById('background');
+        const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
         const particles = [];
-        for (let i = 0; i < 300; i++) { // Aumenté la cantidad de partículas
+        for (let i = 0; i < 150; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -248,7 +195,7 @@
                 if (particle.y < 0) particle.y = canvas.height;
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                ctx.fillStyle = "blue";
+                ctx.fillStyle = 'white';
                 ctx.fill();
                 ctx.closePath();
             }
