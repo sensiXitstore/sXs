@@ -80,6 +80,12 @@
             color: gray;
             font-size: 12px;
         }
+        .status {
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: #00ff00;
+            text-shadow: 0px 0px 10px #00ff00;
+        }
     </style>
 </head>
 <body>
@@ -91,32 +97,40 @@
     <div class="menu-container container" id="menu">
         <div class="header">MOD MENU</div>
         <div class="option" id="aimbot-option" onclick="toggleAimbot()">ACTIVAR AIMBOT</div>
+        <div class="status" id="aimbot-status">Aimbot: 0%</div>
     </div>
     <div class="footer">Creado por Raziel G</div>
 
     <script>
         const aimbot = {
             enabled: false,
-            injectionTarget: "freefire.app", // Objetivo de inyección
+            percentage: 0, // Porcentaje de efectividad del aimbot
+            injectionTarget: "freefire.app", // Bundle objetivo
         };
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const option = document.getElementById('aimbot-option');
+            const status = document.getElementById('aimbot-status');
+            
             if (aimbot.enabled) {
+                aimbot.percentage = 100; // Aimbot siempre al 100%
                 option.classList.add('active');
                 option.innerText = "AIMBOT ACTIVADO";
+                status.innerText = `Aimbot: ${aimbot.percentage}%`;
                 injectAimbot();
             } else {
+                aimbot.percentage = 0; // Aimbot desactivado
                 option.classList.remove('active');
                 option.innerText = "AIMBOT DESACTIVADO";
+                status.innerText = `Aimbot: ${aimbot.percentage}%`;
                 injectNoAimbot();
             }
         }
 
         function injectAimbot() {
-            // Inyección directa para activar aimbot sin simulación
-            const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&headshotOnly=true&lockStrength=9999`;
+            // Inyección directa del aimbot con 100% precisión
+            const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&headshotOnly=true&lockStrength=9999&precision=${aimbot.percentage}`;
             console.log(`Inyectando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
         }
