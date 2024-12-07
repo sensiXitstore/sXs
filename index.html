@@ -1,127 +1,118 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOD MENU Free Fire</title>
+    <title>MOD MENU</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #111;
-            color: #fff;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            background: black;
             overflow: hidden;
+            color: white;
         }
-        
-        .container {
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .login-container, .menu-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
-
-        .login-container, .mod-menu-container {
-            text-align: center;
+        .login-container {
             background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+        .menu-container {
             display: none;
         }
-
-        input {
-            padding: 10px;
-            margin: 10px;
-            width: 250px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background: #222;
-            color: #fff;
-            font-size: 16px;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin-top: 10px;
-            background-color: #0a74da;
+        h1 {
             color: white;
+            text-transform: uppercase;
+            font-size: 2rem;
+        }
+        .input-field {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid white;
+            background: transparent;
+            color: white;
+        }
+        .button {
+            margin: 20px 0;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background: #1a73e8;
             border: none;
+            color: white;
             cursor: pointer;
-            border-radius: 5px;
+            text-transform: uppercase;
         }
-
-        button:hover {
-            background-color: #0858a0;
-        }
-
-        .aimbot-toggle {
-            margin-top: 20px;
-            padding: 10px 30px;
-            background: #0a74da;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .aimbot-toggle.active {
-            background: #4CAF50;
-        }
-
         .footer {
             position: fixed;
             bottom: 0;
             width: 100%;
             text-align: center;
-            padding: 10px;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: #fff;
-            font-size: 14px;
+            color: gray;
+            font-size: 12px;
         }
-        
-        /* Animación de bolitas */
-        .ball {
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .toggle-switch div {
+            width: 60px;
+            height: 30px;
+            background: #555;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .toggle-switch div.active {
+            background: #1a73e8;
+        }
+        .toggle-switch div::after {
+            content: '';
             position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            background: white;
             border-radius: 50%;
-            background-color: #0a74da;
-            animation: moveBalls 6s infinite linear;
+            transition: left 0.3s;
         }
-
-        @keyframes moveBalls {
-            0% {
-                top: 100%;
-                left: 50%;
-                transform: translateX(-50%) scale(0.5);
-            }
-            100% {
-                top: 0%;
-                left: 50%;
-                transform: translateX(-50%) scale(1);
-            }
+        .toggle-switch div.active::after {
+            left: 35px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Login -->
-        <div class="login-container">
-            <h2>Bienvenido al Mod Menu</h2>
-            <input type="text" id="username" placeholder="Usuario: TOP" />
-            <input type="password" id="password" placeholder="Contraseña: 1" />
-            <button onclick="login()">Iniciar sesión</button>
-        </div>
-
-        <!-- Mod Menu -->
-        <div class="mod-menu-container">
-            <h3>MOD MENU ACTIVADO</h3>
-            <div id="aimbot-toggle" class="aimbot-toggle" onclick="toggleAimbot()">Activar Aimbot</div>
+    <canvas id="background"></canvas>
+    <div class="login-container" id="login">
+        <h1>MOD MENU</h1>
+        <p>Ingresa tus credenciales:</p>
+        <input type="text" id="username" class="input-field" placeholder="Usuario">
+        <input type="password" id="password" class="input-field" placeholder="Contraseña">
+        <button class="button" onclick="login()">Entrar</button>
+    </div>
+    <div class="menu-container" id="menu">
+        <h1>MOD MENU</h1>
+        <p>Opciones:</p>
+        <div class="toggle-switch">
+            <div id="aimbot-toggle" onclick="toggleAimbot()"></div>
         </div>
     </div>
-
-    <div class="footer">
-        <p>Mod Menu de Free Fire | Todos los derechos reservados</p>
-    </div>
+    <div class="footer">Desarrollado por RE4L1NS4NE</div>
 
     <script>
         const aimbot = {
@@ -132,27 +123,14 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.0005, // Más rápido y agresivo
-            lockStrength: 1000,    // Lockeo extremadamente fuerte
-            aimSnapStrength: 500,  // Snap muy agresivo
-            aimPriority: 'head',   // Siempre apuntar a la cabeza
-            maxTargets: 20,        // Detección de más enemigos
-            prediction: true,      // Predicción de movimiento enemigo
-            autoTracking: true,    // Hacer seguimiento automáticamente
+            trackingSpeed: 0.001,
+            lockStrength: 500,  // Mucho más fuerte lockeo a la cabeza
+            aimSnapStrength: 400, // Mucha mayor precisión al apuntar
+            aimPriority: 'head',
+            maxTargets: 10,
+            prediction: true,
+            trackingSpeedIncrease: 1.5, // Más rápido en el seguimiento
         };
-
-        function login() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            if (username === "TOP" && password === "1") {
-                document.querySelector(".login-container").style.display = "none";
-                document.querySelector(".mod-menu-container").style.display = "block";
-                generateBalls();
-            } else {
-                alert("Credenciales incorrectas.");
-            }
-        }
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
@@ -167,7 +145,7 @@
         }
 
         function activateAimbot() {
-            console.log("Aimbot activado con auto-apuntado exagerado y lockeo fuerte.");
+            console.log("Aimbot activado.");
             injectAimbot();
             autoAimLogic();
         }
@@ -201,7 +179,7 @@
                         }
                     }
                 }
-            }, 1);
+            }, 5);  // Ajustado para respuesta más rápida
         }
 
         function detectEnemies() {
@@ -212,41 +190,66 @@
                     y: Math.random() * 100,
                     headX: Math.random() * 100,
                     headY: Math.random() * 100,
-                    distance: Math.random() * 100,
-                    velocityX: Math.random() * 2 - 1,
-                    velocityY: Math.random() * 2 - 1,
+                    distance: Math.random() * 100
                 });
             }
             return enemies;
         }
 
         function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0];
+            return enemies.sort((a, b) => a.distance - b.distance)[0]; // Más cercano primero
         }
 
         function aimAtHead(target) {
-            const predictedX = target.headX + target.velocityX * aimbot.trackingSpeed;
-            const predictedY = target.headY + target.velocityY * aimbot.trackingSpeed;
-            console.log(`Lockeo extremadamente fuerte en la cabeza: (${predictedX.toFixed(2)}, ${predictedY.toFixed(2)})`);
+            // Mucho más fuerte lockeo y apuntado hacia la cabeza
+            console.log(`Lockeo y apuntado a la cabeza con fuerza máxima: (${target.headX}, ${target.headY})`);
         }
 
         function shoot(target) {
             console.log(`Disparo automático a la cabeza: (${target.headX}, ${target.headY}).`);
         }
 
-        function generateBalls() {
-            const ballsContainer = document.createElement('div');
-            for (let i = 0; i < 50; i++) {
-                const ball = document.createElement('div');
-                ball.classList.add('ball');
-                ball.style.width = `${Math.random() * 30 + 10}px`;
-                ball.style.height = ball.style.width;
-                ball.style.animationDuration = `${Math.random() * 4 + 2}s`;
-                ball.style.left = `${Math.random() * 100}%`;
-                ballsContainer.appendChild(ball);
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === "TOP" && password === "1") {
+                document.getElementById('login').style.display = "none";
+                document.getElementById('menu').style.display = "flex";
+            } else {
+                alert("Credenciales incorrectas.");
             }
-            document.body.appendChild(ballsContainer);
         }
+
+        // Canvas Animation
+        const canvas = document.getElementById("background");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        for (let i = 0; i < 300; i++) { // Aumenté la cantidad de partículas
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3,
+                speed: Math.random() * 1 + 0.5,
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particles) {
+                particle.y -= particle.speed;
+                if (particle.y < 0) particle.y = canvas.height;
+                ctx.beginPath();
+                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                ctx.closePath();
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
     </script>
 </body>
 </html>
