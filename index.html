@@ -77,12 +77,11 @@
             text-align: center;
             transition: all 0.3s ease;
         }
-        .option:hover {
-            background: linear-gradient(90deg, #6600cc, #ff0000);
-            box-shadow: 0px 0px 10px #ff0000;
-        }
         .option.active {
-            background: linear-gradient(90deg, #ff0000, #6600cc);
+            background: linear-gradient(90deg, #00ff00, #005500);
+        }
+        .option.inactive {
+            background: linear-gradient(90deg, #ff0000, #550000);
         }
         .footer {
             position: fixed;
@@ -104,8 +103,8 @@
     </div>
     <div class="menu-container container" id="menu">
         <div class="header">MOD MENU</div>
-        <div class="option" id="aimbot-option" onclick="toggleAimbot()">Activar Aimbot</div>
-        <div class="option" id="auto-shoot-option" onclick="toggleAutoShoot()">Activar Disparo Automático</div>
+        <div class="option inactive" id="aimbot-option" onclick="toggleAimbot()">Aimbot: Desactivado</div>
+        <div class="option inactive" id="auto-shoot-option" onclick="toggleAutoShoot()">Disparo Automático: Desactivado</div>
     </div>
     <div class="footer">Creado por Raziel G</div>
 
@@ -113,7 +112,7 @@
         const aimbot = {
             enabled: false,
             autoShoot: false,
-            lockStrength: 1500,
+            lockStrength: 2000,
             snapToHead: true,
             injectionTarget: "freefire.app", // Bundle para inyección
         };
@@ -122,10 +121,14 @@
             aimbot.enabled = !aimbot.enabled;
             const option = document.getElementById('aimbot-option');
             if (aimbot.enabled) {
+                option.classList.remove('inactive');
                 option.classList.add('active');
+                option.innerText = "Aimbot: Activado";
                 injectAimbot();
             } else {
                 option.classList.remove('active');
+                option.classList.add('inactive');
+                option.innerText = "Aimbot: Desactivado";
                 injectNoAimbot();
             }
         }
@@ -134,10 +137,14 @@
             aimbot.autoShoot = !aimbot.autoShoot;
             const option = document.getElementById('auto-shoot-option');
             if (aimbot.autoShoot) {
+                option.classList.remove('inactive');
                 option.classList.add('active');
+                option.innerText = "Disparo Automático: Activado";
                 activateAutoShoot();
             } else {
                 option.classList.remove('active');
+                option.classList.add('inactive');
+                option.innerText = "Disparo Automático: Desactivado";
                 deactivateAutoShoot();
             }
         }
