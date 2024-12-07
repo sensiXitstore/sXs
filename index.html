@@ -7,9 +7,9 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: black;
-            color: white;
+            font-family: 'Courier New', monospace;
+            background: #000000;
+            color: #ff0000;
             overflow: hidden;
         }
         canvas {
@@ -26,41 +26,31 @@
             height: 100vh;
         }
         .header {
-            font-size: 3rem;
+            font-size: 4rem;
             font-weight: bold;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #ff0000, #6600cc);
+            background: linear-gradient(90deg, red, black);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-            text-align: center;
-            text-shadow: 0px 0px 15px #ff0000;
-        }
-        .input-field {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid white;
-            background: #222;
-            color: white;
-            width: 80%;
-            max-width: 300px;
+            text-shadow: 0px 0px 20px red;
+            margin-bottom: 2rem;
             text-align: center;
         }
         .button {
             margin: 20px 0;
             padding: 15px 30px;
             border-radius: 5px;
-            background: linear-gradient(90deg, #ff0000, #6600cc);
+            background: red;
             border: none;
-            color: white;
+            color: black;
             cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0px 0px 10px red;
             text-transform: uppercase;
-            font-size: 1rem;
-            box-shadow: 0px 0px 10px #6600cc;
         }
         .button:hover {
-            opacity: 0.9;
+            background: #660000;
         }
         .menu-container {
             display: none;
@@ -68,20 +58,19 @@
         .option {
             margin: 10px 0;
             padding: 10px;
-            background: #222;
-            color: white;
+            background: #111;
+            color: red;
             border-radius: 5px;
             cursor: pointer;
             width: 80%;
             max-width: 300px;
             text-align: center;
             transition: all 0.3s ease;
+            font-size: 1.2rem;
         }
         .option.active {
-            background: linear-gradient(90deg, #00ff00, #005500);
-        }
-        .option.inactive {
-            background: linear-gradient(90deg, #ff0000, #550000);
+            background: red;
+            color: black;
         }
         .footer {
             position: fixed;
@@ -97,115 +86,51 @@
     <canvas id="background"></canvas>
     <div class="container" id="login">
         <div class="header">@iOSrazielOFC</div>
-        <input type="text" id="username" class="input-field" placeholder="Usuario">
-        <input type="password" id="password" class="input-field" placeholder="Contraseña">
-        <button class="button" onclick="login()">Entrar</button>
+        <button class="button" onclick="login()">ACTIVAR MOD</button>
     </div>
     <div class="menu-container container" id="menu">
         <div class="header">MOD MENU</div>
-        <div class="option inactive" id="aimbot-option" onclick="toggleAimbot()">Aimbot: Desactivado</div>
-        <div class="option inactive" id="auto-shoot-option" onclick="toggleAutoShoot()">Disparo Automático: Desactivado</div>
+        <div class="option" id="aimbot-option" onclick="toggleAimbot()">ACTIVAR AIMBOT</div>
     </div>
     <div class="footer">Creado por Raziel G</div>
 
     <script>
         const aimbot = {
             enabled: false,
-            autoShoot: false,
-            lockStrength: 2000,
-            snapToHead: true,
-            injectionTarget: "freefire.app", // Bundle para inyección
+            injectionTarget: "freefire.app", // Objetivo de inyección
         };
 
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const option = document.getElementById('aimbot-option');
             if (aimbot.enabled) {
-                option.classList.remove('inactive');
                 option.classList.add('active');
-                option.innerText = "Aimbot: Activado";
+                option.innerText = "AIMBOT ACTIVADO";
                 injectAimbot();
             } else {
                 option.classList.remove('active');
-                option.classList.add('inactive');
-                option.innerText = "Aimbot: Desactivado";
+                option.innerText = "AIMBOT DESACTIVADO";
                 injectNoAimbot();
             }
         }
 
-        function toggleAutoShoot() {
-            aimbot.autoShoot = !aimbot.autoShoot;
-            const option = document.getElementById('auto-shoot-option');
-            if (aimbot.autoShoot) {
-                option.classList.remove('inactive');
-                option.classList.add('active');
-                option.innerText = "Disparo Automático: Activado";
-                activateAutoShoot();
-            } else {
-                option.classList.remove('active');
-                option.classList.add('inactive');
-                option.innerText = "Disparo Automático: Desactivado";
-                deactivateAutoShoot();
-            }
-        }
-
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&lockStrength=${aimbot.lockStrength}`;
+            // Inyección directa para activar aimbot sin simulación
+            const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&headshotOnly=true&lockStrength=9999`;
             console.log(`Inyectando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
         }
 
         function injectNoAimbot() {
+            // Desactiva el aimbot
             const injectionURL = `freefire://disableAimbot?bundle=${aimbot.injectionTarget}`;
             console.log(`Desactivando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
         }
 
-        function activateAutoShoot() {
-            console.log("Disparo automático activado.");
-            autoShootLogic();
-        }
-
-        function deactivateAutoShoot() {
-            console.log("Disparo automático desactivado.");
-        }
-
-        function autoShootLogic() {
-            setInterval(() => {
-                if (aimbot.enabled && aimbot.autoShoot) {
-                    const target = detectEnemy();
-                    if (target) {
-                        lockToHead(target);
-                        shoot(target);
-                    }
-                }
-            }, 10);
-        }
-
-        function detectEnemy() {
-            return {
-                headX: Math.random() * 100,
-                headY: Math.random() * 100,
-            };
-        }
-
-        function lockToHead(target) {
-            console.log(`Lockeando Crosshair a la cabeza: (${target.headX}, ${target.headY}).`);
-        }
-
-        function shoot(target) {
-            console.log(`Disparando a la cabeza: (${target.headX}, ${target.headY}).`);
-        }
-
         function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            if (username === "Raziel" && password === "1234") {
-                document.getElementById('login').style.display = "none";
-                document.getElementById('menu').style.display = "flex";
-            } else {
-                alert("Credenciales incorrectas.");
-            }
+            document.getElementById('login').style.display = "none";
+            document.getElementById('menu').style.display = "flex";
         }
 
         // Animación de fondo
@@ -215,7 +140,7 @@
         canvas.height = window.innerHeight;
 
         const particles = [];
-        for (let i = 0; i < 200; i++) {
+        for (let i = 0; i < 300; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
