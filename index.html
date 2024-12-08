@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@iOSrazielOFC</title>
+    <title>Raziel G</title>
     <style>
         body {
             margin: 0;
@@ -35,6 +35,12 @@
             text-shadow: 0px 0px 20px red;
             margin-bottom: 2rem;
             text-align: center;
+        }
+        .subheader {
+            font-size: 1.5rem;
+            color: gray;
+            text-shadow: 0px 0px 5px gray;
+            margin-bottom: 20px;
         }
         .button {
             margin: 20px 0;
@@ -91,7 +97,8 @@
 <body>
     <canvas id="background"></canvas>
     <div class="container" id="login">
-        <div class="header">@iOSrazielOFC</div>
+        <div class="header">Raziel G</div>
+        <div class="subheader">ModMenu | Desarrollado X @iOSrazielOFC</div>
         <button class="button" onclick="login()">ACTIVAR MOD</button>
     </div>
     <div class="menu-container container" id="menu">
@@ -118,25 +125,45 @@
                 option.classList.add('active');
                 option.innerText = "AIMBOT ACTIVADO";
                 status.innerText = `Aimbot: ${aimbot.percentage}%`;
-                injectAimbot();
+                modifyFreeFireFiles();
             } else {
                 aimbot.percentage = 0; // Aimbot desactivado
                 option.classList.remove('active');
                 option.innerText = "AIMBOT DESACTIVADO";
                 status.innerText = `Aimbot: ${aimbot.percentage}%`;
-                injectNoAimbot();
+                revertFreeFireFiles();
             }
         }
 
-        function injectAimbot() {
-            // Inyección directa del aimbot con 100% precisión
+        function modifyFreeFireFiles() {
+            // Simula la modificación de archivos del juego Free Fire
+            console.log("Modificando archivos del juego...");
+            const modifiedFiles = [
+                "aimbot_logic.js",
+                "hit_detection.cfg",
+                "player_tracking.dll"
+            ];
+            modifiedFiles.forEach(file => {
+                console.log(`Archivo modificado: ${file}`);
+            });
+
             const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&headshotOnly=true&lockStrength=9999&precision=${aimbot.percentage}`;
             console.log(`Inyectando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
         }
 
-        function injectNoAimbot() {
-            // Desactiva el aimbot
+        function revertFreeFireFiles() {
+            // Simula la restauración de los archivos originales del juego
+            console.log("Restaurando archivos originales del juego...");
+            const originalFiles = [
+                "aimbot_logic.js",
+                "hit_detection.cfg",
+                "player_tracking.dll"
+            ];
+            originalFiles.forEach(file => {
+                console.log(`Archivo restaurado: ${file}`);
+            });
+
             const injectionURL = `freefire://disableAimbot?bundle=${aimbot.injectionTarget}`;
             console.log(`Desactivando Aimbot: ${injectionURL}`);
             window.location.href = injectionURL;
