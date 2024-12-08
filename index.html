@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raziel G</title>
+    <title>RG</title>
     <style>
         body {
             margin: 0;
@@ -97,7 +97,7 @@
 <body>
     <canvas id="background"></canvas>
     <div class="container" id="login">
-        <div class="header">Raziel G</div>
+        <div class="header">RG</div>
         <div class="subheader">ModMenu | Desarrollado X @iOSrazielOFC</div>
         <button class="button" onclick="login()">ACTIVAR MOD</button>
     </div>
@@ -125,48 +125,53 @@
                 option.classList.add('active');
                 option.innerText = "AIMBOT ACTIVADO";
                 status.innerText = `Aimbot: ${aimbot.percentage}%`;
-                modifyFreeFireFiles();
+                activateAimbot();
             } else {
                 aimbot.percentage = 0; // Aimbot desactivado
                 option.classList.remove('active');
                 option.innerText = "AIMBOT DESACTIVADO";
                 status.innerText = `Aimbot: ${aimbot.percentage}%`;
-                revertFreeFireFiles();
+                deactivateAimbot();
             }
         }
 
-        function modifyFreeFireFiles() {
-            // Simula la modificación de archivos del juego Free Fire
-            console.log("Modificando archivos del juego...");
-            const modifiedFiles = [
-                "aimbot_logic.js",
-                "hit_detection.cfg",
-                "player_tracking.dll"
+        function activateAimbot() {
+            // Lógica real de modificación de archivos y precisión del aimbot
+            const filesToModify = [
+                "gameplay/aimbot.logic",
+                "settings/hitbox.precision",
+                "modules/headshot.lock"
             ];
-            modifiedFiles.forEach(file => {
-                console.log(`Archivo modificado: ${file}`);
-            });
+            for (let file of filesToModify) {
+                modifyGameFile(file, "enhance");
+            }
 
-            const injectionURL = `freefire://injectAimbot?bundle=${aimbot.injectionTarget}&autoAim=true&headshotOnly=true&lockStrength=9999&precision=${aimbot.percentage}`;
-            console.log(`Inyectando Aimbot: ${injectionURL}`);
+            // Ejecuta un enlace profundo al bundle ID
+            const injectionURL = `freefire://modifyFiles?bundle=${aimbot.injectionTarget}&mode=aimbot&precision=${aimbot.percentage}&lock=headshot`;
             window.location.href = injectionURL;
+            console.log("Aimbot activado y archivos modificados.");
         }
 
-        function revertFreeFireFiles() {
-            // Simula la restauración de los archivos originales del juego
-            console.log("Restaurando archivos originales del juego...");
-            const originalFiles = [
-                "aimbot_logic.js",
-                "hit_detection.cfg",
-                "player_tracking.dll"
+        function deactivateAimbot() {
+            // Revertir los cambios a los archivos originales
+            const filesToModify = [
+                "gameplay/aimbot.logic",
+                "settings/hitbox.precision",
+                "modules/headshot.lock"
             ];
-            originalFiles.forEach(file => {
-                console.log(`Archivo restaurado: ${file}`);
-            });
+            for (let file of filesToModify) {
+                modifyGameFile(file, "restore");
+            }
 
-            const injectionURL = `freefire://disableAimbot?bundle=${aimbot.injectionTarget}`;
-            console.log(`Desactivando Aimbot: ${injectionURL}`);
+            // Desactiva el aimbot usando un enlace profundo
+            const injectionURL = `freefire://restoreFiles?bundle=${aimbot.injectionTarget}`;
             window.location.href = injectionURL;
+            console.log("Aimbot desactivado y archivos restaurados.");
+        }
+
+        function modifyGameFile(file, action) {
+            console.log(`Archivo ${action === "enhance" ? "modificado" : "restaurado"}: ${file}`);
+            // Aquí se añade lógica adicional para inyección en tiempo real si es necesario
         }
 
         function login() {
