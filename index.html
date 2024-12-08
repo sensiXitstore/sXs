@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raziel G</title>
+    <title>H4CKBOT</title>
     <style>
         body {
             margin: 0;
@@ -97,7 +97,7 @@
 <body>
     <canvas id="background"></canvas>
     <div class="container" id="login">
-        <div class="header">Raziel G</div>
+        <div class="header">H4CKBOT</div>
         <div class="subheader">ModMenu | Desarrollado X @iOSrazielOFC</div>
         <button class="button" onclick="login()">ACTIVAR MOD</button>
     </div>
@@ -105,14 +105,18 @@
         <div class="header">MOD MENU</div>
         <div class="option" id="aimbot-option" onclick="toggleAimbot()">ACTIVAR AIMBOT</div>
         <div class="status" id="aimbot-status">Aimbot: 0%</div>
+        <div class="option" id="autoaim-option" onclick="toggleAutoAim()">AUTO AIM: OFF</div>
+        <div class="option" id="aimfov-option" onclick="toggleAimFOV()">AIM FOV: OFF</div>
     </div>
     <div class="footer">Creado por Raziel G</div>
 
     <script>
         const aimbot = {
             enabled: false,
-            percentage: 0, // Porcentaje de efectividad del aimbot
-            injectionTarget: "com.dts.freefireios", // Bundle objetivo actualizado
+            percentage: 0,
+            injectionTarget: "com.dts.freefireios",
+            autoAim: false,
+            aimFOV: false,
         };
 
         function toggleAimbot() {
@@ -121,13 +125,13 @@
             const status = document.getElementById('aimbot-status');
             
             if (aimbot.enabled) {
-                aimbot.percentage = 100; // Aimbot siempre al 100%
+                aimbot.percentage = 100;
                 option.classList.add('active');
                 option.innerText = "AIMBOT ACTIVADO";
                 status.innerText = `Aimbot: ${aimbot.percentage}%`;
                 activateAimbot();
             } else {
-                aimbot.percentage = 0; // Aimbot desactivado
+                aimbot.percentage = 0;
                 option.classList.remove('active');
                 option.innerText = "AIMBOT DESACTIVADO";
                 status.innerText = `Aimbot: ${aimbot.percentage}%`;
@@ -135,63 +139,50 @@
             }
         }
 
-        function activateAimbot() {
-            // Lógica del efecto exagerado del Aimbot
-            const filesToModify = [
-                "gameplay/aimbot.logic",
-                "settings/hitbox.precision",
-                "modules/headshot.lock"
-            ];
-            for (let file of filesToModify) {
-                modifyGameFile(file, "enhance");
-            }
+        function toggleAutoAim() {
+            aimbot.autoAim = !aimbot.autoAim;
+            const option = document.getElementById('autoaim-option');
+            option.innerText = aimbot.autoAim ? "AUTO AIM: ON" : "AUTO AIM: OFF";
+            updateAimbotSettings();
+        }
 
-            const injectionURL = `freefire://modifyFiles?bundle=${aimbot.injectionTarget}&mode=aimbot&precision=${aimbot.percentage}&lock=headshot`;
-            forceCrosshairEffect();
-            console.log("Aimbot activado con efecto exagerado y archivos modificados.");
+        function toggleAimFOV() {
+            aimbot.aimFOV = !aimbot.aimFOV;
+            const option = document.getElementById('aimfov-option');
+            option.innerText = aimbot.aimFOV ? "AIM FOV: ON" : "AIM FOV: OFF";
+            updateAimbotSettings();
+        }
+
+        function activateAimbot() {
+            modifyGameFiles("enhance");
+            const injectionURL = `freefire://modifyFiles?bundle=${aimbot.injectionTarget}&mode=aimbot&precision=${aimbot.percentage}&lock=headshot&autoAim=${aimbot.autoAim}&aimFOV=${aimbot.aimFOV}`;
+            console.log("Aimbot activado.");
             window.location.href = injectionURL;
         }
 
         function deactivateAimbot() {
-            // Revertir cambios al estado original
+            modifyGameFiles("restore");
+            const injectionURL = `freefire://restoreFiles?bundle=${aimbot.injectionTarget}`;
+            console.log("Aimbot desactivado.");
+            window.location.href = injectionURL;
+        }
+
+        function updateAimbotSettings() {
+            // Reaplicar los cambios de configuración en el aimbot.
+            const injectionURL = `freefire://updateAimbotSettings?bundle=${aimbot.injectionTarget}&autoAim=${aimbot.autoAim}&aimFOV=${aimbot.aimFOV}`;
+            console.log(`Configuración del aimbot actualizada: AutoAim: ${aimbot.autoAim}, AimFOV: ${aimbot.aimFOV}`);
+            window.location.href = injectionURL;
+        }
+
+        function modifyGameFiles(action) {
             const filesToModify = [
                 "gameplay/aimbot.logic",
                 "settings/hitbox.precision",
                 "modules/headshot.lock"
             ];
             for (let file of filesToModify) {
-                modifyGameFile(file, "restore");
+                console.log(`Archivo ${action === "enhance" ? "modificado" : "restaurado"}: ${file}`);
             }
-
-            const injectionURL = `freefire://restoreFiles?bundle=${aimbot.injectionTarget}`;
-            console.log("Aimbot desactivado y archivos restaurados.");
-            window.location.href = injectionURL;
-        }
-
-        function forceCrosshairEffect() {
-            console.log("Forzando mira hacia la cabeza...");
-            // Simulación de la lógica del crosshair hacia el enemigo
-            let crosshairInterval = setInterval(() => {
-                const enemyPosition = getEnemyHeadPosition();
-                moveCrosshairTo(enemyPosition.x, enemyPosition.y);
-            }, 50); // Ajustar cada 50ms
-        }
-
-        function getEnemyHeadPosition() {
-            // Lógica simulada para obtener la posición de la cabeza del enemigo
-            return {
-                x: Math.random() * window.innerWidth, // Posición horizontal
-                y: Math.random() * window.innerHeight // Posición vertical
-            };
-        }
-
-        function moveCrosshairTo(x, y) {
-            console.log(`Crosshair movido a la posición: ${x}, ${y}`);
-            // Lógica para mover el crosshair a la cabeza del enemigo
-        }
-
-        function modifyGameFile(file, action) {
-            console.log(`Archivo ${action === "enhance" ? "modificado" : "restaurado"}: ${file}`);
         }
 
         function login() {
