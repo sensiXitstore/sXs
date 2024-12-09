@@ -205,6 +205,7 @@
                 value = config.sensitivity;
             }
 
+            // Inyectando la URL que abrirá Free Fire y aplicará las funciones
             let injectionURL = `freefire://inject?bundle=${injectionTarget}&feature=${feature}&enabled=true&value=${value}`;
             console.log(`[INJECTION] ${feature.toUpperCase()} ENABLED: ${value}`);
             window.location.href = injectionURL;
