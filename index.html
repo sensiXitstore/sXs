@@ -178,10 +178,10 @@
         const injectionTarget = "com.dts.freefireios";
 
         const features = {
-            aimbot: { enabled: false, percentage: 100 },
-            autoAim: { enabled: false, percentage: 100 },
-            aimFOV: { enabled: false, degrees: 120 },
-            freestylerx: { enabled: false, sensitivity: 10.0 }
+            aimbot: { enabled: false, percentage: 1000 },  // Aimbot más exagerado
+            autoAim: { enabled: false, percentage: 1000 }, // Auto Aim más fuerte
+            aimFOV: { enabled: false, degrees: 360 },     // FOV más amplio
+            freestylerx: { enabled: false, sensitivity: 100.0 } // Sensibilidad extrema
         };
 
         function toggleFeature(feature) {
@@ -198,14 +198,13 @@
         function injectFeature(feature, config) {
             let value = 0;
             if (feature === "aimFOV") {
-                value = config.degrees;
+                value = config.degrees; // FOV
             } else if (feature === "aimbot" || feature === "autoAim") {
-                value = config.percentage;
+                value = config.percentage; // Aimbot / Auto Aim
             } else if (feature === "freestylerx") {
-                value = config.sensitivity;
+                value = config.sensitivity; // Sensibilidad extrema
             }
 
-            // Inyectando la URL que abrirá Free Fire y aplicará las funciones
             let injectionURL = `freefire://inject?bundle=${injectionTarget}&feature=${feature}&enabled=true&value=${value}`;
             console.log(`[INJECTION] ${feature.toUpperCase()} ENABLED: ${value}`);
             window.location.href = injectionURL;
