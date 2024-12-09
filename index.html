@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium DNS</title>
+    <title>InjectorX 💉</title>
     <style>
         body {
             margin: 0;
@@ -131,7 +131,7 @@
 <body>
     <canvas id="background"></canvas>
     <div class="container" id="login">
-        <div class="header">Premium DNS</div>
+        <div class="header">InjectorX 💉</div>
         <div class="subheader">ModMenu | Desarrollado por @iOSrazielOFC</div>
         <button class="button" onclick="login()">ACTIVAR MOD</button>
     </div>
@@ -142,69 +142,77 @@
         <div class="option">
             <label>Aimbot:</label>
             <label class="switch">
-                <input type="checkbox" id="aimbot-switch" onclick="toggleAimbot()">
+                <input type="checkbox" id="aimbot-switch" onclick="toggleFeature('aimbot')">
                 <span class="slider"></span>
             </label>
-            <span id="aimbot-status">0%</span>
         </div>
 
         <!-- AUTO AIM -->
         <div class="option">
             <label>Auto Aim:</label>
             <label class="switch">
-                <input type="checkbox" id="autoaim-switch" onclick="toggleAutoAim()">
+                <input type="checkbox" id="autoaim-switch" onclick="toggleFeature('autoAim')">
                 <span class="slider"></span>
             </label>
-            <span id="autoaim-status">0%</span>
         </div>
 
         <!-- AIM FOV -->
         <div class="option">
             <label>Aim FOV (°):</label>
             <label class="switch">
-                <input type="checkbox" id="aimfov-switch" onclick="toggleAimFOV()">
+                <input type="checkbox" id="aimfov-switch" onclick="toggleFeature('aimFOV')">
                 <span class="slider"></span>
             </label>
-            <span id="aimfov-status">0°</span>
+        </div>
+
+        <!-- FREESTYLERX MODE -->
+        <div class="option">
+            <label>FreeStylerX Mode:</label>
+            <label class="switch">
+                <input type="checkbox" id="freestylerx-switch" onclick="toggleFeature('freestylerx')">
+                <span class="slider"></span>
+            </label>
         </div>
     </div>
-    <div class="footer">Creado por @iOSrazielOFC</div>
-
     <script>
         const injectionTarget = "com.dts.freefireios";
-        const aimbot = { enabled: false, percentage: 0 };
-        const autoAim = { enabled: false, percentage: 0 };
-        const aimFOV = { enabled: false, degrees: 0 };
 
-        function toggleAimbot() {
-            aimbot.enabled = document.getElementById('aimbot-switch').checked;
-            aimbot.percentage = aimbot.enabled ? 100 : 0;
-            updateStatus('aimbot-status', `${aimbot.percentage}%`);
-            modifyGameFiles('aimbot', aimbot.enabled, aimbot.percentage);
+        const features = {
+            aimbot: { enabled: false, percentage: 100 },
+            autoAim: { enabled: false, percentage: 100 },
+            aimFOV: { enabled: false, degrees: 120 },
+            freestylerx: { enabled: false, sensitivity: 10.0 }
+        };
+
+        function toggleFeature(feature) {
+            const config = features[feature];
+            config.enabled = document.getElementById(`${feature}-switch`).checked;
+
+            if (config.enabled) {
+                injectFeature(feature, config);
+            } else {
+                disableFeature(feature);
+            }
         }
 
-        function toggleAutoAim() {
-            autoAim.enabled = document.getElementById('autoaim-switch').checked;
-            autoAim.percentage = autoAim.enabled ? 100 : 0;
-            updateStatus('autoaim-status', `${autoAim.percentage}%`);
-            modifyGameFiles('autoaim', autoAim.enabled, autoAim.percentage);
+        function injectFeature(feature, config) {
+            let value = 0;
+            if (feature === "aimFOV") {
+                value = config.degrees;
+            } else if (feature === "aimbot" || feature === "autoAim") {
+                value = config.percentage;
+            } else if (feature === "freestylerx") {
+                value = config.sensitivity;
+            }
+
+            let injectionURL = `freefire://inject?bundle=${injectionTarget}&feature=${feature}&enabled=true&value=${value}`;
+            console.log(`[INJECTION] ${feature.toUpperCase()} ENABLED: ${value}`);
+            window.location.href = injectionURL;
         }
 
-        function toggleAimFOV() {
-            aimFOV.enabled = document.getElementById('aimfov-switch').checked;
-            aimFOV.degrees = aimFOV.enabled ? 90 : 0; // Default to 90° if enabled
-            updateStatus('aimfov-status', `${aimFOV.degrees}°`);
-            modifyGameFiles('aimfov', aimFOV.enabled, aimFOV.degrees);
-        }
-
-        function updateStatus(id, value) {
-            document.getElementById(id).innerText = value;
-        }
-
-        function modifyGameFiles(feature, enabled, value) {
-            const action = enabled ? "ACTIVADO" : "DESACTIVADO";
-            const injectionURL = `freefire://modifyFiles?bundle=${injectionTarget}&feature=${feature}&enabled=${enabled}&value=${value}`;
-            console.log(`Modificando archivos para ${feature.toUpperCase()} (${action}): ${injectionURL}`);
+        function disableFeature(feature) {
+            let injectionURL = `freefire://inject?bundle=${injectionTarget}&feature=${feature}&enabled=false`;
+            console.log(`[INJECTION] ${feature.toUpperCase()} DISABLED`);
             window.location.href = injectionURL;
         }
 
@@ -213,7 +221,7 @@
             document.getElementById('menu').style.display = "flex";
         }
 
-        // Fondo animado
+        // Animación de fondo
         const canvas = document.getElementById('background');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
