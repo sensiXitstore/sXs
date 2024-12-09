@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iOS Premium DNS</title>
+    <title>Premium DNS</title>
     <style>
         body {
             margin: 0;
@@ -131,8 +131,8 @@
 <body>
     <canvas id="background"></canvas>
     <div class="container" id="login">
-        <div class="header">iOS Premium DNS</div>
-        <div class="subheader">ModMenu | Desarrollado X @iOSrazielOFC</div>
+        <div class="header">Premium DNS</div>
+        <div class="subheader">ModMenu | Desarrollado por @iOSrazielOFC</div>
         <button class="button" onclick="login()">ACTIVAR MOD</button>
     </div>
     <div class="menu-container container" id="menu">
@@ -171,7 +171,6 @@
     <div class="footer">Creado por @iOSrazielOFC</div>
 
     <script>
-        // Configuración de las funcionalidades
         const injectionTarget = "com.dts.freefireios";
         const aimbot = { enabled: false, percentage: 0 };
         const autoAim = { enabled: false, percentage: 0 };
@@ -181,33 +180,31 @@
             aimbot.enabled = document.getElementById('aimbot-switch').checked;
             aimbot.percentage = aimbot.enabled ? 100 : 0;
             updateStatus('aimbot-status', `${aimbot.percentage}%`);
-            modifyGameFiles('aimbot', aimbot.enabled);
+            modifyGameFiles('aimbot', aimbot.enabled, aimbot.percentage);
         }
 
         function toggleAutoAim() {
             autoAim.enabled = document.getElementById('autoaim-switch').checked;
             autoAim.percentage = autoAim.enabled ? 100 : 0;
             updateStatus('autoaim-status', `${autoAim.percentage}%`);
-            modifyGameFiles('autoaim', autoAim.enabled);
+            modifyGameFiles('autoaim', autoAim.enabled, autoAim.percentage);
         }
 
         function toggleAimFOV() {
             aimFOV.enabled = document.getElementById('aimfov-switch').checked;
-            aimFOV.degrees = aimFOV.enabled ? 90 : 0; // Grados de visión ajustados
+            aimFOV.degrees = aimFOV.enabled ? 90 : 0; // Default to 90° if enabled
             updateStatus('aimfov-status', `${aimFOV.degrees}°`);
-            modifyGameFiles('aimfov', aimFOV.enabled);
+            modifyGameFiles('aimfov', aimFOV.enabled, aimFOV.degrees);
         }
 
         function updateStatus(id, value) {
             document.getElementById(id).innerText = value;
         }
 
-        function modifyGameFiles(feature, enabled) {
+        function modifyGameFiles(feature, enabled, value) {
             const action = enabled ? "ACTIVADO" : "DESACTIVADO";
-            const injectionURL = `freefire://modifyFiles?bundle=${injectionTarget}&feature=${feature}&enabled=${enabled}`;
-            console.log(
-                `Inyección para ${feature.toUpperCase()} (${action}): ${injectionURL}`
-            );
+            const injectionURL = `freefire://modifyFiles?bundle=${injectionTarget}&feature=${feature}&enabled=${enabled}&value=${value}`;
+            console.log(`Modificando archivos para ${feature.toUpperCase()} (${action}): ${injectionURL}`);
             window.location.href = injectionURL;
         }
 
@@ -216,7 +213,7 @@
             document.getElementById('menu').style.display = "flex";
         }
 
-        // Animación de fondo
+        // Fondo animado
         const canvas = document.getElementById('background');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
