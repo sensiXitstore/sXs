@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InjectorX 💉</title>
+    <title>InjectorX 🪽</title>
     <style>
         body {
             margin: 0;
             font-family: 'Courier New', monospace;
-            background: #000000;
-            color: #ff0000;
+            background: #000 url('https://example.com/background-image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
             overflow: hidden;
-        }
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: -1;
         }
         .container {
             display: flex;
@@ -29,10 +24,10 @@
             font-size: 4rem;
             font-weight: bold;
             text-transform: uppercase;
-            background: linear-gradient(90deg, red, black);
+            background: linear-gradient(90deg, white, gray);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 0px 20px red;
+            text-shadow: 0px 0px 20px white;
             margin-bottom: 2rem;
             text-align: center;
         }
@@ -42,18 +37,15 @@
             text-shadow: 0px 0px 5px gray;
             margin-bottom: 20px;
         }
-        .menu-container {
-            display: none;
-        }
         .button {
             padding: 15px 30px;
             font-size: 1.5rem;
             font-weight: bold;
             color: black;
-            background: linear-gradient(90deg, red, black);
-            border: 2px solid red;
+            background: linear-gradient(90deg, white, gray);
+            border: 2px solid white;
             border-radius: 10px;
-            box-shadow: 0px 0px 30px red;
+            box-shadow: 0px 0px 30px white;
             text-transform: uppercase;
             cursor: pointer;
             animation: pulse 2s infinite;
@@ -61,22 +53,14 @@
         }
         .button:hover {
             background: black;
-            color: red;
-            box-shadow: 0px 0px 50px red;
-        }
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0px 0px 30px red;
-            }
-            50% {
-                box-shadow: 0px 0px 60px red;
-            }
+            color: white;
+            box-shadow: 0px 0px 50px white;
         }
         .option {
             margin: 15px 0;
             padding: 10px;
             background: #111;
-            color: red;
+            color: white;
             border-radius: 5px;
             text-align: center;
             transition: all 0.3s ease;
@@ -103,10 +87,10 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #660000;
+            background-color: #333;
             transition: .4s;
             border-radius: 34px;
-            box-shadow: 0px 0px 15px red;
+            box-shadow: 0px 0px 15px white;
         }
         .slider:before {
             position: absolute;
@@ -120,8 +104,8 @@
             transition: .4s;
         }
         input:checked + .slider {
-            background-color: red;
-            box-shadow: 0px 0px 20px #ff0000;
+            background-color: white;
+            box-shadow: 0px 0px 20px #ffffff;
         }
         input:checked + .slider:before {
             transform: translateX(36px);
@@ -129,15 +113,14 @@
     </style>
 </head>
 <body>
-    <canvas id="background"></canvas>
     <div class="container" id="login">
-        <div class="header">InjectorX 💉</div>
-        <div class="subheader">ModMenu | Desarrollado por @iOSrazielOFC</div>
-        <button class="button" onclick="login()">ACTIVAR MOD</button>
+        <div class="header">InjectorX 🪽</div>
+        <div class="subheader">ModMenu | Developed by @iOSrazielOFC</div>
+        <button class="button" onclick="login()">Activate Mod</button>
     </div>
-    <div class="menu-container container" id="menu">
+    <div class="menu-container container" id="menu" style="display:none;">
         <div class="header">MOD MENU</div>
-        
+
         <!-- AIMBOT -->
         <div class="option">
             <label>Aimbot:</label>
@@ -175,13 +158,13 @@
         </div>
     </div>
     <script>
-        const injectionTarget = "com.dts.freefireios";
+        const bundleID = "com.dts.freefireios";
 
         const features = {
-            aimbot: { enabled: false, percentage: 1000 },  // Aimbot más exagerado
-            autoAim: { enabled: false, percentage: 1000 }, // Auto Aim más fuerte
-            aimFOV: { enabled: false, degrees: 360 },     // FOV más amplio
-            freestylerx: { enabled: false, sensitivity: 100.0 } // Sensibilidad extrema
+            aimbot: { enabled: false, multiplier: 3.0 },
+            autoAim: { enabled: false, multiplier: 2.5 },
+            aimFOV: { enabled: false, degrees: 180 },
+            freestylerx: { enabled: false, sensitivity: 500.0 }
         };
 
         function toggleFeature(feature) {
@@ -189,68 +172,42 @@
             config.enabled = document.getElementById(`${feature}-switch`).checked;
 
             if (config.enabled) {
-                injectFeature(feature, config);
+                applyChangesToFiles(feature, config);
+                launchGame(); // Lanza el juego después de modificar la configuración
             } else {
                 disableFeature(feature);
+                launchGame(); // Lanza el juego después de desactivar la configuración
             }
         }
 
-        function injectFeature(feature, config) {
-            let value = 0;
-            if (feature === "aimFOV") {
-                value = config.degrees; // FOV
-            } else if (feature === "aimbot" || feature === "autoAim") {
-                value = config.percentage; // Aimbot / Auto Aim
-            } else if (feature === "freestylerx") {
-                value = config.sensitivity; // Sensibilidad extrema
-            }
+        function applyChangesToFiles(feature, config) {
+            let adjustment = config.multiplier || config.degrees || config.sensitivity;
 
-            let injectionURL = `freefire://inject?bundle=${injectionTarget}&feature=${feature}&enabled=true&value=${value}`;
-            console.log(`[INJECTION] ${feature.toUpperCase()} ENABLED: ${value}`);
-            window.location.href = injectionURL;
+            console.log(`[MODIFYING FILES] Feature: ${feature.toUpperCase()} | Adjustment: ${adjustment}`);
+
+            // Aquí se simula la modificación de los archivos de configuración
+            let data = {
+                feature: feature,
+                adjustment: adjustment,
+                enabled: true,
+            };
+
+            console.log(`[Injected] ${JSON.stringify(data)}`);
         }
 
         function disableFeature(feature) {
-            let injectionURL = `freefire://inject?bundle=${injectionTarget}&feature=${feature}&enabled=false`;
-            console.log(`[INJECTION] ${feature.toUpperCase()} DISABLED`);
-            window.location.href = injectionURL;
+            console.log(`[MODIFYING FILES] Feature: ${feature.toUpperCase()} DISABLED`);
+        }
+
+        function launchGame() {
+            console.log("[LAUNCHING GAME] Opening Free Fire...");
+            window.location.href = `freefire://launch`; // Inicia el juego
         }
 
         function login() {
             document.getElementById('login').style.display = "none";
             document.getElementById('menu').style.display = "flex";
         }
-
-        // Animación de fondo
-        const canvas = document.getElementById('background');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const particles = [];
-        for (let i = 0; i < 300; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 3,
-                speed: Math.random() * 2 + 1,
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let particle of particles) {
-                particle.y -= particle.speed;
-                if (particle.y < 0) particle.y = canvas.height;
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-                ctx.fillStyle = 'red';
-                ctx.fill();
-                ctx.closePath();
-            }
-            requestAnimationFrame(animate);
-        }
-        animate();
     </script>
 </body>
 </html>
