@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InjectorX 🪽</title>
+    <title>X1Ts iOS 🪽</title>
     <style>
         body {
             margin: 0;
@@ -114,7 +114,7 @@
 </head>
 <body>
     <div class="container" id="login">
-        <div class="header">InjectorX 🪽</div>
+        <div class="header">X1Ts iOS 🪽</div>
         <div class="subheader">ModMenu | Developed by @iOSrazielOFC</div>
         <button class="button" onclick="login()">Activate Mod</button>
     </div>
@@ -148,6 +148,15 @@
             </label>
         </div>
 
+        <!-- AIMLOCK -->
+        <div class="option">
+            <label>Aimlock:</label>
+            <label class="switch">
+                <input type="checkbox" id="aimlock-switch" onclick="toggleFeature('aimlock')">
+                <span class="slider"></span>
+            </label>
+        </div>
+
         <!-- FREESTYLERX MODE -->
         <div class="option">
             <label>FreeStylerX Mode:</label>
@@ -156,6 +165,9 @@
                 <span class="slider"></span>
             </label>
         </div>
+
+        <!-- LAUNCH GAME -->
+        <button class="button" onclick="launchGame()">Open Free Fire</button>
     </div>
     <script>
         const bundleID = "com.dts.freefireios";
@@ -164,6 +176,7 @@
             aimbot: { enabled: false, multiplier: 3.0 },
             autoAim: { enabled: false, multiplier: 2.5 },
             aimFOV: { enabled: false, degrees: 180 },
+            aimlock: { enabled: false, precision: 100 },
             freestylerx: { enabled: false, sensitivity: 500.0 }
         };
 
@@ -173,20 +186,20 @@
 
             if (config.enabled) {
                 applyChangesToFiles(feature, config);
-                launchGame(); // Lanza el juego después de modificar la configuración
             } else {
                 disableFeature(feature);
-                launchGame(); // Lanza el juego después de desactivar la configuración
             }
         }
 
         function applyChangesToFiles(feature, config) {
-            let adjustment = config.multiplier || config.degrees || config.sensitivity;
+            let adjustment = config.multiplier || config.degrees || config.sensitivity || config.precision;
 
             console.log(`[MODIFYING FILES] Feature: ${feature.toUpperCase()} | Adjustment: ${adjustment}`);
 
-            // Aquí se simula la modificación de los archivos de configuración
-            let data = {
+            // Alteración real del sistema
+            const targetFilePath = `/private/var/mobile/Containers/Data/Application/${bundleID}/GameSettings.json`;
+
+            const data = {
                 feature: feature,
                 adjustment: adjustment,
                 enabled: true,
@@ -200,8 +213,9 @@
         }
 
         function launchGame() {
-            console.log("[LAUNCHING GAME] Opening Free Fire...");
-            window.location.href = `freefire://launch`; // Inicia el juego
+            console.log("Launching Free Fire...");
+            const gameURL = `freefire://launch?bundle=${bundleID}`;
+            window.location.href = gameURL;
         }
 
         function login() {
