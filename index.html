@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X1T iOS 🪽</title>
+    <title>iOS Xits 🪽</title>
     <style>
         body {
             margin: 0;
@@ -115,7 +115,7 @@
 </head>
 <body>
     <div class="container" id="login">
-        <div class="header">X1T iOS 🪽</div>
+        <div class="header">iOS Xits 🪽</div>
         <div class="subheader">Free Version Xit</div>
         <button class="button" onclick="login()">Activate Mod</button>
     </div>
@@ -158,20 +158,20 @@
             </label>
         </div>
 
-        <!-- HEAD TRACKING -->
+        <!-- NO RECOIL -->
         <div class="option">
-            <label>Head Tracking:</label>
+            <label>No Recoil:</label>
             <label class="switch">
-                <input type="checkbox" id="headtracking-switch" onclick="toggleFeature('headTracking')">
+                <input type="checkbox" id="norecoil-switch" onclick="toggleFeature('noRecoil')">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- FREESTYLERX MODE -->
+        <!-- AIM ASSIST -->
         <div class="option">
-            <label>FreeStylerX Mode:</label>
+            <label>Aim Assist:</label>
             <label class="switch">
-                <input type="checkbox" id="freestylerx-switch" onclick="toggleFeature('freestylerx')">
+                <input type="checkbox" id="aimassist-switch" onclick="toggleFeature('aimAssist')">
                 <span class="slider"></span>
             </label>
         </div>
@@ -187,8 +187,8 @@
             autoAim: { enabled: false, multiplier: 2.5 },
             aimFOV: { enabled: false, degrees: 180 },
             aimlock: { enabled: false, precision: 100 },
-            headTracking: { enabled: false, lockSpeed: 5.0 },
-            freestylerx: { enabled: false, sensitivity: 500.0 }
+            noRecoil: { enabled: false, stability: 0 },
+            aimAssist: { enabled: false, assistStrength: 5.0 }
         };
 
         function toggleFeature(feature) {
@@ -203,20 +203,9 @@
         }
 
         function applyChangesToFiles(feature, config) {
-            let adjustment = config.multiplier || config.degrees || config.sensitivity || config.precision || config.lockSpeed;
+            let adjustment = config.multiplier || config.degrees || config.stability || config.assistStrength;
 
             console.log(`[MODIFYING FILES] Feature: ${feature.toUpperCase()} | Adjustment: ${adjustment}`);
-
-            // Alteración real del sistema
-            const targetFilePath = `/private/var/mobile/Containers/Data/Application/${bundleID}/GameSettings.json`;
-
-            const data = {
-                feature: feature,
-                adjustment: adjustment,
-                enabled: true,
-            };
-
-            console.log(`[Injected] ${JSON.stringify(data)}`);
         }
 
         function disableFeature(feature) {
