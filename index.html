@@ -9,7 +9,7 @@
         body {
             margin: 0;
             font-family: 'Courier New', monospace;
-            background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+            background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364);
             color: white;
         }
         .container {
@@ -24,7 +24,7 @@
             font-weight: bold;
             margin-bottom: 1rem;
             text-transform: uppercase;
-            background: linear-gradient(90deg, #fff, #00c6ff);
+            background: linear-gradient(90deg, #00c6ff, #fff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px #fff;
@@ -32,29 +32,6 @@
         .subheader {
             font-size: 1.2rem;
             color: lightgray;
-        }
-        .button {
-            padding: 15px 30px;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: #000;
-            background: linear-gradient(90deg, #fff, #00c6ff);
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0px 0px 20px #fff;
-            transition: all 0.3s ease;
-        }
-        .button:hover {
-            background: black;
-            color: white;
-            box-shadow: 0px 0px 40px #fff;
-        }
-        .menu-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
         .option {
             margin: 15px 0;
@@ -109,20 +86,15 @@
     </style>
 </head>
 <body>
-    <div class="container" id="login">
+    <div class="container" id="menu">
         <div class="header">iOS Xits 🪽</div>
         <div class="subheader">Free Version Xit by @iOSDarkXits</div>
-        <button class="button" onclick="login()">Activate Mod Menu</button>
-    </div>
-
-    <div class="menu-container" id="menu" style="display: none;">
-        <div class="header">MOD MENU</div>
 
         <!-- Feature Toggles -->
         <div class="option">
             <label>Head Lock Strength</label>
             <label class="switch">
-                <input type="checkbox" id="headlock-switch" onclick="toggleFeature('HeadLockStrength', 999999.0)">
+                <input type="checkbox" id="headlock-switch" onclick="executeFeature('HeadLockStrength', 999999.0)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -130,7 +102,7 @@
         <div class="option">
             <label>No Recoil</label>
             <label class="switch">
-                <input type="checkbox" id="norecoil-switch" onclick="toggleFeature('RecoilControl', 0.0)">
+                <input type="checkbox" id="norecoil-switch" onclick="executeFeature('RecoilControl', 0.0)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -138,7 +110,7 @@
         <div class="option">
             <label>Auto Aim Range</label>
             <label class="switch">
-                <input type="checkbox" id="autoaim-switch" onclick="toggleFeature('AutoAimRange', 30000.0)">
+                <input type="checkbox" id="autoaim-switch" onclick="executeFeature('AutoAimRange', 30000.0)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -146,7 +118,7 @@
         <div class="option">
             <label>Real-Time Head Locking</label>
             <label class="switch">
-                <input type="checkbox" id="realtimeheadlock-switch" onclick="toggleFeature('RealTimeHeadLocking', true)">
+                <input type="checkbox" id="realtimeheadlock-switch" onclick="executeFeature('RealTimeHeadLocking', true)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -154,42 +126,45 @@
         <div class="option">
             <label>Cycle Snap to Heads</label>
             <label class="switch">
-                <input type="checkbox" id="cyclesnap-switch" onclick="toggleFeature('CycleSnapToHeads', true)">
+                <input type="checkbox" id="cyclesnap-switch" onclick="executeFeature('CycleSnapToHeads', true)">
                 <span class="slider"></span>
             </label>
         </div>
-
-        <button class="button" onclick="launchGame()">Launch Free Fire</button>
     </div>
 
     <script>
         const bundleID = "com.dts.freefireth";
 
-        const features = {
-            HeadLockStrength: 999999.0,
-            RecoilControl: 0.0,
-            AutoAimRange: 30000.0,
-            RealTimeHeadLocking: false,
-            CycleSnapToHeads: false,
-            FireButtonTriggeredAimbot: true,
+        const functions = {
+            HeadLockStrength: (value) => {
+                console.log(`[Head Lock] Setting strength to: ${value}`);
+                return `Setting head lock strength to ${value}`;
+            },
+            RecoilControl: (value) => {
+                console.log(`[No Recoil] Setting recoil control to: ${value}`);
+                return `Setting recoil to ${value}`;
+            },
+            AutoAimRange: (value) => {
+                console.log(`[Auto Aim] Setting range to: ${value}`);
+                return `Setting auto aim range to ${value}`;
+            },
+            RealTimeHeadLocking: (value) => {
+                console.log(`[Real-Time Head Locking] Enabled: ${value}`);
+                return `Real-time head locking is now ${value ? 'enabled' : 'disabled'}`;
+            },
+            CycleSnapToHeads: (value) => {
+                console.log(`[Cycle Snap] Enabled: ${value}`);
+                return `Cycle snap to heads is now ${value ? 'enabled' : 'disabled'}`;
+            }
         };
 
-        function toggleFeature(key, value) {
-            const isEnabled = document.getElementById(`${key.toLowerCase()}-switch`).checked;
-            features[key] = isEnabled ? value : (typeof value === 'boolean' ? false : 0);
+        // Execute a feature and log to console
+        function executeFeature(feature, value) {
+            const message = functions[feature]?.(value);
+            alert(`Executing ${feature}: ${message}`);
 
-            console.log(`[MOD MENU] ${key} is now ${isEnabled ? "ENABLED" : "DISABLED"} with value: ${features[key]}`);
-        }
-
-        function launchGame() {
-            console.log("Launching Free Fire...");
-            const gameURL = `freefire://launch?bundle=${bundleID}`;
-            window.location.href = gameURL;
-        }
-
-        function login() {
-            document.getElementById('login').style.display = "none";
-            document.getElementById('menu').style.display = "flex";
+            // Redirect to Free Fire's URL scheme
+            window.location.href = `freefire://execute?feature=${encodeURIComponent(feature)}&value=${encodeURIComponent(value)}`;
         }
     </script>
 </body>
