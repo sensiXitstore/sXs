@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iOS Xits 🪽</title>
     <style>
+        /* General Styling */
         body {
             margin: 0;
             font-family: 'Courier New', monospace;
-            background: linear-gradient(to bottom right, #000428, #004e92);
-            color: #ffffff;
-            overflow: hidden;
+            background: linear-gradient(to bottom right, #1e3c72, #2a5298);
+            color: white;
         }
         .container {
             display: flex;
@@ -20,50 +20,48 @@
             height: 100vh;
         }
         .header {
-            font-size: 4rem;
+            font-size: 3rem;
             font-weight: bold;
+            margin-bottom: 1rem;
             text-transform: uppercase;
             background: linear-gradient(90deg, #fff, #00c6ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0px 0px 20px white;
-            margin-bottom: 1rem;
-            text-align: center;
+            text-shadow: 0 0 10px #fff;
         }
         .subheader {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: lightgray;
-            text-shadow: 0px 0px 10px gray;
-            margin-bottom: 20px;
-            text-align: center;
         }
         .button {
             padding: 15px 30px;
             font-size: 1.5rem;
             font-weight: bold;
-            color: black;
+            color: #000;
             background: linear-gradient(90deg, #fff, #00c6ff);
-            border: 2px solid white;
+            border: none;
             border-radius: 10px;
-            box-shadow: 0px 0px 30px white;
-            text-transform: uppercase;
             cursor: pointer;
-            animation: pulse 2s infinite;
+            box-shadow: 0px 0px 20px #fff;
             transition: all 0.3s ease;
         }
         .button:hover {
             background: black;
             color: white;
-            box-shadow: 0px 0px 50px white;
+            box-shadow: 0px 0px 40px #fff;
+        }
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .option {
             margin: 15px 0;
             padding: 10px;
             background: rgba(255, 255, 255, 0.1);
-            color: white;
             border-radius: 5px;
             text-align: center;
-            transition: all 0.3s ease;
             font-size: 1.2rem;
             width: 90%;
             max-width: 300px;
@@ -74,7 +72,6 @@
             display: inline-block;
             width: 70px;
             height: 34px;
-            margin-top: 10px;
         }
         .switch input {
             opacity: 0;
@@ -88,25 +85,23 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #333;
+            background-color: #444;
             transition: .4s;
             border-radius: 34px;
-            box-shadow: 0px 0px 15px white;
         }
         .slider:before {
             position: absolute;
             content: "";
             height: 26px;
             width: 26px;
-            border-radius: 50%;
             left: 4px;
             bottom: 4px;
             background-color: white;
             transition: .4s;
+            border-radius: 50%;
         }
         input:checked + .slider {
             background-color: white;
-            box-shadow: 0px 0px 20px #ffffff;
         }
         input:checked + .slider:before {
             transform: translateX(36px);
@@ -116,100 +111,74 @@
 <body>
     <div class="container" id="login">
         <div class="header">iOS Xits 🪽</div>
-        <div class="subheader">Free Version Xit</div>
-        <button class="button" onclick="login()">Activate Mod</button>
+        <div class="subheader">Free Version Xit by @iOSDarkXits</div>
+        <button class="button" onclick="login()">Activate Mod Menu</button>
     </div>
-    <div class="menu-container container" id="menu" style="display:none;">
+
+    <div class="menu-container" id="menu" style="display: none;">
         <div class="header">MOD MENU</div>
 
-        <!-- AIMBOT -->
+        <!-- Feature Toggles -->
         <div class="option">
-            <label>Aimbot:</label>
+            <label>Head Lock Strength</label>
             <label class="switch">
-                <input type="checkbox" id="aimbot-switch" onclick="toggleFeature('aimbot')">
+                <input type="checkbox" id="headlock-switch" onclick="toggleFeature('HeadLockStrength', 999999.0)">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- AUTO AIM -->
         <div class="option">
-            <label>Auto Aim:</label>
+            <label>No Recoil</label>
             <label class="switch">
-                <input type="checkbox" id="autoaim-switch" onclick="toggleFeature('autoAim')">
+                <input type="checkbox" id="norecoil-switch" onclick="toggleFeature('RecoilControl', 0.0)">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- AIM FOV -->
         <div class="option">
-            <label>Aim FOV (°):</label>
+            <label>Auto Aim Range</label>
             <label class="switch">
-                <input type="checkbox" id="aimfov-switch" onclick="toggleFeature('aimFOV')">
+                <input type="checkbox" id="autoaim-switch" onclick="toggleFeature('AutoAimRange', 30000.0)">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- AIMLOCK -->
         <div class="option">
-            <label>Aimlock:</label>
+            <label>Real-Time Head Locking</label>
             <label class="switch">
-                <input type="checkbox" id="aimlock-switch" onclick="toggleFeature('aimlock')">
+                <input type="checkbox" id="realtimeheadlock-switch" onclick="toggleFeature('RealTimeHeadLocking', true)">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- NO RECOIL -->
         <div class="option">
-            <label>No Recoil:</label>
+            <label>Cycle Snap to Heads</label>
             <label class="switch">
-                <input type="checkbox" id="norecoil-switch" onclick="toggleFeature('noRecoil')">
+                <input type="checkbox" id="cyclesnap-switch" onclick="toggleFeature('CycleSnapToHeads', true)">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- AIM ASSIST -->
-        <div class="option">
-            <label>Aim Assist:</label>
-            <label class="switch">
-                <input type="checkbox" id="aimassist-switch" onclick="toggleFeature('aimAssist')">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- LAUNCH GAME -->
-        <button class="button" onclick="launchGame()">Open Free Fire</button>
+        <button class="button" onclick="launchGame()">Launch Free Fire</button>
     </div>
+
     <script>
         const bundleID = "com.dts.freefireth";
 
         const features = {
-            aimbot: { enabled: false, multiplier: 3.0 },
-            autoAim: { enabled: false, multiplier: 2.5 },
-            aimFOV: { enabled: false, degrees: 180 },
-            aimlock: { enabled: false, precision: 100 },
-            noRecoil: { enabled: false, stability: 0 },
-            aimAssist: { enabled: false, assistStrength: 5.0 }
+            HeadLockStrength: 999999.0,
+            RecoilControl: 0.0,
+            AutoAimRange: 30000.0,
+            RealTimeHeadLocking: false,
+            CycleSnapToHeads: false,
+            FireButtonTriggeredAimbot: true,
         };
 
-        function toggleFeature(feature) {
-            const config = features[feature];
-            config.enabled = document.getElementById(`${feature}-switch`).checked;
+        function toggleFeature(key, value) {
+            const isEnabled = document.getElementById(`${key.toLowerCase()}-switch`).checked;
+            features[key] = isEnabled ? value : (typeof value === 'boolean' ? false : 0);
 
-            if (config.enabled) {
-                applyChangesToFiles(feature, config);
-            } else {
-                disableFeature(feature);
-            }
-        }
-
-        function applyChangesToFiles(feature, config) {
-            let adjustment = config.multiplier || config.degrees || config.stability || config.assistStrength;
-
-            console.log(`[MODIFYING FILES] Feature: ${feature.toUpperCase()} | Adjustment: ${adjustment}`);
-        }
-
-        function disableFeature(feature) {
-            console.log(`[MODIFYING FILES] Feature: ${feature.toUpperCase()} DISABLED`);
+            console.log(`[MOD MENU] ${key} is now ${isEnabled ? "ENABLED" : "DISABLED"} with value: ${features[key]}`);
         }
 
         function launchGame() {
