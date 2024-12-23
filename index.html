@@ -1,1 +1,173 @@
-Don’t forget to add the sensi for the bundle id com.dts.freefireth
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iOS Dark Xit’s Mod Menu</title>
+    <style>
+        /* General Styling */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            background: url('https://i.imgur.com/N7Hs1aN.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            backdrop-filter: blur(5px);
+        }
+        .header {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        .subheader {
+            font-size: 1.2rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+        .option {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            width: 80%;
+            max-width: 350px;
+            text-align: center;
+            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
+        }
+        .option label {
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        .slider {
+            position: relative;
+            display: inline-block;
+            width: 70px;
+            height: 34px;
+        }
+        .slider input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider:before {
+            content: "";
+            height: 26px;
+            width: 26px;
+            background: #ffd700;
+            border-radius: 50%;
+            position: absolute;
+            left: 4px;
+            bottom: 4px;
+            transition: transform 0.4s;
+        }
+        .slider input:checked + .slider:before {
+            transform: translateX(36px);
+        }
+        .range-container {
+            margin-top: 10px;
+            color: #ffd700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">iOS Dark Xit’s 🪽</div>
+        <div class="subheader">Mod Menu</div>
+
+        <!-- Feature Toggles -->
+        <div class="option">
+            <label>Head Lock Strength</label>
+            <label class="slider">
+                <input type="checkbox" id="headlock-switch" onclick="executeFeature('HeadLockStrength', 999999.0)">
+                <span></span>
+            </label>
+            <div class="range-container">
+                <span>Strength</span>
+                <input type="range" id="headlock-range" min="0" max="1000000" value="999999" step="1000" 
+                    oninput="updateFeatureValue('HeadLockStrength', this.value)">
+            </div>
+        </div>
+
+        <div class="option">
+            <label>Auto Aim Range</label>
+            <label class="slider">
+                <input type="checkbox" id="autoaim-switch" onclick="executeFeature('AutoAimRange', 30000.0)">
+                <span></span>
+            </label>
+            <div class="range-container">
+                <span>Range</span>
+                <input type="range" id="autoaim-range" min="0" max="50000" value="30000" step="1000" 
+                    oninput="updateFeatureValue('AutoAimRange', this.value)">
+            </div>
+        </div>
+
+        <div class="option">
+            <label>No Recoil</label>
+            <label class="slider">
+                <input type="checkbox" id="norecoil-switch" onclick="executeFeature('RecoilControl', 0.0)">
+                <span></span>
+            </label>
+        </div>
+
+        <div class="option">
+            <label>Real-Time Head Lock</label>
+            <label class="slider">
+                <input type="checkbox" id="realtimeheadlock-switch" onclick="executeFeature('RealTimeHeadLocking', true)">
+                <span></span>
+            </label>
+        </div>
+    </div>
+
+    <script>
+        const bundleID = "com.dts.freefireth";
+
+        const functions = {
+            HeadLockStrength: (value) => {
+                console.log(`[Head Lock] Adjusted strength to: ${value}`);
+                return `Head lock strength set to ${value}`;
+            },
+            AutoAimRange: (value) => {
+                console.log(`[Auto Aim] Adjusted range to: ${value}`);
+                return `Auto aim range set to ${value}`;
+            },
+            RecoilControl: (value) => {
+                console.log(`[No Recoil] Recoil control set to: ${value}`);
+                return `Recoil control set to ${value}`;
+            },
+            RealTimeHeadLocking: (value) => {
+                console.log(`[Real-Time Head Locking] Enabled: ${value}`);
+                return `Real-time head locking is now ${value ? 'enabled' : 'disabled'}`;
+            }
+        };
+
+        // Execute a feature and redirect to Free Fire
+        function executeFeature(feature, value) {
+            const message = functions[feature]?.(value);
+            alert(`Executing ${feature}: ${message}`);
+            window.location.href = `freefire://execute?feature=${encodeURIComponent(feature)}&value=${encodeURIComponent(value)}`;
+        }
+
+        // Update feature value dynamically using ranges
+        function updateFeatureValue(feature, value) {
+            console.log(`[Feature Update] ${feature} adjusted to: ${value}`);
+            executeFeature(feature, value);
+        }
+    </script>
+</body>
+</html>
