@@ -1,196 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iOS Dark Xit’s Mod Menu</title>
-    <style>
-        /* General Styling */
-        body {
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: white;
-            overflow: hidden;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
-        }
-
-        /* Snow Animation Background */
-        .snowflakes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-        @keyframes fall {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(100vh) translateX(-10vw);
-                opacity: 0.2;
-            }
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .header {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #ffd700;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
-        }
-
-        .subheader {
-            font-size: 1.2rem;
-            color: #ffffff;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
-
-        .option {
-            margin: 15px 0;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
-        }
-
-        /* Switch Styling */
-        .switch-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .slider {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-        }
-        .slider input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider:before {
-            content: "";
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border-radius: 50%;
-            transition: transform 0.4s;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-        }
-        .slider input:checked + .slider:before {
-            transform: translateX(30px);
-            background-color: #ffd700;
-        }
-        .slider span {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #555;
-            border-radius: 30px;
-            transition: background-color 0.4s;
-        }
-        .slider input:checked + span {
-            background-color: #ffd700;
-        }
-
-        /* Slider Range Styling */
-        .range-container {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 5px;
-            background: #ffd700;
-            border-radius: 5px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 15px;
-            height: 15px;
-            background: white;
-            border: 2px solid #ffd700;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-moz-range-thumb {
-            width: 15px;
-            height: 15px;
-            background: white;
-            border: 2px solid #ffd700;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-    <!-- Snowflakes -->
-    <div class="snowflakes">
-        <div class="snowflake" style="width: 10px; height: 10px; left: 10%; animation-duration: 8s;"></div>
-        <div class="snowflake" style="width: 7px; height: 7px; left: 20%; animation-duration: 6s;"></div>
-        <div class="snowflake" style="width: 5px; height: 5px; left: 50%; animation-duration: 12s;"></div>
-        <div class="snowflake" style="width: 8px; height: 8px; left: 70%; animation-duration: 10s;"></div>
-        <div class="snowflake" style="width: 6px; height: 6px; left: 90%; animation-duration: 5s;"></div>
-    </div>
-
-    <div class="container">
-        <div class="header">iOS Dark Xit’s 🪽</div>
-        <div class="subheader">Mod Menu</div>
-
-        <!-- Feature Toggles -->
         <div class="option">
             <div class="switch-container">
                 <label>Head Lock Strength</label>
                 <label class="slider">
-                    <input type="checkbox" onclick="executeFeature('HeadLockStrength', 999999)">
+                    <input type="checkbox" onclick="executeFeature('HeadLockStrength', 100)">
                     <span></span>
                 </label>
             </div>
             <div class="range-container">
-                <label>Adjust Strength</label>
-                <input type="range" min="0" max="1000000" value="999999" step="1000" 
+                <label>Adjust Strength: <span id="HeadLockStrengthValue">100%</span></label>
+                <input type="range" min="0" max="100" value="100" step="1" 
                     oninput="updateFeatureValue('HeadLockStrength', this.value)">
             </div>
         </div>
@@ -199,13 +17,13 @@
             <div class="switch-container">
                 <label>Auto Aim Range</label>
                 <label class="slider">
-                    <input type="checkbox" onclick="executeFeature('AutoAimRange', 30000)">
+                    <input type="checkbox" onclick="executeFeature('AutoAimRange', 100)">
                     <span></span>
                 </label>
             </div>
             <div class="range-container">
-                <label>Adjust Range</label>
-                <input type="range" min="0" max="50000" value="30000" step="500" 
+                <label>Adjust Range: <span id="AutoAimRangeValue">100%</span></label>
+                <input type="range" min="0" max="100" value="100" step="1" 
                     oninput="updateFeatureValue('AutoAimRange', this.value)">
             </div>
         </div>
@@ -214,7 +32,7 @@
             <div class="switch-container">
                 <label>No Recoil</label>
                 <label class="slider">
-                    <input type="checkbox" onclick="executeFeature('RecoilControl', 0)">
+                    <input type="checkbox" onclick="executeFeature('RecoilControl', 100)">
                     <span></span>
                 </label>
             </div>
@@ -224,19 +42,19 @@
     <script>
         const bundleID = "com.dts.freefireth";
 
-        const functions = {
-            HeadLockStrength: (value) => `Head lock strength set to ${value}`,
-            AutoAimRange: (value) => `Auto aim range set to ${value}`,
+        const features = {
+            HeadLockStrength: (value) => `Head Lock Strength set to ${value}%`,
+            AutoAimRange: (value) => `Auto Aim Range set to ${value}%`,
             RecoilControl: () => "Recoil control activated"
         };
 
         function executeFeature(feature, value) {
-            alert(`Executing ${feature}: ${functions[feature]?.(value)}`);
+            alert(`Executing ${feature}: ${features[feature]?.(value)}`);
             window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
         }
 
         function updateFeatureValue(feature, value) {
-            console.log(`[Feature Update] ${feature} set to ${value}`);
+            document.getElementById(`${feature}Value`).textContent = `${value}%`;
             executeFeature(feature, value);
         }
     </script>
