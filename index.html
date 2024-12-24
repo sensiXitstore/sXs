@@ -198,20 +198,20 @@
 
         <!-- Adjustable Sliders -->
         <div class="option">
-            <label>Head Lock Strength</label>
+            <label>Exaggerated Auto Aim</label>
             <div class="range-container">
-                <input id="HeadLockStrength" type="range" min="0" max="100" value="50" step="1" 
-                    oninput="updateValueDisplay('HeadLockStrength', this.value)">
-                <span id="HeadLockStrengthValue">50%</span>
+                <input id="AutoAim" type="range" min="0" max="100" value="100" step="1" 
+                    oninput="updateValueDisplay('AutoAim', this.value)">
+                <span id="AutoAimValue">100%</span>
             </div>
         </div>
 
         <div class="option">
-            <label>Auto Aim Range</label>
+            <label>Supercharged Aimbot</label>
             <div class="range-container">
-                <input id="AutoAimRange" type="range" min="0" max="100" value="80" step="1" 
-                    oninput="updateValueDisplay('AutoAimRange', this.value)">
-                <span id="AutoAimRangeValue">80%</span>
+                <input id="Aimbot" type="range" min="0" max="100" value="100" step="1" 
+                    oninput="updateValueDisplay('Aimbot', this.value)">
+                <span id="AimbotValue">100%</span>
             </div>
         </div>
 
@@ -238,13 +238,13 @@
 
         // Execute all selected or adjusted features
         function executeAllFeatures() {
-            const headLockStrength = document.getElementById('HeadLockStrength').value;
-            const autoAimRange = document.getElementById('AutoAimRange').value;
+            const autoAim = document.getElementById('AutoAim').value;
+            const aimbot = document.getElementById('Aimbot').value;
             const noRecoil = document.getElementById('NoRecoil').checked ? 100 : 0;
 
             const features = [
-                { feature: 'HeadLockStrength', value: headLockStrength },
-                { feature: 'AutoAimRange', value: autoAimRange },
+                { feature: 'AutoAim', value: autoAim },
+                { feature: 'Aimbot', value: aimbot },
                 { feature: 'NoRecoil', value: noRecoil }
             ];
 
