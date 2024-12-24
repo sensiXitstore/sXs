@@ -78,60 +78,12 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Switch Styling */
-        .switch-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .slider {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-        }
-        .slider input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider:before {
-            content: "";
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 20px;
-            height: 20px;
-            background-color: white;
-            border-radius: 50%;
-            transition: transform 0.4s;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
-        }
-        .slider input:checked + .slider:before {
-            transform: translateX(30px);
-            background-color: #ffd700;
-        }
-        .slider span {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #555;
-            border-radius: 30px;
-            transition: background-color 0.4s;
-        }
-        .slider input:checked + span {
-            background-color: #ffd700;
-        }
-
         /* Slider Range Styling */
         .range-container {
-            margin-top: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 10px;
         }
 
         input[type="range"] {
@@ -163,6 +115,52 @@
             border-radius: 50%;
             cursor: pointer;
         }
+
+        /* Switch Styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: #ffd700;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
     </style>
 </head>
 <body>
@@ -179,64 +177,54 @@
         <div class="header">iOS Dark Xit’s 🪽</div>
         <div class="subheader">Mod Menu</div>
 
-        <!-- Feature Toggles -->        <div class="option">
-            <div class="switch-container">
-                <label>Head Lock Strength</label>
-                <label class="slider">
-                    <input type="checkbox" onclick="executeFeature('HeadLockStrength', 100)">
-                    <span></span>
-                </label>
-            </div>
+        <!-- Adjustable Sliders -->
+        <div class="option">
+            <label>Head Lock Strength</label>
             <div class="range-container">
-                <label>Adjust Strength: <span id="HeadLockStrengthValue">100%</span></label>
-                <input type="range" min="0" max="100" value="100" step="1" 
-                    oninput="updateFeatureValue('HeadLockStrength', this.value)">
+                <input type="range" min="0" max="100" value="50" step="1" 
+                    oninput="adjustFeature('HeadLockStrength', this.value)">
+                <span id="HeadLockStrengthValue">50%</span>
             </div>
         </div>
 
         <div class="option">
-            <div class="switch-container">
-                <label>Auto Aim Range</label>
-                <label class="slider">
-                    <input type="checkbox" onclick="executeFeature('AutoAimRange', 100)">
-                    <span></span>
-                </label>
-            </div>
+            <label>Auto Aim Range</label>
             <div class="range-container">
-                <label>Adjust Range: <span id="AutoAimRangeValue">100%</span></label>
-                <input type="range" min="0" max="100" value="100" step="1" 
-                    oninput="updateFeatureValue('AutoAimRange', this.value)">
+                <input type="range" min="0" max="100" value="80" step="1" 
+                    oninput="adjustFeature('AutoAimRange', this.value)">
+                <span id="AutoAimRangeValue">80%</span>
             </div>
         </div>
 
+        <!-- Switch for No Recoil -->
         <div class="option">
-            <div class="switch-container">
-                <label>No Recoil</label>
-                <label class="slider">
-                    <input type="checkbox" onclick="executeFeature('RecoilControl', 100)">
-                    <span></span>
-                </label>
-            </div>
+            <label>No Recoil</label>
+            <label class="switch">
+                <input type="checkbox" onchange="toggleFeature('NoRecoil', this.checked)">
+                <span class="slider"></span>
+            </label>
         </div>
     </div>
 
     <script>
         const bundleID = "com.dts.freefireth";
 
-        const features = {
-            HeadLockStrength: (value) => `Head Lock Strength set to ${value}%`,
-            AutoAimRange: (value) => `Auto Aim Range set to ${value}%`,
-            RecoilControl: () => "Recoil control activated"
-        };
-
-        function executeFeature(feature, value) {
-            alert(`Executing ${feature}: ${features[feature]?.(value)}`);
-            window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
-        }
-
-        function updateFeatureValue(feature, value) {
+        // Adjust slider features dynamically
+        function adjustFeature(feature, value) {
             document.getElementById(`${feature}Value`).textContent = `${value}%`;
             executeFeature(feature, value);
+        }
+
+        // Toggle features using switches
+        function toggleFeature(feature, state) {
+            const value = state ? 100 : 0;
+            executeFeature(feature, value);
+        }
+
+        // Execute features into Free Fire bundle
+        function executeFeature(feature, value) {
+            console.log(`Executing ${feature}: ${value}%`);
+            window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
         }
     </script>
 </body>
