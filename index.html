@@ -215,6 +215,15 @@
             </div>
         </div>
 
+        <div class="option">
+            <label>Aim FOV</label>
+            <div class="range-container">
+                <input id="AimFOV" type="range" min="0" max="100" value="60" step="1" 
+                    oninput="updateValueDisplay('AimFOV', this.value)">
+                <span id="AimFOVValue">60%</span>
+            </div>
+        </div>
+
         <!-- Switch for No Recoil -->
         <div class="option">
             <label>No Recoil</label>
@@ -240,11 +249,13 @@
         function executeAllFeatures() {
             const autoAim = document.getElementById('AutoAim').value;
             const aimbot = document.getElementById('Aimbot').value;
+            const aimFOV = document.getElementById('AimFOV').value;
             const noRecoil = document.getElementById('NoRecoil').checked ? 100 : 0;
 
             const features = [
                 { feature: 'AutoAim', value: autoAim },
                 { feature: 'Aimbot', value: aimbot },
+                { feature: 'AimFOV', value: aimFOV },
                 { feature: 'NoRecoil', value: noRecoil }
             ];
 
