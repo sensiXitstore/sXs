@@ -190,30 +190,21 @@
 
         <!-- Adjustable Sliders -->
         <div class="option">
-            <label>Exaggerated Auto Aim</label>
+            <label>Head Tracking Strength</label>
             <div class="range-container">
-                <input id="AutoAim" type="range" min="0" max="100" value="100" step="1" 
-                    oninput="updateValueDisplay('AutoAim', this.value)">
-                <span id="AutoAimValue">100%</span>
+                <input id="HeadTracking" type="range" min="0" max="100" value="50" step="1" 
+                    oninput="updateValueDisplay('HeadTracking', this.value)">
+                <span id="HeadTrackingValue">50%</span>
             </div>
         </div>
 
         <div class="option">
-            <label>Aim FOV (°)</label>
+            <label>Aimbot Intensity</label>
             <div class="range-container">
-                <input id="AimFOV" type="range" min="0" max="360" value="90" step="1" 
-                    oninput="updateValueDisplay('AimFOV', this.value)">
-                <span id="AimFOVValue">90°</span>
+                <input id="Aimbot" type="range" min="0" max="100" value="75" step="1" 
+                    oninput="updateValueDisplay('Aimbot', this.value)">
+                <span id="AimbotValue">75%</span>
             </div>
-        </div>
-
-        <!-- Switch for Head Tracking -->
-        <div class="option">
-            <label>Head Tracking</label>
-            <label class="switch">
-                <input id="HeadTracking" type="checkbox">
-                <span class="slider"></span>
-            </label>
         </div>
 
         <!-- Execute All Button -->
@@ -221,24 +212,23 @@
     </div>
 
     <script>
-        const bundleID = "com.dts.freefireth";
+        const targetApp = "freefire.app";
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
-            document.getElementById(`${feature}Value`).textContent = `${value}${feature === "AimFOV" ? "°" : "%"}`;
+            document.getElementById(`${feature}Value`).textContent = `${value}%`;
         }
 
         // Execute all selected or adjusted features
         function executeAllFeatures() {
             const features = [
-                { feature: 'AutoAim', value: document.getElementById('AutoAim').value },
-                { feature: 'AimFOV', value: document.getElementById('AimFOV').value },
-                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').checked ? 1 : 0 },
+                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').value },
+                { feature: 'Aimbot', value: document.getElementById('Aimbot').value },
             ];
 
             features.forEach(({ feature, value }) => {
                 console.log(`Executing ${feature}: ${value}`);
-                window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
+                window.location.href = `${targetApp}://execute?feature=${feature}&value=${value}`;
             });
         }
     </script>
