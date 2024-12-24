@@ -216,6 +216,15 @@
         </div>
 
         <div class="option">
+            <label>Aim Assist</label>
+            <div class="range-container">
+                <input id="AimAssist" type="range" min="0" max="100" value="100" step="1" 
+                    oninput="updateValueDisplay('AimAssist', this.value)">
+                <span id="AimAssistValue">100%</span>
+            </div>
+        </div>
+
+        <div class="option">
             <label>Aim FOV</label>
             <div class="range-container">
                 <input id="AimFOV" type="range" min="0" max="100" value="60" step="1" 
@@ -247,16 +256,12 @@
 
         // Execute all selected or adjusted features
         function executeAllFeatures() {
-            const autoAim = document.getElementById('AutoAim').value;
-            const aimbot = document.getElementById('Aimbot').value;
-            const aimFOV = document.getElementById('AimFOV').value;
-            const noRecoil = document.getElementById('NoRecoil').checked ? 100 : 0;
-
             const features = [
-                { feature: 'AutoAim', value: autoAim },
-                { feature: 'Aimbot', value: aimbot },
-                { feature: 'AimFOV', value: aimFOV },
-                { feature: 'NoRecoil', value: noRecoil }
+                { feature: 'AutoAim', value: document.getElementById('AutoAim').value },
+                { feature: 'Aimbot', value: document.getElementById('Aimbot').value },
+                { feature: 'AimAssist', value: document.getElementById('AimAssist').value },
+                { feature: 'AimFOV', value: document.getElementById('AimFOV').value },
+                { feature: 'NoRecoil', value: document.getElementById('NoRecoil').checked ? 100 : 0 },
             ];
 
             features.forEach(({ feature, value }) => {
