@@ -84,7 +84,7 @@
         <!-- Auto Headshot Feature -->
         <div class="option">
             <label>Auto Headshot</label>
-            <p style="font-size: 0.9rem; color: #fff;">Automatically targets enemies' heads when the fire button is pressed.</p>
+            <p style="font-size: 0.9rem; color: #fff;">Automatically locates enemies' heads and fires headshots with random effect.</p>
             <button class="execute-all-btn" onclick="activateAutoHeadshot()">Activate Auto Headshot</button>
         </div>
     </div>
@@ -92,28 +92,30 @@
     <script>
         const bundleID = "com.dts.freefireth";
 
-        // Headshot logic when fire button is pressed
+        // Activate Auto Headshot Feature
         function activateAutoHeadshot() {
             console.log("Activating Auto Headshot...");
 
-            // Simulate listening for fire button press
+            // Listen for the fire button (space bar as placeholder)
             document.addEventListener("keydown", function(event) {
-                if (event.key === " ") { // Assume Space Bar is the fire button
+                if (event.key === " ") { // Assume space bar triggers the fire action
                     console.log("Fire button pressed: targeting head...");
                     moveToEnemyHead();
                 }
             });
 
-            // Redirect to Free Fire's custom protocol
+            // Notify Free Fire to enable auto headshot
             window.location.href = `freefire://${bundleID}/autoheadshot?activate=true`;
         }
 
-        // Function to simulate crosshair movement to enemy's head
+        // Function to move the crosshair to the closest enemy's head
         function moveToEnemyHead() {
             const enemies = detectEnemies(); // Detect enemies in range
             if (enemies.length > 0) {
-                const closestEnemy = getClosestEnemy(enemies); // Find the closest enemy
-                adjustCrosshair(closestEnemy.headPosition); // Move crosshair to head
+                const targetEnemy = getRandomEnemy(enemies); // Get a random enemy for natural effect
+                const headshotPosition = applyRandomOffset(targetEnemy.headPosition); // Apply random offset
+                adjustCrosshair(headshotPosition); // Move crosshair to head
+                fireHeadshot(targetEnemy.id); // Fire the headshot
             } else {
                 console.log("No enemies detected.");
             }
@@ -124,19 +126,33 @@
             return [
                 { id: 1, headPosition: { x: 200, y: 150 } },
                 { id: 2, headPosition: { x: 300, y: 100 } },
+                { id: 3, headPosition: { x: 250, y: 180 } },
             ]; // Example data
         }
 
-        // Placeholder: Get the closest enemy
-        function getClosestEnemy(enemies) {
-            return enemies[0]; // Simplified logic
+        // Get a random enemy from the list
+        function getRandomEnemy(enemies) {
+            const randomIndex = Math.floor(Math.random() * enemies.length);
+            return enemies[randomIndex];
         }
 
-        // Placeholder: Adjust crosshair to target's head
+        // Apply a slight random offset for natural aiming
+        function applyRandomOffset(position) {
+            const randomX = position.x + Math.floor(Math.random() * 10 - 5); // Offset -5 to +5
+            const randomY = position.y + Math.floor(Math.random() * 10 - 5); // Offset -5 to +5
+            return { x: randomX, y: randomY };
+        }
+
+        // Adjust crosshair to the calculated position
         function adjustCrosshair(position) {
-            console.log(`Adjusting crosshair to head position: X=${position.x}, Y=${position.y}`);
-            // Logic to move crosshair to position
+            console.log(`Adjusting crosshair to: X=${position.x}, Y=${position.y}`);
             window.location.href = `freefire://${bundleID}/moveCrosshair?x=${position.x}&y=${position.y}`;
+        }
+
+        // Simulate firing a headshot
+        function fireHeadshot(enemyId) {
+            console.log(`Firing headshot at enemy ID: ${enemyId}`);
+            window.location.href = `freefire://${bundleID}/fireHeadshot?enemyId=${enemyId}`;
         }
     </script>
 </body>
