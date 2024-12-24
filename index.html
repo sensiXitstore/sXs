@@ -213,6 +213,7 @@
 
     <script>
         const targetApp = "freefire"; // We are using the "freefire://" scheme
+        const bundleID = "com.dts.freefirethios"; // Free Fire's bundle ID
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
@@ -228,7 +229,7 @@
 
             features.forEach(({ feature, value }) => {
                 console.log(`Executing ${feature}: ${value}`);
-                window.location.href = `freefire://${feature}?value=${value}`;
+                window.location.href = `freefire://${feature}?bundle=${bundleID}&value=${value}`;
             });
         }
     </script>
