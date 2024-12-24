@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iOS Dark Xit’s Mod Menu</title>
     <style>
-        /* General Styling */
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
@@ -24,6 +23,7 @@
             pointer-events: none;
             overflow: hidden;
         }
+
         .snowflake {
             position: absolute;
             top: -10px;
@@ -32,6 +32,7 @@
             opacity: 0.8;
             animation: fall linear infinite;
         }
+
         @keyframes fall {
             0% {
                 transform: translateY(0) translateX(0);
@@ -78,7 +79,7 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Slider Range Styling */
+        /* Slider Styling */
         .range-container {
             display: flex;
             flex-direction: column;
@@ -99,15 +100,6 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 15px;
-            height: 15px;
-            background: white;
-            border: 2px solid #ffd700;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-moz-range-thumb {
             width: 15px;
             height: 15px;
             background: white;
@@ -207,37 +199,19 @@
         </div>
 
         <div class="option">
-            <label>Supercharged Aimbot</label>
+            <label>Aim FOV (°)</label>
             <div class="range-container">
-                <input id="Aimbot" type="range" min="0" max="100" value="100" step="1" 
-                    oninput="updateValueDisplay('Aimbot', this.value)">
-                <span id="AimbotValue">100%</span>
-            </div>
-        </div>
-
-        <div class="option">
-            <label>Aim Assist</label>
-            <div class="range-container">
-                <input id="AimAssist" type="range" min="0" max="100" value="100" step="1" 
-                    oninput="updateValueDisplay('AimAssist', this.value)">
-                <span id="AimAssistValue">100%</span>
-            </div>
-        </div>
-
-        <div class="option">
-            <label>Aim FOV</label>
-            <div class="range-container">
-                <input id="AimFOV" type="range" min="0" max="100" value="60" step="1" 
+                <input id="AimFOV" type="range" min="0" max="360" value="90" step="1" 
                     oninput="updateValueDisplay('AimFOV', this.value)">
-                <span id="AimFOVValue">60%</span>
+                <span id="AimFOVValue">90°</span>
             </div>
         </div>
 
-        <!-- Switch for No Recoil -->
+        <!-- Switch for Head Tracking -->
         <div class="option">
-            <label>No Recoil</label>
+            <label>Head Tracking</label>
             <label class="switch">
-                <input id="NoRecoil" type="checkbox">
+                <input id="HeadTracking" type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
@@ -251,21 +225,19 @@
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
-            document.getElementById(`${feature}Value`).textContent = `${value}%`;
+            document.getElementById(`${feature}Value`).textContent = `${value}${feature === "AimFOV" ? "°" : "%"}`;
         }
 
         // Execute all selected or adjusted features
         function executeAllFeatures() {
             const features = [
                 { feature: 'AutoAim', value: document.getElementById('AutoAim').value },
-                { feature: 'Aimbot', value: document.getElementById('Aimbot').value },
-                { feature: 'AimAssist', value: document.getElementById('AimAssist').value },
                 { feature: 'AimFOV', value: document.getElementById('AimFOV').value },
-                { feature: 'NoRecoil', value: document.getElementById('NoRecoil').checked ? 100 : 0 },
+                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').checked ? 1 : 0 },
             ];
 
             features.forEach(({ feature, value }) => {
-                console.log(`Executing ${feature}: ${value}%`);
+                console.log(`Executing ${feature}: ${value}`);
                 window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
             });
         }
