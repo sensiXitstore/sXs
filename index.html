@@ -161,6 +161,25 @@
         input:checked + .slider:before {
             transform: translateX(26px);
         }
+
+        /* Execute All Button */
+        .execute-all-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #ffd700;
+            color: black;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .execute-all-btn:hover {
+            background: #ffc107;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -181,8 +200,8 @@
         <div class="option">
             <label>Head Lock Strength</label>
             <div class="range-container">
-                <input type="range" min="0" max="100" value="50" step="1" 
-                    oninput="adjustFeature('HeadLockStrength', this.value)">
+                <input id="HeadLockStrength" type="range" min="0" max="100" value="50" step="1" 
+                    oninput="updateValueDisplay('HeadLockStrength', this.value)">
                 <span id="HeadLockStrengthValue">50%</span>
             </div>
         </div>
@@ -190,8 +209,8 @@
         <div class="option">
             <label>Auto Aim Range</label>
             <div class="range-container">
-                <input type="range" min="0" max="100" value="80" step="1" 
-                    oninput="adjustFeature('AutoAimRange', this.value)">
+                <input id="AutoAimRange" type="range" min="0" max="100" value="80" step="1" 
+                    oninput="updateValueDisplay('AutoAimRange', this.value)">
                 <span id="AutoAimRangeValue">80%</span>
             </div>
         </div>
@@ -200,31 +219,39 @@
         <div class="option">
             <label>No Recoil</label>
             <label class="switch">
-                <input type="checkbox" onchange="toggleFeature('NoRecoil', this.checked)">
+                <input id="NoRecoil" type="checkbox">
                 <span class="slider"></span>
             </label>
         </div>
+
+        <!-- Execute All Button -->
+        <button class="execute-all-btn" onclick="executeAllFeatures()">Execute All</button>
     </div>
 
     <script>
         const bundleID = "com.dts.freefireth";
 
-        // Adjust slider features dynamically
-        function adjustFeature(feature, value) {
+        // Update slider value display
+        function updateValueDisplay(feature, value) {
             document.getElementById(`${feature}Value`).textContent = `${value}%`;
-            executeFeature(feature, value);
         }
 
-        // Toggle features using switches
-        function toggleFeature(feature, state) {
-            const value = state ? 100 : 0;
-            executeFeature(feature, value);
-        }
+        // Execute all selected or adjusted features
+        function executeAllFeatures() {
+            const headLockStrength = document.getElementById('HeadLockStrength').value;
+            const autoAimRange = document.getElementById('AutoAimRange').value;
+            const noRecoil = document.getElementById('NoRecoil').checked ? 100 : 0;
 
-        // Execute features into Free Fire bundle
-        function executeFeature(feature, value) {
-            console.log(`Executing ${feature}: ${value}%`);
-            window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
+            const features = [
+                { feature: 'HeadLockStrength', value: headLockStrength },
+                { feature: 'AutoAimRange', value: autoAimRange },
+                { feature: 'NoRecoil', value: noRecoil }
+            ];
+
+            features.forEach(({ feature, value }) => {
+                console.log(`Executing ${feature}: ${value}%`);
+                window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
+            });
         }
     </script>
 </body>
