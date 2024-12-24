@@ -57,12 +57,12 @@
             color: #ffd700;
         }
 
-        .execute-all-btn {
-            margin-top: 20px;
+        .execute-btn {
+            margin-top: 10px;
             padding: 10px 20px;
             background: #ffd700;
             color: black;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
             border-radius: 10px;
@@ -70,7 +70,7 @@
             transition: 0.3s;
         }
 
-        .execute-all-btn:hover {
+        .execute-btn:hover {
             background: #ffc107;
             transform: scale(1.05);
         }
@@ -85,23 +85,30 @@
         <div class="option">
             <label>Auto Headshot</label>
             <p style="font-size: 0.9rem; color: #fff;">Automatically targets enemies' heads when the fire button is pressed.</p>
-            <button class="execute-all-btn" onclick="activateAutoHeadshot()">Activate Auto Headshot</button>
+            <button class="execute-btn" onclick="activateAutoHeadshot()">Activate Auto Headshot</button>
         </div>
 
-        <!-- Adjustable Sliders -->
+        <!-- Aimbot Slider -->
         <div class="option">
             <label>Aimbot Intensity</label>
             <input id="Aimbot" type="range" min="0" max="100" value="75" step="1" 
                 oninput="updateValueDisplay('Aimbot', this.value)">
             <span id="AimbotValue">75%</span>
+            <button class="execute-btn" onclick="executeAimbot()">Set Aimbot</button>
         </div>
 
-        <!-- Execute All Button -->
-        <button class="execute-all-btn" onclick="executeAllFeatures()">Execute All</button>
+        <!-- Debug Console -->
+        <div id="debug" style="margin-top: 20px; font-size: 0.8rem; color: #ccc;"></div>
     </div>
 
     <script>
-        const bundleID = "com.dts.freefireth"; // Bundle ID for Free Fire
+        const bundleID = "com.dts.freefireth"; // Correct Bundle ID
+
+        // Debugging Helper
+        function logDebug(message) {
+            const debugElement = document.getElementById("debug");
+            debugElement.innerHTML += `<p>${message}</p>`;
+        }
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
@@ -110,24 +117,23 @@
 
         // Auto Headshot Method
         function activateAutoHeadshot() {
-            console.log("Activating Auto Headshot...");
-            window.location.href = `freefire://${bundleID}/autoheadshot?activate=true`;
+            logDebug("Activating Auto Headshot...");
+            try {
+                window.location.href = `freefire://${bundleID}/autoheadshot?activate=true`;
+            } catch (error) {
+                logDebug(`Error activating Auto Headshot: ${error}`);
+            }
         }
 
         // Aimbot Execution Method
-        function executeAimbot(value) {
-            console.log(`Executing Aimbot with value: ${value}`);
-            window.location.href = `freefire://${bundleID}/aimbot?value=${value}`;
-        }
-
-        // Execute all features
-        function executeAllFeatures() {
-            const aimbotValue = document.getElementById('Aimbot').value;
-
-            executeAimbot(aimbotValue);
-            activateAutoHeadshot();
-
-            console.log("All features executed for bundle:", bundleID);
+        function executeAimbot() {
+            const value = document.getElementById('Aimbot').value;
+            logDebug(`Executing Aimbot with value: ${value}`);
+            try {
+                window.location.href = `freefire://${bundleID}/aimbot?value=${value}`;
+            } catch (error) {
+                logDebug(`Error executing Aimbot: ${error}`);
+            }
         }
     </script>
 </body>
