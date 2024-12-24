@@ -3,87 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iOS Dark Xit’s Mod Menu</title>
+    <title>Evil Mod Panel</title>
     <style>
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
+            background: #000; /* Pure black for a dark theme */
             color: white;
-            overflow: hidden;
-            background: linear-gradient(to bottom, #1e3c72, #2a5298);
         }
 
-        /* Snow Animation Background */
-        .snowflakes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
+        /* Evil Panel */
+        .evil-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid red;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
         }
 
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(100vh) translateX(-10vw);
-                opacity: 0.2;
-            }
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .header {
-            font-size: 3rem;
+        .evil-panel-header {
+            font-size: 2rem;
             font-weight: bold;
-            color: #ffd700;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+            text-align: center;
+            color: red;
+            text-shadow: 0 0 10px red, 0 0 20px darkred;
         }
 
-        .subheader {
-            font-size: 1.2rem;
-            color: #ffffff;
+        .evil-panel-subheader {
+            text-align: center;
+            font-size: 1rem;
+            color: #ff6666;
             margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
         .option {
             margin: 15px 0;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            width: 80%;
-            max-width: 400px;
-            text-align: center;
-            box-shadow: 0px 0px 15px rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(5px);
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid red;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+        }
+
+        .option label {
+            font-size: 1rem;
+            color: #ff6666;
         }
 
         /* Slider Styling */
         .range-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-top: 10px;
         }
 
@@ -91,7 +65,7 @@
             -webkit-appearance: none;
             width: 100%;
             height: 5px;
-            background: #ffd700;
+            background: red;
             border-radius: 5px;
             outline: none;
             cursor: pointer;
@@ -102,19 +76,75 @@
             appearance: none;
             width: 15px;
             height: 15px;
-            background: white;
-            border: 2px solid #ffd700;
+            background: #000;
+            border: 2px solid red;
             border-radius: 50%;
             cursor: pointer;
         }
 
-        /* Execute All Button */
+        .range-value {
+            text-align: center;
+            color: white;
+            margin-top: 5px;
+        }
+
+        /* Toggle Switch Styling */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+            margin-left: 10px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #555;
+            border: 1px solid red;
+            border-radius: 25px;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3px;
+            background-color: red;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: red;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(24px);
+            background-color: black;
+        }
+
+        /* Execute Button */
         .execute-all-btn {
-            margin-top: 20px;
+            display: block;
+            margin: 20px auto 0;
             padding: 10px 20px;
-            background: #ffd700;
+            background: red;
             color: black;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             border: none;
             border-radius: 10px;
@@ -123,24 +153,14 @@
         }
 
         .execute-all-btn:hover {
-            background: #ffc107;
-            transform: scale(1.05);
+            background: darkred;
         }
     </style>
 </head>
 <body>
-    <!-- Snowflakes -->
-    <div class="snowflakes">
-        <div class="snowflake" style="width: 10px; height: 10px; left: 10%; animation-duration: 8s;"></div>
-        <div class="snowflake" style="width: 7px; height: 7px; left: 20%; animation-duration: 6s;"></div>
-        <div class="snowflake" style="width: 5px; height: 5px; left: 50%; animation-duration: 12s;"></div>
-        <div class="snowflake" style="width: 8px; height: 8px; left: 70%; animation-duration: 10s;"></div>
-        <div class="snowflake" style="width: 6px; height: 6px; left: 90%; animation-duration: 5s;"></div>
-    </div>
-
-    <div class="container">
-        <div class="header">iOS Dark Xit’s 🪽</div>
-        <div class="subheader">Mod Menu</div>
+    <div class="evil-panel">
+        <div class="evil-panel-header">Evil Mod Panel</div>
+        <div class="evil-panel-subheader">Injecting into com.dts.freefireios</div>
 
         <!-- Adjustable Sliders -->
         <div class="option">
@@ -148,7 +168,7 @@
             <div class="range-container">
                 <input id="AutoAim" type="range" min="0" max="100" value="100" step="1" 
                     oninput="updateValueDisplay('AutoAim', this.value)">
-                <span id="AutoAimValue">100%</span>
+                <div class="range-value" id="AutoAimValue">100%</div>
             </div>
         </div>
 
@@ -157,26 +177,26 @@
             <div class="range-container">
                 <input id="AimbotStrength" type="range" min="0" max="100" value="50" step="1" 
                     oninput="updateValueDisplay('AimbotStrength', this.value)">
-                <span id="AimbotStrengthValue">50%</span>
+                <div class="range-value" id="AimbotStrengthValue">50%</div>
             </div>
         </div>
 
         <div class="option">
-            <label>Aim FOV (°)</label>
+            <label>Aim FOV</label>
             <div class="range-container">
                 <input id="AimFOV" type="range" min="0" max="360" value="90" step="1" 
                     oninput="updateValueDisplay('AimFOV', this.value)">
-                <span id="AimFOVValue">90°</span>
+                <div class="range-value" id="AimFOVValue">90°</div>
             </div>
         </div>
 
+        <!-- Switch Toggles -->
         <div class="option">
-            <label>Head Tracking Strength</label>
-            <div class="range-container">
-                <input id="HeadTracking" type="range" min="0" max="100" value="75" step="1" 
-                    oninput="updateValueDisplay('HeadTracking', this.value)">
-                <span id="HeadTrackingValue">75%</span>
-            </div>
+            <label>Head Tracking</label>
+            <label class="switch">
+                <input id="HeadTracking" type="checkbox">
+                <span class="slider"></span>
+            </label>
         </div>
 
         <!-- Execute All Button -->
@@ -184,7 +204,7 @@
     </div>
 
     <script>
-        const bundleID = "com.dts.freefireth";
+        const bundleID = "com.dts.freefireios";
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
@@ -197,11 +217,11 @@
                 { feature: 'AutoAim', value: document.getElementById('AutoAim').value },
                 { feature: 'AimbotStrength', value: document.getElementById('AimbotStrength').value },
                 { feature: 'AimFOV', value: document.getElementById('AimFOV').value },
-                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').value },
+                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').checked ? 1 : 0 },
             ];
 
             features.forEach(({ feature, value }) => {
-                console.log(`Executing ${feature}: ${value}`);
+                console.log(`Injecting ${feature} (${value}) into ${bundleID}`);
                 window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
             });
         }
