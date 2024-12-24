@@ -13,43 +13,14 @@
             background: linear-gradient(to bottom, #1e3c72, #2a5298);
         }
 
-        /* Snow Animation Background */
-        .snowflakes {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .snowflake {
-            position: absolute;
-            top: -10px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.8;
-            animation: fall linear infinite;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(0) translateX(0);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translateY(100vh) translateX(-10vw);
-                opacity: 0.2;
-            }
-        }
-
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .header {
@@ -57,12 +28,13 @@
             font-weight: bold;
             color: #ffd700;
             text-shadow: 0 0 15px rgba(255, 255, 255, 0.9);
+            margin-bottom: 10px;
         }
 
-        .subheader {
-            font-size: 1.2rem;
+        .target-app {
+            font-size: 1.5rem;
             color: #ffffff;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
         }
 
@@ -79,11 +51,13 @@
             backdrop-filter: blur(5px);
         }
 
-        /* Slider Styling */
+        label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
         .range-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             margin-top: 10px;
         }
 
@@ -99,7 +73,6 @@
 
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
             width: 15px;
             height: 15px;
             background: white;
@@ -108,53 +81,6 @@
             cursor: pointer;
         }
 
-        /* Switch Styling */
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            border-radius: 34px;
-            transition: 0.4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            border-radius: 50%;
-            transition: 0.4s;
-        }
-
-        input:checked + .slider {
-            background-color: #ffd700;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        /* Execute All Button */
         .execute-all-btn {
             margin-top: 20px;
             padding: 10px 20px;
@@ -175,18 +101,9 @@
     </style>
 </head>
 <body>
-    <!-- Snowflakes -->
-    <div class="snowflakes">
-        <div class="snowflake" style="width: 10px; height: 10px; left: 10%; animation-duration: 8s;"></div>
-        <div class="snowflake" style="width: 7px; height: 7px; left: 20%; animation-duration: 6s;"></div>
-        <div class="snowflake" style="width: 5px; height: 5px; left: 50%; animation-duration: 12s;"></div>
-        <div class="snowflake" style="width: 8px; height: 8px; left: 70%; animation-duration: 10s;"></div>
-        <div class="snowflake" style="width: 6px; height: 6px; left: 90%; animation-duration: 5s;"></div>
-    </div>
-
     <div class="container">
         <div class="header">iOS Dark Xit’s 🪽</div>
-        <div class="subheader">Mod Menu</div>
+        <div class="target-app">Target App: <strong>freefire.app</strong></div>
 
         <!-- Adjustable Sliders -->
         <div class="option">
@@ -212,25 +129,34 @@
     </div>
 
     <script>
-        const targetApp = "freefire.app"; // We are using the "freefire://" scheme
-        const bundleID = "com.dts.freefireth"; // Updated Free Fire's bundle ID
+        const targetApp = "freefire.app"; // Target app name
+        const bundleID = "com.dts.freefireth"; // Free Fire's bundle ID
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
             document.getElementById(`${feature}Value`).textContent = `${value}%`;
         }
 
+        // Logic for each functionality
+        function executeHeadTracking(value) {
+            console.log(`Executing HeadTracking with value: ${value}`);
+            window.location.href = `freefire://${bundleID}/headtracking?value=${value}`;
+        }
+
+        function executeAimbot(value) {
+            console.log(`Executing Aimbot with value: ${value}`);
+            window.location.href = `freefire://${bundleID}/aimbot?value=${value}`;
+        }
+
         // Execute all selected or adjusted features
         function executeAllFeatures() {
-            const features = [
-                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').value },
-                { feature: 'Aimbot', value: document.getElementById('Aimbot').value },
-            ];
+            const headTrackingValue = document.getElementById('HeadTracking').value;
+            const aimbotValue = document.getElementById('Aimbot').value;
 
-            features.forEach(({ feature, value }) => {
-                console.log(`Executing ${feature}: ${value}`);
-                window.location.href = `freefire://${feature}?bundle=${bundleID}&value=${value}`;
-            });
+            executeHeadTracking(headTrackingValue);
+            executeAimbot(aimbotValue);
+
+            console.log("All features executed for bundle:", bundleID);
         }
     </script>
 </body>
