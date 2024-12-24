@@ -57,30 +57,6 @@
             color: #ffd700;
         }
 
-        .range-container {
-            margin-top: 10px;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 5px;
-            background: #ffd700;
-            border-radius: 5px;
-            outline: none;
-            cursor: pointer;
-        }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
-            background: white;
-            border: 2px solid #ffd700;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
         .execute-all-btn {
             margin-top: 20px;
             padding: 10px 20px;
@@ -105,23 +81,19 @@
         <div class="header">iOS Dark Xit’s 🪽</div>
         <div class="target-app">Target App: <strong>freefire.app</strong></div>
 
-        <!-- Adjustable Sliders -->
+        <!-- Auto Headshot Feature -->
         <div class="option">
-            <label>Head Tracking Strength</label>
-            <div class="range-container">
-                <input id="HeadTracking" type="range" min="0" max="100" value="50" step="1" 
-                    oninput="updateValueDisplay('HeadTracking', this.value)">
-                <span id="HeadTrackingValue">50%</span>
-            </div>
+            <label>Auto Headshot</label>
+            <p style="font-size: 0.9rem; color: #fff;">Automatically targets enemies' heads when the fire button is pressed.</p>
+            <button class="execute-all-btn" onclick="activateAutoHeadshot()">Activate Auto Headshot</button>
         </div>
 
+        <!-- Adjustable Sliders -->
         <div class="option">
             <label>Aimbot Intensity</label>
-            <div class="range-container">
-                <input id="Aimbot" type="range" min="0" max="100" value="75" step="1" 
-                    oninput="updateValueDisplay('Aimbot', this.value)">
-                <span id="AimbotValue">75%</span>
-            </div>
+            <input id="Aimbot" type="range" min="0" max="100" value="75" step="1" 
+                oninput="updateValueDisplay('Aimbot', this.value)">
+            <span id="AimbotValue">75%</span>
         </div>
 
         <!-- Execute All Button -->
@@ -129,32 +101,31 @@
     </div>
 
     <script>
-        const targetApp = "freefire.app"; // Target app name
-        const bundleID = "com.dts.freefireth"; // Free Fire's bundle ID
+        const bundleID = "com.dts.freefireth"; // Bundle ID for Free Fire
 
         // Update slider value display
         function updateValueDisplay(feature, value) {
             document.getElementById(`${feature}Value`).textContent = `${value}%`;
         }
 
-        // Logic for each functionality
-        function executeHeadTracking(value) {
-            console.log(`Executing HeadTracking with value: ${value}`);
-            window.location.href = `freefire://${bundleID}/headtracking?value=${value}`;
+        // Auto Headshot Method
+        function activateAutoHeadshot() {
+            console.log("Activating Auto Headshot...");
+            window.location.href = `freefire://${bundleID}/autoheadshot?activate=true`;
         }
 
+        // Aimbot Execution Method
         function executeAimbot(value) {
             console.log(`Executing Aimbot with value: ${value}`);
             window.location.href = `freefire://${bundleID}/aimbot?value=${value}`;
         }
 
-        // Execute all selected or adjusted features
+        // Execute all features
         function executeAllFeatures() {
-            const headTrackingValue = document.getElementById('HeadTracking').value;
             const aimbotValue = document.getElementById('Aimbot').value;
 
-            executeHeadTracking(headTrackingValue);
             executeAimbot(aimbotValue);
+            activateAutoHeadshot();
 
             console.log("All features executed for bundle:", bundleID);
         }
