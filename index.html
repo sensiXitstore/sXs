@@ -57,12 +57,12 @@
             color: #ffd700;
         }
 
-        .execute-btn {
-            margin-top: 10px;
+        .execute-all-btn {
+            margin-top: 20px;
             padding: 10px 20px;
             background: #ffd700;
             color: black;
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border: none;
             border-radius: 10px;
@@ -70,7 +70,7 @@
             transition: 0.3s;
         }
 
-        .execute-btn:hover {
+        .execute-all-btn:hover {
             background: #ffc107;
             transform: scale(1.05);
         }
@@ -85,55 +85,58 @@
         <div class="option">
             <label>Auto Headshot</label>
             <p style="font-size: 0.9rem; color: #fff;">Automatically targets enemies' heads when the fire button is pressed.</p>
-            <button class="execute-btn" onclick="activateAutoHeadshot()">Activate Auto Headshot</button>
+            <button class="execute-all-btn" onclick="activateAutoHeadshot()">Activate Auto Headshot</button>
         </div>
-
-        <!-- Aimbot Slider -->
-        <div class="option">
-            <label>Aimbot Intensity</label>
-            <input id="Aimbot" type="range" min="0" max="100" value="75" step="1" 
-                oninput="updateValueDisplay('Aimbot', this.value)">
-            <span id="AimbotValue">75%</span>
-            <button class="execute-btn" onclick="executeAimbot()">Set Aimbot</button>
-        </div>
-
-        <!-- Debug Console -->
-        <div id="debug" style="margin-top: 20px; font-size: 0.8rem; color: #ccc;"></div>
     </div>
 
     <script>
-        const bundleID = "com.dts.freefireth"; // Correct Bundle ID
+        const bundleID = "com.dts.freefireth";
 
-        // Debugging Helper
-        function logDebug(message) {
-            const debugElement = document.getElementById("debug");
-            debugElement.innerHTML += `<p>${message}</p>`;
-        }
-
-        // Update slider value display
-        function updateValueDisplay(feature, value) {
-            document.getElementById(`${feature}Value`).textContent = `${value}%`;
-        }
-
-        // Auto Headshot Method
+        // Headshot logic when fire button is pressed
         function activateAutoHeadshot() {
-            logDebug("Activating Auto Headshot...");
-            try {
-                window.location.href = `freefire://${bundleID}/autoheadshot?activate=true`;
-            } catch (error) {
-                logDebug(`Error activating Auto Headshot: ${error}`);
+            console.log("Activating Auto Headshot...");
+
+            // Simulate listening for fire button press
+            document.addEventListener("keydown", function(event) {
+                if (event.key === " ") { // Assume Space Bar is the fire button
+                    console.log("Fire button pressed: targeting head...");
+                    moveToEnemyHead();
+                }
+            });
+
+            // Redirect to Free Fire's custom protocol
+            window.location.href = `freefire://${bundleID}/autoheadshot?activate=true`;
+        }
+
+        // Function to simulate crosshair movement to enemy's head
+        function moveToEnemyHead() {
+            const enemies = detectEnemies(); // Detect enemies in range
+            if (enemies.length > 0) {
+                const closestEnemy = getClosestEnemy(enemies); // Find the closest enemy
+                adjustCrosshair(closestEnemy.headPosition); // Move crosshair to head
+            } else {
+                console.log("No enemies detected.");
             }
         }
 
-        // Aimbot Execution Method
-        function executeAimbot() {
-            const value = document.getElementById('Aimbot').value;
-            logDebug(`Executing Aimbot with value: ${value}`);
-            try {
-                window.location.href = `freefire://${bundleID}/aimbot?value=${value}`;
-            } catch (error) {
-                logDebug(`Error executing Aimbot: ${error}`);
-            }
+        // Placeholder: Detect enemies in range
+        function detectEnemies() {
+            return [
+                { id: 1, headPosition: { x: 200, y: 150 } },
+                { id: 2, headPosition: { x: 300, y: 100 } },
+            ]; // Example data
+        }
+
+        // Placeholder: Get the closest enemy
+        function getClosestEnemy(enemies) {
+            return enemies[0]; // Simplified logic
+        }
+
+        // Placeholder: Adjust crosshair to target's head
+        function adjustCrosshair(position) {
+            console.log(`Adjusting crosshair to head position: X=${position.x}, Y=${position.y}`);
+            // Logic to move crosshair to position
+            window.location.href = `freefire://${bundleID}/moveCrosshair?x=${position.x}&y=${position.y}`;
         }
     </script>
 </body>
