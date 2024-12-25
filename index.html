@@ -7,9 +7,10 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: #000; /* Pure black for a dark theme */
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(to bottom, #000000, #200000);
             color: white;
+            overflow: hidden;
         }
 
         /* Evil Panel */
@@ -20,39 +21,53 @@
             transform: translate(-50%, -50%);
             width: 90%;
             max-width: 400px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid red;
-            border-radius: 20px;
+            height: 70%;
+            max-height: 90%;
+            overflow-y: auto;
+            background: rgba(20, 0, 0, 0.95);
+            border: 3px solid red;
+            border-radius: 15px;
             padding: 20px;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
         }
 
+        .evil-panel::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .evil-panel::-webkit-scrollbar-thumb {
+            background: red;
+            border-radius: 5px;
+        }
+
         .evil-panel-header {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             text-align: center;
             color: red;
             text-shadow: 0 0 10px red, 0 0 20px darkred;
+            margin-bottom: 10px;
         }
 
         .evil-panel-subheader {
             text-align: center;
             font-size: 1rem;
-            color: #ff6666;
+            color: #ffcccc;
             margin-bottom: 20px;
         }
 
         .option {
-            margin: 15px 0;
-            background: rgba(20, 20, 20, 0.9);
-            border: 1px solid red;
+            margin: 20px 0;
+            background: rgba(40, 0, 0, 0.9);
+            border: 2px solid red;
             border-radius: 10px;
-            padding: 10px;
+            padding: 15px;
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
         }
 
         .option label {
-            font-size: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
             color: #ff6666;
         }
 
@@ -64,7 +79,7 @@
         input[type="range"] {
             -webkit-appearance: none;
             width: 100%;
-            height: 5px;
+            height: 8px;
             background: red;
             border-radius: 5px;
             outline: none;
@@ -74,10 +89,10 @@
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 15px;
-            height: 15px;
+            width: 20px;
+            height: 20px;
             background: #000;
-            border: 2px solid red;
+            border: 3px solid red;
             border-radius: 50%;
             cursor: pointer;
         }
@@ -85,15 +100,16 @@
         .range-value {
             text-align: center;
             color: white;
-            margin-top: 5px;
+            margin-top: 10px;
+            font-size: 1rem;
         }
 
         /* Toggle Switch Styling */
         .switch {
             position: relative;
             display: inline-block;
-            width: 50px;
-            height: 25px;
+            width: 60px;
+            height: 30px;
             margin-left: 10px;
         }
 
@@ -110,17 +126,17 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #555;
-            border: 1px solid red;
-            border-radius: 25px;
+            background-color: #444;
+            border: 2px solid red;
+            border-radius: 30px;
             transition: 0.4s;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 18px;
-            width: 18px;
+            height: 22px;
+            width: 22px;
             left: 4px;
             bottom: 3px;
             background-color: red;
@@ -133,7 +149,7 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(24px);
+            transform: translateX(28px);
             background-color: black;
         }
 
@@ -160,7 +176,7 @@
 <body>
     <div class="evil-panel">
         <div class="evil-panel-header">Evil Mod Panel</div>
-        <div class="evil-panel-subheader">Injecting into com.dts.freefireios</div>
+        <div class="evil-panel-subheader">Injected into com.dts.freefireios</div>
 
         <!-- Adjustable Sliders -->
         <div class="option">
