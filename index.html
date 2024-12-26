@@ -210,7 +210,7 @@
         <div class="option">
             <label>Head Tracking</label>
             <label class="switch">
-                <input id="HeadTracking" type="checkbox">
+                <input id="HeadTracking" type="checkbox" onchange="executeSingleFeature('HeadTracking', this.checked ? 1 : 0)">
                 <span class="slider"></span>
             </label>
         </div>
@@ -225,6 +225,13 @@
         // Update slider value display
         function updateValueDisplay(feature, value) {
             document.getElementById(`${feature}Value`).textContent = `${value}${feature === "AimFOV" ? "°" : "%"}`;
+            executeSingleFeature(feature, value); // Execute when adjusted
+        }
+
+        // Execute a single feature
+        function executeSingleFeature(feature, value) {
+            console.log(`Executing ${feature} (${value}) into ${bundleID}`);
+            window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
         }
 
         // Execute all selected or adjusted features
