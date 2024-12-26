@@ -3,122 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evil Mod Panel</title>
+    <title>iOS Dark Xit's Panel</title>
     <style>
         body {
             margin: 0;
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(to bottom, #000000, #200000);
-            color: white;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #000, #222);
+            color: #fff;
             overflow: hidden;
         }
-
-        /* Evil Panel */
-        .evil-panel {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            max-width: 400px;
-            height: 70%;
-            max-height: 90%;
-            overflow-y: auto;
-            background: rgba(20, 0, 0, 0.95);
-            border: 3px solid red;
-            border-radius: 15px;
+        .panel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+            width: 350px;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            border-left: 2px solid #444;
+            box-shadow: 0px 0px 20px #ff0000;
+            overflow-y: scroll;
+            position: fixed;
+            right: 0;
+            top: 0;
         }
-
-        .evil-panel::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .evil-panel::-webkit-scrollbar-thumb {
-            background: red;
-            border-radius: 5px;
-        }
-
-        .evil-panel-header {
-            font-size: 2.5rem;
+        .header {
+            font-size: 1.8rem;
             font-weight: bold;
-            text-align: center;
-            color: red;
-            text-shadow: 0 0 10px red, 0 0 20px darkred;
+            text-transform: uppercase;
+            color: #ff4d4d;
             margin-bottom: 10px;
         }
-
-        .evil-panel-subheader {
-            text-align: center;
+        .subtitle {
             font-size: 1rem;
-            color: #ffcccc;
+            color: #999;
             margin-bottom: 20px;
         }
-
         .option {
-            margin: 20px 0;
-            background: rgba(40, 0, 0, 0.9);
-            border: 2px solid red;
-            border-radius: 10px;
-            padding: 15px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-        }
-
-        .option label {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #ff6666;
-        }
-
-        /* Slider Styling */
-        .range-container {
-            margin-top: 10px;
-        }
-
-        input[type="range"] {
-            -webkit-appearance: none;
             width: 100%;
-            height: 8px;
-            background: red;
-            border-radius: 5px;
-            outline: none;
-            cursor: pointer;
+            margin: 15px 0;
+            padding: 10px;
+            background: #111;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px #333;
         }
-
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            background: #000;
-            border: 3px solid red;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .range-value {
-            text-align: center;
-            color: white;
-            margin-top: 10px;
+        .option label {
             font-size: 1rem;
+            margin-bottom: 5px;
+            display: block;
+            color: #fff;
         }
-
-        /* Toggle Switch Styling */
         .switch {
-            position: relative;
             display: inline-block;
             width: 60px;
             height: 30px;
-            margin-left: 10px;
+            position: relative;
         }
-
         .switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
-
         .slider {
             position: absolute;
             cursor: pointer;
@@ -127,126 +72,120 @@
             right: 0;
             bottom: 0;
             background-color: #444;
-            border: 2px solid red;
             border-radius: 30px;
-            transition: 0.4s;
+            transition: .4s;
         }
-
         .slider:before {
             position: absolute;
             content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 3px;
-            background-color: red;
+            height: 20px;
+            width: 20px;
+            background-color: white;
             border-radius: 50%;
-            transition: 0.4s;
+            bottom: 5px;
+            left: 5px;
+            transition: .4s;
         }
-
         input:checked + .slider {
-            background-color: red;
+            background-color: #ff4d4d;
         }
-
         input:checked + .slider:before {
-            transform: translateX(28px);
-            background-color: black;
+            transform: translateX(30px);
         }
-
-        /* Execute Button */
-        .execute-all-btn {
-            display: block;
-            margin: 20px auto 0;
-            padding: 10px 20px;
-            background: red;
-            color: black;
-            font-size: 1rem;
-            font-weight: bold;
+        .slider-value {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #ff4d4d;
+            text-align: center;
+        }
+        .execute-button {
+            margin-top: 20px;
+            padding: 15px 25px;
+            font-size: 1.2rem;
+            color: #fff;
+            background: #ff4d4d;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0px 0px 10px #ff0000;
+            transition: all 0.3s ease;
         }
-
-        .execute-all-btn:hover {
-            background: darkred;
+        .execute-button:hover {
+            background: #ff6666;
+            box-shadow: 0px 0px 20px #ff4d4d;
         }
     </style>
 </head>
 <body>
-    <div class="evil-panel">
-        <div class="evil-panel-header">Evil Mod Panel</div>
-        <div class="evil-panel-subheader">Injected into com.dts.freefireios</div>
+    <div class="panel-container">
+        <div class="header">iOS Dark Xit's Panel</div>
+        <div class="subtitle">Mod Menu | Developed by @iOSDarkXits</div>
 
-        <!-- Adjustable Sliders -->
+        <!-- Aim Assist -->
         <div class="option">
-            <label>Exaggerated Auto Aim</label>
-            <div class="range-container">
-                <input id="AutoAim" type="range" min="0" max="100" value="100" step="1" 
-                    oninput="updateValueDisplay('AutoAim', this.value)">
-                <div class="range-value" id="AutoAimValue">100%</div>
-            </div>
-        </div>
-
-        <div class="option">
-            <label>Aimbot Strength</label>
-            <div class="range-container">
-                <input id="AimbotStrength" type="range" min="0" max="100" value="50" step="1" 
-                    oninput="updateValueDisplay('AimbotStrength', this.value)">
-                <div class="range-value" id="AimbotStrengthValue">50%</div>
-            </div>
-        </div>
-
-        <div class="option">
-            <label>Aim FOV</label>
-            <div class="range-container">
-                <input id="AimFOV" type="range" min="0" max="360" value="90" step="1" 
-                    oninput="updateValueDisplay('AimFOV', this.value)">
-                <div class="range-value" id="AimFOVValue">90°</div>
-            </div>
-        </div>
-
-        <!-- Switch Toggles -->
-        <div class="option">
-            <label>Head Tracking</label>
+            <label>Aim Assist</label>
             <label class="switch">
-                <input id="HeadTracking" type="checkbox" onchange="executeSingleFeature('HeadTracking', this.checked ? 1 : 0)">
+                <input type="checkbox" id="aim-assist-switch">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- Execute All Button -->
-        <button class="execute-all-btn" onclick="executeAllFeatures()">Execute All</button>
+        <!-- Recoil Control -->
+        <div class="option">
+            <label>No Recoil</label>
+            <label class="switch">
+                <input type="checkbox" id="no-recoil-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Head Lock -->
+        <div class="option">
+            <label>Head Lock</label>
+            <label class="switch">
+                <input type="checkbox" id="head-lock-switch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- Aim FOV -->
+        <div class="option">
+            <label>Aim FOV (%)</label>
+            <input type="range" id="aim-fov-slider" min="0" max="100" value="50" oninput="updateSliderValue('aim-fov-slider', 'aim-fov-value')">
+            <div class="slider-value" id="aim-fov-value">50%</div>
+        </div>
+
+        <!-- Execute All -->
+        <button class="execute-button" onclick="executeAll()">Execute All</button>
     </div>
 
     <script>
         const bundleID = "com.dts.freefireios";
 
-        // Update slider value display
-        function updateValueDisplay(feature, value) {
-            document.getElementById(`${feature}Value`).textContent = `${value}${feature === "AimFOV" ? "°" : "%"}`;
-            executeSingleFeature(feature, value); // Execute when adjusted
+        function updateSliderValue(sliderId, displayId) {
+            const slider = document.getElementById(sliderId);
+            const display = document.getElementById(displayId);
+            display.textContent = `${slider.value}%`;
         }
 
-        // Execute a single feature
-        function executeSingleFeature(feature, value) {
-            console.log(`Executing ${feature} (${value}) into ${bundleID}`);
-            window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
-        }
+        function executeAll() {
+            console.log("Executing all selected functions...");
 
-        // Execute all selected or adjusted features
-        function executeAllFeatures() {
-            const features = [
-                { feature: 'AutoAim', value: document.getElementById('AutoAim').value },
-                { feature: 'AimbotStrength', value: document.getElementById('AimbotStrength').value },
-                { feature: 'AimFOV', value: document.getElementById('AimFOV').value },
-                { feature: 'HeadTracking', value: document.getElementById('HeadTracking').checked ? 1 : 0 },
-            ];
+            const aimAssist = document.getElementById("aim-assist-switch").checked;
+            const noRecoil = document.getElementById("no-recoil-switch").checked;
+            const headLock = document.getElementById("head-lock-switch").checked;
+            const aimFOV = document.getElementById("aim-fov-slider").value;
 
-            features.forEach(({ feature, value }) => {
-                console.log(`Injecting ${feature} (${value}) into ${bundleID}`);
-                window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
-            });
+            const commands = [];
+            if (aimAssist) commands.push(`freefire://inject?bundle=${bundleID}&feature=aimAssist&value=true`);
+            if (noRecoil) commands.push(`freefire://inject?bundle=${bundleID}&feature=noRecoil&value=true`);
+            if (headLock) commands.push(`freefire://inject?bundle=${bundleID}&feature=headLock&value=true`);
+            commands.push(`freefire://inject?bundle=${bundleID}&feature=aimFOV&value=${aimFOV}`);
+
+            for (const command of commands) {
+                console.log(`[EXECUTE]: ${command}`);
+                window.location.href = command;
+            }
         }
     </script>
 </body>
