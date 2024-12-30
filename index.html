@@ -3,190 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iOS Dark Xit's Panel</title>
+    <title>RE4L1NS4NE MOD MENU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Estilos generales */
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #000, #222);
-            color: #fff;
-            overflow: hidden;
-        }
-        .panel-container {
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
-            width: 350px;
             height: 100vh;
-            background: rgba(0, 0, 0, 0.95);
-            border-left: 2px solid #444;
-            box-shadow: 0px 0px 20px #ff0000;
-            overflow-y: scroll;
-            position: fixed;
-            right: 0;
-            top: 0;
-        }
-        .header {
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            color: #ff4d4d;
-            margin-bottom: 10px;
-        }
-        .subtitle {
-            font-size: 1rem;
-            color: #999;
-            margin-bottom: 20px;
-        }
-        .option {
-            width: 100%;
-            margin: 15px 0;
-            padding: 10px;
-            background: #111;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px #333;
-        }
-        .option label {
-            font-size: 1rem;
-            margin-bottom: 5px;
-            display: block;
-            color: #fff;
-        }
-        .switch {
-            display: inline-block;
-            width: 60px;
-            height: 30px;
+            overflow: hidden;
+            background: #121212;
             position: relative;
         }
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        .slider {
+
+        /* Fondo con bolitas */
+        .background {
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #444;
-            border-radius: 30px;
-            transition: .4s;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
-        .slider:before {
+
+        .ball {
             position: absolute;
-            content: "";
-            height: 20px;
-            width: 20px;
-            background-color: white;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(30, 144, 255, 0.8); /* Azul */
             border-radius: 50%;
-            bottom: 5px;
-            left: 5px;
-            transition: .4s;
-        }
-        input:checked + .slider {
-            background-color: #ff4d4d;
-        }
-        input:checked + .slider:before {
-            transform: translateX(30px);
-        }
-        .slider-value {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #ff4d4d;
-            text-align: center;
-        }
-        .execute-button {
-            margin-top: 20px;
-            padding: 15px 25px;
-            font-size: 1.2rem;
-            color: #fff;
-            background: #ff4d4d;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            box-shadow: 0px 0px 10px #ff0000;
-            transition: all 0.3s ease;
-        }
-        .execute-button:hover {
-            background: #ff6666;
-            box-shadow: 0px 0px 20px #ff4d4d;
-        }
-    </style>
-</head>
-<body>
-    <div class="panel-container">
-        <div class="header">iOS Dark Xit's Panel</div>
-        <div class="subtitle">Mod Menu | Developed by @iOSDarkXits</div>
-
-        <!-- Aim Assist -->
-        <div class="option">
-            <label>Aim Assist</label>
-            <label class="switch">
-                <input type="checkbox" id="aim-assist-switch">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Recoil Control -->
-        <div class="option">
-            <label>No Recoil</label>
-            <label class="switch">
-                <input type="checkbox" id="no-recoil-switch">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Head Lock -->
-        <div class="option">
-            <label>Head Lock</label>
-            <label class="switch">
-                <input type="checkbox" id="head-lock-switch">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Aim FOV -->
-        <div class="option">
-            <label>Aim FOV (%)</label>
-            <input type="range" id="aim-fov-slider" min="0" max="100" value="50" oninput="updateSliderValue('aim-fov-slider', 'aim-fov-value')">
-            <div class="slider-value" id="aim-fov-value">50%</div>
-        </div>
-
-        <!-- Execute All -->
-        <button class="execute-button" onclick="executeAll()">Execute All</button>
-    </div>
-
-    <script>
-        const bundleID = "com.dts.freefireios";
-
-        function updateSliderValue(sliderId, displayId) {
-            const slider = document.getElementById(sliderId);
-            const display = document.getElementById(displayId);
-            display.textContent = `${slider.value}%`;
+            animation: moveUp 2s infinite ease-in-out; /* Bolitas más rápidas */
         }
 
-        function executeAll() {
-            console.log("Executing all selected functions...");
-
-            const aimAssist = document.getElementById("aim-assist-switch").checked;
-            const noRecoil = document.getElementById("no-recoil-switch").checked;
-            const headLock = document.getElementById("head-lock-switch").checked;
-            const aimFOV = document.getElementById("aim-fov-slider").value;
-
-            const commands = [];
-            if (aimAssist) commands.push(`freefire://inject?bundle=${bundleID}&feature=aimAssist&value=true`);
-            if (noRecoil) commands.push(`freefire://inject?bundle=${bundleID}&feature=noRecoil&value=true`);
-            if (headLock) commands.push(`freefire://inject?bundle=${bundleID}&feature=headLock&value=true`);
-            commands.push(`freefire://inject?bundle=${bundleID}&feature=aimFOV&value=${aimFOV}`);
-
-            for (const command of commands) {
-                console.log(`[EXECUTE]: ${command}`);
-                window.location.href = command;
+        @keyframes moveUp {
+            0% {
+                transform: translateY(100vh);
+            }
+            100% {
+                transform: translateY(-10vh);
             }
         }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+            width: 350px;
+            text-align: center;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: #1e90ff; /* Azul */
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-container p {
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            color: #bbb;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .login-container input {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #1e90ff; /* Azul */
+            border-radius: 10px;
+            outline: none;
+            font-size: 1em;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: border 0.3s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .login-container input:focus {
+            border-color: #1e90ff;
+        }
+
+        .login-container button {
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .login-container button:hover {
+            background: linear-gradient(135deg, #4682b4, #1e90ff);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Mod Menu Styling */
+        .mod-menu-container {
+            display: none;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            color: #fff;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mod-menu-container h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: #1e90ff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .mod-menu-container label {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            font-size: 1.5em;
+            color: #ccc;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            width: 70px;
+            height: 35px;
+            background-color: #555;
+            border-radius: 35px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: lime;
+        }
+
+        .toggle-switch span {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 25px;
+            height: 25px;
+            background-color: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active span {
+            left: 35px;
+        }
+
+        /* Footer Styling */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #4682b4;
+        }
+    </style>
+    <script>
+        // Aimbot configuration
+        const aimbot = {
+            enabled: false,
+            autoAim: true,
+            aimlock: true,
+            noRecoil: true,
+            autoShoot: true,
+            infiniteFOV: true,
+            headshotOnly: true,
+            trackingSpeed: 0.003, // Incremento en la velocidad para mejorar el seguimiento
+            aimPriority: 'head', // Apuntar siempre a la cabeza
+            maxTargets: 10, // Detección de múltiples enemigos
+            lockStrength: 20, // Aumento en la pegajosidad para bloquear aún más fuerte
+            aimSnapStrength: 10, // Aumento de la fuerza para que el crosshair se "enganche" más rápido a la cabeza
+        };
+
+        // Verificación de login
+        function verifyLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "TOP" && password === "1") {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.mod-menu-container').style.display = 'flex';
+            } else {
+                alert("Usuario o contraseña incorrectos.");
+            }
+        }
+
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                activateAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                deactivateAimbot();
+            }
+        }
+
+        function activateAimbot() {
+            console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
+            injectAimbot();
+            autoAimLogic();
+        }
+
+        function deactivateAimbot() {
+            console.log("Aimbot desactivado.");
+            injectNoAimbot();
+        }
+
+        function injectAimbot() {
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimSnapStrength=${aimbot.aimSnapStrength}`;
+            window.location.href = injectionURL;
+            console.log("Aimbot inyectado en Free Fire.");
+        }
+
+        function injectNoAimbot() {
+            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+            window.location.href = injectionURL;
+            console.log("Aimbot desactivado en Free Fire.");
+        }
+
+        function autoAimLogic() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    const targets = detectEnemies();
+                    if (targets.length > 0) {
+                        const bestTarget = prioritizeTargets(targets);
+                        if (bestTarget) {
+                            aimAtTarget(bestTarget);
+                            if (aimbot.autoShoot) {
+                                shoot(bestTarget);
+                            }
+                        }
+                    }
+                }
+            }, 10); // Detección y disparo más rápidos
+        }
+
+        function detectEnemies() {
+            const enemies = [];
+            for (let i = 0; i < aimbot.maxTargets; i++) {
+                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
+            }
+            return enemies;
+        }
+
+        function prioritizeTargets(enemies) {
+            return enemies.sort((a, b) => a.distance - b.distance)[0];
+        }
+
+        function aimAtTarget(target) {
+            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
+        }
+
+        function shoot(target) {
+            console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
+        }
     </script>
+</head>
+<body>
+    <div class="background">
+        <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
+        <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
+        <div class="ball" style="left: 30%; animation-duration: 1.8s;"></div>
+        <div class="ball" style="left: 40%; animation-duration: 2.2s;"></div>
+        <div class="ball" style="left: 50%; animation-duration: 1.7s;"></div>
+        <div class="ball" style="left: 60%; animation-duration: 2.3s;"></div>
+        <div class="ball" style="left: 70%; animation-duration: 1.6s;"></div>
+        <div class="ball" style="left: 80%; animation-duration: 2.1s;"></div>
+        <div class="ball" style="left: 90%; animation-duration: 2.4s;"></div>
+    </div>
+
+    <!-- Login -->
+    <div class="login-container">
+        <h1>RE4L1NS4NE</h1>
+        <p>MOD MENU</p>
+        <input type="text" id="username" placeholder="Usuario">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="verifyLogin()">Iniciar sesión</button>
+    </div>
+
+    <!-- Mod Menu -->
+    <div class="mod-menu-container">
+        <h1>RE4L1NS4NE</h1>
+        <p>MOD MENU</p>
+        <label>
+            Aimbot:
+            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+                <span></span>
+            </div>
+        </label>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 RE4L1NS4NE. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
+    </footer>
 </body>
 </html>
