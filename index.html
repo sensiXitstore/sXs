@@ -1,343 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RE4L1NS4NE MOD MENU</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos generales */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            background: #121212;
-            position: relative;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evil Panel by XitStyle 66</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #0a0a0a, #110000);
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-        /* Fondo con bolitas */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
+    .panel {
+      width: 90%;
+      max-width: 450px;
+      border-radius: 15px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #111, #330000);
+      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+    }
 
-        .ball {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: rgba(30, 144, 255, 0.8); /* Azul */
-            border-radius: 50%;
-            animation: moveUp 2s infinite ease-in-out; /* Bolitas más rápidas */
-        }
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      background: linear-gradient(135deg, crimson, black);
+      border-bottom: 2px solid #ff0000;
+    }
 
-        @keyframes moveUp {
-            0% {
-                transform: translateY(100vh);
-            }
-            100% {
-                transform: translateY(-10vh);
-            }
-        }
+    .avatar img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+    }
 
-        /* Login Container */
-        .login-container {
-            display: flex;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 50px;
-            border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
-            width: 350px;
-            text-align: center;
-            z-index: 1;
-            transition: all 0.3s;
-        }
+    .info {
+      margin-left: 15px;
+    }
 
-        .login-container h1 {
-            margin-bottom: 20px;
-            font-size: 3em;
-            color: #1e90ff; /* Azul */
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Poppins', sans-serif;
-        }
+    .info strong {
+      font-size: 1.2rem;
+      color: #fff;
+      display: block;
+    }
 
-        .login-container p {
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            color: #bbb;
-            font-family: 'Montserrat', sans-serif;
-        }
+    .info span {
+      font-size: 0.9rem;
+      color: #ffcccc;
+    }
 
-        .login-container input {
-            width: 90%;
-            padding: 12px;
-            margin-bottom: 20px;
-            border: 2px solid #1e90ff; /* Azul */
-            border-radius: 10px;
-            outline: none;
-            font-size: 1em;
-            color: #333;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: border 0.3s;
-            font-family: 'Roboto', sans-serif;
-        }
+    .content {
+      padding: 20px;
+    }
 
-        .login-container input:focus {
-            border-color: #1e90ff;
-        }
+    .content h2 {
+      text-align: center;
+      color: crimson;
+      text-shadow: 0 0 10px #ff0000;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
 
-        .login-container button {
-            background: linear-gradient(135deg, #1e90ff, #4682b4);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2em;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
-        }
+    .setting-item {
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-        .login-container button:hover {
-            background: linear-gradient(135deg, #4682b4, #1e90ff);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        }
+    .setting-item label {
+      font-size: 1rem;
+      color: #ddd;
+    }
 
-        /* Mod Menu Styling */
-        .mod-menu-container {
-            display: none;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            z-index: 1;
-            color: #fff;
-            text-align: center;
-            transition: all 0.3s;
-        }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 25px;
+    }
 
-        .mod-menu-container h1 {
-            margin-bottom: 20px;
-            font-size: 3em;
-            color: #1e90ff;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-            font-family: 'Poppins', sans-serif;
-        }
+    .switch input {
+      display: none;
+    }
 
-        .mod-menu-container label {
-            display: flex;
-            justify-content: space-between;
-            margin: 20px 0;
-            font-size: 1.5em;
-            color: #ccc;
-            font-family: 'Roboto', sans-serif;
-        }
+    .slider {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #444;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.4s;
+    }
 
-        .toggle-switch {
-            display: inline-block;
-            width: 70px;
-            height: 35px;
-            background-color: #555;
-            border-radius: 35px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 17px;
+      width: 17px;
+      background-color: white;
+      border-radius: 50%;
+      bottom: 4px;
+      left: 4px;
+      transition: 0.4s;
+    }
 
-        .toggle-switch.active {
-            background-color: lime;
-        }
+    input:checked + .slider {
+      background-color: crimson;
+    }
 
-        .toggle-switch span {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: white;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
+    input:checked + .slider:before {
+      transform: translateX(25px);
+    }
 
-        .toggle-switch.active span {
-            left: 35px;
-        }
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-        /* Footer Styling */
-        footer {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: #bbb;
-            font-size: 0.9em;
-            font-family: 'Montserrat', sans-serif;
-        }
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 6px;
+      background: crimson;
+      outline: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
 
-        footer a {
-            color: #1e90ff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px;
+      height: 15px;
+      background: white;
+      border: 2px solid crimson;
+      border-radius: 50%;
+    }
 
-        footer a:hover {
-            color: #4682b4;
-        }
-    </style>
-    <script>
-        // Aimbot configuration
-        const aimbot = {
-            enabled: false,
-            autoAim: true,
-            aimlock: true,
-            noRecoil: true,
-            autoShoot: true,
-            infiniteFOV: true,
-            headshotOnly: true,
-            trackingSpeed: 0.005, // Aumentado para más control sobre la cabeza
-            aimPriority: 'head', // Apuntar siempre a la cabeza
-            maxTargets: 10, // Detección de múltiples enemigos
-            lockStrength: 10, // Mayor "pegajosidad" para bloquear la cabeza
-        };
+    .slider-value {
+      font-weight: bold;
+      color: #fff;
+    }
 
-        // Verificación de login
-        function verifyLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+    .footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 0.9rem;
+      background: #111;
+      color: crimson;
+      border-top: 1px solid #ff0000;
+    }
 
-            if (username === "TOP" && password === "1") {
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.mod-menu-container').style.display = 'flex';
-            } else {
-                alert("Usuario o contraseña incorrectos.");
-            }
-        }
-
-        function toggleAimbot() {
-            aimbot.enabled = !aimbot.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
-            if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
-                activateAimbot();
-            } else {
-                toggleSwitch.classList.remove('active');
-                deactivateAimbot();
-            }
-        }
-
-        function activateAimbot() {
-            console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
-            injectAimbot();
-            autoAimLogic();
-        }
-
-        function deactivateAimbot() {
-            console.log("Aimbot desactivado.");
-            injectNoAimbot();
-        }
-
-        function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}`;
-            window.location.href = injectionURL;
-            console.log("Aimbot inyectado en Free Fire.");
-        }
-
-        function injectNoAimbot() {
-            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
-            window.location.href = injectionURL;
-            console.log("Aimbot desactivado en Free Fire.");
-        }
-
-        function autoAimLogic() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    const targets = detectEnemies();
-                    if (targets.length > 0) {
-                        const bestTarget = prioritizeTargets(targets);
-                        if (bestTarget) {
-                            aimAtTarget(bestTarget);
-                            if (aimbot.autoShoot) {
-                                shoot(bestTarget);
-                            }
-                        }
-                    }
-                }
-            }, 10); // Detección y disparo más rápidos
-        }
-
-        function detectEnemies() {
-            const enemies = [];
-            for (let i = 0; i < aimbot.maxTargets; i++) {
-                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
-            }
-            return enemies;
-        }
-
-        function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0];
-        }
-
-        function aimAtTarget(target) {
-            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
-        }
-
-        function shoot(target) {
-            console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
-        }
-    </script>
+    .footer strong {
+      color: white;
+    }
+  </style>
 </head>
 <body>
-    <div class="background">
-        <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
-        <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
-        <div class="ball" style="left: 30%; animation-duration: 1.8s;"></div>
-        <div class="ball" style="left: 40%; animation-duration: 2.2s;"></div>
-        <div class="ball" style="left: 50%; animation-duration: 1.7s;"></div>
-        <div class="ball" style="left: 60%; animation-duration: 2.3s;"></div>
-        <div class="ball" style="left: 70%; animation-duration: 1.6s;"></div>
-        <div class="ball" style="left: 80%; animation-duration: 2.1s;"></div>
-        <div class="ball" style="left: 90%; animation-duration: 2.4s;"></div>
+  <div class="panel">
+    <div class="header">
+      <div class="avatar">
+        <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
+      </div>
+      <div class="info">
+        <strong>Raziel G</strong>
+        <span>Creator of XitStyle 66</span>
+      </div>
     </div>
-
-    <!-- Login -->
-    <div class="login-container">
-        <h1>RE4L1NS4NE</h1>
-        <p>MOD MENU</p>
-        <input type="text" id="username" placeholder="Usuario">
-        <input type="password" id="password" placeholder="Contraseña">
-        <button onclick="verifyLogin()">Iniciar sesión</button>
+    <div class="content">
+      <h2>Evil Settings Panel</h2>
+      <div class="setting-item">
+        <label for="aimbot">Aimbot</label>
+        <div class="switch">
+          <input type="checkbox" id="aimbot">
+          <span class="slider"></span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <label for="headtracking">Headtracking</label>
+        <div class="switch">
+          <input type="checkbox" id="headtracking">
+          <span class="slider"></span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <label for="aimfov">Aim FOV</label>
+        <div class="slider-container">
+          <input type="range" id="aimfov" min="0" max="360" value="90">
+          <span id="aimfov-value" class="slider-value">90°</span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <label for="freestyle">Freestyle Sensitivity</label>
+        <div class="slider-container">
+          <input type="range" id="freestyle" min="0" max="100" value="50">
+          <span id="freestyle-value" class="slider-value">50%</span>
+        </div>
+      </div>
     </div>
-
-    <!-- Mod Menu -->
-    <div class="mod-menu-container">
-        <h1>RE4L1NS4NE</h1>
-        <p>MOD MENU</p>
-        <label>
-            Aimbot:
-            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
-                <span></span>
-            </div>
-        </label>
+    <div class="footer">
+      Panel by <strong>Raziel G</strong> | For Free Fire (Bundle ID: <strong>com.dts.freefireios</strong>)
     </div>
+  </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 RE4L1NS4NE. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
-    </footer>
+  <script>
+    // Update Slider Values
+    document.querySelectorAll('input[type="range"]').forEach(slider => {
+      const valueDisplay = document.getElementById(`${slider.id}-value`);
+      slider.addEventListener('input', () => {
+        valueDisplay.textContent = `${slider.value}${slider.id === "aimfov" ? "°" : "%"}`;
+        injectFunction(slider.id, slider.value);
+      });
+    });
+
+    // Handle Switches
+    document.querySelectorAll('input[type="checkbox"]').forEach(switchElement => {
+      switchElement.addEventListener('change', () => {
+        injectFunction(switchElement.id, switchElement.checked ? 1 : 0);
+      });
+    });
+
+    // Inject Functions
+    function injectFunction(feature, value) {
+      const bundleID = "com.dts.freefireios";
+      console.log(`Injecting ${feature} = ${value} into ${bundleID}`);
+      window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
+    }
+  </script>
 </body>
 </html>
