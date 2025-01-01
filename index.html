@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Evil Panel by XitStyle 66</title>
+  <title>PanelXplug</title>
   <style>
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #0a0a0a, #110000);
+      background: linear-gradient(135deg, #000, #330000);
       color: #fff;
       height: 100vh;
       display: flex;
@@ -21,7 +21,7 @@
       max-width: 450px;
       border-radius: 15px;
       overflow: hidden;
-      background: linear-gradient(135deg, #111, #330000);
+      background: linear-gradient(135deg, #111, #220000);
       box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
     }
 
@@ -30,7 +30,7 @@
       align-items: center;
       padding: 15px 20px;
       background: linear-gradient(135deg, crimson, black);
-      border-bottom: 2px solid #ff0000;
+      border-bottom: 2px solid crimson;
     }
 
     .avatar img {
@@ -47,7 +47,6 @@
     .info strong {
       font-size: 1.2rem;
       color: #fff;
-      display: block;
     }
 
     .info span {
@@ -122,43 +121,13 @@
       transform: translateX(25px);
     }
 
-    .slider-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    input[type="range"] {
-      flex: 1;
-      -webkit-appearance: none;
-      height: 6px;
-      background: crimson;
-      outline: none;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 15px;
-      height: 15px;
-      background: white;
-      border: 2px solid crimson;
-      border-radius: 50%;
-    }
-
-    .slider-value {
-      font-weight: bold;
-      color: #fff;
-    }
-
     .footer {
       text-align: center;
       padding: 10px;
       font-size: 0.9rem;
       background: #111;
       color: crimson;
-      border-top: 1px solid #ff0000;
+      border-top: 1px solid crimson;
     }
 
     .footer strong {
@@ -173,12 +142,12 @@
         <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
       </div>
       <div class="info">
-        <strong>Raziel G</strong>
+        <strong>@rxzielg</strong>
         <span>Creator of XitStyle 66</span>
       </div>
     </div>
     <div class="content">
-      <h2>Evil Settings Panel</h2>
+      <h2>PanelXplug</h2>
       <div class="setting-item">
         <label for="aimbot">Aimbot</label>
         <div class="switch">
@@ -195,46 +164,48 @@
       </div>
       <div class="setting-item">
         <label for="aimfov">Aim FOV</label>
-        <div class="slider-container">
-          <input type="range" id="aimfov" min="0" max="360" value="90">
-          <span id="aimfov-value" class="slider-value">90°</span>
+        <div class="switch">
+          <input type="checkbox" id="aimfov">
+          <span class="slider"></span>
         </div>
       </div>
       <div class="setting-item">
-        <label for="freestyle">Freestyle Sensitivity</label>
-        <div class="slider-container">
-          <input type="range" id="freestyle" min="0" max="100" value="50">
-          <span id="freestyle-value" class="slider-value">50%</span>
+        <label for="bypass">Bypass</label>
+        <div class="switch">
+          <input type="checkbox" id="bypass">
+          <span class="slider"></span>
         </div>
       </div>
     </div>
     <div class="footer">
-      Panel by <strong>Raziel G</strong> | For Free Fire (Bundle ID: <strong>com.dts.freefireios</strong>)
+      Developed by <strong>@rxzielg</strong>
     </div>
   </div>
 
   <script>
-    // Update Slider Values
-    document.querySelectorAll('input[type="range"]').forEach(slider => {
-      const valueDisplay = document.getElementById(`${slider.id}-value`);
-      slider.addEventListener('input', () => {
-        valueDisplay.textContent = `${slider.value}${slider.id === "aimfov" ? "°" : "%"}`;
-        injectFunction(slider.id, slider.value);
+    document.addEventListener("DOMContentLoaded", () => {
+      // Define commands for each switch
+      const commands = {
+        aimbot: { on: "/enable_aimbot", off: "/disable_aimbot" },
+        headtracking: { on: "/enable_headtracking", off: "/disable_headtracking" },
+        aimfov: { on: "/enable_aimfov", off: "/disable_aimfov" },
+        bypass: { on: "/enable_bypass", off: "/disable_bypass" },
+      };
+
+      // Add event listeners to each switch
+      Object.keys(commands).forEach((id) => {
+        const element = document.getElementById(id);
+        element.addEventListener("change", () => {
+          const command = element.checked ? commands[id].on : commands[id].off;
+          injectCommand(command);
+        });
       });
     });
 
-    // Handle Switches
-    document.querySelectorAll('input[type="checkbox"]').forEach(switchElement => {
-      switchElement.addEventListener('change', () => {
-        injectFunction(switchElement.id, switchElement.checked ? 1 : 0);
-      });
-    });
-
-    // Inject Functions
-    function injectFunction(feature, value) {
-      const bundleID = "com.dts.freefireios";
-      console.log(`Injecting ${feature} = ${value} into ${bundleID}`);
-      window.location.href = `freefire://execute?bundle=${bundleID}&feature=${feature}&value=${value}`;
+    // Inject commands into Free Fire system
+    function injectCommand(command) {
+      console.log(`Executing: ${command}`);
+      window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
     }
   </script>
 </body>
