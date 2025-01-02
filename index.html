@@ -184,29 +184,28 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Define commands for each switch
-      const commands = {
-        aimbot: { on: "/enable_aimbot", off: "/disable_aimbot" },
-        headtracking: { on: "/enable_headtracking", off: "/disable_headtracking" },
-        aimfov: { on: "/enable_aimfov", off: "/disable_aimfov" },
-        bypass: { on: "/enable_bypass", off: "/disable_bypass" },
+      const functionsLogic = {
+        aimbot: { enable: "/enable_aimbot", disable: "/disable_aimbot" },
+        headtracking: { enable: "/enable_headtracking", disable: "/disable_headtracking" },
+        aimfov: { enable: "/enable_aimfov", disable: "/disable_aimfov" },
+        bypass: { enable: "/enable_bypass", disable: "/disable_bypass" },
       };
 
-      // Add event listeners to each switch
-      Object.keys(commands).forEach((id) => {
+      const sendCommandToFreeFire = (command) => {
+        console.log(`Executing: ${command}`);
+        window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
+      };
+
+      Object.keys(functionsLogic).forEach((id) => {
         const element = document.getElementById(id);
         element.addEventListener("change", () => {
-          const command = element.checked ? commands[id].on : commands[id].off;
-          injectCommand(command);
+          const command = element.checked
+            ? functionsLogic[id].enable
+            : functionsLogic[id].disable;
+          sendCommandToFreeFire(command);
         });
       });
     });
-
-    // Inject commands into Free Fire system
-    function injectCommand(command) {
-      console.log(`Executing: ${command}`);
-      window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
-    }
   </script>
 </body>
 </html>
