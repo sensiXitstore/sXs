@@ -45,12 +45,12 @@
     }
 
     .info strong {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: #fff;
     }
 
     .info span {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: #ffcccc;
     }
 
@@ -142,8 +142,8 @@
         <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
       </div>
       <div class="info">
-        <strong>@rxzielg</strong>
-        <span>Creator of XitStyle 66</span>
+        <strong>Raziel G</strong>
+        <span>@rxzielg</span>
       </div>
     </div>
     <div class="content">
@@ -185,10 +185,10 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const functionsLogic = {
-        aimbot: { enable: "/enable_aimbot", disable: "/disable_aimbot" },
-        headtracking: { enable: "/enable_headtracking", disable: "/disable_headtracking" },
-        aimfov: { enable: "/enable_aimfov", disable: "/disable_aimfov" },
-        bypass: { enable: "/enable_bypass", disable: "/disable_bypass" },
+        aimbot: { enable: "/enable_aimbot max_accuracy", disable: "/disable_aimbot" },
+        headtracking: { enable: "/enable_headtracking 100%", disable: "/disable_headtracking" },
+        aimfov: { enable: "/set_aimfov 120", disable: "/disable_aimfov" },
+        bypass: { enable: "/activate_bypass_mode true", disable: "/deactivate_bypass_mode" },
       };
 
       const sendCommandToFreeFire = (command) => {
