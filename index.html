@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #000, #330000);
+      background-color: #000;
       color: #fff;
       height: 100vh;
       display: flex;
@@ -21,16 +21,16 @@
       max-width: 450px;
       border-radius: 15px;
       overflow: hidden;
-      background: linear-gradient(135deg, #111, #220000);
-      box-shadow: 0 8px 20px rgba(255, 0, 0, 0.6);
+      background-color: #111;
+      border: 2px solid #fff;
     }
 
     .header {
       display: flex;
       align-items: center;
       padding: 15px 20px;
-      background: linear-gradient(135deg, crimson, black);
-      border-bottom: 2px solid crimson;
+      background-color: #000;
+      border-bottom: 2px solid #fff;
     }
 
     .avatar img {
@@ -55,8 +55,7 @@
 
     .content h2 {
       text-align: center;
-      color: crimson;
-      text-shadow: 0 0 10px #ff0000;
+      color: #fff;
       font-size: 1.5rem;
       margin-bottom: 20px;
     }
@@ -70,7 +69,7 @@
 
     .setting-item label {
       font-size: 1rem;
-      color: #ddd;
+      color: #fff;
     }
 
     .switch {
@@ -109,7 +108,7 @@
     }
 
     input:checked + .slider {
-      background-color: crimson;
+      background-color: #fff;
     }
 
     input:checked + .slider:before {
@@ -120,13 +119,13 @@
       text-align: center;
       padding: 10px;
       font-size: 0.9rem;
-      background: #111;
-      color: crimson;
-      border-top: 1px solid crimson;
+      background-color: #000;
+      color: #fff;
+      border-top: 1px solid #fff;
     }
 
     .footer strong {
-      color: white;
+      color: #fff;
     }
   </style>
 </head>
@@ -143,23 +142,20 @@
     <div class="content">
       <h2>PanelXplug</h2>
       <div class="setting-item">
-        <label for="aimbot">Aimbot</label>
+        <label for="aimbot">Aimbot (Avanzado)</label>
         <div class="switch">
           <input type="checkbox" id="aimbot">
           <span class="slider"></span>
         </div>
       </div>
       <div class="setting-item">
+        <label for="aimradius">Aim Radius Ajustable</label>
+        <input type="range" id="aimradius" min="10" max="200" value="100" style="width: 60%;">
+      </div>
+      <div class="setting-item">
         <label for="headtracking">Headtracking</label>
         <div class="switch">
           <input type="checkbox" id="headtracking">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="aimfov">Aim FOV</label>
-        <div class="switch">
-          <input type="checkbox" id="aimfov">
           <span class="slider"></span>
         </div>
       </div>
@@ -179,9 +175,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const functionsLogic = {
-        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_accuracy", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
+        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
         headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking 100%", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
-        aimfov: { enable: "documents/contentcache/compulsory/ios/set_aimfov 120", disable: "documents/contentcache/compulsory/ios/disable_aimfov" },
         bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" },
       };
 
@@ -192,12 +187,19 @@
 
       Object.keys(functionsLogic).forEach((id) => {
         const element = document.getElementById(id);
-        element.addEventListener("change", () => {
+        element?.addEventListener("change", () => {
           const command = element.checked
             ? functionsLogic[id].enable
             : functionsLogic[id].disable;
           sendCommandToFreeFire(command);
         });
+      });
+
+      const aimRadius = document.getElementById("aimradius");
+      aimRadius?.addEventListener("input", () => {
+        const value = aimRadius.value;
+        const command = `documents/contentcache/compulsory/ios/set_aimradius ${value}`;
+        sendCommandToFreeFire(command);
       });
     });
   </script>
