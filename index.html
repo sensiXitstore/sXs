@@ -23,14 +23,16 @@
       overflow: hidden;
       background-color: #111;
       border: 2px solid #fff;
+      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
     }
 
     .header {
       display: flex;
       align-items: center;
-      padding: 15px 20px;
+      padding: 20px;
       background-color: #000;
       border-bottom: 2px solid #fff;
+      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
     }
 
     .avatar img {
@@ -45,8 +47,9 @@
     }
 
     .info strong {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       color: #fff;
+      text-transform: uppercase;
     }
 
     .content {
@@ -56,8 +59,9 @@
     .content h2 {
       text-align: center;
       color: #fff;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-bottom: 20px;
+      text-shadow: 0 0 10px #fff;
     }
 
     .setting-item {
@@ -142,29 +146,15 @@
     <div class="content">
       <h2>PanelXplug</h2>
       <div class="setting-item">
-        <label for="aimbot">Aimbot (Avanzado)</label>
+        <label for="aimbot">Aimbot</label>
         <div class="switch">
           <input type="checkbox" id="aimbot">
           <span class="slider"></span>
         </div>
       </div>
       <div class="setting-item">
-        <label for="aimradius">Aim Radius Ajustable</label>
-        <input type="range" id="aimradius" min="10" max="500" value="250" style="width: 60%;">
-      </div>
-      <div class="setting-item">
-        <label for="aimlock">Aimlock (Bloquear objetivo)</label>
-        <div class="switch">
-          <input type="checkbox" id="aimlock">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="norecoil">No Recoil (Sin retroceso)</label>
-        <div class="switch">
-          <input type="checkbox" id="norecoil">
-          <span class="slider"></span>
-        </div>
+        <label for="aimradius">Aim Radius</label>
+        <input type="range" id="aimradius" min="50" max="300" value="150" style="width: 60%;">
       </div>
       <div class="setting-item">
         <label for="headtracking">Headtracking</label>
@@ -189,11 +179,8 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const functionsLogic = {
-        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
-        aimlock: { enable: "documents/contentcache/compulsory/ios/lock_aim true", disable: "documents/contentcache/compulsory/ios/lock_aim false" },
-        norecoil: { enable: "documents/contentcache/compulsory/ios/set_no_recoil true", disable: "documents/contentcache/compulsory/ios/set_no_recoil false" },
-        aimradius: { enable: (value) => `documents/contentcache/compulsory/ios/set_aimradius ${value}`, disable: () => "" },
-        headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking 100%", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
+        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_strength", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
+        headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking extreme", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
         bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" },
       };
 
@@ -204,19 +191,19 @@
 
       Object.keys(functionsLogic).forEach((id) => {
         const element = document.getElementById(id);
-        if (id === 'aimradius') {
-          element?.addEventListener("input", () => {
-            const value = element.value;
-            sendCommandToFreeFire(functionsLogic[id].enable(value));
-          });
-        } else {
-          element?.addEventListener("change", () => {
-            const command = element.checked
-              ? functionsLogic[id].enable
-              : functionsLogic[id].disable;
-            sendCommandToFreeFire(command);
-          });
-        }
+        element?.addEventListener("change", () => {
+          const command = element.checked
+            ? functionsLogic[id].enable
+            : functionsLogic[id].disable;
+          sendCommandToFreeFire(command);
+        });
+      });
+
+      const aimRadius = document.getElementById("aimradius");
+      aimRadius?.addEventListener("input", () => {
+        const value = aimRadius.value;
+        const command = `documents/contentcache/compulsory/ios/set_aimradius ${value}`;
+        sendCommandToFreeFire(command);
       });
     });
   </script>
