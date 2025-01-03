@@ -19,10 +19,11 @@
     .panel {
       width: 90%;
       max-width: 450px;
-      border-radius: 15px;
+      border-radius: 20px;
       overflow: hidden;
       background-color: #111;
       border: 2px solid #fff;
+      box-shadow: 0 0 20px #fff;
     }
 
     .header {
@@ -45,7 +46,7 @@
     }
 
     .info strong {
-      font-size: 1.4rem;
+      font-size: 1.6rem;
       color: #fff;
     }
 
@@ -56,7 +57,7 @@
     .content h2 {
       text-align: center;
       color: #fff;
-      font-size: 1.5rem;
+      font-size: 1.8rem;
       margin-bottom: 20px;
     }
 
@@ -68,7 +69,7 @@
     }
 
     .setting-item label {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: #fff;
     }
 
@@ -136,11 +137,12 @@
         <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
       </div>
       <div class="info">
-        <strong>Raziel G</strong>
+        <strong>PREMIUM</strong>
       </div>
     </div>
     <div class="content">
       <h2>PanelXplug</h2>
+      
       <div class="setting-item">
         <label for="aimbot">Aimbot (Avanzado)</label>
         <div class="switch">
@@ -148,10 +150,12 @@
           <span class="slider"></span>
         </div>
       </div>
+      
       <div class="setting-item">
         <label for="aimradius">Aim Radius Ajustable</label>
-        <input type="range" id="aimradius" min="10" max="200" value="100" style="width: 60%;">
+        <input type="range" id="aimradius" min="10" max="500" value="250" style="width: 60%;">
       </div>
+      
       <div class="setting-item">
         <label for="headtracking">Headtracking</label>
         <div class="switch">
@@ -159,6 +163,23 @@
           <span class="slider"></span>
         </div>
       </div>
+
+      <div class="setting-item">
+        <label for="nodispersion">Evitar Dispersión de Balas</label>
+        <div class="switch">
+          <input type="checkbox" id="nodispersion">
+          <span class="slider"></span>
+        </div>
+      </div>
+
+      <div class="setting-item">
+        <label for="crosshairlock">Bloquear Crosshair</label>
+        <div class="switch">
+          <input type="checkbox" id="crosshairlock">
+          <span class="slider"></span>
+        </div>
+      </div>
+
       <div class="setting-item">
         <label for="bypass">Bypass</label>
         <div class="switch">
@@ -178,6 +199,8 @@
         aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
         headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking 100%", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
         bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" },
+        nodispersion: { enable: "documents/contentcache/compulsory/ios/set_no_bullet_spread true", disable: "documents/contentcache/compulsory/ios/set_no_bullet_spread false" },
+        crosshairlock: { enable: "documents/contentcache/compulsory/ios/lock_crosshair true", disable: "documents/contentcache/compulsory/ios/lock_crosshair false" },
       };
 
       const sendCommandToFreeFire = (command) => {
