@@ -19,11 +19,10 @@
     .panel {
       width: 90%;
       max-width: 450px;
-      border-radius: 20px;
+      border-radius: 15px;
       overflow: hidden;
       background-color: #111;
       border: 2px solid #fff;
-      box-shadow: 0 0 20px #fff;
     }
 
     .header {
@@ -46,7 +45,7 @@
     }
 
     .info strong {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: #fff;
     }
 
@@ -57,7 +56,7 @@
     .content h2 {
       text-align: center;
       color: #fff;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       margin-bottom: 20px;
     }
 
@@ -69,7 +68,7 @@
     }
 
     .setting-item label {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: #fff;
     }
 
@@ -142,7 +141,6 @@
     </div>
     <div class="content">
       <h2>PanelXplug</h2>
-      
       <div class="setting-item">
         <label for="aimbot">Aimbot (Avanzado)</label>
         <div class="switch">
@@ -150,12 +148,24 @@
           <span class="slider"></span>
         </div>
       </div>
-      
       <div class="setting-item">
         <label for="aimradius">Aim Radius Ajustable</label>
         <input type="range" id="aimradius" min="10" max="500" value="250" style="width: 60%;">
       </div>
-      
+      <div class="setting-item">
+        <label for="aimlock">Aimlock (Bloquear objetivo)</label>
+        <div class="switch">
+          <input type="checkbox" id="aimlock">
+          <span class="slider"></span>
+        </div>
+      </div>
+      <div class="setting-item">
+        <label for="norecoil">No Recoil (Sin retroceso)</label>
+        <div class="switch">
+          <input type="checkbox" id="norecoil">
+          <span class="slider"></span>
+        </div>
+      </div>
       <div class="setting-item">
         <label for="headtracking">Headtracking</label>
         <div class="switch">
@@ -163,23 +173,6 @@
           <span class="slider"></span>
         </div>
       </div>
-
-      <div class="setting-item">
-        <label for="nodispersion">Evitar Dispersión de Balas</label>
-        <div class="switch">
-          <input type="checkbox" id="nodispersion">
-          <span class="slider"></span>
-        </div>
-      </div>
-
-      <div class="setting-item">
-        <label for="crosshairlock">Bloquear Crosshair</label>
-        <div class="switch">
-          <input type="checkbox" id="crosshairlock">
-          <span class="slider"></span>
-        </div>
-      </div>
-
       <div class="setting-item">
         <label for="bypass">Bypass</label>
         <div class="switch">
@@ -197,10 +190,11 @@
     document.addEventListener("DOMContentLoaded", () => {
       const functionsLogic = {
         aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
+        aimlock: { enable: "documents/contentcache/compulsory/ios/lock_aim true", disable: "documents/contentcache/compulsory/ios/lock_aim false" },
+        norecoil: { enable: "documents/contentcache/compulsory/ios/set_no_recoil true", disable: "documents/contentcache/compulsory/ios/set_no_recoil false" },
+        aimradius: { enable: (value) => `documents/contentcache/compulsory/ios/set_aimradius ${value}`, disable: () => "" },
         headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking 100%", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
         bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" },
-        nodispersion: { enable: "documents/contentcache/compulsory/ios/set_no_bullet_spread true", disable: "documents/contentcache/compulsory/ios/set_no_bullet_spread false" },
-        crosshairlock: { enable: "documents/contentcache/compulsory/ios/lock_crosshair true", disable: "documents/contentcache/compulsory/ios/lock_crosshair false" },
       };
 
       const sendCommandToFreeFire = (command) => {
@@ -210,19 +204,19 @@
 
       Object.keys(functionsLogic).forEach((id) => {
         const element = document.getElementById(id);
-        element?.addEventListener("change", () => {
-          const command = element.checked
-            ? functionsLogic[id].enable
-            : functionsLogic[id].disable;
-          sendCommandToFreeFire(command);
-        });
-      });
-
-      const aimRadius = document.getElementById("aimradius");
-      aimRadius?.addEventListener("input", () => {
-        const value = aimRadius.value;
-        const command = `documents/contentcache/compulsory/ios/set_aimradius ${value}`;
-        sendCommandToFreeFire(command);
+        if (id === 'aimradius') {
+          element?.addEventListener("input", () => {
+            const value = element.value;
+            sendCommandToFreeFire(functionsLogic[id].enable(value));
+          });
+        } else {
+          element?.addEventListener("change", () => {
+            const command = element.checked
+              ? functionsLogic[id].enable
+              : functionsLogic[id].disable;
+            sendCommandToFreeFire(command);
+          });
+        }
       });
     });
   </script>
