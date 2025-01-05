@@ -1,241 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PanelXplug</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: #000;
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanelXplug</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .panel {
-      width: 90%;
-      max-width: 500px;
-      border-radius: 20px;
-      overflow: hidden;
-      background: #111;
-      border: 3px solid white;
-      box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
-    }
+        .panel {
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #111;
+            border: 3px solid white;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+        }
 
-    .header {
-      display: flex;
-      align-items: center;
-      padding: 20px;
-      background: linear-gradient(135deg, black, #333);
-      border-bottom: 3px solid white;
-    }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, black, #333);
+            border-bottom: 3px solid white;
+        }
 
-    .avatar img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-    }
+        .avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
 
-    .info {
-      margin-left: 20px;
-    }
+        .info {
+            margin-left: 20px;
+        }
 
-    .info strong {
-      font-size: 1.8rem;
-      color: #fff;
-    }
+        .info strong {
+            font-size: 1.8rem;
+            color: #fff;
+        }
 
-    .content {
-      padding: 25px;
-    }
+        .content {
+            padding: 25px;
+        }
 
-    .content h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 25px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
+        .content h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
 
-    .setting-item {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .setting-item {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    .setting-item label {
-      font-size: 1.2rem;
-    }
+        .setting-item label {
+            font-size: 1.2rem;
+        }
 
-    .switch, input[type="range"] {
-      cursor: pointer;
-    }
+        .switch, input[type="range"] {
+            cursor: pointer;
+        }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 30px;
-    }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
 
-    .switch input {
-      display: none;
-    }
+        .switch input {
+            display: none;
+        }
 
-    .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #444;
-      border-radius: 30px;
-      transition: 0.4s;
-    }
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            border-radius: 30px;
+            transition: 0.4s;
+        }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 22px;
-      width: 22px;
-      background-color: white;
-      border-radius: 50%;
-      bottom: 4px;
-      left: 4px;
-      transition: 0.4s;
-    }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            background-color: white;
+            border-radius: 50%;
+            bottom: 4px;
+            left: 4px;
+            transition: 0.4s;
+        }
 
-    input:checked + .slider {
-      background-color: white;
-    }
+        input:checked + .slider {
+            background-color: white;
+        }
 
-    input:checked + .slider:before {
-      transform: translateX(30px);
-      background-color: black;
-    }
+        input:checked + .slider:before {
+            transform: translateX(30px);
+            background-color: black;
+        }
 
-    input[type="range"] {
-      width: 100%;
-    }
+        input[type="range"] {
+            width: 100%;
+        }
 
-    .footer {
-      text-align: center;
-      padding: 15px;
-      background: #000;
-      border-top: 3px solid white;
-    }
+        .range-value {
+            margin-left: 10px;
+            font-size: 1rem;
+        }
 
-    .footer strong {
-      color: white;
-    }
-  </style>
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #000;
+            border-top: 3px solid white;
+        }
+
+        .footer strong {
+            color: white;
+        }
+    </style>
 </head>
 <body>
-  <div class="panel">
-    <div class="header">
-      <div class="avatar">
-        <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
-      </div>
-      <div class="info">
-        <strong>PanelXplug</strong>
-      </div>
+    <div class="panel">
+        <div class="header">
+            <div class="avatar">
+                <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
+            </div>
+            <div class="info">
+                <strong>PanelXplug</strong>
+            </div>
+        </div>
+        <div class="content">
+            <h2>Premium Version</h2>
+
+            <div class="setting-item">
+                <label for="aimbot">Aimbot Avanzado</label>
+                <div class="switch">
+                    <input type="checkbox" id="aimbot">
+                    <span class="slider"></span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label for="aimradius">Aim Radius</label>
+                <input type="range" id="aimradius" min="0" max="200" value="0">
+                <span class="range-value">0</span>
+            </div>
+
+            <div class="setting-item">
+                <label for="aimassist">Aim Assist</label>
+                <input type="range" id="aimassist" min="0" max="100" value="0">
+                <span class="range-value">0%</span>
+            </div>
+
+            <div class="setting-item">
+                <label for="aimfov">Aim FOV</label>
+                <input type="range" id="aimfov" min="0" max="180" value="0">
+                <span class="range-value">0°</span>
+            </div>
+
+            <div class="setting-item">
+                <label for="headtracking">Headtracking</label>
+                <div class="switch">
+                    <input type="checkbox" id="headtracking">
+                    <span class="slider"></span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label for="bypass">Bypass Seguro</label>
+                <div class="switch">
+                    <input type="checkbox" id="bypass">
+                    <span class="slider"></span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label for="autoaim">Auto Apuntado</label>
+                <div class="switch">
+                    <input type="checkbox" id="autoaim">
+                    <span class="slider"></span>
+                </div>
+            </div>
+
+            <div class="setting-item">
+                <label for="norecoil">No Recoil</label>
+                <div class="switch">
+                    <input type="checkbox" id="norecoil">
+                    <span class="slider"></span>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            Developed by <strong>@rxzielg</strong>
+        </div>
     </div>
-    <div class="content">
-      <h2>PremiumXplug</h2>
 
-      <div class="setting-item">
-        <label for="aimbot">Aimbot (Avanzado)</label>
-        <div class="switch">
-          <input type="checkbox" id="aimbot">
-          <span class="slider"></span>
-        </div>
-      </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const functionsLogic = {
+                aimbot: "enable_aimbot",
+                headtracking: "enable_headtracking",
+                bypass: "enable_bypass_secure",
+                autoaim: "enable_autoaim",
+                norecoil: "enable_norecoil"
+            };
 
-      <div class="setting-item">
-        <label for="aimradius">Aim Radius Ajustable</label>
-        <input type="range" id="aimradius" min="10" max="200" value="100">
-      </div>
+            const sendCommandToFreeFire = (command) => {
+                console.log(`Executing: ${command}`);
+                window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
+            };
 
-      <div class="setting-item">
-        <label for="aimassist">Aim Assist Ajustable</label>
-        <input type="range" id="aimassist" min="0" max="100" value="50">
-      </div>
+            Object.keys(functionsLogic).forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener("change", () => {
+                    const command = element.checked 
+                        ? `documents/contentcache/compulsory/ios/${functionsLogic[id]}` 
+                        : `documents/contentcache/compulsory/ios/disable_${functionsLogic[id]}`;
+                    sendCommandToFreeFire(command);
+                });
+            });
 
-      <div class="setting-item">
-        <label for="aimfov">Aim FOV Ajustable</label>
-        <input type="range" id="aimfov" min="0" max="180" value="90">
-      </div>
-
-      <div class="setting-item">
-        <label for="headtracking">Headtracking</label>
-        <div class="switch">
-          <input type="checkbox" id="headtracking">
-          <span class="slider"></span>
-        </div>
-      </div>
-
-      <div class="setting-item">
-        <label for="bypass">Bypass Seguro</label>
-        <div class="switch">
-          <input type="checkbox" id="bypass">
-          <span class="slider"></span>
-        </div>
-      </div>
-
-      <div class="setting-item">
-        <label for="autoaim">Auto Apuntado</label>
-        <div class="switch">
-          <input type="checkbox" id="autoaim">
-          <span class="slider"></span>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
-      Developed by <strong>@rxzielg</strong>
-    </div>
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const functionsLogic = {
-        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
-        headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
-        bypass: { enable: "documents/contentcache/compulsory/ios/enable_bypass_secure", disable: "documents/contentcache/compulsory/ios/disable_bypass_secure" },
-        autoaim: { enable: "documents/contentcache/compulsory/ios/enable_autoaim", disable: "documents/contentcache/compulsory/ios/disable_autoaim" }
-      };
-
-      const sendCommandToFreeFire = (command) => {
-        console.log(`Executing: ${command}`);
-        window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
-      };
-
-      // Conmutadores binarios
-      Object.keys(functionsLogic).forEach((id) => {
-        const element = document.getElementById(id);
-        element.addEventListener("change", () => {
-          const command = element.checked
-            ? functionsLogic[id].enable
-            : functionsLogic[id].disable;
-          sendCommandToFreeFire(command);
+            document.querySelectorAll('input[type="range"]').forEach(range => {
+                const valueDisplay = range.nextElementSibling;
+                range.addEventListener("input", () => {
+                    valueDisplay.textContent = range.value + (range.id === "aimassist" ? "%" : range.id === "aimfov" ? "°" : "");
+                    sendCommandToFreeFire(`documents/contentcache/compulsory/ios/set_${range.id} ${range.value}`);
+                });
+            });
         });
-      });
-
-      // Deslizadores de ajustes
-      ["aimradius", "aimassist", "aimfov"].forEach((id) => {
-        const element = document.getElementById(id);
-        element.addEventListener("input", () => {
-          const value = element.value;
-          const command = `documents/contentcache/compulsory/ios/set_${id} ${value}`;
-          sendCommandToFreeFire(command);
-        });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
