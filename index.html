@@ -23,16 +23,14 @@
       overflow: hidden;
       background-color: #111;
       border: 2px solid #fff;
-      box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
     }
 
     .header {
       display: flex;
       align-items: center;
-      padding: 20px;
+      padding: 15px 20px;
       background-color: #000;
       border-bottom: 2px solid #fff;
-      box-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
     }
 
     .avatar img {
@@ -47,9 +45,8 @@
     }
 
     .info strong {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: #fff;
-      text-transform: uppercase;
     }
 
     .content {
@@ -59,9 +56,8 @@
     .content h2 {
       text-align: center;
       color: #fff;
-      font-size: 1.8rem;
+      font-size: 1.5rem;
       margin-bottom: 20px;
-      text-shadow: 0 0 10px #fff;
     }
 
     .setting-item {
@@ -140,22 +136,29 @@
         <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
       </div>
       <div class="info">
-        <strong>PREMIUM</strong>
+        <strong>RG</strong>
       </div>
     </div>
     <div class="content">
       <h2>PanelXplug</h2>
       <div class="setting-item">
-        <label for="aimbot">Aimbot</label>
+        <label for="aimbot">Aimbot (Avanzado)</label>
         <div class="switch">
           <input type="checkbox" id="aimbot">
           <span class="slider"></span>
         </div>
       </div>
+      
       <div class="setting-item">
-        <label for="aimradius">Aim Radius</label>
-        <input type="range" id="aimradius" min="50" max="300" value="150" style="width: 60%;">
+        <label for="aimradius">Aim Radius Ajustable</label>
+        <input type="range" id="aimradius" min="10" max="200" value="100" style="width: 60%;">
       </div>
+
+      <div class="setting-item">
+        <label for="aimassist">Aim Assist (Ajustable)</label>
+        <input type="range" id="aimassist" min="0" max="100" value="50" style="width: 60%;">
+      </div>
+
       <div class="setting-item">
         <label for="headtracking">Headtracking</label>
         <div class="switch">
@@ -163,6 +166,7 @@
           <span class="slider"></span>
         </div>
       </div>
+
       <div class="setting-item">
         <label for="bypass">Bypass</label>
         <div class="switch">
@@ -179,9 +183,9 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const functionsLogic = {
-        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_strength", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
-        headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking extreme", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
-        bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" },
+        aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
+        headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking 100%", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
+        bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" }
       };
 
       const sendCommandToFreeFire = (command) => {
@@ -189,6 +193,7 @@
         window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
       };
 
+      // Conmutadores de funciones
       Object.keys(functionsLogic).forEach((id) => {
         const element = document.getElementById(id);
         element?.addEventListener("change", () => {
@@ -199,10 +204,19 @@
         });
       });
 
+      // Aim Radius Ajustable
       const aimRadius = document.getElementById("aimradius");
       aimRadius?.addEventListener("input", () => {
         const value = aimRadius.value;
         const command = `documents/contentcache/compulsory/ios/set_aimradius ${value}`;
+        sendCommandToFreeFire(command);
+      });
+
+      // Aim Assist Ajustable
+      const aimAssist = document.getElementById("aimassist");
+      aimAssist?.addEventListener("input", () => {
+        const value = aimAssist.value;
+        const command = `documents/contentcache/compulsory/ios/set_aimassist ${value}`;
         sendCommandToFreeFire(command);
       });
     });
