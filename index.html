@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Version</title>
+  <title>PanelXplug</title>
   <style>
     body {
       margin: 0;
@@ -143,11 +143,11 @@
         <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
       </div>
       <div class="info">
-        <strong>Premium Version</strong>
+        <strong>PanelXplug</strong>
       </div>
     </div>
     <div class="content">
-      <h2>Control Panel</h2>
+      <h2>PremiumXplug</h2>
 
       <div class="setting-item">
         <label for="aimbot">Aimbot (Avanzado)</label>
@@ -187,6 +187,14 @@
           <span class="slider"></span>
         </div>
       </div>
+
+      <div class="setting-item">
+        <label for="autoaim">Auto Apuntado</label>
+        <div class="switch">
+          <input type="checkbox" id="autoaim">
+          <span class="slider"></span>
+        </div>
+      </div>
     </div>
     <div class="footer">
       Developed by <strong>@rxzielg</strong>
@@ -198,7 +206,8 @@
       const functionsLogic = {
         aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
         headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
-        bypass: { enable: "documents/contentcache/compulsory/ios/enable_bypass_secure", disable: "documents/contentcache/compulsory/ios/disable_bypass_secure" }
+        bypass: { enable: "documents/contentcache/compulsory/ios/enable_bypass_secure", disable: "documents/contentcache/compulsory/ios/disable_bypass_secure" },
+        autoaim: { enable: "documents/contentcache/compulsory/ios/enable_autoaim", disable: "documents/contentcache/compulsory/ios/disable_autoaim" }
       };
 
       const sendCommandToFreeFire = (command) => {
