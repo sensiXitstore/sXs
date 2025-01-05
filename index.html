@@ -136,7 +136,7 @@
         <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
       </div>
       <div class="info">
-        <strong>RG</strong>
+        <strong>Raziel G</strong>
       </div>
     </div>
     <div class="content">
@@ -148,17 +148,10 @@
           <span class="slider"></span>
         </div>
       </div>
-      
       <div class="setting-item">
         <label for="aimradius">Aim Radius Ajustable</label>
         <input type="range" id="aimradius" min="10" max="200" value="100" style="width: 60%;">
       </div>
-
-      <div class="setting-item">
-        <label for="aimassist">Aim Assist (Ajustable)</label>
-        <input type="range" id="aimassist" min="0" max="100" value="50" style="width: 60%;">
-      </div>
-
       <div class="setting-item">
         <label for="headtracking">Headtracking</label>
         <div class="switch">
@@ -166,7 +159,6 @@
           <span class="slider"></span>
         </div>
       </div>
-
       <div class="setting-item">
         <label for="bypass">Bypass</label>
         <div class="switch">
@@ -185,7 +177,7 @@
       const functionsLogic = {
         aimbot: { enable: "documents/contentcache/compulsory/ios/enable_aimbot max_advanced", disable: "documents/contentcache/compulsory/ios/disable_aimbot" },
         headtracking: { enable: "documents/contentcache/compulsory/ios/enable_headtracking 100%", disable: "documents/contentcache/compulsory/ios/disable_headtracking" },
-        bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" }
+        bypass: { enable: "documents/contentcache/compulsory/ios/activate_bypass_mode true", disable: "documents/contentcache/compulsory/ios/deactivate_bypass_mode" },
       };
 
       const sendCommandToFreeFire = (command) => {
@@ -193,7 +185,6 @@
         window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
       };
 
-      // Conmutadores de funciones
       Object.keys(functionsLogic).forEach((id) => {
         const element = document.getElementById(id);
         element?.addEventListener("change", () => {
@@ -204,19 +195,10 @@
         });
       });
 
-      // Aim Radius Ajustable
       const aimRadius = document.getElementById("aimradius");
       aimRadius?.addEventListener("input", () => {
         const value = aimRadius.value;
         const command = `documents/contentcache/compulsory/ios/set_aimradius ${value}`;
-        sendCommandToFreeFire(command);
-      });
-
-      // Aim Assist Ajustable
-      const aimAssist = document.getElementById("aimassist");
-      aimAssist?.addEventListener("input", () => {
-        const value = aimAssist.value;
-        const command = `documents/contentcache/compulsory/ios/set_aimassist ${value}`;
         sendCommandToFreeFire(command);
       });
     });
