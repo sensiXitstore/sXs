@@ -1,221 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PanelXplug</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(135deg, #000, #333);
-      color: #fff;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PanelXplug</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #000, #333);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
 
-    .panel {
-      width: 90%;
-      max-width: 450px;
-      border-radius: 15px;
-      overflow: hidden;
-      background: linear-gradient(135deg, #111, #222);
-      box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
 
-    .header {
-      display: flex;
-      align-items: center;
-      padding: 15px 20px;
-      background: linear-gradient(135deg, #000, #333);
-      border-bottom: 2px solid #fff;
-    }
+        .panel {
+            width: 90%;
+            max-width: 450px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #111, #222);
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
+            padding: 20px;
+            transform: scale(0.9);
+            animation: popIn 0.8s ease-out forwards;
+        }
 
-    .avatar img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 2px solid #fff;
-    }
+        @keyframes popIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
 
-    .info {
-      margin-left: 15px;
-    }
+        .header {
+            text-align: center;
+            padding-bottom: 20px;
+        }
 
-    .info strong {
-      font-size: 1.4rem;
-      color: #fff;
-    }
+        .header h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            color: white;
+            text-shadow: 0 0 15px #fff;
+        }
 
-    .content {
-      padding: 20px;
-    }
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+        }
 
-    .content h2 {
-      text-align: center;
-      color: white;
-      text-shadow: 0 0 10px #fff;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-    }
+        .setting-item label {
+            font-size: 1.2rem;
+            color: white;
+        }
 
-    .setting-item {
-      margin-bottom: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 25px;
+        }
 
-    .setting-item label {
-      font-size: 1rem;
-      color: #ddd;
-    }
+        .switch input {
+            display: none;
+        }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 50px;
-      height: 25px;
-    }
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.4s ease;
+        }
 
-    .switch input {
-      display: none;
-    }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 17px;
+            width: 17px;
+            background-color: white;
+            border-radius: 50%;
+            bottom: 4px;
+            left: 4px;
+            transition: transform 0.4s;
+        }
 
-    .slider {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #444;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: 0.4s;
-    }
+        input:checked + .slider {
+            background-color: #fff;
+        }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 17px;
-      width: 17px;
-      background-color: white;
-      border-radius: 50%;
-      bottom: 4px;
-      left: 4px;
-      transition: 0.4s;
-    }
+        input:checked + .slider:before {
+            transform: translateX(25px);
+        }
 
-    input:checked + .slider {
-      background-color: white;
-    }
+        .footer {
+            text-align: center;
+            padding-top: 20px;
+            font-size: 0.9rem;
+            color: white;
+        }
 
-    input:checked + .slider:before {
-      transform: translateX(25px);
-    }
-
-    .footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 0.9rem;
-      background: #111;
-      color: white;
-      border-top: 1px solid white;
-    }
-
-    .footer strong {
-      color: white;
-    }
-  </style>
+        .footer strong {
+            color: white;
+        }
+    </style>
 </head>
 <body>
-  <div class="panel">
-    <div class="header">
-      <div class="avatar">
-        <img src="https://m.media-amazon.com/images/I/61Vlk4j1gwL._UXNaN_FMjpg_QL85_.jpg" alt="Avatar">
-      </div>
-      <div class="info">
-        <strong>PanelXplug</strong>
-      </div>
+    <div class="panel">
+        <div class="header">
+            <h1>FreeStylerX | sensi</h1>
+        </div>
+        <div class="setting-item">
+            <label for="freestylerX">Activar Sensibilidad Extrema</label>
+            <div class="switch">
+                <input type="checkbox" id="freestylerX">
+                <span class="slider"></span>
+            </div>
+        </div>
+        <div class="footer">
+            Desarrollado por <strong>@rxzielg</strong>
+        </div>
     </div>
-    <div class="content">
-      <h2>SensiXIT</h2>
-      <div class="setting-item">
-        <label for="aimbot">Aimbot</label>
-        <div class="switch">
-          <input type="checkbox" id="aimbot">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="headtracking">Headtracking</label>
-        <div class="switch">
-          <input type="checkbox" id="headtracking">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="aimfov">Aim FOV</label>
-        <div class="switch">
-          <input type="checkbox" id="aimfov">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="bypass">Bypass</label>
-        <div class="switch">
-          <input type="checkbox" id="bypass">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="sensibaja">SensiBaja</label>
-        <div class="switch">
-          <input type="checkbox" id="sensibaja">
-          <span class="slider"></span>
-        </div>
-      </div>
-      <div class="setting-item">
-        <label for="aimradius">Aim Radius</label>
-        <div class="switch">
-          <input type="checkbox" id="aimradius">
-          <span class="slider"></span>
-        </div>
-      </div>
-    </div>
-    <div class="footer">
-      Developed by <strong>@rxzielg</strong>
-    </div>
-  </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const functionsLogic = {
-        aimbot: { enable: "/enable_aimbot max_accuracy", disable: "/disable_aimbot" },
-        headtracking: { enable: "/enable_headtracking 100%", disable: "/disable_headtracking" },
-        aimfov: { enable: "/set_aimfov 120", disable: "/disable_aimfov" },
-        bypass: { enable: "/activate_bypass_mode true", disable: "/deactivate_bypass_mode" },
-        sensibaja: { enable: "/increase_swipe_speed 300", disable: "/reset_swipe_speed" },
-        aimradius: { enable: "/set_aimradius 150", disable: "/reset_aimradius" }
-      };
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const sensiCommand = {
+                enable: "/inject_sensitivity extreme /documents/contentcache/compulsory/ios/gameassetsbundles",
+                disable: "/reset_sensitivity /documents/contentcache/compulsory/ios/gameassetsbundles"
+            };
 
-      const sendCommandToFreeFire = (command) => {
-        console.log(`Executing: ${command}`);
-        window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.10`;
-      };
+            const sendCommandToFreeFire = (command) => {
+                console.log(`Ejecutando: ${command}`);
+                window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.10`;
+            };
 
-      Object.keys(functionsLogic).forEach((id) => {
-        const element = document.getElementById(id);
-        element.addEventListener("change", () => {
-          const command = element.checked
-            ? functionsLogic[id].enable
-            : functionsLogic[id].disable;
-          sendCommandToFreeFire(command);
+            const element = document.getElementById("freestylerX");
+            element.addEventListener("change", () => {
+                const command = element.checked ? sensiCommand.enable : sensiCommand.disable;
+                sendCommandToFreeFire(command);
+            });
         });
-      });
-    });
-  </script>
+    </script>
 </body>
 </html>
