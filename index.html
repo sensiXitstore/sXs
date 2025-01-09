@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FreeStylerX | sensi</title>
+    <title>SensiXIT</title>
     <style>
         body {
             margin: 0;
@@ -57,49 +57,9 @@
             font-size: 1.3rem;
         }
 
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 30px;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #555;
-            border-radius: 30px;
-            transition: 0.4s;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            border-radius: 50%;
-            background-color: white;
-            bottom: 4px;
-            left: 4px;
-            transition: 0.4s;
-        }
-
-        input:checked + .slider {
-            background-color: white;
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(30px);
-            background: crimson;
+        .slider-input {
+            width: 100%;
+            margin: 10px 0;
         }
 
         .footer {
@@ -115,13 +75,10 @@
 </head>
 <body>
     <div class="panel">
-        <h1>FreeStylerX | sensi</h1>
+        <h1>SensiXIT</h1>
         <div class="setting-item">
-            <label for="freestylerX">Activar Sensibilidad Extrema</label>
-            <div class="switch">
-                <input type="checkbox" id="freestylerX">
-                <span class="slider"></span>
-            </div>
+            <label for="sensitivity">Sensibilidad Extrema</label>
+            <input type="range" id="sensitivity" class="slider-input" min="100" max="1000" value="500">
         </div>
         <div class="footer">
             Desarrollado por <strong>@rxzielg</strong>
@@ -130,20 +87,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const sensitivityCommand = {
-                enable: "/inject_sensitivity max_extreme /documents/contentcache/compulsory/ios/gameassetsbundles",
-                disable: "/reset_sensitivity /documents/contentcache/compulsory/ios/gameassetsbundles"
-            };
+            const sensitivityInput = document.getElementById("sensitivity");
 
-            const sendCommandToFreeFire = (command) => {
+            const sendCommandToFreeFire = (value) => {
+                const command = `/inject_sensitivity ${value} /documents/contentcache/compulsory/ios/gameassetsbundles`;
                 console.log(`Ejecutando: ${command}`);
                 window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.10`;
             };
 
-            const element = document.getElementById("freestylerX");
-            element.addEventListener("change", () => {
-                const command = element.checked ? sensitivityCommand.enable : sensitivityCommand.disable;
-                sendCommandToFreeFire(command);
+            sensitivityInput.addEventListener("input", () => {
+                sendCommandToFreeFire(sensitivityInput.value);
             });
         });
     </script>
