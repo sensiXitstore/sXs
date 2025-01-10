@@ -57,9 +57,47 @@
             font-size: 1.3rem;
         }
 
-        .slider-input {
-            width: 100%;
-            margin: 10px 0;
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #444;
+            border-radius: 34px;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            border-radius: 50%;
+            background-color: white;
+            left: 4px;
+            bottom: 4px;
+            transition: 0.4s;
+        }
+
+        input:checked + .slider {
+            background-color: crimson;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
         }
 
         .footer {
@@ -77,8 +115,11 @@
     <div class="panel">
         <h1>SensiX1T</h1>
         <div class="setting-item">
-            <label for="sensitivity">FreeStylerX</label>
-            <input type="range" id="sensitivity" class="slider-input" min="1000" max="10000" value="5000">
+            <label for="sensitivitySwitch">FreeStylerX | sensi</label>
+            <label class="switch">
+                <input type="checkbox" id="sensitivitySwitch">
+                <span class="slider"></span>
+            </label>
         </div>
         <div class="footer">
             Desarrollado por <strong>@rxzielg</strong>
@@ -87,16 +128,18 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const sensitivityInput = document.getElementById("sensitivity");
+            const sensitivitySwitch = document.getElementById("sensitivitySwitch");
 
-            const sendCommandToFreeFire = (value) => {
-                const command = `/inject_sensitivity ${value} /documents/contentcache/compulsory/ios/gameassetsbundles`;
+            const sendCommandToFreeFire = (activate) => {
+                const command = activate 
+                    ? "/inject_sensitivity extreme /documents/contentcache/compulsory/ios/gameassetsbundles"
+                    : "/disable_sensitivity";
                 console.log(`Ejecutando: ${command}`);
                 window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.11`;
             };
 
-            sensitivityInput.addEventListener("input", () => {
-                sendCommandToFreeFire(sensitivityInput.value);
+            sensitivitySwitch.addEventListener("change", () => {
+                sendCommandToFreeFire(sensitivitySwitch.checked);
             });
         });
     </script>
