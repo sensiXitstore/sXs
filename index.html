@@ -114,13 +114,25 @@
 <body>
     <div class="panel">
         <h1>SensiX1T</h1>
+        
+        <!-- Sensibilidad extrema -->
         <div class="setting-item">
-            <label for="sensitivitySwitch">FreeStylerX | sensi</label>
+            <label for="sensitivitySwitch">FreeStylerX | sensi (Ultra Sensible)</label>
             <label class="switch">
                 <input type="checkbox" id="sensitivitySwitch">
                 <span class="slider"></span>
             </label>
         </div>
+
+        <!-- Auto Aim (Auto Apuntado a la cabeza) -->
+        <div class="setting-item">
+            <label for="autoAimSwitch">Auto Aim (Auto Apuntado)</label>
+            <label class="switch">
+                <input type="checkbox" id="autoAimSwitch">
+                <span class="slider"></span>
+            </label>
+        </div>
+
         <div class="footer">
             Desarrollado por <strong>@rxzielg</strong>
         </div>
@@ -129,17 +141,28 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const sensitivitySwitch = document.getElementById("sensitivitySwitch");
+            const autoAimSwitch = document.getElementById("autoAimSwitch");
 
-            const sendCommandToFreeFire = (activate) => {
-                const command = activate 
-                    ? "/inject_sensitivity extreme /documents/contentcache/compulsory/ios/gameassetsbundles"
-                    : "/disable_sensitivity";
+            // Función para ejecutar comandos dentro del Free Fire
+            const sendCommandToFreeFire = (command) => {
                 console.log(`Ejecutando: ${command}`);
                 window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.11`;
             };
 
+            // Control de Sensibilidad Extrema
             sensitivitySwitch.addEventListener("change", () => {
-                sendCommandToFreeFire(sensitivitySwitch.checked);
+                const command = sensitivitySwitch.checked 
+                    ? "/inject_sensitivity ultra_high /documents/contentcache/compulsory/ios/gameassetsbundles"
+                    : "/disable_sensitivity";
+                sendCommandToFreeFire(command);
+            });
+
+            // Control de Auto Aim (Auto Apuntado)
+            autoAimSwitch.addEventListener("change", () => {
+                const command = autoAimSwitch.checked
+                    ? "/activate_auto_aim head /documents/contentcache/compulsory/ios/gameassetsbundles"
+                    : "/deactivate_auto_aim";
+                sendCommandToFreeFire(command);
             });
         });
     </script>
