@@ -8,20 +8,20 @@
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle, #000, #111, #222);
-            color: #fff;
-            height: 100vh;
+            background: linear-gradient(135deg, black, #222);
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 100vh;
         }
 
         .panel {
+            border-radius: 20px;
+            padding: 30px;
             width: 90%;
             max-width: 500px;
-            border-radius: 25px;
-            padding: 30px;
-            background: linear-gradient(145deg, #000000, #222222);
+            background: linear-gradient(145deg, #000, #111);
             box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
             border: 2px solid white;
         }
@@ -29,7 +29,7 @@
         h1 {
             text-align: center;
             font-size: 2.5rem;
-            color: #fff;
+            color: white;
             text-shadow: 0 0 20px white;
         }
 
@@ -62,7 +62,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #444;
+            background-color: grey;
             border-radius: 34px;
             transition: 0.4s;
         }
@@ -101,8 +101,8 @@
 <body>
     <div class="panel">
         <h1>SensiX1T</h1>
-        
-        <!-- Sensibilidad extrema -->
+
+        <!-- Sensibilidad Extrema -->
         <div class="setting-item">
             <label for="sensitivitySwitch">FreeStylerX | sensi (Ultra Sensible)</label>
             <label class="switch">
@@ -111,7 +111,7 @@
             </label>
         </div>
 
-        <!-- Auto Aim Mejorado -->
+        <!-- Auto Aim Potente -->
         <div class="setting-item">
             <label for="autoAimSwitch">Auto Aim (Auto Cabeza)</label>
             <label class="switch">
@@ -130,26 +130,23 @@
             const sensitivitySwitch = document.getElementById("sensitivitySwitch");
             const autoAimSwitch = document.getElementById("autoAimSwitch");
 
-            // Función para ejecutar comandos dentro del Free Fire
-            const sendCommandToFreeFire = (command) => {
+            // Comandos para inyectar sensibilidad extrema y auto aim directamente
+            const injectCommand = (feature, enable) => {
+                const command = enable 
+                    ? `/inject_${feature} true /documents/contentcache/compulsory/ios/gameassetsbundles`
+                    : `/disable_${feature}`;
                 console.log(`Ejecutando: ${command}`);
                 window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.11`;
             };
 
             // Control de Sensibilidad Extrema
             sensitivitySwitch.addEventListener("change", () => {
-                const command = sensitivitySwitch.checked 
-                    ? "/inject_sensitivity ultra_high /documents/contentcache/compulsory/ios/gameassetsbundles"
-                    : "/disable_sensitivity";
-                sendCommandToFreeFire(command);
+                injectCommand("sensitivity", sensitivitySwitch.checked);
             });
 
-            // Control de Auto Aim Mejorado
+            // Control de Auto Aim Potente
             autoAimSwitch.addEventListener("change", () => {
-                const command = autoAimSwitch.checked
-                    ? "/enable_auto_aim_headtracking extreme /documents/contentcache/compulsory/ios/gameassetsbundles"
-                    : "/disable_auto_aim";
-                sendCommandToFreeFire(command);
+                injectCommand("auto_aim_headshot", autoAimSwitch.checked);
             });
         });
     </script>
