@@ -7,48 +7,46 @@
     <style>
         body {
             margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, black, #222);
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #000000, #111111);
             color: white;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
         }
 
         .panel {
-            border-radius: 20px;
-            padding: 30px;
             width: 90%;
-            max-width: 500px;
-            background: linear-gradient(145deg, #000, #111);
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
-            border: 2px solid white;
+            max-width: 450px;
+            border-radius: 15px;
+            background: #000;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            padding: 20px;
         }
 
-        h1 {
+        h2 {
             text-align: center;
-            font-size: 2.5rem;
             color: white;
-            text-shadow: 0 0 20px white;
+            text-shadow: 0 0 15px #ffffff;
         }
 
         .setting-item {
+            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin: 20px 0;
         }
 
-        .setting-item label {
-            font-size: 1.3rem;
+        label {
+            font-size: 1.2rem;
         }
 
         .switch {
             position: relative;
             display: inline-block;
             width: 60px;
-            height: 34px;
+            height: 30px;
         }
 
         .switch input {
@@ -57,97 +55,119 @@
 
         .slider {
             position: absolute;
-            cursor: pointer;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
             background-color: grey;
-            border-radius: 34px;
+            border-radius: 30px;
+            cursor: pointer;
             transition: 0.4s;
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
-            border-radius: 50%;
+            height: 20px;
+            width: 20px;
+            left: 5px;
+            bottom: 5px;
             background-color: white;
-            left: 4px;
-            bottom: 4px;
+            border-radius: 50%;
             transition: 0.4s;
         }
 
         input:checked + .slider {
-            background-color: crimson;
+            background-color: #00ff00;
         }
 
         input:checked + .slider:before {
-            transform: translateX(26px);
+            transform: translateX(30px);
+        }
+
+        .slider-value {
+            font-size: 1.2rem;
+            margin-left: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
         }
 
         .footer {
             text-align: center;
-            margin-top: 30px;
-            font-size: 1rem;
-        }
-
-        .footer strong {
-            color: crimson;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h1>SensiX1T</h1>
+        <h2>SensiX1T</h2>
 
-        <!-- Sensibilidad Extrema -->
+        <!-- FreeStylerX Sensitivity Switch -->
         <div class="setting-item">
-            <label for="sensitivitySwitch">FreeStylerX | sensi (Ultra Sensible)</label>
+            <label>FreeStylerX | Sensi</label>
             <label class="switch">
-                <input type="checkbox" id="sensitivitySwitch">
+                <input type="checkbox" id="freestylerx">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- Auto Aim Potente -->
+        <!-- Aim Radius Slider -->
         <div class="setting-item">
-            <label for="autoAimSwitch">Auto Aim (Auto Cabeza)</label>
+            <label>Aim Radius</label>
+            <input type="range" id="aimRadius" min="50" max="200" value="110">
+            <span class="slider-value" id="aimRadiusValue">110</span>
+        </div>
+
+        <!-- Auto Aim Switch -->
+        <div class="setting-item">
+            <label>Auto Aim</label>
             <label class="switch">
-                <input type="checkbox" id="autoAimSwitch">
+                <input type="checkbox" id="autoAim">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- No Recoil Switch -->
+        <div class="setting-item">
+            <label>No Recoil</label>
+            <label class="switch">
+                <input type="checkbox" id="norecoil">
                 <span class="slider"></span>
             </label>
         </div>
 
         <div class="footer">
-            Desarrollado por <strong>@rxzielg</strong>
+            Developed by <strong>@rxzielg</strong>
         </div>
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const sensitivitySwitch = document.getElementById("sensitivitySwitch");
-            const autoAimSwitch = document.getElementById("autoAimSwitch");
+        document.getElementById('aimRadius').addEventListener('input', function () {
+            document.getElementById('aimRadiusValue').textContent = this.value;
+        });
 
-            // Comandos para inyectar sensibilidad extrema y auto aim directamente
-            const injectCommand = (feature, enable) => {
-                const command = enable 
-                    ? `/inject_${feature} true /documents/contentcache/compulsory/ios/gameassetsbundles`
-                    : `/disable_${feature}`;
-                console.log(`Ejecutando: ${command}`);
-                window.location.href = `freefire://execute?command=${encodeURIComponent(command)}&bundle_id=com.dts.freefireth&version=1.108.11`;
-            };
+        // Commands for Free Fire injection
+        function sendCommandToFreeFire(command) {
+            console.log(`Injecting: ${command}`);
+            window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
+        }
 
-            // Control de Sensibilidad Extrema
-            sensitivitySwitch.addEventListener("change", () => {
-                injectCommand("sensitivity", sensitivitySwitch.checked);
-            });
+        document.getElementById('freestylerx').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_freestylerx extreme' : '/deactivate_freestylerx');
+        });
 
-            // Control de Auto Aim Potente
-            autoAimSwitch.addEventListener("change", () => {
-                injectCommand("auto_aim_headshot", autoAimSwitch.checked);
-            });
+        document.getElementById('autoAim').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_autoaim headshots' : '/deactivate_autoaim');
+        });
+
+        document.getElementById('norecoil').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_norecoil max' : '/deactivate_norecoil');
+        });
+
+        document.getElementById('aimRadius').addEventListener('change', function () {
+            sendCommandToFreeFire(`/set_aim_radius ${this.value}`);
         });
     </script>
 </body>
