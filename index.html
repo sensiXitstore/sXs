@@ -14,12 +14,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: fadeIn 1.5s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         .panel {
@@ -30,13 +24,6 @@
             background: linear-gradient(145deg, #000000, #222222);
             box-shadow: 0 0 40px rgba(255, 255, 255, 0.8);
             border: 2px solid white;
-            transform: scale(0.95);
-            animation: scaleUp 0.8s ease-out forwards;
-        }
-
-        @keyframes scaleUp {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
 
         h1 {
@@ -124,9 +111,9 @@
             </label>
         </div>
 
-        <!-- Auto Aim (Auto Apuntado a la cabeza) -->
+        <!-- Auto Aim Mejorado -->
         <div class="setting-item">
-            <label for="autoAimSwitch">Auto Aim (Auto Apuntado)</label>
+            <label for="autoAimSwitch">Auto Aim (Auto Cabeza)</label>
             <label class="switch">
                 <input type="checkbox" id="autoAimSwitch">
                 <span class="slider"></span>
@@ -157,11 +144,11 @@
                 sendCommandToFreeFire(command);
             });
 
-            // Control de Auto Aim (Auto Apuntado)
+            // Control de Auto Aim Mejorado
             autoAimSwitch.addEventListener("change", () => {
                 const command = autoAimSwitch.checked
-                    ? "/activate_auto_aim head /documents/contentcache/compulsory/ios/gameassetsbundles"
-                    : "/deactivate_auto_aim";
+                    ? "/enable_auto_aim_headtracking extreme /documents/contentcache/compulsory/ios/gameassetsbundles"
+                    : "/disable_auto_aim";
                 sendCommandToFreeFire(command);
             });
         });
