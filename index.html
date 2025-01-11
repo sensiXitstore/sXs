@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000000, #111111);
+            background: linear-gradient(135deg, #000000, #1a1a1a);
             color: white;
             height: 100vh;
             display: flex;
@@ -19,34 +19,36 @@
         .panel {
             width: 90%;
             max-width: 450px;
-            border-radius: 15px;
-            background: #000;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
-            padding: 20px;
+            border-radius: 20px;
+            background: #0d0d0d;
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+            padding: 25px;
+            border: 1px solid #00ff00;
         }
 
         h2 {
             text-align: center;
-            color: white;
-            text-shadow: 0 0 15px #ffffff;
+            color: #00ff00;
+            text-shadow: 0 0 20px #00ff00;
+            font-size: 2rem;
         }
 
         .setting-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         label {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
-            height: 30px;
+            width: 70px;
+            height: 35px;
         }
 
         .switch input {
@@ -60,7 +62,7 @@
             right: 0;
             bottom: 0;
             background-color: grey;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
             transition: 0.4s;
         }
@@ -68,8 +70,8 @@
         .slider:before {
             position: absolute;
             content: "";
-            height: 20px;
-            width: 20px;
+            height: 25px;
+            width: 25px;
             left: 5px;
             bottom: 5px;
             background-color: white;
@@ -82,7 +84,7 @@
         }
 
         input:checked + .slider:before {
-            transform: translateX(30px);
+            transform: translateX(35px);
         }
 
         .slider-value {
@@ -92,11 +94,13 @@
 
         input[type="range"] {
             width: 100%;
+            accent-color: #00ff00;
         }
 
         .footer {
             text-align: center;
-            padding-top: 10px;
+            padding-top: 20px;
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -106,32 +110,32 @@
 
         <!-- FreeStylerX Sensitivity Switch -->
         <div class="setting-item">
-            <label>FreeStylerX | Sensi</label>
+            <label>FreeStylerX | Sensibilidad Extrema</label>
             <label class="switch">
                 <input type="checkbox" id="freestylerx">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- Aim Radius Slider (Potenciado) -->
+        <!-- Aim Radius Slider (Máximo) -->
         <div class="setting-item">
-            <label>Aim Radius (Potente)</label>
-            <input type="range" id="aimRadius" min="150" max="500" value="250">
-            <span class="slider-value" id="aimRadiusValue">250</span>
+            <label>Aim Radius (Máximo)</label>
+            <input type="range" id="aimRadius" min="500" max="1000" value="750">
+            <span class="slider-value" id="aimRadiusValue">750</span>
         </div>
 
-        <!-- Auto Aim Switch -->
+        <!-- Auto Aim Switch (Ultra) -->
         <div class="setting-item">
-            <label>Auto Aim (Mejorado)</label>
+            <label>Auto Aim (Ultra)</label>
             <label class="switch">
                 <input type="checkbox" id="autoAim">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- Aimbot Lock Switch -->
+        <!-- Aimbot Lock Head Extreme -->
         <div class="setting-item">
-            <label>Aimbot Lock Head</label>
+            <label>Aimbot Lock Head (Extremo)</label>
             <label class="switch">
                 <input type="checkbox" id="aimbot">
                 <span class="slider"></span>
@@ -148,7 +152,7 @@
         </div>
 
         <div class="footer">
-            Developed by <strong>@rxzielg</strong>
+            Desarrollado por <strong>@rxzielg</strong>
         </div>
     </div>
 
@@ -157,33 +161,28 @@
             document.getElementById('aimRadiusValue').textContent = this.value;
         });
 
-        // Comandos directos al Bundle de Free Fire
+        // Nueva forma de ejecutar comandos directamente en Free Fire usando el esquema de URL de la app instalada
         function sendCommandToFreeFire(command) {
-            console.log(`Injecting: ${command}`);
-            window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
+            console.log(`Comando enviado: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
         }
 
-        // Activación de FreeStylerX
         document.getElementById('freestylerx').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_freestylerx ultra' : '/deactivate_freestylerx');
+            sendCommandToFreeFire(this.checked ? '/activate_freestylerx max_sensi' : '/deactivate_freestylerx');
         });
 
-        // Auto Aim Mejorado
         document.getElementById('autoAim').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_autoaim head_lock' : '/deactivate_autoaim');
+            sendCommandToFreeFire(this.checked ? '/activate_autoaim headshot_only' : '/deactivate_autoaim');
         });
 
-        // Aimbot con Bloqueo Total
         document.getElementById('aimbot').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aimbot headlock_max' : '/deactivate_aimbot');
+            sendCommandToFreeFire(this.checked ? '/activate_aimbot headlock_extreme' : '/deactivate_aimbot');
         });
 
-        // Sin Retroceso Total
         document.getElementById('norecoil').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_norecoil max' : '/deactivate_norecoil');
         });
 
-        // Control deslizante de Aim Radius
         document.getElementById('aimRadius').addEventListener('change', function () {
             sendCommandToFreeFire(`/set_aim_radius ${this.value}`);
         });
