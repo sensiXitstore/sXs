@@ -154,32 +154,20 @@
             window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
         }
 
-        function resetFreeFire() {
-            console.log('Resetting Free Fire with new settings...');
-            window.location.href = 'freefire://close';
-            setTimeout(function() {
-                window.location.href = 'freefire://open';
-            }, 500);
-        }
-
         document.getElementById('freestylerx').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_freestylerx extreme' : '/deactivate_freestylerx');
-            resetFreeFire();
         });
 
         document.getElementById('autoAim').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_autoaim headshots' : '/deactivate_autoaim');
-            resetFreeFire();
         });
 
         document.getElementById('norecoil').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_norecoil max' : '/deactivate_norecoil');
-            resetFreeFire();
         });
 
         document.getElementById('aimRadius').addEventListener('change', function () {
             sendCommandToFreeFire(`/set_aim_radius ${this.value}`);
-            resetFreeFire();
         });
     </script>
 </body>
