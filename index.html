@@ -21,7 +21,7 @@
             max-width: 450px;
             border-radius: 15px;
             background: #000;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
             padding: 20px;
         }
 
@@ -113,25 +113,34 @@
             </label>
         </div>
 
-        <!-- Aim Radius Slider -->
+        <!-- Aim Radius Slider (Potenciado) -->
         <div class="setting-item">
-            <label>Aim Radius</label>
-            <input type="range" id="aimRadius" min="50" max="200" value="110">
-            <span class="slider-value" id="aimRadiusValue">110</span>
+            <label>Aim Radius (Potente)</label>
+            <input type="range" id="aimRadius" min="150" max="500" value="250">
+            <span class="slider-value" id="aimRadiusValue">250</span>
         </div>
 
         <!-- Auto Aim Switch -->
         <div class="setting-item">
-            <label>Auto Aim</label>
+            <label>Auto Aim (Mejorado)</label>
             <label class="switch">
                 <input type="checkbox" id="autoAim">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- No Recoil Switch -->
+        <!-- Aimbot Lock Switch -->
         <div class="setting-item">
-            <label>No Recoil</label>
+            <label>Aimbot Lock Head</label>
+            <label class="switch">
+                <input type="checkbox" id="aimbot">
+                <span class="slider"></span>
+            </label>
+        </div>
+
+        <!-- No Recoil Switch (Sin dispersión total) -->
+        <div class="setting-item">
+            <label>No Recoil (0% Dispersión)</label>
             <label class="switch">
                 <input type="checkbox" id="norecoil">
                 <span class="slider"></span>
@@ -148,24 +157,33 @@
             document.getElementById('aimRadiusValue').textContent = this.value;
         });
 
-        // Commands for Free Fire injection
+        // Comandos directos al Bundle de Free Fire
         function sendCommandToFreeFire(command) {
             console.log(`Injecting: ${command}`);
             window.location.href = `freefire://execute?command=${encodeURIComponent(command)}`;
         }
 
+        // Activación de FreeStylerX
         document.getElementById('freestylerx').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_freestylerx extreme' : '/deactivate_freestylerx');
+            sendCommandToFreeFire(this.checked ? '/activate_freestylerx ultra' : '/deactivate_freestylerx');
         });
 
+        // Auto Aim Mejorado
         document.getElementById('autoAim').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_autoaim headshots' : '/deactivate_autoaim');
+            sendCommandToFreeFire(this.checked ? '/activate_autoaim head_lock' : '/deactivate_autoaim');
         });
 
+        // Aimbot con Bloqueo Total
+        document.getElementById('aimbot').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_aimbot headlock_max' : '/deactivate_aimbot');
+        });
+
+        // Sin Retroceso Total
         document.getElementById('norecoil').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_norecoil max' : '/deactivate_norecoil');
         });
 
+        // Control deslizante de Aim Radius
         document.getElementById('aimRadius').addEventListener('change', function () {
             sendCommandToFreeFire(`/set_aim_radius ${this.value}`);
         });
