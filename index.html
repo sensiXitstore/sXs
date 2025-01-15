@@ -161,7 +161,7 @@
             document.getElementById('aimRadiusValue').textContent = this.value;
         });
 
-        // Nueva forma de ejecutar comandos directamente en Free Fire usando el esquema de URL de la app instalada
+        // Ejecución directa en Free Fire 1.108.12 con el bundle ID actualizado
         function sendCommandToFreeFire(command) {
             console.log(`Comando enviado: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
