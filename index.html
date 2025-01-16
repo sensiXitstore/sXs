@@ -2,114 +2,125 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SensiX1T Ultra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SensiX1T</title>
+    <link rel="apple-touch-icon" href="https://example.com/icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="SensiX1T">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
     <style>
         body {
             margin: 0;
+            padding: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #333);
+            background: linear-gradient(145deg, #000000, #333333);
             color: white;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
-        .panel {
-            width: 90%;
-            max-width: 500px;
-            border-radius: 25px;
+        .app-container {
+            width: 95%;
+            max-width: 420px;
             background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border: 2px solid #fff;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+            border: 1px solid #fff;
         }
 
-        h2 {
+        h1 {
             text-align: center;
-            color: white;
             font-size: 2.5rem;
             text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #ffffff;
+            text-shadow: 0 0 20px white;
         }
 
         .setting-item {
-            margin-bottom: 25px;
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 15px;
+            background: #222;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         label {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 70px;
-            height: 35px;
+            width: 60px;
+            height: 30px;
         }
 
         .switch input {
-            display: none;
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
         .slider {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: gray;
-            border-radius: 35px;
+            background-color: grey;
+            border-radius: 30px;
             cursor: pointer;
-            transition: 0.4s;
+            width: 100%;
+            height: 100%;
         }
 
         .slider:before {
-            position: absolute;
             content: "";
-            height: 25px;
-            width: 25px;
-            left: 5px;
-            bottom: 5px;
-            background-color: white;
+            position: absolute;
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
             border-radius: 50%;
-            transition: 0.4s;
+            transition: 0.3s;
         }
 
         input:checked + .slider {
-            background-color: white;
+            background: #00ff00;
         }
 
         input:checked + .slider:before {
-            transform: translateX(35px);
-            background-color: black;
-        }
-
-        .slider-value {
-            font-size: 1.3rem;
-            margin-left: 10px;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: white;
+            transform: translateX(30px);
         }
 
         .footer {
+            margin-top: 20px;
             text-align: center;
-            padding-top: 20px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ccc;
         }
+
+        /* Scroll Lock para App Completa */
+        html, body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior: contain;
+            touch-action: manipulation;
+        }
+
     </style>
 </head>
 <body>
-    <div class="panel">
-        <h2>SensiX1T Ultra</h2>
+    <div class="app-container">
+        <h1>SensiX1T</h1>
 
-        <!-- Sensibilidad Extrema -->
+        <!-- FreeStylerX (Sensibilidad Ultra) -->
         <div class="setting-item">
             <label>FreeStylerX (Sensibilidad Ultra)</label>
             <label class="switch">
@@ -118,14 +129,14 @@
             </label>
         </div>
 
-        <!-- AIM Radius Potente -->
+        <!-- AIM Radius Extremo -->
         <div class="setting-item">
-            <label>AIM Radius (Hack Mode)</label>
+            <label>AIM Radius (Modo Hack)</label>
             <input type="range" id="aimRadius" min="1000" max="5000" value="3000">
             <span class="slider-value" id="aimRadiusValue">3000</span>
         </div>
 
-        <!-- Auto Aim Exagerado -->
+        <!-- Auto Aim (Exagerado) -->
         <div class="setting-item">
             <label>Auto Aim (Exagerado)</label>
             <label class="switch">
@@ -134,44 +145,18 @@
             </label>
         </div>
 
-        <!-- Aimbot Lock Extremo -->
+        <!-- No Recoil Total -->
         <div class="setting-item">
-            <label>Aimbot Lock Head (Máximo)</label>
-            <label class="switch">
-                <input type="checkbox" id="aimbot">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- No Recoil Extremo -->
-        <div class="setting-item">
-            <label>No Recoil (0% Dispersión)</label>
+            <label>No Recoil (Sin Dispersión)</label>
             <label class="switch">
                 <input type="checkbox" id="norecoil">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- AIM Assist Mejorado -->
-        <div class="setting-item">
-            <label>AIM Assist (Mejorado)</label>
-            <label class="switch">
-                <input type="checkbox" id="aimAssist">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Crosshair Lock en Cabeza -->
-        <div class="setting-item">
-            <label>Crosshair Lock (En Cabeza)</label>
-            <label class="switch">
-                <input type="checkbox" id="crosshairLock">
-                <span class="slider"></span>
-            </label>
-        </div>
-
+        <!-- Footer -->
         <div class="footer">
-            Desarrollado por <strong>@rxzielg</strong>
+            Desarrollado por <strong>@rxzielg | @sensiXiters</strong>
         </div>
     </div>
 
@@ -180,45 +165,25 @@
             document.getElementById('aimRadiusValue').textContent = this.value;
         });
 
-        // Función de ejecución directa a Free Fire
+        // Inyección de comandos en Free Fire con bundle diferente
         function sendCommandToFreeFire(command) {
-            console.log(`Ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
+            window.location.href = `freefirebundle123://execute?command=${encodeURIComponent(command)}`;
         }
 
-        // Sensibilidad Ultra Rápida
         document.getElementById('freestylerx').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_freestylerx extreme_sensi' : '/deactivate_freestylerx');
+            sendCommandToFreeFire(this.checked ? '/activate_freestylerx ultra' : '/deactivate_freestylerx');
         });
 
-        // AIM Radius Potente
+        document.getElementById('autoAim').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_autoaim max' : '/deactivate_autoaim');
+        });
+
+        document.getElementById('norecoil').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_norecoil max' : '/deactivate_norecoil');
+        });
+
         document.getElementById('aimRadius').addEventListener('change', function () {
             sendCommandToFreeFire(`/set_aim_radius ${this.value}`);
-        });
-
-        // Auto Aim Exagerado
-        document.getElementById('autoAim').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_autoaim extreme' : '/deactivate_autoaim');
-        });
-
-        // Aimbot Lock Head Máximo
-        document.getElementById('aimbot').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aimbot headlock_max' : '/deactivate_aimbot');
-        });
-
-        // No Recoil Total
-        document.getElementById('norecoil').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_norecoil extreme' : '/deactivate_norecoil');
-        });
-
-        // AIM Assist Mejorado
-        document.getElementById('aimAssist').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aim_assist max' : '/deactivate_aim_assist');
-        });
-
-        // Crosshair Lock en la Cabeza
-        document.getElementById('crosshairLock').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_crosshair_lock head' : '/deactivate_crosshair_lock');
         });
     </script>
 </body>
