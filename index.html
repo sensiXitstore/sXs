@@ -183,6 +183,7 @@
         // Función para inyectar comandos en Free Fire
         function injectCommandToFreeFire(command) {
             console.log(`Inyectando: ${command}`);
+            // Aquí intentamos simular la ejecución de un comando en Free Fire
             window.location.href = `freefire://bundle/com.dts.freefireth/inject?command=${encodeURIComponent(command)}`;
         }
 
