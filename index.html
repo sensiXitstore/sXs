@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000000, #333333);
+            background: linear-gradient(135deg, #000000, #111111);
             color: white;
             height: 100vh;
             display: flex;
@@ -18,18 +18,17 @@
 
         .panel {
             width: 90%;
-            max-width: 500px;
-            border-radius: 20px;
-            background: #111;
-            box-shadow: 0 0 40px rgba(255, 255, 255, 0.9);
-            padding: 25px;
-            border: 1px solid #444;
+            max-width: 450px;
+            border-radius: 15px;
+            background: #000;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.9);
+            padding: 20px;
         }
 
         h2 {
             text-align: center;
             color: white;
-            text-shadow: 0 0 20px #ffffff;
+            text-shadow: 0 0 15px #ffffff;
         }
 
         .setting-item {
@@ -60,7 +59,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: grey;
+            background-color: grey;
             border-radius: 30px;
             cursor: pointer;
             transition: 0.4s;
@@ -73,13 +72,13 @@
             width: 20px;
             left: 5px;
             bottom: 5px;
-            background: white;
+            background-color: white;
             border-radius: 50%;
             transition: 0.4s;
         }
 
         input:checked + .slider {
-            background: #00ff00;
+            background-color: #00ff00;
         }
 
         input:checked + .slider:before {
@@ -107,23 +106,23 @@
 
         <!-- FreeStylerX Sensitivity Switch -->
         <div class="setting-item">
-            <label>FreeStylerX | Ultra Sensitivity</label>
+            <label>FreeStylerX | Sensi</label>
             <label class="switch">
                 <input type="checkbox" id="freestylerx">
                 <span class="slider"></span>
             </label>
         </div>
 
-        <!-- AIM Radius Slider -->
+        <!-- Aim Radius Slider (Potenciado) -->
         <div class="setting-item">
-            <label>AIM Radius (Hack Mode)</label>
-            <input type="range" id="aimRadius" min="150" max="800" value="400">
-            <span class="slider-value" id="aimRadiusValue">400</span>
+            <label>Aim Radius (Hack)</label>
+            <input type="range" id="aimRadius" min="150" max="500" value="250">
+            <span class="slider-value" id="aimRadiusValue">250</span>
         </div>
 
         <!-- Auto Aim Switch -->
         <div class="setting-item">
-            <label>Auto Aim (Max Lock)</label>
+            <label>Auto Aim (Exagerado)</label>
             <label class="switch">
                 <input type="checkbox" id="autoAim">
                 <span class="slider"></span>
@@ -132,7 +131,7 @@
 
         <!-- Aimbot Lock Switch -->
         <div class="setting-item">
-            <label>Aimbot Lock Head (100% Headshots)</label>
+            <label>Aimbot Lock Head</label>
             <label class="switch">
                 <input type="checkbox" id="aimbot">
                 <span class="slider"></span>
@@ -141,7 +140,7 @@
 
         <!-- No Recoil Switch -->
         <div class="setting-item">
-            <label>No Recoil (0% Spread)</label>
+            <label>No Recoil (Sin dispersión)</label>
             <label class="switch">
                 <input type="checkbox" id="norecoil">
                 <span class="slider"></span>
@@ -154,43 +153,40 @@
     </div>
 
     <script>
-        document.getElementById('aimRadius').addEventListener('input', function () {
-            document.getElementById('aimRadiusValue').textContent = this.value;
-        });
-
-        // Activación Real de Funciones en el Sistema de Free Fire con freefire://
-        function executeFreeFireCommand(command) {
-            try {
-                window.location.href = `freefire://${command}`;
-            } catch (error) {
-                alert('Error conectando con el sistema de Free Fire.');
-            }
+        // Función para ejecutar comandos en Free Fire usando deep links
+        function executeCommandInFreeFire(command) {
+            const url = `freefire://execute?command=${command}`;
+            window.location.href = url;
         }
 
-        // FreeStylerX Sensitivity
+        // Comportamiento de la Sensi FreeStylerX
         document.getElementById('freestylerx').addEventListener('change', function () {
-            executeFreeFireCommand(this.checked ? 'inject_freestylerx_max' : 'remove_freestylerx');
+            executeCommandInFreeFire(this.checked ? 'inject_freestylerx_max' : 'remove_freestylerx');
         });
 
-        // Auto Aim
+        // Auto Aim Exagerado
         document.getElementById('autoAim').addEventListener('change', function () {
-            executeFreeFireCommand(this.checked ? 'inject_autoaim_max' : 'remove_autoaim');
+            executeCommandInFreeFire(this.checked ? 'inject_autoaim_max' : 'remove_autoaim');
         });
 
-        // Aimbot Lock Head
+        // Aimbot Lock a la Cabeza
         document.getElementById('aimbot').addEventListener('change', function () {
-            executeFreeFireCommand(this.checked ? 'inject_aimbot_headlock' : 'remove_aimbot');
+            executeCommandInFreeFire(this.checked ? 'inject_aimbot_headlock' : 'remove_aimbot');
         });
 
-        // No Recoil
+        // No Recoil (Sin dispersión)
         document.getElementById('norecoil').addEventListener('change', function () {
-            executeFreeFireCommand(this.checked ? 'inject_norecoil_max' : 'remove_norecoil');
+            executeCommandInFreeFire(this.checked ? 'inject_norecoil_max' : 'remove_norecoil');
         });
 
-        // AIM Radius
-        document.getElementById('aimRadius').addEventListener('change', function () {
-            executeFreeFireCommand(`set_aim_radius ${this.value}`);
+        // AIM Radius Potente
+        document.getElementById('aimRadius').addEventListener('input', function () {
+            document.getElementById('aimRadiusValue').textContent = this.value;
+            executeCommandInFreeFire(`set_aim_radius ${this.value}`);
         });
+
+        // Llamada inicial para configurar el AIM Radius
+        executeCommandInFreeFire("set_aim_radius 250");
     </script>
 </body>
 </html>
