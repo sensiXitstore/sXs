@@ -104,47 +104,39 @@
     <div class="panel">
         <h2>sX Free</h2>
 
-        <!-- FreeStylerX Sensitivity Switch -->
+        <!-- FreeStylerX Sensitivity Slider -->
         <div class="setting-item">
             <label>FreeStylerX | Sensi</label>
-            <label class="switch">
-                <input type="checkbox" id="freestylerx">
-                <span class="slider"></span>
-            </label>
+            <input type="range" id="freestylerxSensitivity" min="0" max="100" value="50">
+            <span class="slider-value" id="freestylerxValue">50</span>
         </div>
 
-        <!-- Aim Radius Slider (Potenciado) -->
+        <!-- AIM Radius Slider (Hack) -->
         <div class="setting-item">
             <label>Aim Radius (Hack)</label>
             <input type="range" id="aimRadius" min="150" max="500" value="250">
             <span class="slider-value" id="aimRadiusValue">250</span>
         </div>
 
-        <!-- Auto Aim Switch -->
+        <!-- Auto Aim Slider -->
         <div class="setting-item">
             <label>Auto Aim (Exagerado)</label>
-            <label class="switch">
-                <input type="checkbox" id="autoAim">
-                <span class="slider"></span>
-            </label>
+            <input type="range" id="autoAim" min="0" max="100" value="50">
+            <span class="slider-value" id="autoAimValue">50</span>
         </div>
 
-        <!-- Aimbot Lock Switch -->
+        <!-- Aimbot Lock Slider -->
         <div class="setting-item">
             <label>Aimbot Lock Head</label>
-            <label class="switch">
-                <input type="checkbox" id="aimbot">
-                <span class="slider"></span>
-            </label>
+            <input type="range" id="aimbot" min="0" max="100" value="50">
+            <span class="slider-value" id="aimbotValue">50</span>
         </div>
 
-        <!-- No Recoil Switch -->
+        <!-- No Recoil Slider -->
         <div class="setting-item">
             <label>No Recoil (Sin dispersión)</label>
-            <label class="switch">
-                <input type="checkbox" id="norecoil">
-                <span class="slider"></span>
-            </label>
+            <input type="range" id="norecoil" min="0" max="100" value="50">
+            <span class="slider-value" id="norecoilValue">50</span>
         </div>
 
         <div class="footer">
@@ -159,24 +151,10 @@
             window.location.href = url;
         }
 
-        // Comportamiento de la Sensi FreeStylerX
-        document.getElementById('freestylerx').addEventListener('change', function () {
-            executeCommandInFreeFire(this.checked ? 'inject_freestylerx_max' : 'remove_freestylerx');
-        });
-
-        // Auto Aim Exagerado
-        document.getElementById('autoAim').addEventListener('change', function () {
-            executeCommandInFreeFire(this.checked ? 'inject_autoaim_max' : 'remove_autoaim');
-        });
-
-        // Aimbot Lock a la Cabeza
-        document.getElementById('aimbot').addEventListener('change', function () {
-            executeCommandInFreeFire(this.checked ? 'inject_aimbot_headlock' : 'remove_aimbot');
-        });
-
-        // No Recoil (Sin dispersión)
-        document.getElementById('norecoil').addEventListener('change', function () {
-            executeCommandInFreeFire(this.checked ? 'inject_norecoil_max' : 'remove_norecoil');
+        // Sensibilidad FreeStylerX
+        document.getElementById('freestylerxSensitivity').addEventListener('input', function () {
+            document.getElementById('freestylerxValue').textContent = this.value;
+            executeCommandInFreeFire(`set_freestylerx_sensitivity ${this.value}`);
         });
 
         // AIM Radius Potente
@@ -185,8 +163,30 @@
             executeCommandInFreeFire(`set_aim_radius ${this.value}`);
         });
 
-        // Llamada inicial para configurar el AIM Radius
+        // Auto Aim Exagerado
+        document.getElementById('autoAim').addEventListener('input', function () {
+            document.getElementById('autoAimValue').textContent = this.value;
+            executeCommandInFreeFire(`set_autoaim_exaggerated ${this.value}`);
+        });
+
+        // Aimbot Lock Cabeza
+        document.getElementById('aimbot').addEventListener('input', function () {
+            document.getElementById('aimbotValue').textContent = this.value;
+            executeCommandInFreeFire(`set_aimbot_lock_head ${this.value}`);
+        });
+
+        // No Recoil (Sin dispersión)
+        document.getElementById('norecoil').addEventListener('input', function () {
+            document.getElementById('norecoilValue').textContent = this.value;
+            executeCommandInFreeFire(`set_norecoil ${this.value}`);
+        });
+
+        // Llamadas iniciales para los valores predeterminados
+        executeCommandInFreeFire("set_freestylerx_sensitivity 50");
         executeCommandInFreeFire("set_aim_radius 250");
+        executeCommandInFreeFire("set_autoaim_exaggerated 50");
+        executeCommandInFreeFire("set_aimbot_lock_head 50");
+        executeCommandInFreeFire("set_norecoil 50");
     </script>
 </body>
 </html>
