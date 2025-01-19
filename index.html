@@ -20,7 +20,7 @@
         .panel {
             width: 90%;
             max-width: 500px;
-            background: rgba(0, 0, 0, 0.85);
+            background: rgba(0, 0, 0, 0.6); /* Transparencia añadida */
             border-radius: 25px;
             padding: 30px;
             border: 2px solid #fff;
@@ -184,6 +184,17 @@
             </div>
         </div>
 
+        <!-- Aimbot -->
+        <div class="setting-item">
+            <label>Aimbot (Modo Hack)</label>
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="aimbot">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
         <!-- AIM Assist -->
         <div class="setting-item">
             <label>AIM Assist (Mejorado)</label>
@@ -223,29 +234,12 @@
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
         }
 
-        // Example event handlers
-        document.getElementById('freestylerx').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_freestylerx' : '/deactivate_freestylerx');
-        });
-
-        document.getElementById('autoAim').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_autoaim extreme' : '/deactivate_autoaim');
-        });
-
-        document.getElementById('crosshairLock').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_crosshairlock' : '/deactivate_crosshairlock');
-        });
-
-        document.getElementById('norecoil').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_norecoil' : '/deactivate_norecoil');
-        });
-
-        document.getElementById('aimAssist').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aimassist' : '/deactivate_aimassist');
-        });
-
-        document.getElementById('headtracking').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_headtracking' : '/deactivate_headtracking');
+        // Event handlers for each feature
+        document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+            input.addEventListener('change', function () {
+                const command = this.id.replace(/([A-Z])/g, "_$1").toLowerCase();
+                sendCommandToFreeFire(this.checked ? `/activate${command}` : `/deactivate${command}`);
+            });
         });
     </script>
 </body>
