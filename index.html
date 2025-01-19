@@ -20,7 +20,7 @@
         .panel {
             width: 90%;
             max-width: 500px;
-            background: rgba(0, 0, 0, 0.6); /* Transparencia del panel */
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 25px;
             padding: 30px;
             border: 2px solid rgba(255, 255, 255, 0.5);
@@ -142,12 +142,12 @@
             </div>
         </div>
 
-        <!-- AIM Radius (Potente) -->
+        <!-- AIM Radius -->
         <div class="setting-item">
-            <label>AIM Radius (Hack Potente)</label>
+            <label>AIM Radius (Hack Mode)</label>
             <div class="slider-container">
-                <input type="range" id="aimRadius" min="1000" max="10000" value="5000">
-                <span class="slider-value" id="aimRadiusValue">5000</span>
+                <input type="range" id="aimRadius" min="2000" max="7000" value="4000">
+                <span class="slider-value" id="aimRadiusValue">4000</span>
             </div>
         </div>
 
@@ -228,13 +228,13 @@
             document.getElementById('aimRadiusValue').textContent = this.value;
         });
 
-        // Functions to send commands to Free Fire
+        // Function to send commands to Free Fire using scheme
         function sendCommandToFreeFire(command) {
             console.log(`Ejecutando: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
         }
 
-        // Event handlers for functions
+        // Functions to handle activations
         document.getElementById('freestylerx').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_freestylerx' : '/deactivate_freestylerx');
         });
@@ -244,7 +244,7 @@
         });
 
         document.getElementById('aimbot').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aimbot extreme' : '/deactivate_aimbot');
+            sendCommandToFreeFire(this.checked ? '/activate_aimbot' : '/deactivate_aimbot');
         });
 
         document.getElementById('crosshairLock').addEventListener('change', function () {
@@ -261,6 +261,12 @@
 
         document.getElementById('headtracking').addEventListener('change', function () {
             sendCommandToFreeFire(this.checked ? '/activate_headtracking' : '/deactivate_headtracking');
+        });
+
+        // Ensure the AIM Radius activates properly in Free Fire
+        document.getElementById('aimRadius').addEventListener('input', function () {
+            const radius = this.value;
+            sendCommandToFreeFire(`/set_aimradius ${radius}`);
         });
     </script>
 </body>
