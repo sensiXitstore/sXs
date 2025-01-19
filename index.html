@@ -20,7 +20,7 @@
             position: relative;
         }
 
-        /* Fondo con bolitas */
+        /* Fondo animado */
         .background {
             position: absolute;
             top: 0;
@@ -28,357 +28,177 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            pointer-events: none;
         }
 
         .ball {
             position: absolute;
             width: 30px;
             height: 30px;
-            background-color: rgba(30, 144, 255, 0.8); /* Azul */
+            background-color: rgba(30, 144, 255, 0.8);
             border-radius: 50%;
-            animation: moveUp 2s infinite ease-in-out; /* Bolitas más rápidas */
+            animation: moveUp 2s infinite ease-in-out;
         }
 
         @keyframes moveUp {
-            0% {
-                transform: translateY(100vh);
-            }
-            100% {
-                transform: translateY(-10vh);
-            }
+            0% { transform: translateY(100vh); }
+            100% { transform: translateY(-10vh); }
         }
 
-        /* Panel de configuración */
-        .login-container {
+        /* Panel principal */
+        .login-container, .mod-menu-container {
             display: flex;
             flex-direction: column;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 50px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
             width: 350px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
             text-align: center;
             z-index: 1;
-            transition: all 0.3s;
-        }
-
-        .login-container h1 {
-            margin-bottom: 20px;
-            font-size: 3em;
-            color: #1e90ff;
-            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .login-container p {
-            margin-bottom: 40px;
-            font-size: 1.2em;
-            color: #bbb;
-            font-family: 'Montserrat', sans-serif;
         }
 
         .login-container input {
-            width: 90%;
-            padding: 12px;
-            margin-bottom: 20px;
+            margin: 10px 0;
+            padding: 10px;
             border: 2px solid #1e90ff;
             border-radius: 10px;
             outline: none;
-            font-size: 1em;
-            color: #333;
-            background-color: rgba(255, 255, 255, 0.1);
-            transition: border 0.3s;
-            font-family: 'Roboto', sans-serif;
         }
 
-        .login-container input:focus {
-            border-color: #1e90ff;
-        }
-
-        .login-container button {
-            background: linear-gradient(135deg, #1e90ff, #4682b4);
-            color: white;
+        .login-container button, .mod-menu-container button {
+            margin: 10px 0;
+            padding: 10px;
+            background: #1e90ff;
             border: none;
-            padding: 12px 25px;
+            color: white;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1.2em;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
         }
 
-        .login-container button:hover {
-            background: linear-gradient(135deg, #4682b4, #1e90ff);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        }
-
-        .mod-menu-container {
-            display: none;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            width: 80%;
-            max-width: 500px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            z-index: 1;
-            color: #fff;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .mod-menu-container h1 {
-            margin-bottom: 20px;
-            font-size: 3em;
-            color: #1e90ff;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-            font-family: 'Poppins', sans-serif;
-        }
-
+        /* Ajustes personalizados */
         .mod-menu-container label {
+            margin: 10px 0;
+            color: #ccc;
             display: flex;
             justify-content: space-between;
-            margin: 20px 0;
-            font-size: 1.5em;
-            color: #ccc;
-            font-family: 'Roboto', sans-serif;
         }
 
-        .toggle-switch {
-            display: inline-block;
-            width: 70px;
-            height: 35px;
-            background-color: #555;
-            border-radius: 35px;
-            position: relative;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .toggle-switch.active {
-            background-color: lime;
-        }
-
-        .toggle-switch span {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            width: 25px;
-            height: 25px;
-            background-color: white;
-            border-radius: 50%;
-            transition: all 0.3s;
-        }
-
-        .toggle-switch.active span {
-            left: 35px;
-        }
-
-        /* Estilos del control AIM Radius */
         .range-input {
             width: 100%;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 8px;
-            border-radius: 5px;
-            background: #555;
-            outline: none;
-            transition: background 0.3s;
-        }
-
-        .range-input:hover {
-            background: #1e90ff;
-        }
-
-        .range-input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #1e90ff;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        footer {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: #bbb;
-            font-size: 0.9em;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        footer a {
-            color: #1e90ff;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        footer a:hover {
-            color: #4682b4;
+            margin-top: 10px;
         }
     </style>
     <script>
-        // Configuración de la Aimbot
-        const aimbot = {
-            enabled: false,
-            autoAim: true,
-            aimlock: true,
-            noRecoil: true,
-            autoShoot: true,
-            infiniteFOV: true,
-            headshotOnly: true,
-            trackingSpeed: 0.005,
-            aimPriority: 'head',
-            maxTargets: 10,
-            lockStrength: 10,
-            aimRadius: 50 // Ajuste del AIM Radius
+        // Configuración inicial
+        const config = {
+            aimbot: {
+                enabled: false,
+                aimFOV: 100,
+                aimRadius: 50
+            },
+            bypass: {
+                enabled: false
+            }
         };
 
         // Verificación de login
         function verifyLogin() {
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
             if (username === "TOP" && password === "1") {
                 document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.mod-menu-container').style.display = 'flex';
+                document.querySelector('.mod-menu-container').style.display = 'block';
             } else {
                 alert("Usuario o contraseña incorrectos.");
             }
         }
 
-        // Activar o desactivar Aimbot
+        // Activar/desactivar Aimbot
         function toggleAimbot() {
-            aimbot.enabled = !aimbot.enabled;
-            const toggleSwitch = document.getElementById('aimbot-toggle');
-            if (aimbot.enabled) {
-                toggleSwitch.classList.add('active');
-                activateAimbot();
-            } else {
-                toggleSwitch.classList.remove('active');
-                deactivateAimbot();
-            }
-        }
-
-        // Activar Aimbot
-        function activateAimbot() {
-            console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
+            config.aimbot.enabled = !config.aimbot.enabled;
+            const status = config.aimbot.enabled ? "Activado" : "Desactivado";
+            console.log(`Aimbot ${status}`);
             injectAimbot();
-            autoAimLogic();
         }
 
-        // Desactivar Aimbot
-        function deactivateAimbot() {
-            console.log("Aimbot desactivado.");
-            injectNoAimbot();
+        // Activar/desactivar Bypass
+        function toggleBypass() {
+            config.bypass.enabled = !config.bypass.enabled;
+            const status = config.bypass.enabled ? "Activado" : "Desactivado";
+            console.log(`Bypass ${status}`);
+            injectBypass();
+        }
+
+        // Ajustar AimFOV
+        function adjustAimFOV(value) {
+            config.aimbot.aimFOV = value;
+            console.log(`AimFOV ajustado a: ${value}`);
+        }
+
+        // Ajustar AimRadius
+        function adjustAimRadius(value) {
+            config.aimbot.aimRadius = value;
+            console.log(`AimRadius ajustado a: ${value}`);
         }
 
         // Inyección del Aimbot
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimRadius=${aimbot.aimRadius}`;
+            const injectionURL = `freefire://inject?aimbot=${config.aimbot.enabled}&aimFOV=${config.aimbot.aimFOV}&aimRadius=${config.aimbot.aimRadius}`;
             window.location.href = injectionURL;
-            console.log("Aimbot inyectado en Free Fire.");
         }
 
-        // Inyección para desactivar el Aimbot
-        function injectNoAimbot() {
-            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+        // Inyección del Bypass
+        function injectBypass() {
+            const injectionURL = `freefire://injectBypass?enabled=${config.bypass.enabled}`;
             window.location.href = injectionURL;
-            console.log("Aimbot desactivado en Free Fire.");
         }
 
-        // Lógica de auto-aim
-        function autoAimLogic() {
-            setInterval(() => {
-                if (aimbot.enabled) {
-                    const targets = detectEnemies();
-                    if (targets.length > 0) {
-                        const bestTarget = prioritizeTargets(targets);
-                        if (bestTarget) {
-                            aimAtTarget(bestTarget);
-                            if (aimbot.autoShoot) {
-                                shoot(bestTarget);
-                            }
-                        }
-                    }
-                }
-            }, 10); // Detección más rápida
-        }
-
-        // Detectar enemigos (simulado)
-        function detectEnemies() {
-            const enemies = [];
-            for (let i = 0; i < aimbot.maxTargets; i++) {
-                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
-            }
-            return enemies;
-        }
-
-        // Priorizar los enemigos más cercanos
-        function prioritizeTargets(enemies) {
-            return enemies.sort((a, b) => a.distance - b.distance)[0];
-        }
-
-        // Apuntar al enemigo
-        function aimAtTarget(target) {
-            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}) con un AIM Radius de ${aimbot.aimRadius}.`);
-        }
-
-        // Disparar al enemigo
-        function shoot(target) {
-            console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
-        }
-
-        // Ajustar AIM Radius
-        function adjustAimRadius(value) {
-            aimbot.aimRadius = value;
-            console.log(`AIM Radius ajustado a ${value}`);
+        // Abrir Free Fire
+        function openFreeFire() {
+            const injectionURL = `freefire://launch`;
+            window.location.href = injectionURL;
         }
     </script>
 </head>
 <body>
-    <div class="background">
-        <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
-        <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
-        <div class="ball" style="left: 30%; animation-duration: 1.8s;"></div>
-        <div class="ball" style="left: 40%; animation-duration: 2.2s;"></div>
-        <div class="ball" style="left: 50%; animation-duration: 1.7s;"></div>
-        <div class="ball" style="left: 60%; animation-duration: 2.3s;"></div>
-        <div class="ball" style="left: 70%; animation-duration: 1.6s;"></div>
-        <div class="ball" style="left: 80%; animation-duration: 2.1s;"></div>
-        <div class="ball" style="left: 90%; animation-duration: 2.4s;"></div>
-    </div>
+    <!-- Fondo animado -->
+    <div class="background"></div>
 
     <!-- Login -->
     <div class="login-container">
-        <h1>sX Free</h1>
-        <p>MOD MENU</p>
-        <input type="text" id="username" placeholder="Usuario">
-        <input type="password" id="password" placeholder="Contraseña">
+        <h2>sX Free</h2>
+        <input id="username" type="text" placeholder="Usuario">
+        <input id="password" type="password" placeholder="Contraseña">
         <button onclick="verifyLogin()">Iniciar sesión</button>
     </div>
 
     <!-- Mod Menu -->
-    <div class="mod-menu-container">
-        <h1>Mod Menu</h1>
-        <label for="aimbot-toggle">Aimbot: 
-            <div id="aimbot-toggle" class="toggle-switch" onclick="toggleAimbot()">
-                <span></span>
-            </div>
+    <div class="mod-menu-container" style="display: none;">
+        <h2>Mod Menu</h2>
+
+        <!-- Botón para abrir Free Fire -->
+        <button onclick="openFreeFire()">Abrir Free Fire</button>
+
+        <!-- Aimbot -->
+        <label>
+            Aimbot:
+            <button onclick="toggleAimbot()">Toggle</button>
+        </label>
+        <label>
+            Aim FOV:
+            <input type="range" class="range-input" min="0" max="360" value="100" onchange="adjustAimFOV(this.value)">
+        </label>
+        <label>
+            Aim Radius:
+            <input type="range" class="range-input" min="0" max="100" value="50" onchange="adjustAimRadius(this.value)">
         </label>
 
-        <label for="aim-radius">AIM Radius: 
-            <input type="range" id="aim-radius" class="range-input" min="0" max="100" value="50" step="1" onchange="adjustAimRadius(this.value)">
+        <!-- Bypass -->
+        <label>
+            Bypass:
+            <button onclick="toggleBypass()">Toggle</button>
         </label>
-        <footer>
-            Creado por <a href="https://www.youtube.com/@rxzielg" target="_blank">@rxzielg</a>
-        </footer>
     </div>
 </body>
 </html>
