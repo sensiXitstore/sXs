@@ -20,185 +20,182 @@
             position: relative;
         }
 
-        /* Fondo animado */
-        .background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-        }
-
-        .ball {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: rgba(30, 144, 255, 0.8);
-            border-radius: 50%;
-            animation: moveUp 2s infinite ease-in-out;
-        }
-
-        @keyframes moveUp {
-            0% { transform: translateY(100vh); }
-            100% { transform: translateY(-10vh); }
-        }
-
-        /* Panel principal */
-        .login-container, .mod-menu-container {
+        .mod-menu-container {
             display: flex;
             flex-direction: column;
             background: rgba(0, 0, 0, 0.9);
-            padding: 30px;
+            padding: 40px;
             border-radius: 20px;
-            width: 350px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
-            text-align: center;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
             z-index: 1;
+            color: #fff;
+            text-align: center;
         }
 
-        .login-container input {
-            margin: 10px 0;
-            padding: 10px;
-            border: 2px solid #1e90ff;
-            border-radius: 10px;
-            outline: none;
+        .mod-menu-container h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: #1e90ff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            font-family: 'Poppins', sans-serif;
         }
 
-        .login-container button, .mod-menu-container button {
-            margin: 10px 0;
-            padding: 10px;
-            background: #1e90ff;
-            border: none;
-            color: white;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        /* Ajustes personalizados */
-        .mod-menu-container label {
-            margin: 10px 0;
+        label {
+            font-size: 1.5em;
             color: #ccc;
-            display: flex;
-            justify-content: space-between;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .range-container, .toggle-container {
+            text-align: left;
+            margin-top: 20px;
         }
 
         .range-input {
             width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #555;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .range-input:hover {
+            background: #1e90ff;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #1e90ff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .range-value {
+            font-size: 1.2em;
+            color: #1e90ff;
             margin-top: 10px;
+        }
+
+        button {
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #4682b4, #1e90ff);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        .toggle-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #333;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .toggle-button.active {
+            background: #1e90ff;
+            color: white;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9em;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #4682b4;
         }
     </style>
     <script>
-        // Configuración inicial
         const config = {
-            aimbot: {
-                enabled: false,
-                aimFOV: 100,
-                aimRadius: 50
-            },
-            bypass: {
-                enabled: false
-            }
+            aimRadius: 0,
+            headTracking: false
         };
 
-        // Verificación de login
-        function verifyLogin() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            if (username === "TOP" && password === "1") {
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.mod-menu-container').style.display = 'block';
-            } else {
-                alert("Usuario o contraseña incorrectos.");
-            }
-        }
-
-        // Activar/desactivar Aimbot
-        function toggleAimbot() {
-            config.aimbot.enabled = !config.aimbot.enabled;
-            const status = config.aimbot.enabled ? "Activado" : "Desactivado";
-            console.log(`Aimbot ${status}`);
-            injectAimbot();
-        }
-
-        // Activar/desactivar Bypass
-        function toggleBypass() {
-            config.bypass.enabled = !config.bypass.enabled;
-            const status = config.bypass.enabled ? "Activado" : "Desactivado";
-            console.log(`Bypass ${status}`);
-            injectBypass();
-        }
-
-        // Ajustar AimFOV
-        function adjustAimFOV(value) {
-            config.aimbot.aimFOV = value;
-            console.log(`AimFOV ajustado a: ${value}`);
-        }
-
-        // Ajustar AimRadius
+        // Ajustar AIM Radius
         function adjustAimRadius(value) {
-            config.aimbot.aimRadius = value;
-            console.log(`AimRadius ajustado a: ${value}`);
-        }
-
-        // Inyección del Aimbot
-        function injectAimbot() {
-            const injectionURL = `freefire://inject?aimbot=${config.aimbot.enabled}&aimFOV=${config.aimbot.aimFOV}&aimRadius=${config.aimbot.aimRadius}`;
+            config.aimRadius = value;
+            document.getElementById("aim-radius-value").textContent = `${value}`;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${value}`;
             window.location.href = injectionURL;
         }
 
-        // Inyección del Bypass
-        function injectBypass() {
-            const injectionURL = `freefire://injectBypass?enabled=${config.bypass.enabled}`;
-            window.location.href = injectionURL;
-        }
+        // Activar/Desactivar Headtracking
+        function toggleHeadtracking() {
+            config.headTracking = !config.headTracking;
+            const button = document.getElementById("headtracking-toggle");
+            button.classList.toggle("active");
 
-        // Abrir Free Fire
-        function openFreeFire() {
-            const injectionURL = `freefire://launch`;
+            const status = config.headTracking ? "activado" : "desactivado";
+            console.log(`Headtracking ${status}`);
+
+            // Ejecutar lógica de seguimiento en Free Fire
+            const injectionURL = `freefire://injectHeadtracking?bundle=com.dts.freefireth&status=${config.headTracking}`;
             window.location.href = injectionURL;
         }
     </script>
 </head>
 <body>
-    <!-- Fondo animado -->
-    <div class="background"></div>
-
-    <!-- Login -->
-    <div class="login-container">
-        <h2>sX Free</h2>
-        <input id="username" type="text" placeholder="Usuario">
-        <input id="password" type="password" placeholder="Contraseña">
-        <button onclick="verifyLogin()">Iniciar sesión</button>
-    </div>
-
-    <!-- Mod Menu -->
-    <div class="mod-menu-container" style="display: none;">
-        <h2>Mod Menu</h2>
-
-        <!-- Botón para abrir Free Fire -->
-        <button onclick="openFreeFire()">Abrir Free Fire</button>
-
-        <!-- Aimbot -->
-        <label>
-            Aimbot:
-            <button onclick="toggleAimbot()">Toggle</button>
+    <div class="mod-menu-container">
+        <h1>sX Free</h1>
+        <label for="aim-radius">
+            AIM Radius:
         </label>
-        <label>
-            Aim FOV:
-            <input type="range" class="range-input" min="0" max="360" value="100" onchange="adjustAimFOV(this.value)">
-        </label>
-        <label>
-            Aim Radius:
-            <input type="range" class="range-input" min="0" max="100" value="50" onchange="adjustAimRadius(this.value)">
-        </label>
-
-        <!-- Bypass -->
-        <label>
-            Bypass:
-            <button onclick="toggleBypass()">Toggle</button>
-        </label>
+        <div class="range-container">
+            <input 
+                type="range" 
+                id="aim-radius" 
+                class="range-input" 
+                min="0" 
+                max="200" 
+                value="0" 
+                step="1" 
+                oninput="adjustAimRadius(this.value)">
+            <div class="range-value">AIM Radius: <span id="aim-radius-value">0</span></div>
+        </div>
+        <div class="toggle-container">
+            <div id="headtracking-toggle" class="toggle-button" onclick="toggleHeadtracking()">
+                Activar Headtracking
+            </div>
+        </div>
+        <footer>
+            Creado por <a href="https://www.youtube.com/@rxzielg" target="_blank">@rxzielg</a>
+        </footer>
     </div>
 </body>
 </html>
