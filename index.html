@@ -15,9 +15,8 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            overflow: hidden;
             background: #121212;
-            position: relative;
+            color: #fff;
         }
 
         .mod-menu-container {
@@ -26,30 +25,26 @@
             background: rgba(0, 0, 0, 0.9);
             padding: 40px;
             border-radius: 20px;
-            width: 80%;
+            width: 90%;
             max-width: 500px;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
-            z-index: 1;
-            color: #fff;
             text-align: center;
         }
 
-        .mod-menu-container h1 {
+        h1 {
             margin-bottom: 20px;
-            font-size: 3em;
+            font-size: 2.5em;
             color: #1e90ff;
             text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
-            font-family: 'Poppins', sans-serif;
         }
 
         label {
-            font-size: 1.5em;
+            font-size: 1.3em;
             color: #ccc;
-            font-family: 'Roboto', sans-serif;
+            margin-top: 10px;
         }
 
-        .range-container, .toggle-container {
-            text-align: left;
+        .range-container {
             margin-top: 20px;
         }
 
@@ -84,61 +79,44 @@
             margin-top: 10px;
         }
 
-        button {
-            background: linear-gradient(135deg, #1e90ff, #4682b4);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.2em;
-            margin-top: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: all 0.3s;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        button:hover {
-            background: linear-gradient(135deg, #4682b4, #1e90ff);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
-        }
-
         .toggle-button {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             background: #333;
-            padding: 10px 20px;
+            padding: 12px 20px;
             border-radius: 10px;
             font-size: 1.2em;
             cursor: pointer;
-            margin-top: 10px;
+            text-align: center;
+            margin-top: 20px;
         }
 
         .toggle-button.active {
             background: #1e90ff;
-            color: white;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            color: #fff;
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #4682b4, #1e90ff);
         }
 
         footer {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: #bbb;
-            font-size: 0.9em;
-            font-family: 'Montserrat', sans-serif;
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #aaa;
         }
 
         footer a {
             color: #1e90ff;
             text-decoration: none;
-            transition: color 0.3s;
-        }
-
-        footer a:hover {
-            color: #4682b4;
         }
     </style>
     <script>
@@ -147,24 +125,30 @@
             headTracking: false
         };
 
-        // Ajustar AIM Radius
-        function adjustAimRadius(value) {
+        // Cambiar AIM Radius pero no activar aún
+        function updateAimRadius(value) {
             config.aimRadius = value;
-            document.getElementById("aim-radius-value").textContent = `${value}`;
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${value}`;
+            document.getElementById("aim-radius-value").textContent = value;
+        }
+
+        // Activar AIM Radius al terminar el ajuste
+        function finalizeAimRadius() {
+            const aimRadius = config.aimRadius;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${aimRadius}`;
+            console.log(`AIM Radius ajustado a ${aimRadius}`);
             window.location.href = injectionURL;
         }
 
-        // Activar/Desactivar Headtracking
+        // Activar/desactivar Headtracking
         function toggleHeadtracking() {
             config.headTracking = !config.headTracking;
-            const button = document.getElementById("headtracking-toggle");
-            button.classList.toggle("active");
+            const toggleButton = document.getElementById("headtracking-toggle");
+            toggleButton.classList.toggle("active");
 
             const status = config.headTracking ? "activado" : "desactivado";
             console.log(`Headtracking ${status}`);
 
-            // Ejecutar lógica de seguimiento en Free Fire
+            // Enviar comando para activar/desactivar
             const injectionURL = `freefire://injectHeadtracking?bundle=com.dts.freefireth&status=${config.headTracking}`;
             window.location.href = injectionURL;
         }
@@ -173,26 +157,30 @@
 <body>
     <div class="mod-menu-container">
         <h1>sX Free</h1>
-        <label for="aim-radius">
-            AIM Radius:
-        </label>
+
+        <!-- AIM Radius -->
+        <label for="aim-radius">AIM Radius:</label>
         <div class="range-container">
             <input 
                 type="range" 
                 id="aim-radius" 
                 class="range-input" 
                 min="0" 
-                max="200" 
+                max="1000" 
                 value="0" 
                 step="1" 
-                oninput="adjustAimRadius(this.value)">
-            <div class="range-value">AIM Radius: <span id="aim-radius-value">0</span></div>
-        </div>
-        <div class="toggle-container">
-            <div id="headtracking-toggle" class="toggle-button" onclick="toggleHeadtracking()">
-                Activar Headtracking
+                oninput="updateAimRadius(this.value)" 
+                onmouseup="finalizeAimRadius()">
+            <div class="range-value">
+                AIM Radius: <span id="aim-radius-value">0</span>
             </div>
         </div>
+
+        <!-- Headtracking -->
+        <div id="headtracking-toggle" class="toggle-button" onclick="toggleHeadtracking()">
+            Activar Headtracking
+        </div>
+
         <footer>
             Creado por <a href="https://www.youtube.com/@rxzielg" target="_blank">@rxzielg</a>
         </footer>
