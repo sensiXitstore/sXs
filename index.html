@@ -20,10 +20,10 @@
         .panel {
             width: 90%;
             max-width: 500px;
-            background: rgba(0, 0, 0, 0.6); /* Transparencia añadida */
+            background: rgba(0, 0, 0, 0.6); /* Transparencia del panel */
             border-radius: 25px;
             padding: 30px;
-            border: 2px solid #fff;
+            border: 2px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
         }
 
@@ -162,6 +162,17 @@
             </div>
         </div>
 
+        <!-- Aimbot -->
+        <div class="setting-item">
+            <label>Aimbot (Hack Mode)</label>
+            <div class="switch-container">
+                <label class="switch">
+                    <input type="checkbox" id="aimbot">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
         <!-- Crosshair Lock (Head Lock) -->
         <div class="setting-item">
             <label>Crosshair Lock (Head Lock)</label>
@@ -179,17 +190,6 @@
             <div class="switch-container">
                 <label class="switch">
                     <input type="checkbox" id="norecoil">
-                    <span class="slider"></span>
-                </label>
-            </div>
-        </div>
-
-        <!-- Aimbot -->
-        <div class="setting-item">
-            <label>Aimbot (Modo Hack)</label>
-            <div class="switch-container">
-                <label class="switch">
-                    <input type="checkbox" id="aimbot">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -234,12 +234,33 @@
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
         }
 
-        // Event handlers for each feature
-        document.querySelectorAll('input[type="checkbox"]').forEach(input => {
-            input.addEventListener('change', function () {
-                const command = this.id.replace(/([A-Z])/g, "_$1").toLowerCase();
-                sendCommandToFreeFire(this.checked ? `/activate${command}` : `/deactivate${command}`);
-            });
+        // Event handlers for functions
+        document.getElementById('freestylerx').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_freestylerx' : '/deactivate_freestylerx');
+        });
+
+        document.getElementById('autoAim').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_autoaim' : '/deactivate_autoaim');
+        });
+
+        document.getElementById('aimbot').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_aimbot extreme' : '/deactivate_aimbot');
+        });
+
+        document.getElementById('crosshairLock').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_crosshairlock' : '/deactivate_crosshairlock');
+        });
+
+        document.getElementById('norecoil').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_norecoil' : '/deactivate_norecoil');
+        });
+
+        document.getElementById('aimAssist').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_aimassist' : '/deactivate_aimassist');
+        });
+
+        document.getElementById('headtracking').addEventListener('change', function () {
+            sendCommandToFreeFire(this.checked ? '/activate_headtracking' : '/deactivate_headtracking');
         });
     </script>
 </body>
