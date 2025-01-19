@@ -3,237 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX</title>
+    <title>sX MOD MENU</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* Estilos generales */
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #333);
-            color: white;
-            height: 100vh;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-        }
-
-        .panel {
-            width: 90%;
-            max-width: 500px;
-            border-radius: 25px;
-            background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-            padding: 30px;
-            border: 2px solid #fff;
-        }
-
-        h2 {
-            text-align: center;
-            color: white;
-            font-size: 2.5rem;
-            text-transform: uppercase;
-        }
-
-        .setting-item {
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        label {
-            font-size: 1.4rem;
-        }
-
-        .switch {
+            height: 100vh;
+            overflow: hidden;
+            background: #121212;
             position: relative;
-            display: inline-block;
-            width: 70px;
-            height: 35px;
         }
 
-        .switch input {
-            display: none;
-        }
-
-        .slider {
+        /* Fondo con bolitas */
+        .background {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: gray;
-            border-radius: 35px;
-            cursor: pointer;
-            transition: 0.4s;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .slider:before {
+        .ball {
             position: absolute;
-            content: "";
-            height: 25px;
-            width: 25px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(30, 144, 255, 0.8); /* Azul */
+            border-radius: 50%;
+            animation: moveUp 2s infinite ease-in-out; /* Bolitas más rápidas */
+        }
+
+        @keyframes moveUp {
+            0% {
+                transform: translateY(100vh);
+            }
+            100% {
+                transform: translateY(-10vh);
+            }
+        }
+
+        /* Login Container */
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.8);
+            width: 350px;
+            text-align: center;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+
+        .login-container h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: #1e90ff; /* Azul */
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-container p {
+            margin-bottom: 40px;
+            font-size: 1.2em;
+            color: #bbb;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .login-container input {
+            width: 90%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 2px solid #1e90ff; /* Azul */
+            border-radius: 10px;
+            outline: none;
+            font-size: 1em;
+            color: #333;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: border 0.3s;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .login-container input:focus {
+            border-color: #1e90ff;
+        }
+
+        .login-container button {
+            background: linear-gradient(135deg, #1e90ff, #4682b4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .login-container button:hover {
+            background: linear-gradient(135deg, #4682b4, #1e90ff);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Mod Menu Styling */
+        .mod-menu-container {
+            display: none;
+            flex-direction: column;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            z-index: 1;
+            color: #fff;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .mod-menu-container h1 {
+            margin-bottom: 20px;
+            font-size: 3em;
+            color: #1e90ff;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .mod-menu-container label {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            font-size: 1.5em;
+            color: #ccc;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .toggle-switch {
+            display: inline-block;
+            width: 70px;
+            height: 35px;
+            background-color: #555;
+            border-radius: 35px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .toggle-switch.active {
+            background-color: lime;
+        }
+
+        .toggle-switch span {
+            position: absolute;
+            top: 5px;
             left: 5px;
-            bottom: 5px;
+            width: 25px;
+            height: 25px;
             background-color: white;
             border-radius: 50%;
-            transition: 0.4s;
+            transition: all 0.3s;
         }
 
-        input:checked + .slider {
-            background-color: white;
+        .toggle-switch.active span {
+            left: 35px;
         }
 
-        input:checked + .slider:before {
-            transform: translateX(35px);
-            background-color: black;
-        }
-
-        .slider-value {
-            font-size: 1.3rem;
-            margin-left: 10px;
-        }
-
-        input[type="range"] {
+        /* Footer Styling */
+        footer {
+            position: absolute;
+            bottom: 10px;
             width: 100%;
-            accent-color: white;
+            text-align: center;
+            color: #bbb;
+            font-size: 0.9em;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        .footer {
-            text-align: center;
-            padding-top: 20px;
-            font-size: 1.2rem;
+        footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #4682b4;
         }
     </style>
-</head>
-<body>
-    <div class="panel">
-        <h2>sX</h2>
-
-        <!-- Sensibilidad Extrema -->
-        <div class="setting-item">
-            <label>FreeStylerX (Sensibilidad Ultra)</label>
-            <label class="switch">
-                <input type="checkbox" id="freestylerx">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- AIM Radius Potente (Hack Modo) -->
-        <div class="setting-item">
-            <label>AIM Radius (Hack Mode)</label>
-            <input type="range" id="aimRadius" min="3000" max="10000" value="5000">
-            <span class="slider-value" id="aimRadiusValue">5000</span>
-        </div>
-
-        <!-- Auto Aim Exagerado -->
-        <div class="setting-item">
-            <label>Auto Aim (Exagerado)</label>
-            <label class="switch">
-                <input type="checkbox" id="autoAim">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Aimbot Lock Extremo -->
-        <div class="setting-item">
-            <label>Aimbot Lock Head (Máximo)</label>
-            <label class="switch">
-                <input type="checkbox" id="aimbot">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- No Recoil Extremo -->
-        <div class="setting-item">
-            <label>No Recoil (0% Dispersión)</label>
-            <label class="switch">
-                <input type="checkbox" id="norecoil">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- AIM Assist Mejorado -->
-        <div class="setting-item">
-            <label>AIM Assist (Mejorado)</label>
-            <label class="switch">
-                <input type="checkbox" id="aimAssist">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Crosshair Lock en Cabeza -->
-        <div class="setting-item">
-            <label>Crosshair Lock (En Cabeza)</label>
-            <label class="switch">
-                <input type="checkbox" id="crosshairLock">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <!-- Bypass de Free Fire -->
-        <div class="setting-item">
-            <label>Bypass Free Fire</label>
-            <label class="switch">
-                <input type="checkbox" id="bypassFreeFire">
-                <span class="slider"></span>
-            </label>
-        </div>
-
-        <div class="footer">
-            Desarrollado por <strong>@sensiXiters</strong>
-        </div>
-    </div>
-
     <script>
-        document.getElementById('aimRadius').addEventListener('input', function () {
-            document.getElementById('aimRadiusValue').textContent = this.value;
-        });
+        // Configuración del Aimbot
+        const aimbot = {
+            enabled: false,
+            autoAim: true,
+            aimlock: true,
+            noRecoil: true,
+            autoShoot: true,
+            infiniteFOV: true,
+            headshotOnly: true,
+            trackingSpeed: 0.005, // Aumentado para más control sobre la cabeza
+            aimPriority: 'head', // Apuntar siempre a la cabeza
+            maxTargets: 10, // Detección de múltiples enemigos
+            lockStrength: 10, // Mayor "pegajosidad" para bloquear la cabeza
+        };
 
-        // Función de ejecución directa a Free Fire
-        function sendCommandToFreeFire(command) {
-            console.log(`Ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${encodeURIComponent(command)}`;
+        // Verificación de login
+        function verifyLogin() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "sX" && password === "1") {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.mod-menu-container').style.display = 'flex';
+            } else {
+                alert("Usuario o contraseña incorrectos.");
+            }
         }
 
-        // Sensibilidad Ultra Rápida
-        document.getElementById('freestylerx').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_freestylerx extreme_sensi' : '/deactivate_freestylerx');
-        });
+        function toggleAimbot() {
+            aimbot.enabled = !aimbot.enabled;
+            const toggleSwitch = document.getElementById('aimbot-toggle');
+            if (aimbot.enabled) {
+                toggleSwitch.classList.add('active');
+                activateAimbot();
+            } else {
+                toggleSwitch.classList.remove('active');
+                deactivateAimbot();
+            }
+        }
 
-        // AIM Radius Potente (Hack)
-        document.getElementById('aimRadius').addEventListener('change', function () {
-            sendCommandToFreeFire(`/set_aim_radius ${this.value}`);
-        });
+        function activateAimbot() {
+            console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
+            injectAimbot();
+            autoAimLogic();
+        }
 
-        // Auto Aim Exagerado
-        document.getElementById('autoAim').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_autoaim extreme' : '/deactivate_autoaim');
-        });
+        function deactivateAimbot() {
+            console.log("Aimbot desactivado.");
+            injectNoAimbot();
+        }
 
-        // Aimbot Lock Head Máximo
-        document.getElementById('aimbot').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aimbot headlock_max' : '/deactivate_aimbot');
-        });
+        function injectAimbot() {
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}`;
+            window.location.href = injectionURL;
+            console.log("Aimbot inyectado en Free Fire.");
+        }
 
-        // No Recoil Total
-        document.getElementById('norecoil').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_norecoil extreme' : '/deactivate_norecoil');
-        });
+        function injectNoAimbot() {
+            const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
+            window.location.href = injectionURL;
+            console.log("Aimbot desactivado en Free Fire.");
+        }
 
-        // AIM Assist Mejorado
-        document.getElementById('aimAssist').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_aim_assist max' : '/deactivate_aim_assist');
-        });
+        function autoAimLogic() {
+            setInterval(() => {
+                if (aimbot.enabled) {
+                    const targets = detectEnemies();
+                    if (targets.length > 0) {
+                        const bestTarget = prioritizeTargets(targets);
+                        if (bestTarget) {
+                            aimAtTarget(bestTarget);
+                            if (aimbot.autoShoot) {
+                                shoot(bestTarget);
+                            }
+                        }
+                    }
+                }
+            }, 10); // Detección y disparo más rápidos
+        }
 
-        // Crosshair Lock en la Cabeza
-        document.getElementById('crosshairLock').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_crosshair_lock head' : '/deactivate_crosshair_lock');
-        });
+        function detectEnemies() {
+            const enemies = [];
+            for (let i = 0; i < aimbot.maxTargets; i++) {
+                enemies.push({ x: Math.random() * 100, y: Math.random() * 100, distance: Math.random() * 100 });
+            }
+            return enemies;
+        }
 
-        // Bypass Free Fire
-        document.getElementById('bypassFreeFire').addEventListener('change', function () {
-            sendCommandToFreeFire(this.checked ? '/activate_bypass' : '/deactivate_bypass');
-        });
+        function prioritizeTargets(enemies) {
+            return enemies.sort((a, b) => a.distance - b.distance)[0];
+        }
+
+        function aimAtTarget(target) {
+            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
+        }
+
+        function shoot(target) {
+            console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
+        }
     </script>
+</head>
+<body>
+    <div class="background">
+        <div class="ball" style="left: 10%; animation-duration: 1.5s;"></div>
+        <div class="ball" style="left: 20%; animation-duration: 2s;"></div>
+        <div class="ball" style="left: 30%; animation-duration: 1.8s;"></div>
+        <div class="ball" style="left: 40%; animation-duration: 2.2s;"></div>
+        <div class="ball" style="left: 50%; animation-duration: 1.7s;"></div>
+        <div class="ball" style="left: 60%; animation-duration: 2.3s;"></div>
+        <div class="ball" style="left: 70%; animation-duration: 1.6s;"></div>
+        <div class="ball" style="left: 80%; animation-duration: 2.1s;"></div>
+        <div class="ball" style="left: 90%; animation-duration: 2.4s;"></div>
+    </div>
+
+    <!-- Login -->
+    <div class="login-container">
+        <h1>sX</h1>
+        <p>MOD MENU</p>
+        <input type="text" id="username" placeholder="Usuario">
+        <input type="password" id="password" placeholder="Contraseña">
+        <button onclick="verifyLogin()">Iniciar sesión</button>
+    </div>
+
+    <!-- Mod Menu -->
+    <div class="mod-menu-container">
+        <h1>sX</h1>
+        <p>MOD MENU</p>
+        <label>
+            Aimbot:
+            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+                <span></span>
+            </div>
+        </label>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 sX. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
+    </footer>
 </body>
 </html>
