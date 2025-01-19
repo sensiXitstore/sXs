@@ -177,6 +177,32 @@
             left: 35px;
         }
 
+        /* Estilos del control AIM Radius */
+        .range-input {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 5px;
+            background: #555;
+            outline: none;
+            transition: background 0.3s;
+        }
+
+        .range-input:hover {
+            background: #1e90ff;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            background: #1e90ff;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
         footer {
             position: absolute;
             bottom: 10px;
@@ -211,6 +237,7 @@
             aimPriority: 'head',
             maxTargets: 10,
             lockStrength: 10,
+            aimRadius: 50 // Ajuste del AIM Radius
         };
 
         // Verificación de login
@@ -254,7 +281,7 @@
 
         // Inyección del Aimbot
         function injectAimbot() {
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}`;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}&aimRadius=${aimbot.aimRadius}`;
             window.location.href = injectionURL;
             console.log("Aimbot inyectado en Free Fire.");
         }
@@ -300,12 +327,18 @@
 
         // Apuntar al enemigo
         function aimAtTarget(target) {
-            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
+            console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}) con un AIM Radius de ${aimbot.aimRadius}.`);
         }
 
         // Disparar al enemigo
         function shoot(target) {
             console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
+        }
+
+        // Ajustar AIM Radius
+        function adjustAimRadius(value) {
+            aimbot.aimRadius = value;
+            console.log(`AIM Radius ajustado a ${value}`);
         }
     </script>
 </head>
@@ -333,19 +366,19 @@
 
     <!-- Mod Menu -->
     <div class="mod-menu-container">
-        <h1>sX Free</h1>
-        <p>MOD MENU</p>
-        <label>
-            Aimbot:
-            <div class="toggle-switch" id="aimbot-toggle" onclick="toggleAimbot()">
+        <h1>Mod Menu</h1>
+        <label for="aimbot-toggle">Aimbot: 
+            <div id="aimbot-toggle" class="toggle-switch" onclick="toggleAimbot()">
                 <span></span>
             </div>
         </label>
-    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 @sensiXiters. Todos los derechos reservados.</p>
-    </footer>
+        <label for="aim-radius">AIM Radius: 
+            <input type="range" id="aim-radius" class="range-input" min="0" max="100" value="50" step="1" onchange="adjustAimRadius(this.value)">
+        </label>
+        <footer>
+            Creado por <a href="https://www.youtube.com/@rxzielg" target="_blank">@rxzielg</a>
+        </footer>
+    </div>
 </body>
 </html>
