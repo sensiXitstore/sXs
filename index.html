@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX MOD MENU</title>
+    <title>sX Free</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* Estilos generales */
@@ -49,7 +49,7 @@
             }
         }
 
-        /* Login Container */
+        /* Panel de configuración */
         .login-container {
             display: flex;
             flex-direction: column;
@@ -66,7 +66,7 @@
         .login-container h1 {
             margin-bottom: 20px;
             font-size: 3em;
-            color: #1e90ff; /* Azul */
+            color: #1e90ff;
             text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
             font-family: 'Poppins', sans-serif;
         }
@@ -82,7 +82,7 @@
             width: 90%;
             padding: 12px;
             margin-bottom: 20px;
-            border: 2px solid #1e90ff; /* Azul */
+            border: 2px solid #1e90ff;
             border-radius: 10px;
             outline: none;
             font-size: 1em;
@@ -115,7 +115,6 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
         }
 
-        /* Mod Menu Styling */
         .mod-menu-container {
             display: none;
             flex-direction: column;
@@ -178,7 +177,6 @@
             left: 35px;
         }
 
-        /* Footer Styling */
         footer {
             position: absolute;
             bottom: 10px;
@@ -200,7 +198,7 @@
         }
     </style>
     <script>
-        // Configuración del Aimbot
+        // Configuración de la Aimbot
         const aimbot = {
             enabled: false,
             autoAim: true,
@@ -209,10 +207,10 @@
             autoShoot: true,
             infiniteFOV: true,
             headshotOnly: true,
-            trackingSpeed: 0.005, // Aumentado para más control sobre la cabeza
-            aimPriority: 'head', // Apuntar siempre a la cabeza
-            maxTargets: 10, // Detección de múltiples enemigos
-            lockStrength: 10, // Mayor "pegajosidad" para bloquear la cabeza
+            trackingSpeed: 0.005,
+            aimPriority: 'head',
+            maxTargets: 10,
+            lockStrength: 10,
         };
 
         // Verificación de login
@@ -220,7 +218,7 @@
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
 
-            if (username === "sX" && password === "1") {
+            if (username === "TOP" && password === "1") {
                 document.querySelector('.login-container').style.display = 'none';
                 document.querySelector('.mod-menu-container').style.display = 'flex';
             } else {
@@ -228,6 +226,7 @@
             }
         }
 
+        // Activar o desactivar Aimbot
         function toggleAimbot() {
             aimbot.enabled = !aimbot.enabled;
             const toggleSwitch = document.getElementById('aimbot-toggle');
@@ -240,29 +239,34 @@
             }
         }
 
+        // Activar Aimbot
         function activateAimbot() {
             console.log("Aimbot activado: Auto Aim + AimLock + Recoil Off + Auto Shoot + FOV infinito.");
             injectAimbot();
             autoAimLogic();
         }
 
+        // Desactivar Aimbot
         function deactivateAimbot() {
             console.log("Aimbot desactivado.");
             injectNoAimbot();
         }
 
+        // Inyección del Aimbot
         function injectAimbot() {
             const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&autoAim=true&aimlock=true&noRecoil=true&autoShoot=true&infiniteFOV=true&headshotOnly=true&lockStrength=${aimbot.lockStrength}`;
             window.location.href = injectionURL;
             console.log("Aimbot inyectado en Free Fire.");
         }
 
+        // Inyección para desactivar el Aimbot
         function injectNoAimbot() {
             const injectionURL = `freefire://disableAimbot?bundle=com.dts.freefireth`;
             window.location.href = injectionURL;
             console.log("Aimbot desactivado en Free Fire.");
         }
 
+        // Lógica de auto-aim
         function autoAimLogic() {
             setInterval(() => {
                 if (aimbot.enabled) {
@@ -277,9 +281,10 @@
                         }
                     }
                 }
-            }, 10); // Detección y disparo más rápidos
+            }, 10); // Detección más rápida
         }
 
+        // Detectar enemigos (simulado)
         function detectEnemies() {
             const enemies = [];
             for (let i = 0; i < aimbot.maxTargets; i++) {
@@ -288,14 +293,17 @@
             return enemies;
         }
 
+        // Priorizar los enemigos más cercanos
         function prioritizeTargets(enemies) {
             return enemies.sort((a, b) => a.distance - b.distance)[0];
         }
 
+        // Apuntar al enemigo
         function aimAtTarget(target) {
             console.log(`Apuntando automáticamente a la cabeza del enemigo en (${target.x}, ${target.y}).`);
         }
 
+        // Disparar al enemigo
         function shoot(target) {
             console.log(`Disparo automático al enemigo en (${target.x}, ${target.y}).`);
         }
@@ -316,7 +324,7 @@
 
     <!-- Login -->
     <div class="login-container">
-        <h1>sX</h1>
+        <h1>sX Free</h1>
         <p>MOD MENU</p>
         <input type="text" id="username" placeholder="Usuario">
         <input type="password" id="password" placeholder="Contraseña">
@@ -325,7 +333,7 @@
 
     <!-- Mod Menu -->
     <div class="mod-menu-container">
-        <h1>sX</h1>
+        <h1>sX Free</h1>
         <p>MOD MENU</p>
         <label>
             Aimbot:
@@ -337,7 +345,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 sX. Todos los derechos reservados. <a href="#">Política de privacidad</a></p>
+        <p>&copy; 2025 @sensiXiters. Todos los derechos reservados.</p>
     </footer>
 </body>
 </html>
