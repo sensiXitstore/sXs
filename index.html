@@ -125,18 +125,18 @@
             headTracking: false
         };
 
-        // Cambiar AIM Radius pero no activar aún
+        // Actualiza el valor del AIM Radius sin activar
         function updateAimRadius(value) {
             config.aimRadius = value;
             document.getElementById("aim-radius-value").textContent = value;
         }
 
-        // Activar AIM Radius al terminar el ajuste
+        // Activar AIM Radius y abrir el juego al levantar el dedo
         function finalizeAimRadius() {
             const aimRadius = config.aimRadius;
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${aimRadius}`;
             console.log(`AIM Radius ajustado a ${aimRadius}`);
-            window.location.href = injectionURL;
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${aimRadius}`;
+            window.location.href = injectionURL; // Abre el juego
         }
 
         // Activar/desactivar Headtracking
@@ -150,7 +150,7 @@
 
             // Enviar comando para activar/desactivar
             const injectionURL = `freefire://injectHeadtracking?bundle=com.dts.freefireth&status=${config.headTracking}`;
-            window.location.href = injectionURL;
+            window.location.href = injectionURL; // Abre el juego
         }
     </script>
 </head>
@@ -166,7 +166,7 @@
                 id="aim-radius" 
                 class="range-input" 
                 min="0" 
-                max="1000" 
+                max="2000" 
                 value="0" 
                 step="1" 
                 oninput="updateAimRadius(this.value)" 
