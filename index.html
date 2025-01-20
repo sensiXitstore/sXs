@@ -65,6 +65,50 @@
             font-size: 1.2rem;
             color: #1e90ff;
         }
+
+        .switch {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .switch input {
+            display: none;
+        }
+
+        .switch-label {
+            font-size: 1.2rem;
+        }
+
+        .toggle {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background: gray;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .toggle:before {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.3s;
+        }
+
+        .toggle.active {
+            background: #1e90ff;
+        }
+
+        .toggle.active:before {
+            transform: translateX(25px);
+        }
     </style>
 </head>
 <body>
@@ -85,6 +129,24 @@
                 onchange="openGameWithAimRadius(this.value)">
             <div class="value-display" id="aimRadiusValue">AIM Radius: 3000</div>
         </div>
+
+        <!-- Headtracking -->
+        <div class="switch">
+            <span class="switch-label">Headtracking</span>
+            <div class="toggle" id="headtrackingToggle" onclick="toggleHeadtracking(this)"></div>
+        </div>
+
+        <!-- Auto Aim -->
+        <div class="switch">
+            <span class="switch-label">Auto Aim</span>
+            <div class="toggle" id="autoAimToggle" onclick="toggleAutoAim(this)"></div>
+        </div>
+
+        <!-- Aimbot Lock -->
+        <div class="switch">
+            <span class="switch-label">Aimbot Lock (Head)</span>
+            <div class="toggle" id="aimbotToggle" onclick="toggleAimbot(this)"></div>
+        </div>
     </div>
 
     <script>
@@ -96,8 +158,31 @@
         // Ejecutar el comando para abrir el juego con el AIM Radius ajustado
         function openGameWithAimRadius(value) {
             console.log(`AIM Radius ajustado a: ${value}`);
-            // Lógica para abrir el juego con el valor ajustado
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=/set_aim_radius_${value}`;
+        }
+
+        // Toggle para Headtracking
+        function toggleHeadtracking(element) {
+            const isActive = element.classList.toggle('active');
+            const command = isActive ? '/activate_headtracking' : '/deactivate_headtracking';
+            console.log(`Headtracking ${isActive ? 'activado' : 'desactivado'}`);
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${command}`;
+        }
+
+        // Toggle para Auto Aim
+        function toggleAutoAim(element) {
+            const isActive = element.classList.toggle('active');
+            const command = isActive ? '/activate_autoaim' : '/deactivate_autoaim';
+            console.log(`Auto Aim ${isActive ? 'activado' : 'desactivado'}`);
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${command}`;
+        }
+
+        // Toggle para Aimbot Lock
+        function toggleAimbot(element) {
+            const isActive = element.classList.toggle('active');
+            const command = isActive ? '/activate_aimbot_lock' : '/deactivate_aimbot_lock';
+            console.log(`Aimbot Lock ${isActive ? 'activado' : 'desactivado'}`);
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${command}`;
         }
     </script>
 </body>
