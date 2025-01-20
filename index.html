@@ -3,146 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Free</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
+    <title>sX Free - AIM Radius</title>
     <style>
-        /* Estilos generales */
         body {
             margin: 0;
-            padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #000, #333);
+            color: white;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background: #121212;
-            color: #fff;
         }
 
-        .mod-menu-container {
-            background: rgba(0, 0, 0, 0.9);
-            padding: 40px;
-            border-radius: 20px;
+        .panel {
             width: 90%;
             max-width: 500px;
-            text-align: center;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
+            border-radius: 25px;
+            background: #111;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border: 2px solid #fff;
         }
 
-        h1 {
-            margin-bottom: 20px;
-            font-size: 2.5em;
-            color: #1e90ff;
+        h2 {
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .setting-item {
+            margin: 20px 0;
         }
 
         label {
-            font-size: 1.3em;
-            margin-top: 10px;
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
         }
 
-        .range-container {
-            margin-top: 20px;
-        }
-
-        .range-input {
+        input[type="range"] {
             width: 100%;
-            appearance: none;
             height: 8px;
-            border-radius: 5px;
             background: #555;
+            border-radius: 5px;
+            appearance: none;
             outline: none;
             cursor: pointer;
         }
 
-        .range-input::-webkit-slider-thumb {
-            width: 25px;
-            height: 25px;
-            background: #1e90ff;
+        input[type="range"]::-webkit-slider-thumb {
+            width: 20px;
+            height: 20px;
+            background: white;
             border-radius: 50%;
-        }
-
-        .range-value {
-            margin-top: 10px;
-            font-size: 1.2em;
-            color: #1e90ff;
-        }
-
-        .toggle-button {
-            background: #333;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-size: 1.2em;
             cursor: pointer;
-            margin-top: 20px;
         }
 
-        .toggle-button.active {
-            background: #1e90ff;
+        .value-display {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #1e90ff;
         }
     </style>
     <script>
-        const config = {
-            aimRadius: 0,
-            headTracking: false
-        };
-
-        // Actualiza el valor del AIM Radius
         function updateAimRadius(value) {
-            config.aimRadius = value;
-            document.getElementById("aim-radius-value").textContent = value;
+            document.getElementById('aimRadiusValue').textContent = `AIM Radius: ${value}`;
         }
 
-        // Activar AIM Radius y abrir Free Fire
-        function finalizeAimRadius() {
-            const aimRadius = config.aimRadius;
+        function finalizeAimRadius(value) {
+            console.log(`AIM Radius ajustado a: ${value}`);
 
-            console.log(`AIM Radius ajustado a: ${aimRadius}`);
-
-            // Redirección al juego con el valor del AIM Radius
-            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${aimRadius}`;
-            window.location.href = injectionURL; // Abre el juego inmediatamente
-        }
-
-        // Activar/desactivar Headtracking
-        function toggleHeadtracking() {
-            config.headTracking = !config.headTracking;
-            const toggleButton = document.getElementById("headtracking-toggle");
-            toggleButton.classList.toggle("active");
-
-            const status = config.headTracking ? "activado" : "desactivado";
-            console.log(`Headtracking ${status}`);
-
-            // Abrir el juego con el estado de Headtracking
-            const injectionURL = `freefire://injectHeadtracking?bundle=com.dts.freefireth&status=${config.headTracking}`;
-            window.location.href = injectionURL; // Redirección al juego
+            // Comando para abrir Free Fire con el AIM Radius ajustado
+            const command = `freefire://bundle/com.dts.freefireth/execute?aim_radius=${value}`;
+            window.location.href = command; // Redirigir al juego con el valor actualizado
         }
     </script>
 </head>
 <body>
-    <div class="mod-menu-container">
-        <h1>sX Free</h1>
+    <div class="panel">
+        <h2>sX Free - AIM Radius</h2>
 
         <!-- AIM Radius -->
-        <label for="aim-radius">AIM Radius:</label>
-        <div class="range-container">
+        <div class="setting-item">
+            <label for="aimRadius">AIM Radius (Máx 5000):</label>
             <input 
                 type="range" 
-                id="aim-radius" 
-                class="range-input" 
-                min="0" 
-                max="2000" 
-                value="0" 
-                step="1" 
+                id="aimRadius" 
+                min="1000" 
+                max="5000" 
+                step="50" 
+                value="3000" 
                 oninput="updateAimRadius(this.value)" 
-                onmouseup="finalizeAimRadius()"> <!-- Llama al juego al ajustar -->
-            <div class="range-value">
-                AIM Radius: <span id="aim-radius-value">0</span>
-            </div>
-        </div>
-
-        <!-- Headtracking -->
-        <div id="headtracking-toggle" class="toggle-button" onclick="toggleHeadtracking()">
-            Activar Headtracking
+                onmouseup="finalizeAimRadius(this.value)">
+            <div class="value-display" id="aimRadiusValue">AIM Radius: 3000</div>
         </div>
     </div>
 </body>
