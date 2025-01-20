@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sX Free</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&family=Poppins:wght@400;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* Estilos generales */
         body {
@@ -20,27 +20,23 @@
         }
 
         .mod-menu-container {
-            display: flex;
-            flex-direction: column;
             background: rgba(0, 0, 0, 0.9);
             padding: 40px;
             border-radius: 20px;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
             text-align: center;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.6);
         }
 
         h1 {
             margin-bottom: 20px;
             font-size: 2.5em;
             color: #1e90ff;
-            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
         }
 
         label {
             font-size: 1.3em;
-            color: #ccc;
             margin-top: 10px;
         }
 
@@ -50,33 +46,25 @@
 
         .range-input {
             width: 100%;
-            -webkit-appearance: none;
             appearance: none;
             height: 8px;
             border-radius: 5px;
             background: #555;
             outline: none;
-            transition: background 0.3s;
-        }
-
-        .range-input:hover {
-            background: #1e90ff;
+            cursor: pointer;
         }
 
         .range-input::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
             width: 25px;
             height: 25px;
             background: #1e90ff;
             border-radius: 50%;
-            cursor: pointer;
         }
 
         .range-value {
+            margin-top: 10px;
             font-size: 1.2em;
             color: #1e90ff;
-            margin-top: 10px;
         }
 
         .toggle-button {
@@ -85,38 +73,11 @@
             border-radius: 10px;
             font-size: 1.2em;
             cursor: pointer;
-            text-align: center;
             margin-top: 20px;
         }
 
         .toggle-button.active {
             background: #1e90ff;
-        }
-
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.2em;
-            color: #fff;
-            background: linear-gradient(135deg, #1e90ff, #4682b4);
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: linear-gradient(135deg, #4682b4, #1e90ff);
-        }
-
-        footer {
-            margin-top: 20px;
-            font-size: 0.8em;
-            color: #aaa;
-        }
-
-        footer a {
-            color: #1e90ff;
-            text-decoration: none;
         }
     </style>
     <script>
@@ -131,17 +92,15 @@
             document.getElementById("aim-radius-value").textContent = value;
         }
 
-        // Activar AIM Radius y abrir el juego al levantar el dedo
+        // Activar AIM Radius y abrir Free Fire
         function finalizeAimRadius() {
             const aimRadius = config.aimRadius;
 
-            console.log(`AIM Radius ajustado a ${aimRadius}`);
-            
-            // Abrir Free Fire con el comando modificado
-            setTimeout(() => {
-                const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${aimRadius}`;
-                window.location.href = injectionURL;
-            }, 300); // Retraso para garantizar que la acción se complete
+            console.log(`AIM Radius ajustado a: ${aimRadius}`);
+
+            // Redirección al juego con el valor del AIM Radius
+            const injectionURL = `freefire://injectAimbot?bundle=com.dts.freefireth&aimRadius=${aimRadius}`;
+            window.location.href = injectionURL; // Abre el juego inmediatamente
         }
 
         // Activar/desactivar Headtracking
@@ -153,9 +112,9 @@
             const status = config.headTracking ? "activado" : "desactivado";
             console.log(`Headtracking ${status}`);
 
-            // Enviar comando para activar/desactivar
+            // Abrir el juego con el estado de Headtracking
             const injectionURL = `freefire://injectHeadtracking?bundle=com.dts.freefireth&status=${config.headTracking}`;
-            window.location.href = injectionURL; // Abre el juego
+            window.location.href = injectionURL; // Redirección al juego
         }
     </script>
 </head>
@@ -175,7 +134,7 @@
                 value="0" 
                 step="1" 
                 oninput="updateAimRadius(this.value)" 
-                onmouseup="finalizeAimRadius()">
+                onmouseup="finalizeAimRadius()"> <!-- Llama al juego al ajustar -->
             <div class="range-value">
                 AIM Radius: <span id="aim-radius-value">0</span>
             </div>
@@ -185,10 +144,6 @@
         <div id="headtracking-toggle" class="toggle-button" onclick="toggleHeadtracking()">
             Activar Headtracking
         </div>
-
-        <footer>
-            Creado por <a href="https://www.youtube.com/@rxzielg" target="_blank">@rxzielg</a>
-        </footer>
     </div>
 </body>
 </html>
