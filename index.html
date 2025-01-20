@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Free - AIM Radius</title>
+    <title>SensiX1T Ultra</title>
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #000, #333);
             color: white;
             height: 100vh;
@@ -66,23 +66,10 @@
             color: #1e90ff;
         }
     </style>
-    <script>
-        function updateAimRadius(value) {
-            document.getElementById('aimRadiusValue').textContent = `AIM Radius: ${value}`;
-        }
-
-        function finalizeAimRadius(value) {
-            console.log(`AIM Radius ajustado a: ${value}`);
-
-            // Comando para abrir Free Fire con el AIM Radius ajustado
-            const command = `freefire://bundle/com.dts.freefireth/execute?aim_radius=${value}`;
-            window.location.href = command; // Redirigir al juego con el valor actualizado
-        }
-    </script>
 </head>
 <body>
     <div class="panel">
-        <h2>sX Free - AIM Radius</h2>
+        <h2>SensiX1T Ultra</h2>
 
         <!-- AIM Radius -->
         <div class="setting-item">
@@ -95,9 +82,23 @@
                 step="50" 
                 value="3000" 
                 oninput="updateAimRadius(this.value)" 
-                onmouseup="finalizeAimRadius(this.value)">
+                onchange="openGameWithAimRadius(this.value)">
             <div class="value-display" id="aimRadiusValue">AIM Radius: 3000</div>
         </div>
     </div>
+
+    <script>
+        // Actualizar el valor visual del AIM Radius
+        function updateAimRadius(value) {
+            document.getElementById('aimRadiusValue').textContent = `AIM Radius: ${value}`;
+        }
+
+        // Ejecutar el comando para abrir el juego con el AIM Radius ajustado
+        function openGameWithAimRadius(value) {
+            console.log(`AIM Radius ajustado a: ${value}`);
+            // Lógica para abrir el juego con el valor ajustado
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=/set_aim_radius_${value}`;
+        }
+    </script>
 </body>
 </html>
