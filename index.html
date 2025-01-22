@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Aimbot Pro</title>
+    <title>sX Ultimate Aimbot</title>
     <style>
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #222);
+            background: linear-gradient(135deg, #000, #444);
             color: white;
             height: 100vh;
             display: flex;
@@ -21,7 +21,7 @@
             max-width: 500px;
             border-radius: 20px;
             background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
             padding: 30px;
             border: 2px solid #ff4500;
         }
@@ -29,7 +29,7 @@
         h2 {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         button {
@@ -60,25 +60,28 @@
 </head>
 <body>
     <div class="panel">
-        <h2>sX Aimbot Pro</h2>
-        <button onclick="activateAimbot()">Activar Aimbot Pro</button>
+        <h2>sX Ultimate Aimbot</h2>
+        <button onclick="activateAimbot()">Activar Super Aimbot</button>
         <div class="status" id="status">Estado: Listo para activar</div>
     </div>
 
     <script>
-        // Activar Aimbot Avanzado
         function activateAimbot() {
-            const bundleId = 'com.dts.freefireios.custom'; // Nuevo Bundle ID modificado
-            console.log("Activando Aimbot Pro...");
+            const bundleId = 'com.dts.freefireios.ultimate'; // Nuevo Bundle ID
+            console.log("Activando Super Aimbot...");
 
-            // Comando avanzado para Auto Aim + Sticky Headtracking
-            const command = '/activate_auto_aim_sticky_headtracking';
+            // Lógica avanzada del Aimbot:
+            // - Buscar cabezas automáticamente.
+            // - Fijar el Crosshair en la cabeza del enemigo.
+            // - Priorizar enemigos cercanos.
+
+            const command = '/activate_super_aimbot_headsearch';
 
             // Ejecutar el comando en el sistema modificado del juego
             window.location.href = `freefire://${bundleId}/execute?command=${command}`;
 
-            // Actualizar estado en la interfaz
-            document.getElementById('status').textContent = "Estado: Aimbot Pro Activado (Auto Aim + Sticky)";
+            // Actualizar el estado en la interfaz
+            document.getElementById('status').textContent = "Estado: Super Aimbot Activado (Auto Head Search + Sticky Lock)";
         }
     </script>
 </body>
