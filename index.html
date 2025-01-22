@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Panel</title>
+    <title>sX Ultra Headtracking</title>
     <style>
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: radial-gradient(circle, #000, #222);
+            background: linear-gradient(135deg, #000, #222);
             color: white;
             height: 100vh;
             display: flex;
@@ -64,41 +64,49 @@
 </head>
 <body>
     <div class="panel">
-        <h2>sX Panel</h2>
+        <h2>sX Ultra Headtracking</h2>
+
+        <!-- Activar Headtracking -->
         <div class="setting-item">
-            <button onclick="createCacheFolder()">Crear Nuevo Caché</button>
-            <div class="value-display" id="cacheStatus">Estado: Sin Crear</div>
+            <button onclick="activateHeadtracking()">Activar Headtracking</button>
+            <div class="value-display" id="headtrackingStatus">Estado: Inactivo</div>
         </div>
 
+        <!-- Lógica de Auto Aim -->
         <div class="setting-item">
-            <button onclick="copyFreeFireApp()">Copiar freefireth.app</button>
-            <div class="value-display" id="copyStatus">Estado: No Copiado</div>
+            <button onclick="activateAutoAim()">Activar Auto Aim (Cabeza)</button>
+            <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
         </div>
 
+        <!-- Lanzar Juego Modificado -->
         <div class="setting-item">
-            <button onclick="launchCustomGame()">Lanzar Versión Modificada</button>
+            <button onclick="launchModifiedGame()">Lanzar Juego Modificado</button>
         </div>
     </div>
 
     <script>
-        function createCacheFolder() {
-            const cacheFolder = '/cache/sX_cache';
-            console.log(`Creando nuevo folder de caché en: ${cacheFolder}`);
-            document.getElementById('cacheStatus').textContent = "Estado: Caché Creado";
-            
-            // Aquí deberías implementar comandos específicos del sistema para crear el folder real.
+        // Lógica de Headtracking
+        function activateHeadtracking() {
+            const command = '/activate_headtracking';
+            console.log("Headtracking activado para rastrear la cabeza automáticamente.");
+            document.getElementById('headtrackingStatus').textContent = "Estado: Activo";
+
+            // Ejecutar el comando dentro del sistema del juego modificado
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
 
-        function copyFreeFireApp() {
-            const sourceApp = '/Applications/freefireth.app';
-            const targetApp = '/Applications/com.dts.freefireios.custom';
-            console.log(`Copiando contenido de ${sourceApp} a ${targetApp}`);
-            document.getElementById('copyStatus').textContent = "Estado: Copiado";
-            
-            // Simulación: Deberías usar comandos para copiar el directorio en un entorno real.
+        // Lógica de Auto Aim
+        function activateAutoAim() {
+            const command = '/activate_autoaim_head';
+            console.log("Auto Aim activado para fijar automáticamente la cabeza del enemigo.");
+            document.getElementById('autoAimStatus').textContent = "Estado: Activo";
+
+            // Ejecutar el comando dentro del sistema del juego modificado
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
 
-        function launchCustomGame() {
+        // Lanzar el juego modificado
+        function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
