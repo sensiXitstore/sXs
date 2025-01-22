@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Ultra Headtracking</title>
+    <title>sX Ultra Aimbot</title>
     <style>
         body {
             margin: 0;
@@ -64,52 +64,35 @@
 </head>
 <body>
     <div class="panel">
-        <h2>sX Ultra Headtracking</h2>
+        <h2>sX Ultra Aimbot</h2>
 
-        <!-- Activar Headtracking -->
-        <div class="setting-item">
-            <button onclick="activateHeadtracking()">Activar Headtracking</button>
-            <div class="value-display" id="headtrackingStatus">Estado: Inactivo</div>
-        </div>
-
-        <!-- Lógica de Auto Aim -->
-        <div class="setting-item">
-            <button onclick="activateAutoAim()">Activar Auto Aim (Cabeza)</button>
-            <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
-        </div>
-
-        <!-- Lanzar Juego Modificado -->
+        <!-- Activar Juego Modificado -->
         <div class="setting-item">
             <button onclick="launchModifiedGame()">Lanzar Juego Modificado</button>
+            <div class="value-display" id="gameStatus">Estado: Listo</div>
         </div>
     </div>
 
     <script>
-        // Lógica de Headtracking
-        function activateHeadtracking() {
-            const command = '/activate_headtracking';
-            console.log("Headtracking activado para rastrear la cabeza automáticamente.");
-            document.getElementById('headtrackingStatus').textContent = "Estado: Activo";
-
-            // Ejecutar el comando dentro del sistema del juego modificado
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-        }
-
-        // Lógica de Auto Aim
-        function activateAutoAim() {
-            const command = '/activate_autoaim_head';
-            console.log("Auto Aim activado para fijar automáticamente la cabeza del enemigo.");
-            document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-
-            // Ejecutar el comando dentro del sistema del juego modificado
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-        }
-
-        // Lanzar el juego modificado
+        // Lanzar el juego modificado con Aimbot preconfigurado
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
-            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
-            window.location.href = `freefire://${bundleId}/execute`;
+            console.log("Lanzando juego modificado con Aimbot, Headtracking y Auto Aim activados.");
+
+            // Comandos integrados:
+            const commands = [
+                '/activate_headtracking', // Lógica para seguimiento de cabeza
+                '/activate_autoaim_head', // Auto Aim para disparar a la cabeza
+                '/activate_aimbot_lock'   // Aimbot para mejorar precisión automática
+            ];
+
+            // Ejecutar cada comando dentro del sistema del juego
+            commands.forEach(command => {
+                window.location.href = `freefire://${bundleId}/execute?command=${command}`;
+            });
+
+            // Actualizar estado
+            document.getElementById('gameStatus').textContent = "Estado: Juego Modificado Activado";
         }
     </script>
 </body>
