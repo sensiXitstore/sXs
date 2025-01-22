@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: radial-gradient(circle, #000, #111);
+            background: radial-gradient(circle, #000, #222);
             color: white;
             height: 100vh;
             display: flex;
@@ -36,28 +36,22 @@
             margin: 20px 0;
         }
 
-        label {
+        button {
             display: block;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        input[type="range"] {
             width: 100%;
-            height: 8px;
-            background: #555;
-            border-radius: 5px;
-            appearance: none;
-            outline: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #1e90ff;
+            color: white;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
-        input[type="range"]::-webkit-slider-thumb {
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
+        button:hover {
+            background: #63a4ff;
         }
 
         .value-display {
@@ -66,130 +60,48 @@
             font-size: 1.2rem;
             color: #1e90ff;
         }
-
-        .switch {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .switch input {
-            display: none;
-        }
-
-        .switch-label {
-            font-size: 1.2rem;
-        }
-
-        .toggle {
-            position: relative;
-            width: 50px;
-            height: 25px;
-            background: gray;
-            border-radius: 50px;
-            cursor: pointer;
-        }
-
-        .toggle:before {
-            content: '';
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
-            transition: 0.3s;
-        }
-
-        .toggle.active {
-            background: #1e90ff;
-        }
-
-        .toggle.active:before {
-            transform: translateX(25px);
-        }
     </style>
 </head>
 <body>
     <div class="panel">
         <h2>sX Panel</h2>
-
-        <!-- AIM Radius -->
         <div class="setting-item">
-            <label for="aimRadius">AIM Radius (Máx 9999):</label>
-            <input 
-                type="range" 
-                id="aimRadius" 
-                min="5000" 
-                max="9999" 
-                step="100" 
-                value="7000" 
-                oninput="updateAimRadius(this.value)" 
-                onchange="openGameWithAimRadius(this.value)">
-            <div class="value-display" id="aimRadiusValue">AIM Radius: 7000</div>
+            <button onclick="createCacheFolder()">Crear Nuevo Caché</button>
+            <div class="value-display" id="cacheStatus">Estado: Sin Crear</div>
         </div>
 
-        <!-- Headtracking -->
-        <div class="switch">
-            <span class="switch-label">Headtracking</span>
-            <div class="toggle" id="headtrackingToggle" onclick="toggleHeadtracking(this)"></div>
+        <div class="setting-item">
+            <button onclick="copyFreeFireApp()">Copiar freefireth.app</button>
+            <div class="value-display" id="copyStatus">Estado: No Copiado</div>
         </div>
 
-        <!-- Auto Aim -->
-        <div class="switch">
-            <span class="switch-label">Auto Aim</span>
-            <div class="toggle" id="autoAimToggle" onclick="toggleAutoAim(this)"></div>
-        </div>
-
-        <!-- Aimbot Lock -->
-        <div class="switch">
-            <span class="switch-label">Aimbot Lock (Head)</span>
-            <div class="toggle" id="aimbotToggle" onclick="toggleAimbot(this)"></div>
+        <div class="setting-item">
+            <button onclick="launchCustomGame()">Lanzar Versión Modificada</button>
         </div>
     </div>
 
     <script>
-        // Actualizar el valor visual del AIM Radius
-        function updateAimRadius(value) {
-            document.getElementById('aimRadiusValue').textContent = `AIM Radius: ${value}`;
-        }
-
-        // Ejecutar el comando para abrir el juego con el AIM Radius ajustado
-        function openGameWithAimRadius(value) {
-            console.log(`AIM Radius ajustado a: ${value}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=/set_aim_radius_${value}`;
-        }
-
-        // Toggle para Headtracking
-        function toggleHeadtracking(element) {
-            const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_headtracking' : '/deactivate_headtracking';
-            console.log(`Headtracking ${isActive ? 'activado' : 'desactivado'}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
-        }
-
-        // Toggle para Auto Aim
-        function toggleAutoAim(element) {
-            const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_autoaim' : '/deactivate_autoaim';
-            console.log(`Auto Aim ${isActive ? 'activado' : 'desactivado'}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
-        }
-
-        // Toggle para Aimbot Lock
-        function toggleAimbot(element) {
-            const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_aimbot_lock' : '/deactivate_aimbot_lock';
-            console.log(`Aimbot Lock ${isActive ? 'activado' : 'desactivado'}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
-        }
-
-        // Crear caché y copiar freefireth.app
         function createCacheFolder() {
-            console.log("Creando nuevo caché en /cache/sX...");
-            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=/create_cache_folder`;
+            const cacheFolder = '/cache/sX_cache';
+            console.log(`Creando nuevo folder de caché en: ${cacheFolder}`);
+            document.getElementById('cacheStatus').textContent = "Estado: Caché Creado";
+            
+            // Aquí deberías implementar comandos específicos del sistema para crear el folder real.
+        }
+
+        function copyFreeFireApp() {
+            const sourceApp = '/Applications/freefireth.app';
+            const targetApp = '/Applications/com.dts.freefireios.custom';
+            console.log(`Copiando contenido de ${sourceApp} a ${targetApp}`);
+            document.getElementById('copyStatus').textContent = "Estado: Copiado";
+            
+            // Simulación: Deberías usar comandos para copiar el directorio en un entorno real.
+        }
+
+        function launchCustomGame() {
+            const bundleId = 'com.dts.freefireios.custom';
+            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
+            window.location.href = `freefire://${bundleId}/execute`;
         }
     </script>
 </body>
