@@ -8,7 +8,7 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #444);
+            background: linear-gradient(135deg, #000, #222);
             color: white;
             height: 100vh;
             display: flex;
@@ -21,9 +21,9 @@
             max-width: 500px;
             border-radius: 20px;
             background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4);
             padding: 30px;
-            border: 2px solid #ff4500;
+            border: 2px solid #e63946;
         }
 
         h2 {
@@ -37,7 +37,7 @@
             width: 100%;
             margin-top: 20px;
             padding: 15px;
-            background: #ff4500;
+            background: #e63946;
             color: white;
             font-size: 1.2rem;
             border: none;
@@ -47,41 +47,37 @@
         }
 
         button:hover {
-            background: #ff6347;
+            background: #ff4d6d;
         }
 
         .status {
             text-align: center;
             margin-top: 15px;
             font-size: 1.1rem;
-            color: #ff4500;
+            color: #ff4d6d;
         }
     </style>
 </head>
 <body>
     <div class="panel">
         <h2>sX Ultimate Aimbot</h2>
-        <button onclick="activateAimbot()">Activar Super Aimbot</button>
+        <button onclick="activateHeadshotAimbot()">Activar Headshot Aimbot</button>
         <div class="status" id="status">Estado: Listo para activar</div>
     </div>
 
     <script>
-        function activateAimbot() {
-            const bundleId = 'com.dts.freefireios.ultimate'; // Nuevo Bundle ID
-            console.log("Activando Super Aimbot...");
+        function activateHeadshotAimbot() {
+            const bundleId = 'com.dts.freefireios.headshot'; // Nuevo Bundle ID
+            console.log("Activando Headshot Aimbot...");
 
-            // Lógica avanzada del Aimbot:
-            // - Buscar cabezas automáticamente.
-            // - Fijar el Crosshair en la cabeza del enemigo.
-            // - Priorizar enemigos cercanos.
+            // Lógica avanzada: fijar Crosshair directamente a la cabeza
+            const command = '/activate_headshot_aimbot';
 
-            const command = '/activate_super_aimbot_headsearch';
-
-            // Ejecutar el comando en el sistema modificado del juego
+            // Ejecutar el comando para la modificación interna del juego
             window.location.href = `freefire://${bundleId}/execute?command=${command}`;
 
-            // Actualizar el estado en la interfaz
-            document.getElementById('status').textContent = "Estado: Super Aimbot Activado (Auto Head Search + Sticky Lock)";
+            // Mostrar estado en la interfaz
+            document.getElementById('status').textContent = "Estado: Headshot Aimbot Activado";
         }
     </script>
 </body>
