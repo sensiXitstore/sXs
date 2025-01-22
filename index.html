@@ -3,43 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Panel - v1.108.13</title>
+    <title>sX Panel</title>
     <style>
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #333);
+            background: radial-gradient(circle, #000, #111);
             color: white;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
 
         .panel {
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             border-radius: 25px;
-            background: linear-gradient(145deg, #111, #222);
-            box-shadow: 0 0 60px rgba(255, 255, 255, 0.2);
+            background: #111;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
             padding: 30px;
             border: 2px solid #1e90ff;
-            position: relative;
         }
 
         h2 {
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px #1e90ff;
-        }
-
-        .creator {
-            text-align: center;
-            font-size: 1rem;
             margin-bottom: 20px;
-            color: #1e90ff;
         }
 
         .setting-item {
@@ -65,10 +55,9 @@
         input[type="range"]::-webkit-slider-thumb {
             width: 20px;
             height: 20px;
-            background: #1e90ff;
+            background: white;
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 5px #1e90ff;
         }
 
         .value-display {
@@ -126,38 +115,37 @@
 <body>
     <div class="panel">
         <h2>sX Panel</h2>
-        <p class="creator">Creado por @sensiXiters</p>
 
         <!-- AIM Radius -->
         <div class="setting-item">
-            <label for="aimRadius">AIM Radius (Máx 10000):</label>
+            <label for="aimRadius">AIM Radius (Máx 9999):</label>
             <input 
                 type="range" 
                 id="aimRadius" 
                 min="5000" 
-                max="10000" 
+                max="9999" 
                 step="100" 
                 value="7000" 
                 oninput="updateAimRadius(this.value)" 
-                onchange="applyAimRadius(this.value)">
+                onchange="openGameWithAimRadius(this.value)">
             <div class="value-display" id="aimRadiusValue">AIM Radius: 7000</div>
         </div>
 
         <!-- Headtracking -->
         <div class="switch">
-            <span class="switch-label">Headtracking Ultra</span>
+            <span class="switch-label">Headtracking</span>
             <div class="toggle" id="headtrackingToggle" onclick="toggleHeadtracking(this)"></div>
         </div>
 
         <!-- Auto Aim -->
         <div class="switch">
-            <span class="switch-label">Auto Aim (Headshots)</span>
+            <span class="switch-label">Auto Aim</span>
             <div class="toggle" id="autoAimToggle" onclick="toggleAutoAim(this)"></div>
         </div>
 
-        <!-- Aimbot Exagerado -->
+        <!-- Aimbot Lock -->
         <div class="switch">
-            <span class="switch-label">Aimbot Extremo</span>
+            <span class="switch-label">Aimbot Lock (Head)</span>
             <div class="toggle" id="aimbotToggle" onclick="toggleAimbot(this)"></div>
         </div>
     </div>
@@ -168,8 +156,8 @@
             document.getElementById('aimRadiusValue').textContent = `AIM Radius: ${value}`;
         }
 
-        // Aplicar AIM Radius al juego
-        function applyAimRadius(value) {
+        // Ejecutar el comando para abrir el juego con el AIM Radius ajustado
+        function openGameWithAimRadius(value) {
             console.log(`AIM Radius ajustado a: ${value}`);
             window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=/set_aim_radius_${value}`;
         }
@@ -177,7 +165,7 @@
         // Toggle para Headtracking
         function toggleHeadtracking(element) {
             const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_headtracking_ultra' : '/deactivate_headtracking';
+            const command = isActive ? '/activate_headtracking' : '/deactivate_headtracking';
             console.log(`Headtracking ${isActive ? 'activado' : 'desactivado'}`);
             window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
         }
@@ -190,12 +178,18 @@
             window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
         }
 
-        // Toggle para Aimbot Extremo
+        // Toggle para Aimbot Lock
         function toggleAimbot(element) {
             const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_extreme_aimbot' : '/deactivate_aimbot';
-            console.log(`Aimbot ${isActive ? 'activado' : 'desactivado'}`);
+            const command = isActive ? '/activate_aimbot_lock' : '/deactivate_aimbot_lock';
+            console.log(`Aimbot Lock ${isActive ? 'activado' : 'desactivado'}`);
             window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
+        }
+
+        // Crear caché y copiar freefireth.app
+        function createCacheFolder() {
+            console.log("Creando nuevo caché en /cache/sX...");
+            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=/create_cache_folder`;
         }
     </script>
 </body>
