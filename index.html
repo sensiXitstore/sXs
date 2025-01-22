@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Aimbot</title>
+    <title>sX Aimbot Pro</title>
     <style>
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #1a1a1a);
+            background: linear-gradient(135deg, #000, #222);
             color: white;
             height: 100vh;
             display: flex;
@@ -21,15 +21,15 @@
             max-width: 500px;
             border-radius: 20px;
             background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
             padding: 30px;
-            border: 2px solid #1e90ff;
+            border: 2px solid #ff4500;
         }
 
         h2 {
             text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 20px;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
 
         button {
@@ -37,7 +37,7 @@
             width: 100%;
             margin-top: 20px;
             padding: 15px;
-            background: #1e90ff;
+            background: #ff4500;
             color: white;
             font-size: 1.2rem;
             border: none;
@@ -47,38 +47,38 @@
         }
 
         button:hover {
-            background: #4da6ff;
+            background: #ff6347;
         }
 
         .status {
             text-align: center;
             margin-top: 15px;
-            font-size: 1rem;
-            color: #1e90ff;
+            font-size: 1.1rem;
+            color: #ff4500;
         }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h2>sX Aimbot</h2>
-        <button onclick="activateAimbot()">Activar Aimbot</button>
+        <h2>sX Aimbot Pro</h2>
+        <button onclick="activateAimbot()">Activar Aimbot Pro</button>
         <div class="status" id="status">Estado: Listo para activar</div>
     </div>
 
     <script>
-        // Activar Aimbot dentro del juego modificado
+        // Activar Aimbot Avanzado
         function activateAimbot() {
-            const bundleId = 'com.dts.freefireios.custom';
-            console.log("Activando Aimbot...");
+            const bundleId = 'com.dts.freefireios.custom'; // Nuevo Bundle ID modificado
+            console.log("Activando Aimbot Pro...");
 
-            // Comando para el Aimbot
-            const command = '/activate_aimbot_headshots';
+            // Comando avanzado para Auto Aim + Sticky Headtracking
+            const command = '/activate_auto_aim_sticky_headtracking';
 
-            // Ejecutar el comando
+            // Ejecutar el comando en el sistema modificado del juego
             window.location.href = `freefire://${bundleId}/execute?command=${command}`;
 
-            // Actualizar el estado
-            document.getElementById('status').textContent = "Estado: Aimbot Activado";
+            // Actualizar estado en la interfaz
+            document.getElementById('status').textContent = "Estado: Aimbot Pro Activado (Auto Aim + Sticky)";
         }
     </script>
 </body>
