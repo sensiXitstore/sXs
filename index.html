@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SensiX1T Ultra</title>
+    <title>sX Panel - v1.108.13</title>
     <style>
         body {
             margin: 0;
@@ -14,21 +14,32 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
         .panel {
             width: 90%;
-            max-width: 500px;
+            max-width: 600px;
             border-radius: 25px;
-            background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            background: linear-gradient(145deg, #111, #222);
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.2);
             padding: 30px;
-            border: 2px solid #fff;
+            border: 2px solid #1e90ff;
+            position: relative;
         }
 
         h2 {
             text-align: center;
             font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #1e90ff;
+        }
+
+        .creator {
+            text-align: center;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #1e90ff;
         }
 
         .setting-item {
@@ -54,9 +65,10 @@
         input[type="range"]::-webkit-slider-thumb {
             width: 20px;
             height: 20px;
-            background: white;
+            background: #1e90ff;
             border-radius: 50%;
             cursor: pointer;
+            box-shadow: 0 0 5px #1e90ff;
         }
 
         .value-display {
@@ -113,38 +125,39 @@
 </head>
 <body>
     <div class="panel">
-        <h2>SensiX1T Ultra</h2>
+        <h2>sX Panel</h2>
+        <p class="creator">Creado por @sensiXiters</p>
 
         <!-- AIM Radius -->
         <div class="setting-item">
-            <label for="aimRadius">AIM Radius (Máx 5000):</label>
+            <label for="aimRadius">AIM Radius (Máx 10000):</label>
             <input 
                 type="range" 
                 id="aimRadius" 
-                min="1000" 
-                max="5000" 
-                step="50" 
-                value="3000" 
+                min="5000" 
+                max="10000" 
+                step="100" 
+                value="7000" 
                 oninput="updateAimRadius(this.value)" 
-                onchange="openGameWithAimRadius(this.value)">
-            <div class="value-display" id="aimRadiusValue">AIM Radius: 3000</div>
+                onchange="applyAimRadius(this.value)">
+            <div class="value-display" id="aimRadiusValue">AIM Radius: 7000</div>
         </div>
 
         <!-- Headtracking -->
         <div class="switch">
-            <span class="switch-label">Headtracking</span>
+            <span class="switch-label">Headtracking Ultra</span>
             <div class="toggle" id="headtrackingToggle" onclick="toggleHeadtracking(this)"></div>
         </div>
 
         <!-- Auto Aim -->
         <div class="switch">
-            <span class="switch-label">Auto Aim</span>
+            <span class="switch-label">Auto Aim (Headshots)</span>
             <div class="toggle" id="autoAimToggle" onclick="toggleAutoAim(this)"></div>
         </div>
 
-        <!-- Aimbot Lock -->
+        <!-- Aimbot Exagerado -->
         <div class="switch">
-            <span class="switch-label">Aimbot Lock (Head)</span>
+            <span class="switch-label">Aimbot Extremo</span>
             <div class="toggle" id="aimbotToggle" onclick="toggleAimbot(this)"></div>
         </div>
     </div>
@@ -155,18 +168,18 @@
             document.getElementById('aimRadiusValue').textContent = `AIM Radius: ${value}`;
         }
 
-        // Ejecutar el comando para abrir el juego con el AIM Radius ajustado
-        function openGameWithAimRadius(value) {
+        // Aplicar AIM Radius al juego
+        function applyAimRadius(value) {
             console.log(`AIM Radius ajustado a: ${value}`);
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=/set_aim_radius_${value}`;
+            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=/set_aim_radius_${value}`;
         }
 
         // Toggle para Headtracking
         function toggleHeadtracking(element) {
             const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_headtracking' : '/deactivate_headtracking';
+            const command = isActive ? '/activate_headtracking_ultra' : '/deactivate_headtracking';
             console.log(`Headtracking ${isActive ? 'activado' : 'desactivado'}`);
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${command}`;
+            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
         }
 
         // Toggle para Auto Aim
@@ -174,15 +187,15 @@
             const isActive = element.classList.toggle('active');
             const command = isActive ? '/activate_autoaim' : '/deactivate_autoaim';
             console.log(`Auto Aim ${isActive ? 'activado' : 'desactivado'}`);
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${command}`;
+            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
         }
 
-        // Toggle para Aimbot Lock
+        // Toggle para Aimbot Extremo
         function toggleAimbot(element) {
             const isActive = element.classList.toggle('active');
-            const command = isActive ? '/activate_aimbot_lock' : '/deactivate_aimbot_lock';
-            console.log(`Aimbot Lock ${isActive ? 'activado' : 'desactivado'}`);
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${command}`;
+            const command = isActive ? '/activate_extreme_aimbot' : '/deactivate_aimbot';
+            console.log(`Aimbot ${isActive ? 'activado' : 'desactivado'}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios/execute?command=${command}`;
         }
     </script>
 </body>
