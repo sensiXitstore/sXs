@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Ultra Aimbot</title>
+    <title>sX Ultra Headtracking & Aimbot</title>
     <style>
         body {
             margin: 0;
@@ -64,9 +64,9 @@
 </head>
 <body>
     <div class="panel">
-        <h2>sX Ultra Aimbot</h2>
+        <h2>sX Ultra Headtracking & Aimbot</h2>
 
-        <!-- Activar Aimbot para Cabeza -->
+        <!-- Activar Aimbot -->
         <div class="setting-item">
             <button onclick="activateAimbot()">Activar Aimbot (Cabeza)</button>
             <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
@@ -79,21 +79,35 @@
     </div>
 
     <script>
-        // Lógica de Aimbot
+        // Lógica de Aimbot con detección de la cabeza
         function activateAimbot() {
             const command = '/activate_aimbot_head';
-            console.log("Aimbot activado para apuntar automáticamente a la cabeza del enemigo.");
+            console.log("Aimbot activado para detectar la cabeza y ajustar el Crosshair.");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
 
             // Ejecutar el comando dentro del sistema del juego modificado
             window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
 
-            // Activar la función de apuntado a la cabeza con sincronización constante
+            // Activar la función de ajuste automático solo cuando se detecta la cabeza
             setInterval(() => {
-                console.log("Ajustando el Crosshair a la cabeza del enemigo...");
-                const aimbotLockHeadCommand = '/aimbot_lock_to_head';
-                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${aimbotLockHeadCommand}`;
-            }, 100); // Ejecuta cada 100ms para mantener el apuntado a la cabeza
+                console.log("Buscando la cabeza del enemigo...");
+                const headDetected = detectEnemyHead(); // Lógica para detectar la cabeza del enemigo
+
+                if (headDetected) {
+                    // Mover el Crosshair hacia la cabeza
+                    const adjustCrosshairCommand = '/aimbot_lock_to_head';
+                    window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${adjustCrosshairCommand}`;
+                    console.log("Crosshair ajustado hacia la cabeza del enemigo.");
+                }
+            }, 100); // Ejecuta cada 100ms para verificar la cabeza del enemigo
+        }
+
+        // Función de detección de cabeza del enemigo
+        function detectEnemyHead() {
+            // Este es un ejemplo de lógica que debe implementar el juego
+            // En la práctica, necesitarías una forma de obtener las coordenadas de los enemigos y su cabeza
+            // Retornamos `true` como un ejemplo simple, pero debería ser un análisis más avanzado
+            return true;  // Suponemos que siempre detecta la cabeza del enemigo
         }
 
         // Lanzar el juego modificado
