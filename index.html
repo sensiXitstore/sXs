@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Ultimate Aimbot</title>
+    <title>sX Ultra Aimbot</title>
     <style>
         body {
             margin: 0;
@@ -19,11 +19,11 @@
         .panel {
             width: 90%;
             max-width: 500px;
-            border-radius: 20px;
+            border-radius: 25px;
             background: #111;
-            box-shadow: 0 0 50px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
             padding: 30px;
-            border: 2px solid #e63946;
+            border: 2px solid #1e90ff;
         }
 
         h2 {
@@ -32,12 +32,16 @@
             margin-bottom: 20px;
         }
 
+        .setting-item {
+            margin: 20px 0;
+        }
+
         button {
             display: block;
             width: 100%;
             margin-top: 20px;
             padding: 15px;
-            background: #e63946;
+            background: #1e90ff;
             color: white;
             font-size: 1.2rem;
             border: none;
@@ -47,37 +51,56 @@
         }
 
         button:hover {
-            background: #ff4d6d;
+            background: #63a4ff;
         }
 
-        .status {
+        .value-display {
             text-align: center;
-            margin-top: 15px;
-            font-size: 1.1rem;
-            color: #ff4d6d;
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #1e90ff;
         }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h2>sX Ultimate Aimbot</h2>
-        <button onclick="activateHeadshotAimbot()">Activar Headshot Aimbot</button>
-        <div class="status" id="status">Estado: Listo para activar</div>
+        <h2>sX Ultra Aimbot</h2>
+
+        <!-- Activar Aimbot para Cabeza -->
+        <div class="setting-item">
+            <button onclick="activateAimbot()">Activar Aimbot (Cabeza)</button>
+            <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
+        </div>
+
+        <!-- Lanzar Juego Modificado -->
+        <div class="setting-item">
+            <button onclick="launchModifiedGame()">Lanzar Juego Modificado</button>
+        </div>
     </div>
 
     <script>
-        function activateHeadshotAimbot() {
-            const bundleId = 'com.dts.freefireios.headshot'; // Nuevo Bundle ID
-            console.log("Activando Headshot Aimbot...");
+        // Lógica de Aimbot
+        function activateAimbot() {
+            const command = '/activate_aimbot_head';
+            console.log("Aimbot activado para apuntar automáticamente a la cabeza del enemigo.");
+            document.getElementById('aimbotStatus').textContent = "Estado: Activo";
 
-            // Lógica avanzada: fijar Crosshair directamente a la cabeza
-            const command = '/activate_headshot_aimbot';
+            // Ejecutar el comando dentro del sistema del juego modificado
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
 
-            // Ejecutar el comando para la modificación interna del juego
-            window.location.href = `freefire://${bundleId}/execute?command=${command}`;
+            // Activar la función de apuntado a la cabeza con sincronización constante
+            setInterval(() => {
+                console.log("Ajustando el Crosshair a la cabeza del enemigo...");
+                const aimbotLockHeadCommand = '/aimbot_lock_to_head';
+                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${aimbotLockHeadCommand}`;
+            }, 100); // Ejecuta cada 100ms para mantener el apuntado a la cabeza
+        }
 
-            // Mostrar estado en la interfaz
-            document.getElementById('status').textContent = "Estado: Headshot Aimbot Activado";
+        // Lanzar el juego modificado
+        function launchModifiedGame() {
+            const bundleId = 'com.dts.freefireios.custom';
+            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
+            window.location.href = `freefire://${bundleId}/execute`;
         }
     </script>
 </body>
