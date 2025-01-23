@@ -79,46 +79,11 @@
     </div>
 
     <script>
-        // Activar Aimbot con lógica avanzada
+        // Activar Aimbot
         function activateAimbot() {
-            const command = '/activate_aimbot_head';
-            console.log("Aimbot activado para rastrear la cabeza del enemigo.");
+            console.log("Activando Aimbot...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-
-            // Ejecutar el comando dentro del sistema del juego modificado
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-
-            // Inicia la lógica del Aimbot
-            startAimbotLogic();
-        }
-
-        // Lógica principal del Aimbot
-        function startAimbotLogic() {
-            setInterval(() => {
-                const enemyHead = detectEnemyHead(); // Detectar la cabeza del enemigo
-                if (enemyHead) {
-                    adjustCrosshairToHead(enemyHead); // Ajustar el Crosshair automáticamente
-                }
-            }, 50); // Verifica cada 50ms
-        }
-
-        // Detección de la cabeza del enemigo
-        function detectEnemyHead() {
-            // Simular detección de enemigos en la lógica interna del juego
-            // Esto debería ser reemplazado con una lógica avanzada basada en el motor del juego
-            const enemyHeadPosition = {
-                x: Math.random() * 400, // Coordenada X simulada
-                y: Math.random() * 800  // Coordenada Y simulada
-            };
-            console.log("Cabeza detectada en:", enemyHeadPosition);
-            return enemyHeadPosition; // Devuelve la posición de la cabeza del enemigo
-        }
-
-        // Ajustar el Crosshair automáticamente hacia la cabeza del enemigo
-        function adjustCrosshairToHead(headPosition) {
-            const command = `/aimbot_lock_to_head?x=${headPosition.x}&y=${headPosition.y}`;
-            console.log("Ajustando Crosshair hacia la cabeza del enemigo:", headPosition);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+            integrateAimbot(); // Iniciar la lógica del Aimbot directamente
         }
 
         // Lanzar el juego modificado
@@ -126,6 +91,61 @@
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
+        }
+
+        // Lógica del Aimbot Directamente Integrada
+        function integrateAimbot() {
+            console.log("Aimbot integrado dentro de la modificación del juego.");
+
+            // Intervalo para detectar enemigos y ajustar Crosshair
+            setInterval(() => {
+                const enemies = detectEnemies(); // Detectar enemigos en el rango
+                if (enemies.length > 0) {
+                    const target = findClosestEnemyHead(enemies); // Encontrar la cabeza del enemigo más cercano
+                    if (target) {
+                        adjustCrosshairToHead(target); // Ajustar Crosshair automáticamente a la cabeza
+                        console.log("Crosshair ajustado a la cabeza del enemigo.");
+                    }
+                }
+            }, 50); // Verificar cada 50ms
+        }
+
+        // Función para detectar enemigos
+        function detectEnemies() {
+            // Simular detección de enemigos
+            // En la práctica, se conectará a las coordenadas del juego para obtener datos reales
+            return [
+                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
+                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
+            ]; // Enemigos simulados
+        }
+
+        // Función para encontrar el enemigo más cercano a la cabeza
+        function findClosestEnemyHead(enemies) {
+            const playerPosition = { x: 200, y: 200 }; // Posición del jugador
+            let closest = null;
+            let minDistance = Infinity;
+
+            enemies.forEach((enemy) => {
+                const distance = Math.sqrt(
+                    Math.pow(playerPosition.x - enemy.head.x, 2) +
+                    Math.pow(playerPosition.y - enemy.head.y, 2)
+                );
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = enemy.head;
+                }
+            });
+
+            return closest;
+        }
+
+        // Función para ajustar el Crosshair a la cabeza del enemigo
+        function adjustCrosshairToHead(headPosition) {
+            // Lógica para mover el Crosshair automáticamente
+            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
+            console.log(`Ejecutando comando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
 </body>
