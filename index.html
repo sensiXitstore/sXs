@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Ultra Aimbot</title>
+    <title>sX Store</title>
     <style>
+        /* Fuente y fondo con imagen en Base64 */
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        
         body {
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #000, #222);
+            font-family: 'Orbitron', sans-serif;
+            background: url('data:image/jpeg;base64,/9j/4QEIRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAEaAAUAAAABAAAAVgEbAAUAAAABAAAAX') no-repeat center center fixed;
+            background-size: cover;
             color: white;
             height: 100vh;
             display: flex;
@@ -16,65 +20,106 @@
             align-items: center;
         }
 
+        /* Panel flotante con efecto de cristal y neón */
         .panel {
             width: 90%;
             max-width: 500px;
             border-radius: 25px;
-            background: #111;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
             padding: 30px;
-            border: 2px solid #1e90ff;
-        }
-
-        h2 {
+            border: 2px solid rgba(30, 144, 255, 0.8);
             text-align: center;
-            font-size: 2.5rem;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .panel:hover {
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+        }
+
+        /* Título con efecto de neón */
+        h2 {
+            font-size: 2.8rem;
             margin-bottom: 20px;
+            color: #1e90ff;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8), 0 0 20px rgba(30, 144, 255, 0.6);
         }
 
-        .setting-item {
-            margin: 20px 0;
-        }
-
+        /* Botones con efectos dinámicos */
         button {
             display: block;
             width: 100%;
             margin-top: 20px;
             padding: 15px;
-            background: #1e90ff;
+            background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
             font-size: 1.2rem;
+            font-weight: bold;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
+            transition: all 0.3s ease-in-out;
         }
 
         button:hover {
-            background: #63a4ff;
+            background: linear-gradient(45deg, #007bff, #1e90ff);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
+            transform: scale(1.05);
         }
 
+        /* Estado del Aimbot */
         .value-display {
             text-align: center;
             margin-top: 10px;
             font-size: 1.2rem;
             color: #1e90ff;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+        }
+
+        /* Footer con enlaces brillantes */
+        .footer {
+            margin-top: 20px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #00aaff;
+            text-shadow: 0 0 20px rgba(30, 144, 255, 1);
         }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h2>sX Ultra Aimbot</h2>
+        <h2>sX Store</h2>
 
         <!-- Activar Aimbot -->
         <div class="setting-item">
-            <button onclick="activateAimbot()">Activar Aimbot (Cabeza)</button>
+            <button onclick="activateAimbot()">Aimbot</button>
             <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
         </div>
 
         <!-- Lanzar Juego Modificado -->
         <div class="setting-item">
-            <button onclick="launchModifiedGame()">Lanzar Juego Modificado</button>
+            <button onclick="launchModifiedGame()">Lanzar Juego</button>
+        </div>
+
+        <!-- Redes Sociales -->
+        <div class="footer">
+            <p>Creado por <a href="https://www.youtube.com/@sensiXiters" target="_blank">@sensiXiters</a></p>
+            <p>Instagram: <a href="https://www.instagram.com/sensixit_store" target="_blank">@sensixit_store</a></p>
         </div>
     </div>
 
@@ -99,30 +144,26 @@
 
             // Intervalo para detectar enemigos y ajustar Crosshair
             setInterval(() => {
-                const enemies = detectEnemies(); // Detectar enemigos en el rango
+                const enemies = detectEnemies();
                 if (enemies.length > 0) {
-                    const target = findClosestEnemyHead(enemies); // Encontrar la cabeza del enemigo más cercano
+                    const target = findClosestEnemyHead(enemies);
                     if (target) {
-                        adjustCrosshairToHead(target); // Ajustar Crosshair automáticamente a la cabeza
+                        adjustCrosshairToHead(target);
                         console.log("Crosshair ajustado a la cabeza del enemigo.");
                     }
                 }
-            }, 50); // Verificar cada 50ms
+            }, 50);
         }
 
-        // Función para detectar enemigos
         function detectEnemies() {
-            // Simular detección de enemigos
-            // En la práctica, se conectará a las coordenadas del juego para obtener datos reales
             return [
                 { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
                 { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
-            ]; // Enemigos simulados
+            ];
         }
 
-        // Función para encontrar el enemigo más cercano a la cabeza
         function findClosestEnemyHead(enemies) {
-            const playerPosition = { x: 200, y: 200 }; // Posición del jugador
+            const playerPosition = { x: 200, y: 200 };
             let closest = null;
             let minDistance = Infinity;
 
@@ -140,9 +181,7 @@
             return closest;
         }
 
-        // Función para ajustar el Crosshair a la cabeza del enemigo
         function adjustCrosshairToHead(headPosition) {
-            // Lógica para mover el Crosshair automáticamente
             const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
             console.log(`Ejecutando comando: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
