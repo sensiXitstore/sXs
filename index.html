@@ -139,53 +139,53 @@
         }
 
         // Lógica del Aimbot Directamente Integrada
-        function integrateAimbot() {
-            console.log("Aimbot integrado dentro de la modificación del juego.");
+    function integrateAimbot() {
+        console.log("Aimbot ultra agresivo activado...");
 
-            // Intervalo para detectar enemigos y ajustar Crosshair
-            setInterval(() => {
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemyHead(enemies);
-                    if (target) {
-                        adjustCrosshairToHead(target);
-                        console.log("Crosshair ajustado a la cabeza del enemigo.");
-                    }
+        setInterval(() => {
+            const enemies = detectEnemies();
+            if (enemies.length > 0) {
+                const target = findClosestEnemyHead(enemies);
+                if (target) {
+                    lockCrosshairToHead(target);
+                    console.log("Crosshair PEGADO a la cabeza del enemigo.");
                 }
-            }, 50);
-        }
+            }
+        }, 10); // Ajuste cada 10ms para mayor precisión
+    }
 
-        function detectEnemies() {
-            return [
-                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
-                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
-            ];
-        }
+    function detectEnemies() {
+        // Simulación de detección de enemigos con posiciones de la cabeza
+        return [
+            { id: 1, x: 120, y: 250, head: { x: 120, y: 210 } },
+            { id: 2, x: 300, y: 400, head: { x: 300, y: 360 } },
+        ];
+    }
 
-        function findClosestEnemyHead(enemies) {
-            const playerPosition = { x: 200, y: 200 };
-            let closest = null;
-            let minDistance = Infinity;
+    function findClosestEnemyHead(enemies) {
+        const playerPosition = { x: 200, y: 200 };
+        let closest = null;
+        let minDistance = Infinity;
 
-            enemies.forEach((enemy) => {
-                const distance = Math.sqrt(
-                    Math.pow(playerPosition.x - enemy.head.x, 2) +
-                    Math.pow(playerPosition.y - enemy.head.y, 2)
-                );
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closest = enemy.head;
-                }
-            });
+        enemies.forEach((enemy) => {
+            const distance = Math.sqrt(
+                Math.pow(playerPosition.x - enemy.head.x, 2) +
+                Math.pow(playerPosition.y - enemy.head.y, 2)
+            );
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = enemy.head;
+            }
+        });
 
-            return closest;
-        }
+        return closest;
+    }
 
-        function adjustCrosshairToHead(headPosition) {
-            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
-            console.log(`Ejecutando comando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-        }
-    </script>
+    function lockCrosshairToHead(headPosition) {
+        const command = `/ultra_aimbot_lock?x=${headPosition.x}&y=${headPosition.y}`;
+        console.log(`🔥 EJECUTANDO COMANDO: ${command} 🔥`);
+        window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+    }
+</script>
 </body>
 </html>
