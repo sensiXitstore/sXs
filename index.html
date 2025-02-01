@@ -103,6 +103,11 @@
         </div>
 
         <div class="setting-item">
+            <button onclick="activateAutoAim()">Auto Aim</button>
+            <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
+        </div>
+
+        <div class="setting-item">
             <button onclick="launchModifiedGame()">Lanzar Juego</button>
         </div>
 
@@ -113,44 +118,46 @@
     </div>
 
     <script>
-        let isShooting = false;
-
-        document.addEventListener('keydown', function(event) {
-            if (event.code === "Space" || event.code === "KeyF") { // Simula botón de disparo
-                isShooting = true;
-                activateAimbot();
-            }
-        });
-
-        document.addEventListener('keyup', function(event) {
-            if (event.code === "Space" || event.code === "KeyF") {
-                isShooting = false;
-            }
-        });
-
         function activateAimbot() {
-            if (!isShooting) return;
-            
-            console.log("Aimbot Activado: Disparos guiados a la cabeza.");
+            console.log("Aimbot Avanzado Activado...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            
-            setInterval(() => {
-                if (!isShooting) return;
-                
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemyHead(enemies);
-                    if (target) {
-                        guideShotToHead(target);
-                    }
-                }
-            }, 10); // Se ejecuta cada 10ms para máxima precisión
+            integrateAimbot();
+        }
+
+        function activateAutoAim() {
+            console.log("Auto Aim Avanzado Activado...");
+            document.getElementById('autoAimStatus').textContent = "Estado: Activo";
+            integrateAutoAim();
         }
 
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
+        }
+
+        function integrateAimbot() {
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = predictEnemyHead(enemies);
+                    if (target) {
+                        adjustCrosshairToHead(target);
+                    }
+                }
+            }, 10);
+        }
+
+        function integrateAutoAim() {
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = predictEnemyMovement(enemies);
+                    if (target) {
+                        adjustCrosshairToEnemy(target);
+                    }
+                }
+            }, 10);
         }
 
         function detectEnemies() {
@@ -160,29 +167,40 @@
             ];
         }
 
-        function findClosestEnemyHead(enemies) {
+        function predictEnemyHead(enemies) {
+            return findClosestTarget(enemies, 'head');
+        }
+
+        function predictEnemyMovement(enemies) {
+            return findClosestTarget(enemies, 'body');
+        }
+
+        function findClosestTarget(enemies, targetType) {
             const playerPosition = { x: 250, y: 250 };
             let closest = null;
             let minDistance = Infinity;
 
             enemies.forEach((enemy) => {
+                const target = targetType === 'head' ? enemy.head : enemy;
                 const distance = Math.sqrt(
-                    Math.pow(playerPosition.x - enemy.head.x, 2) +
-                    Math.pow(playerPosition.y - enemy.head.y, 2)
+                    Math.pow(playerPosition.x - target.x, 2) +
+                    Math.pow(playerPosition.y - target.y, 2)
                 );
                 if (distance < minDistance) {
                     minDistance = distance;
-                    closest = enemy.head;
+                    closest = target;
                 }
             });
 
             return closest;
         }
 
-        function guideShotToHead(headPosition) {
-            const command = `/guide_bullet?x=${headPosition.x}&y=${headPosition.y}`;
-            console.log(`Ajustando disparo: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+        function adjustCrosshairToHead(headPosition) {
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=/aimbot_lock?x=${headPosition.x}&y=${headPosition.y}`;
+        }
+
+        function adjustCrosshairToEnemy(enemyPosition) {
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=/autoaim_track?x=${enemyPosition.x}&y=${enemyPosition.y}`;
         }
     </script>
 </body>
