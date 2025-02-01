@@ -74,16 +74,6 @@
             text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
 
-        input[type="range"] {
-            width: 100%;
-            margin-top: 10px;
-            appearance: none;
-            height: 8px;
-            background: #1e90ff;
-            border-radius: 5px;
-            outline: none;
-        }
-
         .footer {
             margin-top: 20px;
             font-size: 1rem;
@@ -118,9 +108,8 @@
         </div>
 
         <div class="setting-item">
-            <label>Aim Radius</label>
-            <input type="range" id="aimRadius" min="50" max="1000" step="50" value="500" oninput="updateAimRadius(this.value)">
-            <div class="value-display" id="aimRadiusValue">Radius: 500</div>
+            <button onclick="activateNoRecoil()">No Recoil</button>
+            <div class="value-display" id="noRecoilStatus">Estado: Inactivo</div>
         </div>
 
         <div class="setting-item">
@@ -134,8 +123,6 @@
     </div>
 
     <script>
-        let aimRadius = 500;
-
         function activateAimbot() {
             console.log("Activando Aimbot...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
@@ -148,10 +135,10 @@
             integrateAutoAim();
         }
 
-        function updateAimRadius(value) {
-            aimRadius = value;
-            document.getElementById('aimRadiusValue').textContent = `Radius: ${value}`;
-            console.log(`Aim Radius ajustado a ${value}`);
+        function activateNoRecoil() {
+            console.log("Activando No Recoil...");
+            document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
+            integrateNoRecoil();
         }
 
         function launchModifiedGame() {
@@ -161,6 +148,7 @@
         }
 
         function integrateAimbot() {
+            console.log("Aimbot activo.");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -173,6 +161,7 @@
         }
 
         function integrateAutoAim() {
+            console.log("Auto Aim activo.");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -181,6 +170,15 @@
                         adjustCrosshairToEnemy(target);
                     }
                 }
+            }, 50);
+        }
+
+        function integrateNoRecoil() {
+            console.log("No Recoil activo.");
+            setInterval(() => {
+                const command = `/no_recoil`;
+                console.log(`Ejecutando: ${command}`);
+                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
             }, 50);
         }
 
@@ -202,7 +200,7 @@
         function findClosestTarget(enemies, targetType) {
             const playerPosition = { x: 200, y: 200 };
             let closest = null;
-            let minDistance = aimRadius;
+            let minDistance = Infinity;
 
             enemies.forEach((enemy) => {
                 const target = targetType === 'head' ? enemy.head : enemy;
