@@ -108,11 +108,6 @@
         </div>
 
         <div class="setting-item">
-            <button onclick="activateNoRecoil()">No Recoil</button>
-            <div class="value-display" id="noRecoilStatus">Estado: Inactivo</div>
-        </div>
-
-        <div class="setting-item">
             <button onclick="launchModifiedGame()">Lanzar Juego</button>
         </div>
 
@@ -133,12 +128,6 @@
             console.log("Activando Auto Aim...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
             integrateAutoAim();
-        }
-
-        function activateNoRecoil() {
-            console.log("Activando No Recoil...");
-            document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
-            integrateNoRecoil();
         }
 
         function launchModifiedGame() {
@@ -170,15 +159,6 @@
                         adjustCrosshairToEnemy(target);
                     }
                 }
-            }, 50);
-        }
-
-        function integrateNoRecoil() {
-            console.log("No Recoil activo.");
-            setInterval(() => {
-                const command = `/no_recoil`;
-                console.log(`Ejecutando: ${command}`);
-                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
             }, 50);
         }
 
@@ -215,6 +195,18 @@
             });
 
             return closest;
+        }
+
+        function adjustCrosshairToHead(headPosition) {
+            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
+            console.log(`Aimbot ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+        }
+
+        function adjustCrosshairToEnemy(enemyPosition) {
+            const command = `/autoaim_lock?x=${enemyPosition.x}&y=${enemyPosition.y}`;
+            console.log(`Auto Aim ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
 </body>
