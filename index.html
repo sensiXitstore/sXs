@@ -119,13 +119,13 @@
 
     <script>
         function activateAimbot() {
-            console.log("Activando Aimbot...");
+            console.log("Aimbot Extremo Activado...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
             integrateAimbot();
         }
 
         function activateAutoAim() {
-            console.log("Activando Auto Aim...");
+            console.log("Auto Aim Exagerado Activado...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
             integrateAutoAim();
         }
@@ -137,7 +137,7 @@
         }
 
         function integrateAimbot() {
-            console.log("Aimbot activo.");
+            console.log("Aimbot Activo: Fijando Crosshair en la Cabeza...");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -146,11 +146,11 @@
                         adjustCrosshairToHead(target);
                     }
                 }
-            }, 50);
+            }, 25);
         }
 
         function integrateAutoAim() {
-            console.log("Auto Aim activo.");
+            console.log("Auto Aim Activo: Persiguiendo enemigos...");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -159,13 +159,13 @@
                         adjustCrosshairToEnemy(target);
                     }
                 }
-            }, 50);
+            }, 25);
         }
 
         function detectEnemies() {
             return [
-                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
-                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
+                { id: 1, x: Math.random() * 500, y: Math.random() * 500, head: { x: Math.random() * 500, y: Math.random() * 500 } },
+                { id: 2, x: Math.random() * 500, y: Math.random() * 500, head: { x: Math.random() * 500, y: Math.random() * 500 } },
             ];
         }
 
@@ -178,7 +178,7 @@
         }
 
         function findClosestTarget(enemies, targetType) {
-            const playerPosition = { x: 200, y: 200 };
+            const playerPosition = { x: 250, y: 250 };
             let closest = null;
             let minDistance = Infinity;
 
