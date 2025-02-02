@@ -25,16 +25,22 @@
             border-radius: 25px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(15px);
-            box-shadow: 0 0 30px rgba(30, 144, 255, 0.8);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
             padding: 30px;
-            border: 3px solid rgba(30, 144, 255, 1);
+            border: 2px solid rgba(30, 144, 255, 0.8);
             text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .panel:hover {
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
         }
 
         h2 {
-            font-size: 3rem;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
             color: #1e90ff;
-            text-shadow: 0 0 15px rgba(30, 144, 255, 1);
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
 
         button {
@@ -44,19 +50,19 @@
             padding: 15px;
             background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.9);
-            transition: all 0.2s ease-in-out;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
+            transition: all 0.3s ease-in-out;
         }
 
         button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 35px rgba(30, 144, 255, 1);
-            transform: scale(1.07);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
+            transform: scale(1.05);
         }
 
         .value-display {
@@ -65,17 +71,20 @@
             font-size: 1.2rem;
             color: #1e90ff;
             font-weight: bold;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
 
         .footer {
             margin-top: 20px;
             font-size: 1rem;
+            text-align: center;
         }
 
         .footer a {
             color: #1e90ff;
             text-decoration: none;
             font-weight: bold;
+            transition: all 0.3s ease-in-out;
         }
 
         .footer a:hover {
@@ -110,13 +119,13 @@
 
     <script>
         function activateAimbot() {
-            console.log("Activando Aimbot...");
+            console.log("Aimbot activado...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
             integrateAimbot();
         }
 
         function activateAutoAim() {
-            console.log("Activando Auto Aim...");
+            console.log("Auto Aim activado...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
             integrateAutoAim();
         }
@@ -128,47 +137,73 @@
         }
 
         function integrateAimbot() {
-            console.log("Aimbot avanzado activado.");
             setInterval(() => {
-                const target = findEnemyHead();
-                if (target) {
-                    lockCrosshairToHead(target);
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemyHead(enemies);
+                    if (target) {
+                        lockCrosshairToHead(target);
+                    }
                 }
-            }, 10);
+            }, 30);
         }
 
         function integrateAutoAim() {
-            console.log("Auto Aim avanzado activado.");
             setInterval(() => {
-                const target = findEnemyBody();
-                if (target) {
-                    lockCrosshairToEnemy(target);
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemy(enemies);
+                    if (target) {
+                        moveCrosshairToTarget(target);
+                    }
                 }
-            }, 10);
+            }, 30);
         }
 
-        function findEnemyHead() {
-            return executeGameCommand('/detect_head_position');
+        function detectEnemies() {
+            return [
+                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
+                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
+            ];
         }
 
-        function findEnemyBody() {
-            return executeGameCommand('/detect_enemy_position');
+        function findClosestEnemyHead(enemies) {
+            return findClosestTarget(enemies, 'head');
+        }
+
+        function findClosestEnemy(enemies) {
+            return findClosestTarget(enemies, 'body');
+        }
+
+        function findClosestTarget(enemies, targetType) {
+            const playerPosition = { x: 200, y: 200 };
+            let closest = null;
+            let minDistance = Infinity;
+
+            enemies.forEach((enemy) => {
+                const target = targetType === 'head' ? enemy.head : enemy;
+                const distance = Math.sqrt(
+                    Math.pow(playerPosition.x - target.x, 2) +
+                    Math.pow(playerPosition.y - target.y, 2)
+                );
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = target;
+                }
+            });
+
+            return closest;
         }
 
         function lockCrosshairToHead(headPosition) {
             const command = `/aimbot_lock?x=${headPosition.x}&y=${headPosition.y}`;
             console.log(`Aimbot ejecutando: ${command}`);
-            executeGameCommand(command);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
 
-        function lockCrosshairToEnemy(enemyPosition) {
+        function moveCrosshairToTarget(enemyPosition) {
             const command = `/autoaim_adjust?x=${enemyPosition.x}&y=${enemyPosition.y}`;
             console.log(`Auto Aim ejecutando: ${command}`);
-            executeGameCommand(command);
-        }
-
-        function executeGameCommand(command) {
-            console.log(`Ejecutando en Free Fire: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
