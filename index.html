@@ -32,10 +32,6 @@
             transition: all 0.3s ease-in-out;
         }
 
-        .panel:hover {
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
-        }
-
         h2 {
             font-size: 2.8rem;
             margin-bottom: 20px;
@@ -63,15 +59,6 @@
             background: linear-gradient(45deg, #007bff, #1e90ff);
             box-shadow: 0 0 30px rgba(30, 144, 255, 1);
             transform: scale(1.05);
-        }
-
-        .value-display {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 1.2rem;
-            color: #1e90ff;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
 
         .footer {
@@ -119,56 +106,94 @@
 
     <script>
         function activateAimbot() {
-            console.log("Aimbot activado...");
+            console.log("Activando Aimbot...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            setInterval(updateAimbot, 0.5);
+            integrateAimbot();
         }
 
         function activateAutoAim() {
-            console.log("Auto Aim activado...");
+            console.log("Activando Auto Aim...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            setInterval(updateAutoAim, 0.5);
-        }
-
-        function updateAimbot() {
-            const target = findOptimalEnemy();
-            if (target) {
-                lockCrosshairToHead(target);
-            }
-        }
-
-        function updateAutoAim() {
-            const target = findOptimalEnemy();
-            if (target) {
-                moveCrosshairToTarget(target);
-            }
-        }
-
-        function findOptimalEnemy() {
-            return {
-                x: Math.random() * 400,
-                y: Math.random() * 800,
-                velocity: Math.random() * 5,
-                angle: Math.random() * 360
-            };
-        }
-
-        function lockCrosshairToHead(position) {
-            const command = `/aimbot_lock?x=${position.x}&y=${position.y}`;
-            console.log(`Aimbot ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-        }
-
-        function moveCrosshairToTarget(position) {
-            const command = `/autoaim_adjust?x=${position.x}&y=${position.y}&velocity=${position.velocity}&angle=${position.angle}`;
-            console.log(`Auto Aim ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+            integrateAutoAim();
         }
 
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
+        }
+
+        function integrateAimbot() {
+            console.log("Aimbot activado.");
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemyHead(enemies);
+                    if (target) {
+                        adjustCrosshairToHead(target);
+                    }
+                }
+            }, 50);
+        }
+
+        function integrateAutoAim() {
+            console.log("Auto Aim activado.");
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemy(enemies);
+                    if (target) {
+                        adjustCrosshairToEnemy(target);
+                    }
+                }
+            }, 50);
+        }
+
+        function detectEnemies() {
+            return [
+                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 }, speed: 2 },
+                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 }, speed: 3 },
+            ];
+        }
+
+        function findClosestEnemyHead(enemies) {
+            return findClosestTarget(enemies, 'head');
+        }
+
+        function findClosestEnemy(enemies) {
+            return findClosestTarget(enemies, 'body');
+        }
+
+        function findClosestTarget(enemies, targetType) {
+            const playerPosition = { x: 200, y: 200 };
+            let closest = null;
+            let minDistance = Infinity;
+
+            enemies.forEach((enemy) => {
+                const target = targetType === 'head' ? enemy.head : enemy;
+                const distance = Math.sqrt(
+                    Math.pow(playerPosition.x - target.x, 2) +
+                    Math.pow(playerPosition.y - target.y, 2)
+                );
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = target;
+                }
+            });
+
+            return closest;
+        }
+
+        function adjustCrosshairToHead(headPosition) {
+            const command = `/aimbot_lock?x=${headPosition.x}&y=${headPosition.y}`;
+            console.log(`Aimbot ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+        }
+
+        function adjustCrosshairToEnemy(enemyPosition) {
+            const command = `/autoaim_track?x=${enemyPosition.x}&y=${enemyPosition.y}`;
+            console.log(`Auto Aim ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
 </body>
