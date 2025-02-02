@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Store - Advanced Aim System</title>
+    <title>sX Store - Ultimate Aim System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         
@@ -43,20 +43,23 @@
             text-shadow: 0 0 15px rgba(30, 144, 255, 0.9);
         }
 
-        button {
+        button, select {
             display: block;
             width: 100%;
-            margin-top: 20px;
-            padding: 15px;
-            background: linear-gradient(45deg, #1e90ff, #007bff);
-            color: white;
+            margin-top: 10px;
+            padding: 10px;
             font-size: 1.2rem;
             font-weight: bold;
-            border: none;
             border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.9);
             transition: all 0.3s ease-in-out;
+        }
+
+        button {
+            background: linear-gradient(45deg, #1e90ff, #007bff);
+            color: white;
+            border: none;
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.9);
         }
 
         button:hover {
@@ -66,16 +69,9 @@
         }
 
         select {
-            width: 100%;
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 5px;
             background: #1e90ff;
             color: white;
             border: none;
-            cursor: pointer;
-            font-weight: bold;
         }
 
         .value-display {
@@ -90,7 +86,7 @@
 </head>
 <body>
     <div class="panel">
-        <h2>sX Store - Advanced Aim System</h2>
+        <h2>sX Store - Ultimate Aim System</h2>
 
         <div class="setting-item">
             <label for="aimbotMode">Modo Aimbot:</label>
@@ -98,6 +94,7 @@
                 <option value="precise">Preciso</option>
                 <option value="adaptive">Adaptativo</option>
                 <option value="aggressive">Agresivo</option>
+                <option value="sniper">Modo Sniper</option>
             </select>
             <button onclick="activateAimbot()">Aimbot</button>
             <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
@@ -109,6 +106,7 @@
                 <option value="predictive">Predictivo</option>
                 <option value="reactive">Reactivo</option>
                 <option value="static">Estático</option>
+                <option value="safeZone">Modo Zona Segura</option>
             </select>
             <button onclick="activateAutoAim()">Auto Aim</button>
             <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
@@ -120,6 +118,7 @@
                 <option value="fixed">Fijo</option>
                 <option value="smooth">Suave</option>
                 <option value="intelligent">Inteligente</option>
+                <option value="predictive">Modo Predictivo</option>
             </select>
             <button onclick="activateHeadtracking()">Headtracking</button>
             <div class="value-display" id="headtrackingStatus">Estado: Inactivo</div>
@@ -127,72 +126,29 @@
     </div>
 
     <script>
+        const bundleID = 'com.dts.freefireios.custom';
+
         function activateAimbot() {
             const mode = document.getElementById('aimbotMode').value;
-            console.log(`Activando Aimbot en modo: ${mode}`);
             document.getElementById('aimbotStatus').textContent = `Estado: Activo (${mode})`;
-            setInterval(() => runAimbotLogic(mode), 20);
+            setInterval(() => executeCommand(`/aimbot_${mode}`), 20);
         }
 
         function activateAutoAim() {
             const mode = document.getElementById('autoAimMode').value;
-            console.log(`Activando Auto Aim en modo: ${mode}`);
             document.getElementById('autoAimStatus').textContent = `Estado: Activo (${mode})`;
-            setInterval(() => runAutoAimLogic(mode), 20);
+            setInterval(() => executeCommand(`/autoaim_${mode}`), 20);
         }
 
         function activateHeadtracking() {
             const mode = document.getElementById('headtrackingMode').value;
-            console.log(`Activando Headtracking en modo: ${mode}`);
             document.getElementById('headtrackingStatus').textContent = `Estado: Activo (${mode})`;
-            setInterval(() => runHeadtrackingLogic(mode), 10);
+            setInterval(() => executeCommand(`/headtracking_${mode}`), 10);
         }
 
-        function runAimbotLogic(mode) {
-            const enemy = findBestTarget();
-            if (enemy) {
-                if (mode === 'precise') lockCrosshairToTarget(enemy.head);
-                if (mode === 'adaptive') smoothlyAdjustCrosshair(enemy.head);
-                if (mode === 'aggressive') fastLockToTarget(enemy.head);
-            }
-        }
-
-        function runAutoAimLogic(mode) {
-            const enemy = findBestTarget();
-            if (enemy) {
-                if (mode === 'predictive') predictEnemyPath(enemy.body);
-                if (mode === 'reactive') quickAdjustCrosshair(enemy.body);
-                if (mode === 'static') keepCrosshairOnTarget(enemy.body);
-            }
-        }
-
-        function runHeadtrackingLogic(mode) {
-            const enemy = findBestTarget();
-            if (enemy) {
-                if (mode === 'fixed') trackEnemyHead(enemy.head);
-                if (mode === 'smooth') smoothlyTrackEnemyHead(enemy.head);
-                if (mode === 'intelligent') predictiveHeadTracking(enemy.head);
-            }
-        }
-
-        function findBestTarget() {
-            const enemies = [
-                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 }, body: { x: 120, y: 280 } },
-                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 }, body: { x: 300, y: 420 } },
-            ];
-            return enemies[0];
-        }
-
-        function lockCrosshairToTarget(target) {
-            console.log(`Aimbot bloqueado en: (${target.x}, ${target.y})`);
-        }
-
-        function smoothlyAdjustCrosshair(target) {
-            console.log(`Ajustando suavemente a: (${target.x}, ${target.y})`);
-        }
-
-        function fastLockToTarget(target) {
-            console.log(`Bloqueo rápido en: (${target.x}, ${target.y})`);
+        function executeCommand(command) {
+            console.log(`Ejecutando comando: ${command}`);
+            window.location.href = `freefire://${bundleID}/execute?command=${command}`;
         }
     </script>
 </body>
