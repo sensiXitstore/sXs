@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Store - Ultimate Aim System</title>
+    <title>sX Store</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         
@@ -25,53 +25,44 @@
             border-radius: 25px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(15px);
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.8);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
             padding: 30px;
-            border: 2px solid rgba(30, 144, 255, 0.9);
+            border: 2px solid rgba(30, 144, 255, 0.8);
             text-align: center;
             transition: all 0.3s ease-in-out;
         }
 
         .panel:hover {
-            box-shadow: 0 0 50px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
         }
 
         h2 {
             font-size: 2.8rem;
             margin-bottom: 20px;
             color: #1e90ff;
-            text-shadow: 0 0 15px rgba(30, 144, 255, 0.9);
-        }
-
-        button, select {
-            display: block;
-            width: 100%;
-            margin-top: 10px;
-            padding: 10px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
 
         button {
+            display: block;
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
             background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
             border: none;
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.9);
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
+            transition: all 0.3s ease-in-out;
         }
 
         button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
             transform: scale(1.05);
-        }
-
-        select {
-            background: #1e90ff;
-            color: white;
-            border: none;
         }
 
         .value-display {
@@ -80,75 +71,142 @@
             font-size: 1.2rem;
             color: #1e90ff;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.9);
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #00aaff;
         }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h2>sX Store - Ultimate Aim System</h2>
+        <h2>sX Store</h2>
 
         <div class="setting-item">
-            <label for="aimbotMode">Modo Aimbot:</label>
-            <select id="aimbotMode">
-                <option value="precise">Preciso</option>
-                <option value="adaptive">Adaptativo</option>
-                <option value="aggressive">Agresivo</option>
-                <option value="sniper">Modo Sniper</option>
-            </select>
             <button onclick="activateAimbot()">Aimbot</button>
             <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
         </div>
 
         <div class="setting-item">
-            <label for="autoAimMode">Modo Auto Aim:</label>
-            <select id="autoAimMode">
-                <option value="predictive">Predictivo</option>
-                <option value="reactive">Reactivo</option>
-                <option value="static">Estático</option>
-                <option value="safeZone">Modo Zona Segura</option>
-            </select>
             <button onclick="activateAutoAim()">Auto Aim</button>
             <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
         </div>
 
         <div class="setting-item">
-            <label for="headtrackingMode">Modo Headtracking:</label>
-            <select id="headtrackingMode">
-                <option value="fixed">Fijo</option>
-                <option value="smooth">Suave</option>
-                <option value="intelligent">Inteligente</option>
-                <option value="predictive">Modo Predictivo</option>
-            </select>
-            <button onclick="activateHeadtracking()">Headtracking</button>
-            <div class="value-display" id="headtrackingStatus">Estado: Inactivo</div>
+            <button onclick="launchModifiedGame()">Lanzar Juego</button>
+        </div>
+
+        <div class="footer">
+            <p>Creado por <a href="https://www.youtube.com/@sensiXiters" target="_blank">@sensiXiters</a></p>
+            <p>Instagram: <a href="https://www.instagram.com/sensixit_store" target="_blank">@sensixit_store</a></p>
         </div>
     </div>
 
     <script>
-        const bundleID = 'com.dts.freefireios.custom';
-
         function activateAimbot() {
-            const mode = document.getElementById('aimbotMode').value;
-            document.getElementById('aimbotStatus').textContent = `Estado: Activo (${mode})`;
-            setInterval(() => executeCommand(`/aimbot_${mode}`), 20);
+            console.log("Activando Aimbot...");
+            document.getElementById('aimbotStatus').textContent = "Estado: Activo";
+            integrateAimbot();
         }
 
         function activateAutoAim() {
-            const mode = document.getElementById('autoAimMode').value;
-            document.getElementById('autoAimStatus').textContent = `Estado: Activo (${mode})`;
-            setInterval(() => executeCommand(`/autoaim_${mode}`), 20);
+            console.log("Activando Auto Aim...");
+            document.getElementById('autoAimStatus').textContent = "Estado: Activo";
+            integrateAutoAim();
         }
 
-        function activateHeadtracking() {
-            const mode = document.getElementById('headtrackingMode').value;
-            document.getElementById('headtrackingStatus').textContent = `Estado: Activo (${mode})`;
-            setInterval(() => executeCommand(`/headtracking_${mode}`), 10);
+        function launchModifiedGame() {
+            const bundleId = 'com.dts.freefireios.custom';
+            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
+            window.location.href = `freefire://${bundleId}/execute`;
         }
 
-        function executeCommand(command) {
-            console.log(`Ejecutando comando: ${command}`);
-            window.location.href = `freefire://${bundleID}/execute?command=${command}`;
+        function integrateAimbot() {
+            console.log("Aimbot activo.");
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemyHead(enemies);
+                    if (target) {
+                        adjustCrosshairToHead(target);
+                    }
+                }
+            }, 50);
+        }
+
+        function integrateAutoAim() {
+            console.log("Auto Aim activo.");
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemy(enemies);
+                    if (target) {
+                        adjustCrosshairToEnemy(target);
+                    }
+                }
+            }, 50);
+        }
+
+        function detectEnemies() {
+            return [
+                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
+                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
+            ];
+        }
+
+        function findClosestEnemyHead(enemies) {
+            return findClosestTarget(enemies, 'head');
+        }
+
+        function findClosestEnemy(enemies) {
+            return findClosestTarget(enemies, 'body');
+        }
+
+        function findClosestTarget(enemies, targetType) {
+            const playerPosition = { x: 200, y: 200 };
+            let closest = null;
+            let minDistance = Infinity;
+
+            enemies.forEach((enemy) => {
+                const target = targetType === 'head' ? enemy.head : enemy;
+                const distance = Math.sqrt(
+                    Math.pow(playerPosition.x - target.x, 2) +
+                    Math.pow(playerPosition.y - target.y, 2)
+                );
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = target;
+                }
+            });
+
+            return closest;
+        }
+
+        function adjustCrosshairToHead(headPosition) {
+            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
+            console.log(`Aimbot ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+        }
+
+        function adjustCrosshairToEnemy(enemyPosition) {
+            const command = `/autoaim_lock?x=${enemyPosition.x}&y=${enemyPosition.y}`;
+            console.log(`Auto Aim ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
 </body>
