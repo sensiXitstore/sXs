@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Store</title>
+    <title>sX Store - Advanced Aim System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
         
@@ -25,22 +25,22 @@
             border-radius: 25px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(15px);
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.8);
             padding: 30px;
-            border: 2px solid rgba(30, 144, 255, 0.8);
+            border: 2px solid rgba(30, 144, 255, 0.9);
             text-align: center;
             transition: all 0.3s ease-in-out;
         }
 
         .panel:hover {
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 50px rgba(30, 144, 255, 1);
         }
 
         h2 {
             font-size: 2.8rem;
             margin-bottom: 20px;
             color: #1e90ff;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+            text-shadow: 0 0 15px rgba(30, 144, 255, 0.9);
         }
 
         button {
@@ -55,14 +55,27 @@
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.9);
             transition: all 0.3s ease-in-out;
         }
 
         button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
             transform: scale(1.05);
+        }
+
+        select {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            background: #1e90ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
         }
 
         .value-display {
@@ -71,157 +84,115 @@
             font-size: 1.2rem;
             color: #1e90ff;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 1rem;
-            text-align: center;
-        }
-
-        .footer a {
-            color: #1e90ff;
-            text-decoration: none;
-            font-weight: bold;
-            transition: all 0.3s ease-in-out;
-        }
-
-        .footer a:hover {
-            text-decoration: underline;
-            color: #00aaff;
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.9);
         }
     </style>
 </head>
 <body>
     <div class="panel">
-        <h2>sX Store</h2>
+        <h2>sX Store - Advanced Aim System</h2>
 
         <div class="setting-item">
+            <label for="aimbotMode">Modo Aimbot:</label>
+            <select id="aimbotMode">
+                <option value="precise">Preciso</option>
+                <option value="adaptive">Adaptativo</option>
+                <option value="aggressive">Agresivo</option>
+            </select>
             <button onclick="activateAimbot()">Aimbot</button>
             <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
         </div>
 
         <div class="setting-item">
+            <label for="autoAimMode">Modo Auto Aim:</label>
+            <select id="autoAimMode">
+                <option value="predictive">Predictivo</option>
+                <option value="reactive">Reactivo</option>
+                <option value="static">Estático</option>
+            </select>
             <button onclick="activateAutoAim()">Auto Aim</button>
             <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
         </div>
 
         <div class="setting-item">
+            <label for="headtrackingMode">Modo Headtracking:</label>
+            <select id="headtrackingMode">
+                <option value="fixed">Fijo</option>
+                <option value="smooth">Suave</option>
+                <option value="intelligent">Inteligente</option>
+            </select>
             <button onclick="activateHeadtracking()">Headtracking</button>
             <div class="value-display" id="headtrackingStatus">Estado: Inactivo</div>
-        </div>
-
-        <div class="setting-item">
-            <button onclick="launchModifiedGame()">Lanzar Juego</button>
-        </div>
-
-        <div class="footer">
-            <p>Creado por <a href="https://www.youtube.com/@sensiXiters" target="_blank">@sensiXiters</a></p>
-            <p>Instagram: <a href="https://www.instagram.com/sensixit_store" target="_blank">@sensixit_store</a></p>
         </div>
     </div>
 
     <script>
         function activateAimbot() {
-            console.log("Activando Aimbot...");
-            document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            integrateAimbot();
+            const mode = document.getElementById('aimbotMode').value;
+            console.log(`Activando Aimbot en modo: ${mode}`);
+            document.getElementById('aimbotStatus').textContent = `Estado: Activo (${mode})`;
+            setInterval(() => runAimbotLogic(mode), 20);
         }
 
         function activateAutoAim() {
-            console.log("Activando Auto Aim...");
-            document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            integrateAutoAim();
+            const mode = document.getElementById('autoAimMode').value;
+            console.log(`Activando Auto Aim en modo: ${mode}`);
+            document.getElementById('autoAimStatus').textContent = `Estado: Activo (${mode})`;
+            setInterval(() => runAutoAimLogic(mode), 20);
         }
 
         function activateHeadtracking() {
-            console.log("Activando Headtracking...");
-            document.getElementById('headtrackingStatus').textContent = "Estado: Activo";
-            integrateHeadtracking();
+            const mode = document.getElementById('headtrackingMode').value;
+            console.log(`Activando Headtracking en modo: ${mode}`);
+            document.getElementById('headtrackingStatus').textContent = `Estado: Activo (${mode})`;
+            setInterval(() => runHeadtrackingLogic(mode), 10);
         }
 
-        function launchModifiedGame() {
-            const bundleId = 'com.dts.freefireios.custom';
-            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
-            window.location.href = `freefire://${bundleId}/execute`;
+        function runAimbotLogic(mode) {
+            const enemy = findBestTarget();
+            if (enemy) {
+                if (mode === 'precise') lockCrosshairToTarget(enemy.head);
+                if (mode === 'adaptive') smoothlyAdjustCrosshair(enemy.head);
+                if (mode === 'aggressive') fastLockToTarget(enemy.head);
+            }
         }
 
-        function integrateAimbot() {
-            setInterval(() => {
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemyHead(enemies);
-                    if (target) {
-                        adjustCrosshairToHead(target);
-                    }
-                }
-            }, 30);
+        function runAutoAimLogic(mode) {
+            const enemy = findBestTarget();
+            if (enemy) {
+                if (mode === 'predictive') predictEnemyPath(enemy.body);
+                if (mode === 'reactive') quickAdjustCrosshair(enemy.body);
+                if (mode === 'static') keepCrosshairOnTarget(enemy.body);
+            }
         }
 
-        function integrateAutoAim() {
-            setInterval(() => {
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemy(enemies);
-                    if (target) {
-                        adjustCrosshairToEnemy(target);
-                    }
-                }
-            }, 30);
+        function runHeadtrackingLogic(mode) {
+            const enemy = findBestTarget();
+            if (enemy) {
+                if (mode === 'fixed') trackEnemyHead(enemy.head);
+                if (mode === 'smooth') smoothlyTrackEnemyHead(enemy.head);
+                if (mode === 'intelligent') predictiveHeadTracking(enemy.head);
+            }
         }
 
-        function integrateHeadtracking() {
-            setInterval(() => {
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemyHead(enemies);
-                    if (target) {
-                        trackEnemyHead(target);
-                    }
-                }
-            }, 20);
-        }
-
-        function detectEnemies() {
-            return [
-                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
-                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
+        function findBestTarget() {
+            const enemies = [
+                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 }, body: { x: 120, y: 280 } },
+                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 }, body: { x: 300, y: 420 } },
             ];
+            return enemies[0];
         }
 
-        function findClosestEnemyHead(enemies) {
-            return findClosestTarget(enemies, 'head');
+        function lockCrosshairToTarget(target) {
+            console.log(`Aimbot bloqueado en: (${target.x}, ${target.y})`);
         }
 
-        function findClosestEnemy(enemies) {
-            return findClosestTarget(enemies, 'body');
+        function smoothlyAdjustCrosshair(target) {
+            console.log(`Ajustando suavemente a: (${target.x}, ${target.y})`);
         }
 
-        function findClosestTarget(enemies, targetType) {
-            const playerPosition = { x: 200, y: 200 };
-            let closest = null;
-            let minDistance = Infinity;
-
-            enemies.forEach((enemy) => {
-                const target = targetType === 'head' ? enemy.head : enemy;
-                const distance = Math.sqrt(
-                    Math.pow(playerPosition.x - target.x, 2) +
-                    Math.pow(playerPosition.y - target.y, 2)
-                );
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closest = target;
-                }
-            });
-
-            return closest;
-        }
-
-        function trackEnemyHead(headPosition) {
-            const command = `/headtracking_follow?x=${headPosition.x}&y=${headPosition.y}`;
-            console.log(`Headtracking ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+        function fastLockToTarget(target) {
+            console.log(`Bloqueo rápido en: (${target.x}, ${target.y})`);
         }
     </script>
 </body>
