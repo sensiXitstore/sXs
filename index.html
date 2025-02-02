@@ -128,42 +128,47 @@
         }
 
         function integrateAimbot() {
-            console.log("Aimbot mejorado activo.");
+            console.log("Aimbot avanzado activado.");
             setInterval(() => {
-                const target = findClosestEnemyHead();
+                const target = findEnemyHead();
                 if (target) {
                     lockCrosshairToHead(target);
                 }
-            }, 30);
+            }, 10);
         }
 
         function integrateAutoAim() {
-            console.log("Auto Aim mejorado activo.");
+            console.log("Auto Aim avanzado activado.");
             setInterval(() => {
-                const target = findClosestEnemy();
+                const target = findEnemyBody();
                 if (target) {
                     lockCrosshairToEnemy(target);
                 }
-            }, 30);
+            }, 10);
         }
 
-        function findClosestEnemyHead() {
-            return { x: Math.random() * 500, y: Math.random() * 500 }; 
+        function findEnemyHead() {
+            return executeGameCommand('/detect_head_position');
         }
 
-        function findClosestEnemy() {
-            return { x: Math.random() * 500, y: Math.random() * 500 }; 
+        function findEnemyBody() {
+            return executeGameCommand('/detect_enemy_position');
         }
 
         function lockCrosshairToHead(headPosition) {
             const command = `/aimbot_lock?x=${headPosition.x}&y=${headPosition.y}`;
             console.log(`Aimbot ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+            executeGameCommand(command);
         }
 
         function lockCrosshairToEnemy(enemyPosition) {
             const command = `/autoaim_adjust?x=${enemyPosition.x}&y=${enemyPosition.y}`;
             console.log(`Auto Aim ejecutando: ${command}`);
+            executeGameCommand(command);
+        }
+
+        function executeGameCommand(command) {
+            console.log(`Ejecutando en Free Fire: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
