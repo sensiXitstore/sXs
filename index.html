@@ -108,6 +108,11 @@
         </div>
 
         <div class="setting-item">
+            <button onclick="activateHeadtracking()">Headtracking</button>
+            <div class="value-display" id="headtrackingStatus">Estado: Inactivo</div>
+        </div>
+
+        <div class="setting-item">
             <button onclick="launchModifiedGame()">Lanzar Juego</button>
         </div>
 
@@ -130,6 +135,12 @@
             integrateAutoAim();
         }
 
+        function activateHeadtracking() {
+            console.log("Activando Headtracking...");
+            document.getElementById('headtrackingStatus').textContent = "Estado: Activo";
+            integrateHeadtracking();
+        }
+
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
@@ -137,7 +148,6 @@
         }
 
         function integrateAimbot() {
-            console.log("Aimbot activo.");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -150,13 +160,24 @@
         }
 
         function integrateAutoAim() {
-            console.log("Auto Aim activo.");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
                     const target = findClosestEnemy(enemies);
                     if (target) {
                         adjustCrosshairToEnemy(target);
+                    }
+                }
+            }, 50);
+        }
+
+        function integrateHeadtracking() {
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemyHead(enemies);
+                    if (target) {
+                        trackEnemyHead(target);
                     }
                 }
             }, 50);
@@ -197,15 +218,9 @@
             return closest;
         }
 
-        function adjustCrosshairToHead(headPosition) {
-            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
-            console.log(`Aimbot ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-        }
-
-        function adjustCrosshairToEnemy(enemyPosition) {
-            const command = `/autoaim_lock?x=${enemyPosition.x}&y=${enemyPosition.y}`;
-            console.log(`Auto Aim ejecutando: ${command}`);
+        function trackEnemyHead(headPosition) {
+            const command = `/headtracking_follow?x=${headPosition.x}&y=${headPosition.y}`;
+            console.log(`Headtracking ejecutando: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
