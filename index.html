@@ -25,22 +25,22 @@
             border-radius: 25px;
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(15px);
-            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.8);
             padding: 30px;
-            border: 2px solid rgba(30, 144, 255, 0.8);
+            border: 3px solid rgba(30, 144, 255, 1);
             text-align: center;
             transition: all 0.3s ease-in-out;
         }
 
         .panel:hover {
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 50px rgba(30, 144, 255, 1);
         }
 
         h2 {
-            font-size: 2.8rem;
+            font-size: 3rem;
             margin-bottom: 20px;
             color: #1e90ff;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+            text-shadow: 0 0 15px rgba(30, 144, 255, 1);
         }
 
         button {
@@ -50,33 +50,33 @@
             padding: 15px;
             background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 1);
             transition: all 0.3s ease-in-out;
         }
 
         button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
-            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            transform: scale(1.1);
         }
 
         .value-display {
             text-align: center;
             margin-top: 10px;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             color: #1e90ff;
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+            text-shadow: 0 0 10px rgba(30, 144, 255, 1);
         }
 
         .footer {
             margin-top: 20px;
-            font-size: 1rem;
+            font-size: 1.1rem;
             text-align: center;
         }
 
@@ -124,59 +124,39 @@
 
     <script>
         function activateAimbot() {
-            console.log("Activando Aimbot...");
+            console.log("⚡ Activando Aimbot Extremo...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            integrateAimbot();
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    adjustCrosshairToHead(findClosestEnemyHead(enemies));
+                }
+            }, 20); // Aimbot ultra rápido
         }
 
         function activateAutoAim() {
-            console.log("Activando Auto Aim...");
+            console.log("🎯 Activando Auto Aim Ultra Preciso...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            integrateAutoAim();
+            setInterval(() => {
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    adjustCrosshairToEnemy(findClosestEnemy(enemies));
+                }
+            }, 20); // Auto Aim super reactivo
         }
 
         function activateNoRecoil() {
-            console.log("Activando No Recoil...");
+            console.log("🔫 Activando No Recoil Total...");
             document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
-            integrateNoRecoil();
+            setInterval(() => {
+                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=/remove_recoil_extreme`;
+            }, 10); // No Recoil ejecutado con máxima frecuencia
         }
 
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
-            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
+            console.log(`🚀 Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
-        }
-
-        function integrateAimbot() {
-            setInterval(() => {
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemyHead(enemies);
-                    if (target) {
-                        adjustCrosshairToHead(target);
-                    }
-                }
-            }, 50);
-        }
-
-        function integrateAutoAim() {
-            setInterval(() => {
-                const enemies = detectEnemies();
-                if (enemies.length > 0) {
-                    const target = findClosestEnemy(enemies);
-                    if (target) {
-                        adjustCrosshairToEnemy(target);
-                    }
-                }
-            }, 50);
-        }
-
-        function integrateNoRecoil() {
-            setInterval(() => {
-                console.log("Eliminando retroceso...");
-                const command = "/remove_recoil";
-                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-            }, 50);
         }
 
         function detectEnemies() {
@@ -187,31 +167,21 @@
         }
 
         function findClosestEnemyHead(enemies) {
-            return findClosestTarget(enemies, 'head');
+            return enemies.reduce((closest, enemy) =>
+                (Math.abs(200 - enemy.head.x) < Math.abs(200 - (closest?.head?.x || Infinity))) ? enemy : closest, null)?.head;
         }
 
         function findClosestEnemy(enemies) {
-            return findClosestTarget(enemies, 'body');
+            return enemies.reduce((closest, enemy) =>
+                (Math.abs(200 - enemy.x) < Math.abs(200 - (closest?.x || Infinity))) ? enemy : closest, null);
         }
 
-        function findClosestTarget(enemies, targetType) {
-            const playerPosition = { x: 200, y: 200 };
-            let closest = null;
-            let minDistance = Infinity;
+        function adjustCrosshairToHead(headPosition) {
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=/aimbot_lock_head_x${headPosition.x}_y${headPosition.y}`;
+        }
 
-            enemies.forEach((enemy) => {
-                const target = targetType === 'head' ? enemy.head : enemy;
-                const distance = Math.sqrt(
-                    Math.pow(playerPosition.x - target.x, 2) +
-                    Math.pow(playerPosition.y - target.y, 2)
-                );
-                if (distance < minDistance) {
-                    minDistance = distance;
-                    closest = target;
-                }
-            });
-
-            return closest;
+        function adjustCrosshairToEnemy(enemyPosition) {
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=/autoaim_lock_x${enemyPosition.x}_y${enemyPosition.y}`;
         }
     </script>
 </body>
