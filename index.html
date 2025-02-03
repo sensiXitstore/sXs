@@ -10,7 +10,8 @@
         body {
             margin: 0;
             font-family: 'Orbitron', sans-serif;
-            background: black;
+            background: url('data:image/jpeg;base64,/9j/4QEIRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAEaAAUAAAABAAAAVgEbAAUAAAABAAAAX') no-repeat center center fixed;
+            background-size: cover;
             color: white;
             height: 100vh;
             display: flex;
@@ -22,49 +23,73 @@
             width: 90%;
             max-width: 500px;
             border-radius: 25px;
-            background: rgba(0, 0, 0, 0.9);
-            box-shadow: 0 0 50px rgba(30, 144, 255, 1);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.6);
             padding: 30px;
-            border: 4px solid rgba(30, 144, 255, 1);
+            border: 2px solid rgba(30, 144, 255, 0.8);
             text-align: center;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .panel:hover {
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
         }
 
         h2 {
-            font-size: 3.5rem;
+            font-size: 2.8rem;
             margin-bottom: 20px;
             color: #1e90ff;
-            text-shadow: 0 0 30px rgba(30, 144, 255, 1);
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
         }
 
         button {
             display: block;
             width: 100%;
             margin-top: 20px;
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             cursor: pointer;
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
-            transition: all 0.2s ease-in-out;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
+            transition: all 0.3s ease-in-out;
         }
 
         button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 70px rgba(30, 144, 255, 1);
-            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
+            transform: scale(1.05);
         }
 
         .value-display {
             text-align: center;
             margin-top: 10px;
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             color: #1e90ff;
             font-weight: bold;
-            text-shadow: 0 0 25px rgba(30, 144, 255, 1);
+            text-shadow: 0 0 10px rgba(30, 144, 255, 0.8);
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+            color: #00aaff;
         }
     </style>
 </head>
@@ -83,95 +108,104 @@
         </div>
 
         <div class="setting-item">
-            <button onclick="activateNoRecoil()">No Recoil</button>
-            <div class="value-display" id="noRecoilStatus">Estado: Inactivo</div>
+            <button onclick="launchModifiedGame()">Lanzar Juego</button>
         </div>
 
-        <div class="setting-item">
-            <button onclick="launchModifiedGame()">Lanzar Juego</button>
+        <div class="footer">
+            <p>Creado por <a href="https://www.youtube.com/@sensiXiters" target="_blank">@sensiXiters</a></p>
+            <p>Instagram: <a href="https://www.instagram.com/sensixit_store" target="_blank">@sensixit_store</a></p>
         </div>
     </div>
 
     <script>
         function activateAimbot() {
-            console.log("⚡ Aimbot ULTRA ACTIVADO...");
+            console.log("Activando Aimbot...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            startAimbot("Extreme Aggressive Mode");
+            integrateAimbot();
         }
 
         function activateAutoAim() {
-            console.log("🎯 Auto Aim EXTREMO ACTIVADO...");
+            console.log("Activando Auto Aim...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            startAutoAim("360° Auto Aim");
-        }
-
-        function activateNoRecoil() {
-            console.log("🔫 No Recoil TOTAL ACTIVADO...");
-            document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
-            startNoRecoil("Zero Gravity Mode");
+            integrateAutoAim();
         }
 
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
-            console.log(`🚀 Lanzando juego con Bundle ID: ${bundleId}`);
+            console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
         }
 
-        function startAimbot(mode) {
-            let command;
-            switch (mode) {
-                case "Ultra Lock Mode":
-                    command = "/aimbot_ultra_lock";
-                    break;
-                case "Hyper Tracking Mode":
-                    command = "/aimbot_hyper_tracking";
-                    break;
-                case "Extreme Aggressive Mode":
-                    command = "/aimbot_extreme_aggressive";
-                    break;
-            }
+        function integrateAimbot() {
+            console.log("Aimbot activo.");
             setInterval(() => {
-                sendCommand(command);
-            }, 2); // Máxima velocidad de ajuste
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemyHead(enemies);
+                    if (target) {
+                        adjustCrosshairToHead(target);
+                    }
+                }
+            }, 50);
         }
 
-        function startAutoAim(mode) {
-            let command;
-            switch (mode) {
-                case "Hyper Precision":
-                    command = "/autoaim_hyper_precision";
-                    break;
-                case "Smart Lock":
-                    command = "/autoaim_smart_lock";
-                    break;
-                case "360° Auto Aim":
-                    command = "/autoaim_360";
-                    break;
-            }
+        function integrateAutoAim() {
+            console.log("Auto Aim activo.");
             setInterval(() => {
-                sendCommand(command);
-            }, 2); // Auto Aim reactivo y dinámico
+                const enemies = detectEnemies();
+                if (enemies.length > 0) {
+                    const target = findClosestEnemy(enemies);
+                    if (target) {
+                        adjustCrosshairToEnemy(target);
+                    }
+                }
+            }, 50);
         }
 
-        function startNoRecoil(mode) {
-            let command;
-            switch (mode) {
-                case "Zero Gravity Mode":
-                    command = "/remove_recoil_zero_gravity";
-                    break;
-                case "Advanced Bullet Control":
-                    command = "/remove_recoil_bullet_control";
-                    break;
-                case "Hyper Stability":
-                    command = "/remove_recoil_hyper_stability";
-                    break;
-            }
-            setInterval(() => {
-                sendCommand(command);
-            }, 1); // No Recoil con la mínima latencia posible
+        function detectEnemies() {
+            return [
+                { id: 1, x: 120, y: 250, head: { x: 120, y: 220 } },
+                { id: 2, x: 300, y: 400, head: { x: 300, y: 370 } },
+            ];
         }
 
-        function sendCommand(command) {
+        function findClosestEnemyHead(enemies) {
+            return findClosestTarget(enemies, 'head');
+        }
+
+        function findClosestEnemy(enemies) {
+            return findClosestTarget(enemies, 'body');
+        }
+
+        function findClosestTarget(enemies, targetType) {
+            const playerPosition = { x: 200, y: 200 };
+            let closest = null;
+            let minDistance = Infinity;
+
+            enemies.forEach((enemy) => {
+                const target = targetType === 'head' ? enemy.head : enemy;
+                const distance = Math.sqrt(
+                    Math.pow(playerPosition.x - target.x, 2) +
+                    Math.pow(playerPosition.y - target.y, 2)
+                );
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closest = target;
+                }
+            });
+
+            return closest;
+        }
+
+        function adjustCrosshairToHead(headPosition) {
+            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
+            console.log(`Aimbot ejecutando: ${command}`);
+            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
+        }
+
+        function adjustCrosshairToEnemy(enemyPosition) {
+            const command = `/autoaim_lock?x=${enemyPosition.x}&y=${enemyPosition.y}`;
+            console.log(`Auto Aim ejecutando: ${command}`);
             window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
