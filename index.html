@@ -108,6 +108,11 @@
         </div>
 
         <div class="setting-item">
+            <button onclick="activateNoRecoil()">No Recoil</button>
+            <div class="value-display" id="noRecoilStatus">Estado: Inactivo</div>
+        </div>
+
+        <div class="setting-item">
             <button onclick="launchModifiedGame()">Lanzar Juego</button>
         </div>
 
@@ -130,6 +135,12 @@
             integrateAutoAim();
         }
 
+        function activateNoRecoil() {
+            console.log("Activando No Recoil...");
+            document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
+            integrateNoRecoil();
+        }
+
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`Lanzando juego con Bundle ID: ${bundleId}`);
@@ -137,7 +148,6 @@
         }
 
         function integrateAimbot() {
-            console.log("Aimbot activo.");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -150,7 +160,6 @@
         }
 
         function integrateAutoAim() {
-            console.log("Auto Aim activo.");
             setInterval(() => {
                 const enemies = detectEnemies();
                 if (enemies.length > 0) {
@@ -159,6 +168,14 @@
                         adjustCrosshairToEnemy(target);
                     }
                 }
+            }, 50);
+        }
+
+        function integrateNoRecoil() {
+            setInterval(() => {
+                console.log("Eliminando retroceso...");
+                const command = "/remove_recoil";
+                window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
             }, 50);
         }
 
@@ -195,18 +212,6 @@
             });
 
             return closest;
-        }
-
-        function adjustCrosshairToHead(headPosition) {
-            const command = `/adjust_crosshair?x=${headPosition.x}&y=${headPosition.y}`;
-            console.log(`Aimbot ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
-        }
-
-        function adjustCrosshairToEnemy(enemyPosition) {
-            const command = `/autoaim_lock?x=${enemyPosition.x}&y=${enemyPosition.y}`;
-            console.log(`Auto Aim ejecutando: ${command}`);
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
 </body>
