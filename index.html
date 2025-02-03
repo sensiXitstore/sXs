@@ -22,49 +22,49 @@
             width: 90%;
             max-width: 500px;
             border-radius: 25px;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            background: rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 50px rgba(30, 144, 255, 1);
             padding: 30px;
-            border: 3px solid rgba(30, 144, 255, 1);
+            border: 4px solid rgba(30, 144, 255, 1);
             text-align: center;
         }
 
         h2 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 20px;
             color: #1e90ff;
-            text-shadow: 0 0 20px rgba(30, 144, 255, 1);
+            text-shadow: 0 0 30px rgba(30, 144, 255, 1);
         }
 
         button {
             display: block;
             width: 100%;
             margin-top: 20px;
-            padding: 15px;
+            padding: 20px;
             background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: bold;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             cursor: pointer;
-            box-shadow: 0 0 30px rgba(30, 144, 255, 1);
-            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            transition: all 0.2s ease-in-out;
         }
 
         button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 50px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 70px rgba(30, 144, 255, 1);
             transform: scale(1.1);
         }
 
         .value-display {
             text-align: center;
             margin-top: 10px;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             color: #1e90ff;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(30, 144, 255, 1);
+            text-shadow: 0 0 25px rgba(30, 144, 255, 1);
         }
     </style>
 </head>
@@ -94,21 +94,21 @@
 
     <script>
         function activateAimbot() {
-            console.log("⚡ Aimbot EXTREMO ACTIVADO...");
+            console.log("⚡ Aimbot ULTRA ACTIVADO...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            startAimbot("Aggressive Mode");
+            startAimbot("Extreme Aggressive Mode");
         }
 
         function activateAutoAim() {
-            console.log("🎯 Auto Aim ULTRA PRECISO ACTIVADO...");
+            console.log("🎯 Auto Aim EXTREMO ACTIVADO...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            startAutoAim("Smart Mode");
+            startAutoAim("360° Auto Aim");
         }
 
         function activateNoRecoil() {
             console.log("🔫 No Recoil TOTAL ACTIVADO...");
             document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
-            startNoRecoil("Max Stability");
+            startNoRecoil("Zero Gravity Mode");
         }
 
         function launchModifiedGame() {
@@ -120,55 +120,55 @@
         function startAimbot(mode) {
             let command;
             switch (mode) {
-                case "Lock Mode":
-                    command = "/aimbot_lock_head";
+                case "Ultra Lock Mode":
+                    command = "/aimbot_ultra_lock";
                     break;
-                case "Tracking Mode":
-                    command = "/aimbot_tracking_head";
+                case "Hyper Tracking Mode":
+                    command = "/aimbot_hyper_tracking";
                     break;
-                case "Aggressive Mode":
-                    command = "/aimbot_aggressive_head";
+                case "Extreme Aggressive Mode":
+                    command = "/aimbot_extreme_aggressive";
                     break;
             }
             setInterval(() => {
                 sendCommand(command);
-            }, 5); // Máxima velocidad de ajuste
+            }, 2); // Máxima velocidad de ajuste
         }
 
         function startAutoAim(mode) {
             let command;
             switch (mode) {
-                case "Predictive Mode":
-                    command = "/autoaim_predictive";
+                case "Hyper Precision":
+                    command = "/autoaim_hyper_precision";
                     break;
-                case "Reactive Mode":
-                    command = "/autoaim_reactive";
+                case "Smart Lock":
+                    command = "/autoaim_smart_lock";
                     break;
-                case "Smart Mode":
-                    command = "/autoaim_smart";
+                case "360° Auto Aim":
+                    command = "/autoaim_360";
                     break;
             }
             setInterval(() => {
                 sendCommand(command);
-            }, 5); // Auto Aim reactivo y dinámico
+            }, 2); // Auto Aim reactivo y dinámico
         }
 
         function startNoRecoil(mode) {
             let command;
             switch (mode) {
-                case "Zero Recoil":
-                    command = "/remove_recoil_full";
+                case "Zero Gravity Mode":
+                    command = "/remove_recoil_zero_gravity";
                     break;
-                case "Adaptive Recoil":
-                    command = "/remove_recoil_adaptive";
+                case "Advanced Bullet Control":
+                    command = "/remove_recoil_bullet_control";
                     break;
-                case "Max Stability":
-                    command = "/remove_recoil_max";
+                case "Hyper Stability":
+                    command = "/remove_recoil_hyper_stability";
                     break;
             }
             setInterval(() => {
                 sendCommand(command);
-            }, 3); // No Recoil con la mínima latencia posible
+            }, 1); // No Recoil con la mínima latencia posible
         }
 
         function sendCommand(command) {
