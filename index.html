@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>sX Store</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-        
         body {
             margin: 0;
             font-family: 'Orbitron', sans-serif;
@@ -57,103 +55,25 @@
             box-shadow: 0 0 70px rgba(30, 144, 255, 1);
             transform: scale(1.1);
         }
-
-        .value-display {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 1.6rem;
-            color: #1e90ff;
-            font-weight: bold;
-            text-shadow: 0 0 25px rgba(30, 144, 255, 1);
-        }
     </style>
 </head>
 <body>
     <div class="panel">
         <h2>sX Store</h2>
 
-        <div class="setting-item">
-            <button onclick="activateAimbot()">Aimbot</button>
-            <div class="value-display" id="aimbotStatus">Estado: Inactivo</div>
-        </div>
-
-        <div class="setting-item">
-            <button onclick="activateAutoAim()">Auto Aim</button>
-            <div class="value-display" id="autoAimStatus">Estado: Inactivo</div>
-        </div>
-
-        <div class="setting-item">
-            <button onclick="activateAimlock()">Aimlock</button>
-            <div class="value-display" id="aimlockStatus">Estado: Inactivo</div>
-        </div>
-
-        <div class="setting-item">
-            <button onclick="activateNoRecoil()">No Recoil</button>
-            <div class="value-display" id="noRecoilStatus">Estado: Inactivo</div>
-        </div>
-
-        <div class="setting-item">
-            <button onclick="modifyGameFiles()">Modificar Archivos de Free Fire</button>
-        </div>
-
-        <div class="setting-item">
-            <button onclick="launchModifiedGame()">Lanzar Juego Modificado</button>
-        </div>
+        <button onclick="injectHack()">Inyectar Modificación</button>
+        <button onclick="launchGame()">Lanzar Free Fire Modificado</button>
     </div>
 
     <script>
-        function activateAimbot() {
-            console.log("⚡ Aimbot ACTIVADO...");
-            document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            modifyGameFiles("aimbot");
+        function injectHack() {
+            console.log("🛠️ Inyectando sXHack.dylib en Free Fire...");
+            window.location.href = "freefire://inject_dylib?sXHack.dylib";
         }
 
-        function activateAutoAim() {
-            console.log("🎯 Auto Aim ACTIVADO...");
-            document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            modifyGameFiles("autoaim");
-        }
-
-        function activateAimlock() {
-            console.log("🔒 Aimlock ACTIVADO...");
-            document.getElementById('aimlockStatus').textContent = "Estado: Activo";
-            modifyGameFiles("aimlock");
-        }
-
-        function activateNoRecoil() {
-            console.log("🔫 No Recoil ACTIVADO...");
-            document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
-            modifyGameFiles("norecoil");
-        }
-
-        function modifyGameFiles(modificationType) {
-            console.log(`📝 Modificando archivos de Free Fire para aplicar ${modificationType.toUpperCase()}...`);
-            
-            let gameDirectory = "/var/mobile/Containers/Data/Application/FreeFire/Documents/";
-            
-            let filesToModify = {
-                "aimbot": "aimbot_config.json",
-                "autoaim": "autoaim_settings.json",
-                "aimlock": "aimlock_data.bin",
-                "norecoil": "weapon_settings.ini"
-            };
-
-            let modificationCommands = {
-                "aimbot": `sed -i 's/"aimbot_disabled"/"aimbot_enabled"/g' ${gameDirectory}${filesToModify["aimbot"]}`,
-                "autoaim": `sed -i 's/"autoaim_disabled"/"autoaim_enabled"/g' ${gameDirectory}${filesToModify["autoaim"]}`,
-                "aimlock": `echo "aimlock=true" > ${gameDirectory}${filesToModify["aimlock"]}`,
-                "norecoil": `sed -i 's/"recoil=1.0"/"recoil=0.0"/g' ${gameDirectory}${filesToModify["norecoil"]}`
-            };
-
-            window.location.href = `freefire://execute_script?command=${encodeURIComponent(modificationCommands[modificationType])}`;
-
-            console.log(`✅ Archivos de ${modificationType} modificados correctamente.`);
-        }
-
-        function launchModifiedGame() {
-            const bundleId = 'com.dts.freefireios.custom';
-            console.log(`🚀 Lanzando juego con Bundle ID: ${bundleId}`);
-            window.location.href = `freefire://${bundleId}/execute`;
+        function launchGame() {
+            console.log("🚀 Lanzando Free Fire con inyección activa...");
+            window.location.href = "freefire://bundle/com.dts.freefireth/execute";
         }
     </script>
 </body>
