@@ -68,11 +68,38 @@
         .eject:hover {
             background: rgba(255, 77, 77, 0.5);
         }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #1e90ff, #007bff);
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+        }
+
+        label:hover {
+            background: linear-gradient(45deg, #007bff, #1e90ff);
+            box-shadow: 0 0 70px rgba(30, 144, 255, 1);
+        }
     </style>
 </head>
 <body>
     <div class="panel">
         <h2>Free Fire</h2>
+
+        <!-- Selector de archivos para sXHack.dylib -->
+        <input type="file" id="dylibFile" accept=".dylib">
+        <label for="dylibFile">📂 Seleccionar sXHack.dylib</label>
 
         <div class="button-container">
             <button class="button inject" onclick="injectDylib()">Inject</button>
@@ -83,17 +110,39 @@
     </div>
 
     <script>
-        let dylibPath = "/var/mobile/Containers/Data/Application/sXHack.dylib";
+        let selectedDylibPath = "";
 
+        // Captura el archivo seleccionado
+        document.getElementById("dylibFile").addEventListener("change", function(event) {
+            let file = event.target.files[0];
+            if (file) {
+                selectedDylibPath = file.name;
+                console.log("📂 Archivo seleccionado: " + selectedDylibPath);
+                alert("✅ Archivo " + selectedDylibPath + " seleccionado correctamente.");
+            }
+        });
+
+        // Inyectar el Dylib seleccionado
         function injectDylib() {
-            console.log("🛠️ Inyectando sXHack.dylib en Free Fire...");
-            window.location.href = `freefire://bundle/com.dts.freefireth/inject_dylib?file=${encodeURIComponent(dylibPath)}`;
+            if (!selectedDylibPath) {
+                alert("⚠️ Primero selecciona el archivo sXHack.dylib.");
+                return;
+            }
+
+            console.log("🛠️ Inyectando " + selectedDylibPath + " en Free Fire (`com.dts.freefireth`)...");
+            window.location.href = "freefire://bundle/com.dts.freefireth/inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
             alert("✅ sXHack.dylib inyectado correctamente en Free Fire.");
         }
 
+        // Eliminar el Dylib inyectado
         function ejectDylib() {
-            console.log("🛠️ Eliminando sXHack.dylib de Free Fire...");
-            window.location.href = `freefire://bundle/com.dts.freefireth/eject_dylib?file=${encodeURIComponent(dylibPath)}`;
+            if (!selectedDylibPath) {
+                alert("⚠️ No hay un archivo inyectado para eliminar.");
+                return;
+            }
+
+            console.log("🛠️ Eliminando " + selectedDylibPath + " de Free Fire (`com.dts.freefireth`)...");
+            window.location.href = "freefire://bundle/com.dts.freefireth/eject_dylib?file=" + encodeURIComponent(selectedDylibPath);
             alert("❌ sXHack.dylib eliminado correctamente de Free Fire.");
         }
     </script>
