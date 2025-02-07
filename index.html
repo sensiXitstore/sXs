@@ -34,14 +34,14 @@
             text-shadow: 0 0 30px rgba(30, 144, 255, 1);
         }
 
-        button {
+        button, input {
             display: block;
             width: 100%;
             margin-top: 20px;
-            padding: 20px;
+            padding: 15px;
             background: linear-gradient(45deg, #1e90ff, #007bff);
             color: white;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: bold;
             border: none;
             border-radius: 15px;
@@ -55,20 +55,64 @@
             box-shadow: 0 0 70px rgba(30, 144, 255, 1);
             transform: scale(1.1);
         }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #1e90ff, #007bff);
+            color: white;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+        }
+
+        label:hover {
+            background: linear-gradient(45deg, #007bff, #1e90ff);
+            box-shadow: 0 0 70px rgba(30, 144, 255, 1);
+        }
     </style>
 </head>
 <body>
     <div class="panel">
         <h2>sX Store</h2>
 
-        <button onclick="injectHack()">Inyectar Modificación</button>
-        <button onclick="launchGame()">Lanzar Free Fire Modificado</button>
+        <!-- Selección del Dylib -->
+        <input type="file" id="dylibFile" accept=".dylib">
+        <label for="dylibFile">📂 Seleccionar sXHack.dylib</label>
+        
+        <button onclick="injectDylib()">🔗 Inyectar Modificación</button>
+        <button onclick="launchGame()">🚀 Lanzar Free Fire Modificado</button>
     </div>
 
     <script>
-        function injectHack() {
-            console.log("🛠️ Inyectando sXHack.dylib en Free Fire...");
-            window.location.href = "freefire://inject_dylib?sXHack.dylib";
+        let selectedDylibPath = "";
+
+        document.getElementById("dylibFile").addEventListener("change", function(event) {
+            let file = event.target.files[0];
+            if (file) {
+                selectedDylibPath = file.name;
+                console.log("📂 Archivo seleccionado: " + selectedDylibPath);
+                alert("✅ Archivo " + selectedDylibPath + " seleccionado correctamente.");
+            }
+        });
+
+        function injectDylib() {
+            if (!selectedDylibPath) {
+                alert("⚠️ Primero selecciona el archivo sXHack.dylib.");
+                return;
+            }
+
+            console.log("🛠️ Inyectando " + selectedDylibPath + " en Free Fire...");
+            window.location.href = "freefire://inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
+            alert("✅ sXHack.dylib inyectado correctamente.");
         }
 
         function launchGame() {
