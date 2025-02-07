@@ -89,7 +89,6 @@
         <label for="dylibFile">📂 Seleccionar sXHack.dylib</label>
         
         <button onclick="injectDylib()">🔗 Inyectar Modificación</button>
-        <button onclick="launchGame()">🚀 Lanzar Free Fire Modificado</button>
     </div>
 
     <script>
@@ -113,11 +112,6 @@
             console.log("🛠️ Inyectando " + selectedDylibPath + " en Free Fire...");
             window.location.href = "freefire://inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
             alert("✅ sXHack.dylib inyectado correctamente.");
-        }
-
-        function launchGame() {
-            console.log("🚀 Lanzando Free Fire con inyección activa...");
-            window.location.href = "freefire://bundle/com.dts.freefireth/execute";
         }
     </script>
 </body>
