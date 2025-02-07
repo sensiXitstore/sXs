@@ -93,7 +93,11 @@
         </div>
 
         <div class="setting-item">
-            <button onclick="launchModifiedGame()">Lanzar Juego</button>
+            <button onclick="modifyGameFiles()">Modificar Archivos de Free Fire</button>
+        </div>
+
+        <div class="setting-item">
+            <button onclick="launchModifiedGame()">Lanzar Juego Modificado</button>
         </div>
     </div>
 
@@ -101,63 +105,55 @@
         function activateAimbot() {
             console.log("⚡ Aimbot ACTIVADO...");
             document.getElementById('aimbotStatus').textContent = "Estado: Activo";
-            startAimbot("Head Lock Mode");
+            modifyGameFiles("aimbot");
         }
 
         function activateAutoAim() {
             console.log("🎯 Auto Aim ACTIVADO...");
             document.getElementById('autoAimStatus').textContent = "Estado: Activo";
-            startAutoAim("Smart Aim");
+            modifyGameFiles("autoaim");
         }
 
         function activateAimlock() {
             console.log("🔒 Aimlock ACTIVADO...");
             document.getElementById('aimlockStatus').textContent = "Estado: Activo";
-            startAimlock("Perma Lock");
+            modifyGameFiles("aimlock");
         }
 
         function activateNoRecoil() {
             console.log("🔫 No Recoil ACTIVADO...");
             document.getElementById('noRecoilStatus').textContent = "Estado: Activo";
-            startNoRecoil("Max Bullet Control");
+            modifyGameFiles("norecoil");
+        }
+
+        function modifyGameFiles(modificationType) {
+            console.log(`📝 Modificando archivos de Free Fire para aplicar ${modificationType.toUpperCase()}...`);
+            
+            let gameDirectory = "/var/mobile/Containers/Data/Application/FreeFire/Documents/";
+            
+            let filesToModify = {
+                "aimbot": "aimbot_config.json",
+                "autoaim": "autoaim_settings.json",
+                "aimlock": "aimlock_data.bin",
+                "norecoil": "weapon_settings.ini"
+            };
+
+            let modificationCommands = {
+                "aimbot": `sed -i 's/"aimbot_disabled"/"aimbot_enabled"/g' ${gameDirectory}${filesToModify["aimbot"]}`,
+                "autoaim": `sed -i 's/"autoaim_disabled"/"autoaim_enabled"/g' ${gameDirectory}${filesToModify["autoaim"]}`,
+                "aimlock": `echo "aimlock=true" > ${gameDirectory}${filesToModify["aimlock"]}`,
+                "norecoil": `sed -i 's/"recoil=1.0"/"recoil=0.0"/g' ${gameDirectory}${filesToModify["norecoil"]}`
+            };
+
+            window.location.href = `freefire://execute_script?command=${encodeURIComponent(modificationCommands[modificationType])}`;
+
+            console.log(`✅ Archivos de ${modificationType} modificados correctamente.`);
         }
 
         function launchModifiedGame() {
             const bundleId = 'com.dts.freefireios.custom';
             console.log(`🚀 Lanzando juego con Bundle ID: ${bundleId}`);
             window.location.href = `freefire://${bundleId}/execute`;
-        }
-
-        function startAimbot(mode) {
-            let command = `/aimbot_${mode.toLowerCase().replace(" ", "_")}`;
-            setInterval(() => {
-                sendCommand(command);
-            }, 1);
-        }
-
-        function startAutoAim(mode) {
-            let command = `/autoaim_${mode.toLowerCase().replace(" ", "_")}`;
-            setInterval(() => {
-                sendCommand(command);
-            }, 1);
-        }
-
-        function startAimlock(mode) {
-            let command = `/aimlock_${mode.toLowerCase().replace(" ", "_")}`;
-            setInterval(() => {
-                sendCommand(command);
-            }, 1);
-        }
-
-        function startNoRecoil(mode) {
-            let command = `/remove_recoil_${mode.toLowerCase().replace(" ", "_")}`;
-            setInterval(() => {
-                sendCommand(command);
-            }, 1);
-        }
-
-        function sendCommand(command) {
-            window.location.href = `freefire://bundle/com.dts.freefireios.custom/execute?command=${command}`;
         }
     </script>
 </body>
