@@ -34,49 +34,45 @@
             text-shadow: 0 0 30px rgba(30, 144, 255, 1);
         }
 
-        button, input {
-            display: block;
-            width: 100%;
+        .button-container {
+            display: flex;
+            justify-content: space-around;
             margin-top: 20px;
-            padding: 15px;
-            background: linear-gradient(45deg, #1e90ff, #007bff);
-            color: white;
-            font-size: 1.4rem;
+        }
+
+        .button {
+            width: 40%;
+            padding: 20px;
+            font-size: 1.5rem;
             font-weight: bold;
             border: none;
             border-radius: 15px;
             cursor: pointer;
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
             transition: all 0.2s ease-in-out;
         }
 
-        button:hover {
+        .inject {
+            background: linear-gradient(45deg, #1e90ff, #007bff);
+            color: white;
+            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+        }
+
+        .inject:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
             box-shadow: 0 0 70px rgba(30, 144, 255, 1);
             transform: scale(1.1);
         }
 
-        input[type="file"] {
-            display: none;
-        }
-
-        label {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(45deg, #1e90ff, #007bff);
+        .eject {
+            background: linear-gradient(45deg, #ff4d4d, #ff0000);
             color: white;
-            font-size: 1.4rem;
-            font-weight: bold;
-            border-radius: 15px;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0 0 40px rgba(30, 144, 255, 1);
+            box-shadow: 0 0 40px rgba(255, 77, 77, 1);
         }
 
-        label:hover {
-            background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 70px rgba(30, 144, 255, 1);
+        .eject:hover {
+            background: linear-gradient(45deg, #ff0000, #ff4d4d);
+            box-shadow: 0 0 70px rgba(255, 77, 77, 1);
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -84,34 +80,23 @@
     <div class="panel">
         <h2>sX Store</h2>
 
-        <!-- Selección del Dylib -->
-        <input type="file" id="dylibFile" accept=".dylib">
-        <label for="dylibFile">📂 Seleccionar sXHack.dylib</label>
-        
-        <button onclick="injectDylib()">🔗 Inyectar Modificación</button>
+        <div class="button-container">
+            <button class="button inject" onclick="injectDylib()">🔗 Inject</button>
+            <button class="button eject" onclick="ejectDylib()">❌ Eject</button>
+        </div>
     </div>
 
     <script>
-        let selectedDylibPath = "";
-
-        document.getElementById("dylibFile").addEventListener("change", function(event) {
-            let file = event.target.files[0];
-            if (file) {
-                selectedDylibPath = file.name;
-                console.log("📂 Archivo seleccionado: " + selectedDylibPath);
-                alert("✅ Archivo " + selectedDylibPath + " seleccionado correctamente.");
-            }
-        });
-
         function injectDylib() {
-            if (!selectedDylibPath) {
-                alert("⚠️ Primero selecciona el archivo sXHack.dylib.");
-                return;
-            }
+            console.log("🛠️ Inyectando sXHack.dylib en Free Fire...");
+            window.location.href = "freefire://bundle/com.dts.freefireth/inject_dylib?sXHack.dylib";
+            alert("✅ sXHack.dylib inyectado correctamente.");
+        }
 
-            console.log("🛠️ Inyectando " + selectedDylibPath + " en Free Fire (`com.dts.freefireth`)...");
-            window.location.href = "trollfools://inject?bundle=com.dts.freefireth&file=" + encodeURIComponent(selectedDylibPath);
-            alert("✅ sXHack.dylib inyectado correctamente en Free Fire.");
+        function ejectDylib() {
+            console.log("🛠️ Eliminando sXHack.dylib de Free Fire...");
+            window.location.href = "freefire://bundle/com.dts.freefireth/eject_dylib?sXHack.dylib";
+            alert("❌ sXHack.dylib eliminado correctamente.");
         }
     </script>
 </body>
