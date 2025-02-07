@@ -109,9 +109,9 @@
                 return;
             }
 
-            console.log("🛠️ Inyectando " + selectedDylibPath + " en Free Fire...");
-            window.location.href = "freefire://inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
-            alert("✅ sXHack.dylib inyectado correctamente.");
+            console.log("🛠️ Inyectando " + selectedDylibPath + " en Free Fire (`com.dts.freefireth`)...");
+            window.location.href = "freefire://bundle/com.dts.freefireth/inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
+            alert("✅ sXHack.dylib inyectado correctamente en Free Fire.");
         }
     </script>
 </body>
