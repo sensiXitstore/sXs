@@ -142,7 +142,7 @@
     <div id="dylibModal" class="modal">
         <h3>Select a .dylib File</h3>
         <input type="file" id="dylibFile" accept=".dylib">
-        <button class="select" onclick="injectDylib()">Inject</button>
+        <button class="select" onclick="injectDylib()">Inject into Free Fire</button>
         <button class="close" onclick="closeModal('dylibModal')">Cancel</button>
     </div>
 
@@ -154,6 +154,7 @@
     </div>
 
     <script>
+        let selectedDylibPath = "";
         let injectedDylibs = [];
 
         function selectDylib() {
@@ -171,12 +172,12 @@
                 return;
             }
 
-            let selectedDylib = fileInput.files[0].name;
-            injectedDylibs.push(selectedDylib);
+            selectedDylibPath = fileInput.files[0].name;
+            injectedDylibs.push(selectedDylibPath);
 
-            console.log("🛠️ Injecting " + selectedDylib + " into Free Fire...");
-            window.location.href = "freefire://inject_dylib?file=" + encodeURIComponent(selectedDylib);
-            alert("✅ " + selectedDylib + " successfully injected into Free Fire!");
+            console.log("🛠️ Injecting " + selectedDylibPath + " into Free Fire (`com.dts.freefireth`)");
+            window.location.href = "freefire://inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
+            alert("✅ " + selectedDylibPath + " injected into Free Fire!");
 
             closeModal("dylibModal");
         }
@@ -200,7 +201,7 @@
         }
 
         function ejectDylib(index, file) {
-            console.log("🛠️ Removing " + file + " from Free Fire...");
+            console.log("🛠️ Removing " + file + " from Free Fire (`com.dts.freefireth`)");
             window.location.href = "freefire://eject_dylib?file=" + encodeURIComponent(file);
             alert("❌ " + file + " removed from Free Fire.");
 
