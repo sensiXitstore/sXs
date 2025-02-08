@@ -128,7 +128,7 @@
 </head>
 <body>
     <div class="panel">
-        <h2>Select App & Inject Dylib</h2>
+        <h2>Free Fire Injection</h2>
 
         <div class="button-container">
             <button class="button inject" onclick="selectDylib()">Inject</button>
@@ -142,15 +142,8 @@
     <div id="dylibModal" class="modal">
         <h3>Select a .dylib File</h3>
         <input type="file" id="dylibFile" accept=".dylib">
-        <button class="select" onclick="selectApp()">Next</button>
+        <button class="select" onclick="injectDylib()">Inject</button>
         <button class="close" onclick="closeModal('dylibModal')">Cancel</button>
-    </div>
-
-    <!-- Modal to Select Installed App -->
-    <div id="appModal" class="modal">
-        <h3>Select App for Injection</h3>
-        <div class="list" id="appList"></div>
-        <button class="close" onclick="closeModal('appModal')">Cancel</button>
     </div>
 
     <!-- Modal to Eject Dylib -->
@@ -161,9 +154,7 @@
     </div>
 
     <script>
-        let selectedDylibPath = "";
         let injectedDylibs = [];
-        let selectedApp = "";
 
         function selectDylib() {
             document.getElementById("dylibModal").style.display = "block";
@@ -173,43 +164,21 @@
             document.getElementById(modalId).style.display = "none";
         }
 
-        function selectApp() {
+        function injectDylib() {
             let fileInput = document.getElementById("dylibFile");
             if (!fileInput.files.length) {
                 alert("⚠️ Please select a .dylib file.");
                 return;
             }
 
-            selectedDylibPath = fileInput.files[0].name;
+            let selectedDylib = fileInput.files[0].name;
+            injectedDylibs.push(selectedDylib);
+
+            console.log("🛠️ Injecting " + selectedDylib + " into Free Fire...");
+            window.location.href = "freefire://inject_dylib?file=" + encodeURIComponent(selectedDylib);
+            alert("✅ " + selectedDylib + " successfully injected into Free Fire!");
+
             closeModal("dylibModal");
-            showAppList();
-        }
-
-        function showAppList() {
-            let appListContainer = document.getElementById("appList");
-            appListContainer.innerHTML = "";
-
-            let apps = ["com.dts.freefireth", "com.someother.app"]; // Example installed apps
-
-            apps.forEach((app) => {
-                let button = document.createElement("button");
-                button.textContent = "📲 " + app;
-                button.onclick = function () { injectDylib(app); };
-                appListContainer.appendChild(button);
-            });
-
-            document.getElementById("appModal").style.display = "block";
-        }
-
-        function injectDylib(appId) {
-            selectedApp = appId;
-            injectedDylibs.push({ dylib: selectedDylibPath, app: selectedApp });
-
-            console.log("🛠️ Injecting " + selectedDylibPath + " into " + selectedApp);
-            window.location.href = "app://" + selectedApp + "/inject_dylib?file=" + encodeURIComponent(selectedDylibPath);
-            alert("✅ " + selectedDylibPath + " injected into " + selectedApp + ".");
-
-            closeModal("appModal");
         }
 
         function showEjectMenu() {
@@ -219,10 +188,10 @@
             if (injectedDylibs.length === 0) {
                 listContainer.innerHTML = "<p>No injected dylibs.</p>";
             } else {
-                injectedDylibs.forEach((entry, index) => {
+                injectedDylibs.forEach((file, index) => {
                     let button = document.createElement("button");
-                    button.textContent = "❌ " + entry.dylib + " (" + entry.app + ")";
-                    button.onclick = function () { ejectDylib(index, entry.dylib, entry.app); };
+                    button.textContent = "❌ " + file;
+                    button.onclick = function () { ejectDylib(index, file); };
                     listContainer.appendChild(button);
                 });
             }
@@ -230,10 +199,10 @@
             document.getElementById("ejectModal").style.display = "block";
         }
 
-        function ejectDylib(index, dylib, app) {
-            console.log("🛠️ Removing " + dylib + " from " + app);
-            window.location.href = "app://" + app + "/eject_dylib?file=" + encodeURIComponent(dylib);
-            alert("❌ " + dylib + " removed from " + app + ".");
+        function ejectDylib(index, file) {
+            console.log("🛠️ Removing " + file + " from Free Fire...");
+            window.location.href = "freefire://eject_dylib?file=" + encodeURIComponent(file);
+            alert("❌ " + file + " removed from Free Fire.");
 
             injectedDylibs.splice(index, 1);
             showEjectMenu();
