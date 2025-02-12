@@ -176,7 +176,11 @@
             injectedDylibs.push(selectedDylibPath);
 
             console.log("🛠️ Injecting " + selectedDylibPath + " into Free Fire (`com.dts.freefireth`)");
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=/inject_dylib_${encodeURIComponent(selectedDylibPath)}`;
+            
+            // Inject using a real method similar to TrollFools
+            let dylibCommand = `inject_dylib=${encodeURIComponent(selectedDylibPath)}`;
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${dylibCommand}`;
+            
             alert("✅ " + selectedDylibPath + " injected into Free Fire!");
 
             closeModal("dylibModal");
@@ -202,7 +206,10 @@
 
         function ejectDylib(index, file) {
             console.log("🛠️ Removing " + file + " from Free Fire (`com.dts.freefireth`)");
-            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=/eject_dylib_${encodeURIComponent(file)}`;
+            
+            let ejectCommand = `eject_dylib=${encodeURIComponent(file)}`;
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${ejectCommand}`;
+
             alert("❌ " + file + " removed from Free Fire.");
 
             injectedDylibs.splice(index, 1);
