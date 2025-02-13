@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector</title>
+    <title>sX Injector - Ultimate Injection System</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
         body {
             margin: 0;
             font-family: 'Orbitron', sans-serif;
@@ -20,16 +22,19 @@
             width: 90%;
             max-width: 500px;
             border-radius: 25px;
-            background: white;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(30, 144, 255, 0.8);
             padding: 30px;
             text-align: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            border: 2px solid rgba(30, 144, 255, 1);
         }
 
         h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 20px;
-            color: black;
+            color: #1e90ff;
+            text-shadow: 0 0 20px rgba(30, 144, 255, 1);
         }
 
         .button-container {
@@ -39,34 +44,39 @@
         }
 
         .button {
-            width: 40%;
-            padding: 20px;
-            font-size: 1.5rem;
+            width: 45%;
+            padding: 15px;
+            font-size: 1.4rem;
             font-weight: bold;
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.2s ease-in-out;
+            box-shadow: 0 0 15px rgba(30, 144, 255, 0.8);
         }
 
         .inject {
-            background: rgba(30, 144, 255, 0.2);
-            color: blue;
-            border: 2px solid blue;
+            background: linear-gradient(45deg, #1e90ff, #007bff);
+            color: white;
+            border: 2px solid #1e90ff;
         }
 
         .inject:hover {
-            background: rgba(30, 144, 255, 0.5);
+            background: linear-gradient(45deg, #007bff, #1e90ff);
+            box-shadow: 0 0 25px rgba(30, 144, 255, 1);
+            transform: scale(1.05);
         }
 
         .eject {
-            background: rgba(255, 77, 77, 0.2);
-            color: red;
-            border: 2px solid red;
+            background: linear-gradient(45deg, #ff4d4d, #ff0000);
+            color: white;
+            border: 2px solid #ff4d4d;
         }
 
         .eject:hover {
-            background: rgba(255, 77, 77, 0.5);
+            background: linear-gradient(45deg, #ff0000, #ff4d4d);
+            box-shadow: 0 0 25px rgba(255, 77, 77, 1);
+            transform: scale(1.05);
         }
 
         .modal {
@@ -80,6 +90,7 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
             text-align: center;
+            z-index: 999;
         }
 
         .modal h3 {
@@ -135,7 +146,7 @@
             <button class="button eject" onclick="showEjectMenu()">Eject</button>
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: black;">⚙️ Secure `.dylib` Injection System</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Secure `.dylib` Injection System for Free Fire</p>
     </div>
 
     <!-- Modal to Select Dylib -->
@@ -177,7 +188,6 @@
 
             console.log("🛠️ Injecting " + selectedDylibPath + " into Free Fire (`com.dts.freefireth`)");
             
-            // Secure injection logic
             let dylibCommand = `inject_dylib=${encodeURIComponent(selectedDylibPath)}`;
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${dylibCommand}`;
             
