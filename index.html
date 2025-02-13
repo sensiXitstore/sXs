@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Store - Inject & Eject</title>
+    <title>sX Injector</title>
     <style>
         body {
             margin: 0;
@@ -128,14 +128,14 @@
 </head>
 <body>
     <div class="panel">
-        <h2>Free Fire Injection</h2>
+        <h2>sX Injector</h2>
 
         <div class="button-container">
             <button class="button inject" onclick="selectDylib()">Inject</button>
             <button class="button eject" onclick="showEjectMenu()">Eject</button>
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: black;">⚙️ Advanced Settings</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: black;">⚙️ Secure `.dylib` Injection System</p>
     </div>
 
     <!-- Modal to Select Dylib -->
@@ -177,7 +177,7 @@
 
             console.log("🛠️ Injecting " + selectedDylibPath + " into Free Fire (`com.dts.freefireth`)");
             
-            // Inject using a real method similar to TrollFools
+            // Secure injection logic
             let dylibCommand = `inject_dylib=${encodeURIComponent(selectedDylibPath)}`;
             window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${dylibCommand}`;
             
