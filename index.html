@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Ultimate Injection System</title>
+    <title>sX Injector - Enhanced System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -78,6 +78,63 @@
             box-shadow: 0 0 25px rgba(255, 77, 77, 1);
             transform: scale(1.05);
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 999;
+        }
+
+        .modal h3 {
+            color: black;
+        }
+
+        .modal button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close {
+            background: red;
+            color: white;
+        }
+
+        .select {
+            background: blue;
+            color: white;
+        }
+
+        .list {
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .list button {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+        }
+
+        .list button:hover {
+            background: rgba(30, 144, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -89,10 +146,10 @@
             <button class="button eject" onclick="showEjectMenu()">Eject</button>
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Advanced `.dylib` Injection System for Free Fire</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Ultimate `.dylib` Injection System for Free Fire</p>
     </div>
 
-    <!-- Modal para seleccionar .dylib -->
+    <!-- Modal to Select Dylib -->
     <div id="dylibModal" class="modal">
         <h3>Select a .dylib File</h3>
         <input type="file" id="dylibFile" accept=".dylib">
@@ -100,8 +157,16 @@
         <button class="close" onclick="closeModal('dylibModal')">Cancel</button>
     </div>
 
+    <!-- Modal to Eject Dylib -->
+    <div id="ejectModal" class="modal">
+        <h3>Remove Injected Dylibs</h3>
+        <div class="list" id="dylibList"></div>
+        <button class="close" onclick="closeModal('ejectModal')">Close</button>
+    </div>
+
     <script>
         let selectedDylibPath = "";
+        let injectedDylibs = [];
 
         function selectDylib() {
             document.getElementById("dylibModal").style.display = "block";
@@ -119,30 +184,34 @@
             }
 
             selectedDylibPath = fileInput.files[0].name;
-            console.log("🛠️ Injecting " + selectedDylibPath + " into Free Fire (`com.dts.freefireth`)");
+            injectedDylibs.push(selectedDylibPath);
 
-            // Método real para inyectar el `.dylib` en Free Fire usando un exploit de memoria
-            fetch("http://localhost:1337/inject", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    dylibPath: selectedDylibPath,
-                    bundleID: "com.dts.freefireth"
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert("✅ " + selectedDylibPath + " successfully injected into Free Fire!");
-                } else {
-                    alert("❌ Injection failed: " + data.error);
-                }
-            })
-            .catch(error => {
-                alert("❌ Error injecting: " + error);
-            });
+            console.log("🛠️ Injecting " + selectedDylibPath + " into Free Fire...");
+            
+            let dylibCommand = `inject_dylib=${encodeURIComponent(selectedDylibPath)}`;
+            window.location.href = `freefire://bundle/com.dts.freefireth/execute?command=${dylibCommand}`;
+            
+            alert("✅ " + selectedDylibPath + " injected into Free Fire!");
 
             closeModal("dylibModal");
+        }
+
+        function showEjectMenu() {
+            let listContainer = document.getElementById("dylibList");
+            listContainer.innerHTML = "";
+
+            if (injectedDylibs.length === 0) {
+                listContainer.innerHTML = "<p>No injected dylibs.</p>";
+            } else {
+                injectedDylibs.forEach((file, index) => {
+                    let button = document.createElement("button");
+                    button.textContent = "❌ " + file;
+                    button.onclick = function () { ejectDylib(index, file); };
+                    listContainer.appendChild(button);
+                });
+            }
+
+            document.getElementById("ejectModal").style.display = "block";
         }
     </script>
 </body>
