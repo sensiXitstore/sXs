@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Ultimate Injection System</title>
+    <title>sX Injector - Advanced Injection System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -78,6 +78,44 @@
             box-shadow: 0 0 25px rgba(255, 77, 77, 1);
             transform: scale(1.05);
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 999;
+        }
+
+        .modal h3 {
+            color: black;
+        }
+
+        .modal button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .close {
+            background: red;
+            color: white;
+        }
+
+        .select {
+            background: blue;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -85,37 +123,65 @@
         <h2>sX Injector</h2>
 
         <div class="button-container">
-            <button class="button inject" onclick="injectDylib()">Inject</button>
-            <button class="button eject" onclick="ejectDylib()">Eject</button>
+            <button class="button inject" onclick="selectDylib()">Inject</button>
+            <button class="button eject" onclick="showEjectMenu()">Eject</button>
         </div>
 
         <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Secure `.dylib` Injection System for Free Fire</p>
     </div>
 
-    <iframe id="injectFrame" style="display: none;"></iframe>
+    <div id="dylibModal" class="modal">
+        <h3>Select a .dylib File</h3>
+        <input type="file" id="dylibFile" accept=".dylib">
+        <button class="select" onclick="injectDylib()">Inject into Free Fire</button>
+        <button class="close" onclick="closeModal('dylibModal')">Cancel</button>
+    </div>
 
     <script>
-        let injectedDylib = "sXHeadtracking_OmniSensePureSoftAim.dylib";
+        let injectedDylib = "";
 
-        function injectDylib() {
-            console.log("🛠️ Injecting " + injectedDylib + " into Free Fire (`com.dts.freefireth`)");
-
-            let iframe = document.getElementById("injectFrame");
-            iframe.src = `freefire://open?inject=${encodeURIComponent(injectedDylib)}`;
-
-            alert("✅ " + injectedDylib + " injected successfully!");
+        function selectDylib() {
+            document.getElementById("dylibModal").style.display = "block";
         }
 
-        function ejectDylib() {
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        function injectDylib() {
+            let fileInput = document.getElementById("dylibFile");
+            if (!fileInput.files.length) {
+                alert("⚠️ Please select a .dylib file.");
+                return;
+            }
+
+            injectedDylib = fileInput.files[0].name;
+            console.log("🛠️ Injecting " + injectedDylib + " into Free Fire (`com.dts.freefireth`)");
+
+            let injectionCommand = `freefire://open?inject=${encodeURIComponent(injectedDylib)}`;
+            let iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = injectionCommand;
+            document.body.appendChild(iframe);
+
+            alert("✅ " + injectedDylib + " injected successfully!");
+
+            closeModal("dylibModal");
+        }
+
+        function showEjectMenu() {
             if (!injectedDylib) {
-                alert("⚠️ No injected dylib found.");
+                alert("No injected dylib found.");
                 return;
             }
 
             console.log("🛠️ Removing " + injectedDylib + " from Free Fire (`com.dts.freefireth`)");
+            let ejectCommand = `freefire://open?eject=${encodeURIComponent(injectedDylib)}`;
 
-            let iframe = document.getElementById("injectFrame");
-            iframe.src = `freefire://open?eject=${encodeURIComponent(injectedDylib)}`;
+            let iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = ejectCommand;
+            document.body.appendChild(iframe);
 
             alert("❌ " + injectedDylib + " removed from Free Fire.");
             injectedDylib = "";
