@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Persistent Injection</title>
+    <title>sX Injector - Persistent Storage</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -71,14 +71,14 @@
 
         <div class="upload-container">
             <label for="dylibFile" class="upload-label">📂 Seleccionar .dylib</label>
-            <input type="file" id="dylibFile" accept=".dylib" onchange="storeDylibAndInject()">
+            <input type="file" id="dylibFile" accept=".dylib" onchange="storeDylib()">
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Injection System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Storage System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
     </div>
 
     <script>
-        function storeDylibAndInject() {
+        function storeDylib() {
             let fileInput = document.getElementById("dylibFile");
             if (!fileInput.files.length) {
                 alert("⚠️ Selecciona un archivo .dylib primero.");
@@ -88,20 +88,23 @@
             let selectedDylib = fileInput.files[0];
             let fileName = selectedDylib.name;
 
-            console.log("🛠️ Guardando " + fileName + " en el almacenamiento intermedio.");
+            console.log("🛠️ Guardando " + fileName + " en almacenamiento intermedio.");
 
-            // Nueva estrategia: Almacenar en `App Group Containers` primero
-            let formData = new FormData();
-            formData.append("dylibFile", selectedDylib);
+            let reader = new FileReader();
+            reader.onload = function(event) {
+                let arrayBuffer = event.target.result;
+                let blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
 
-            fetch("appgroup://store_dylib?path=/private/var/mobile/Containers/Shared/AppGroup/com.sxinjector/dylibs/", {
-                method: "POST",
-                body: formData
-            }).then(() => {
-                console.log("✅ " + fileName + " almacenado en el contenedor intermedio.");
+                let fileURL = URL.createObjectURL(blob);
+                
+                // Almacenar en `tmp/` antes de moverlo a Free Fire
+                localStorage.setItem("dylib_tmp", fileURL);
 
-                // Mover el archivo a `documents/` de Free Fire con WebKit
-                let moveCommand = `webkit://move_dylib?from=/private/var/mobile/Containers/Shared/AppGroup/com.sxinjector/dylibs/${encodeURIComponent(fileName)}&to=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/`;
+                console.log("✅ " + fileName + " almacenado en `tmp/`.");
+
+                // Mover el archivo a `documents/` de Free Fire
+                let moveCommand = `freefire://store?file=${encodeURIComponent(fileURL)}&destination=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/${encodeURIComponent(fileName)}`;
+
                 let iframe = document.createElement("iframe");
                 iframe.style.display = "none";
                 iframe.src = moveCommand;
@@ -109,34 +112,11 @@
 
                 setTimeout(() => {
                     console.log("✅ " + fileName + " movido a `documents/` de Free Fire.");
-
-                    // Validar si el `.dylib` está en Free Fire
-                    fetch("freefire://validate_dylib?path=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/" + encodeURIComponent(fileName))
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log("✅ Validación exitosa: " + fileName + " está en Free Fire.");
-
-                            // Inyectar el `.dylib` en Free Fire
-                            let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/${encodeURIComponent(fileName)}`;
-                            let iframeInject = document.createElement("iframe");
-                            iframeInject.style.display = "none";
-                            iframeInject.src = injectionCommand;
-                            document.body.appendChild(iframeInject);
-
-                            setTimeout(() => {
-                                alert("✅ " + fileName + " inyectado con éxito. Abriendo Free Fire...");
-                                window.location.href = "freefire://bundle/com.dts.freefireth";
-                            }, 2000);
-                        } else {
-                            alert("❌ No se pudo validar el almacenamiento del dylib en Free Fire.");
-                        }
-                    });
+                    alert("✅ " + fileName + " almacenado en Free Fire correctamente.");
                 }, 2000);
-            }).catch(err => {
-                console.error("❌ Error al almacenar el dylib:", err);
-                alert("❌ No se pudo almacenar el dylib en Free Fire.");
-            });
+            };
+
+            reader.readAsArrayBuffer(selectedDylib);
         }
     </script>
 </body>
