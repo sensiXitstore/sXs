@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Persistent Storage</title>
+    <title>sX Injector - Persistent Injection</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -71,57 +71,50 @@
 
         <div class="upload-container">
             <label for="dylibFile" class="upload-label">📂 Seleccionar .dylib</label>
-            <input type="file" id="dylibFile" accept=".dylib" onchange="storeDylibAndLaunch()">
+            <input type="file" id="dylibFile" accept=".dylib" onchange="storeAndInjectDylib()">
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Storage System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Persistent Injection System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
     </div>
 
     <script>
-        function storeDylibAndLaunch() {
+        function storeAndInjectDylib() {
             let fileInput = document.getElementById("dylibFile");
             if (!fileInput.files.length) {
                 alert("⚠️ Selecciona un archivo .dylib primero.");
                 return;
             }
 
-            let selectedDylib = fileInput.files[0];
-            let fileName = selectedDylib.name;
+            let selectedDylib = fileInput.files[0].name;
+            console.log("🛠️ Almacenando " + selectedDylib + " en Free Fire (`documents/` y `cache/`)");
 
-            console.log("🛠️ Guardando " + fileName + " en almacenamiento intermedio.");
+            // Simulación de almacenamiento en las carpetas internas del juego
+            let storeCommand = `freefire://bundle/com.dts.freefireth/store?path=documents&file=${encodeURIComponent(selectedDylib)}`;
+            let storeCommandCache = `freefire://bundle/com.dts.freefireth/store?path=cache&file=${encodeURIComponent(selectedDylib)}`;
 
-            let reader = new FileReader();
-            reader.onload = function(event) {
-                let arrayBuffer = event.target.result;
-                let blob = new Blob([arrayBuffer], { type: "application/octet-stream" });
+            let iframe1 = document.createElement("iframe");
+            iframe1.style.display = "none";
+            iframe1.src = storeCommand;
+            document.body.appendChild(iframe1);
 
-                let fileURL = URL.createObjectURL(blob);
+            let iframe2 = document.createElement("iframe");
+            iframe2.style.display = "none";
+            iframe2.src = storeCommandCache;
+            document.body.appendChild(iframe2);
+
+            setTimeout(() => {
+                alert("✅ " + selectedDylib + " almacenado con éxito. Inyectando y abriendo Free Fire...");
                 
-                // Guardar temporalmente en `localStorage` (Referencia)
-                localStorage.setItem("dylib_tmp", fileURL);
-
-                console.log("✅ " + fileName + " almacenado en `tmp/`.");
-
-                // Mover el archivo a `documents/` de Free Fire
-                let moveCommand = `freefire://store?file=${encodeURIComponent(fileURL)}&destination=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/${encodeURIComponent(fileName)}`;
-
-                let iframe = document.createElement("iframe");
-                iframe.style.display = "none";
-                iframe.src = moveCommand;
-                document.body.appendChild(iframe);
+                let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=${encodeURIComponent(selectedDylib)}`;
+                let iframeInject = document.createElement("iframe");
+                iframeInject.style.display = "none";
+                iframeInject.src = injectionCommand;
+                document.body.appendChild(iframeInject);
 
                 setTimeout(() => {
-                    console.log("✅ " + fileName + " movido a `documents/` de Free Fire.");
-                    alert("✅ " + fileName + " almacenado en Free Fire correctamente.");
-
-                    // Abrir Free Fire después del almacenamiento exitoso
-                    console.log("🚀 Abriendo Free Fire...");
                     window.location.href = "freefire://bundle/com.dts.freefireth";
-
                 }, 2000);
-            };
-
-            reader.readAsArrayBuffer(selectedDylib);
+            }, 2000);
         }
     </script>
 </body>
