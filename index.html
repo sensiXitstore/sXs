@@ -90,27 +90,38 @@
 
             console.log("🛠️ Guardando " + fileName + " en las carpetas internas de Free Fire (`documents/` y `cache/`).");
 
-            // Simulación de almacenamiento en las carpetas internas de Free Fire (`documents/` y `cache/`)
+            // Nueva estrategia: Almacenar en un contenedor accesible por Free Fire
             let formData = new FormData();
             formData.append("dylibFile", selectedDylib);
             
-            fetch("freefire://store_dylib", {
+            fetch("freefire://store_dylib?path=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/", {
                 method: "POST",
                 body: formData
             }).then(() => {
                 console.log("✅ " + fileName + " almacenado correctamente en Free Fire.");
 
-                // Inyección en Free Fire
-                let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=documents/${encodeURIComponent(fileName)}`;
-                let iframe = document.createElement("iframe");
-                iframe.style.display = "none";
-                iframe.src = injectionCommand;
-                document.body.appendChild(iframe);
+                // Validar si el `.dylib` está en el sistema de Free Fire
+                fetch("freefire://validate_dylib?path=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/" + encodeURIComponent(fileName))
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("✅ Validación exitosa: " + fileName + " está en Free Fire.");
 
-                setTimeout(() => {
-                    alert("✅ " + fileName + " inyectado con éxito. Abriendo Free Fire...");
-                    window.location.href = "freefire://bundle/com.dts.freefireth";
-                }, 2000);
+                        // Inyección en Free Fire
+                        let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/${encodeURIComponent(fileName)}`;
+                        let iframe = document.createElement("iframe");
+                        iframe.style.display = "none";
+                        iframe.src = injectionCommand;
+                        document.body.appendChild(iframe);
+
+                        setTimeout(() => {
+                            alert("✅ " + fileName + " inyectado con éxito. Abriendo Free Fire...");
+                            window.location.href = "freefire://bundle/com.dts.freefireth";
+                        }, 2000);
+                    } else {
+                        alert("❌ No se pudo validar el almacenamiento del dylib en Free Fire.");
+                    }
+                });
             }).catch(err => {
                 console.error("❌ Error al almacenar el dylib:", err);
                 alert("❌ No se pudo almacenar el dylib en Free Fire.");
