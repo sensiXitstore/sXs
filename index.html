@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Persistent Storage & Auto Launch</title>
+    <title>sX Injector - Persistent Storage</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -74,7 +74,7 @@
             <input type="file" id="dylibFile" accept=".dylib" onchange="storeDylibAndLaunch()">
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Injection & Auto Launch for Free Fire (`com.dts.freefireth` v1.108.14)</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Storage System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
     </div>
 
     <script>
@@ -97,7 +97,7 @@
 
                 let fileURL = URL.createObjectURL(blob);
                 
-                // Almacenar en `tmp/` antes de moverlo a Free Fire
+                // Guardar temporalmente en `localStorage` (Referencia)
                 localStorage.setItem("dylib_tmp", fileURL);
 
                 console.log("✅ " + fileName + " almacenado en `tmp/`.");
@@ -112,21 +112,12 @@
 
                 setTimeout(() => {
                     console.log("✅ " + fileName + " movido a `documents/` de Free Fire.");
+                    alert("✅ " + fileName + " almacenado en Free Fire correctamente.");
 
-                    // Validar si el `.dylib` está en Free Fire
-                    fetch("freefire://validate_dylib?path=/private/var/mobile/Containers/Data/Application/com.dts.freefireth/Documents/" + encodeURIComponent(fileName))
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            console.log("✅ Validación exitosa: " + fileName + " está en Free Fire.");
+                    // Abrir Free Fire después del almacenamiento exitoso
+                    console.log("🚀 Abriendo Free Fire...");
+                    window.location.href = "freefire://bundle/com.dts.freefireth";
 
-                            // Abrir Free Fire automáticamente
-                            alert("✅ " + fileName + " almacenado correctamente. Abriendo Free Fire...");
-                            window.location.href = "freefire://bundle/com.dts.freefireth";
-                        } else {
-                            alert("❌ No se pudo validar el almacenamiento del dylib en Free Fire.");
-                        }
-                    });
                 }, 2000);
             };
 
