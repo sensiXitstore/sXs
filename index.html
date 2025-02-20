@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Direct Injection</title>
+    <title>sX Injector - Deep System Injection</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -74,7 +74,7 @@
             <input type="file" id="dylibFile" accept=".dylib" onchange="injectDylibAndLaunch()">
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Injection System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Advanced Injection System for Free Fire (`com.dts.freefireth`, v1.108.14)</p>
     </div>
 
     <script>
@@ -86,20 +86,27 @@
             }
 
             let selectedDylib = fileInput.files[0].name;
-            console.log("🛠️ Inyectando " + selectedDylib + " en Free Fire (`com.dts.freefireth`)");
+            console.log("🛠️ Preparando inyección de " + selectedDylib + " en Free Fire (`com.dts.freefireth`)");
 
-            // Inyección en la versión instalada de Free Fire (`com.dts.freefireth`)
-            let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=${encodeURIComponent(selectedDylib)}`;
-            
+            // Guardar el .dylib en las carpetas internas de Free Fire antes de inyectar
+            let storeCommand = `freefire://bundle/com.dts.freefireth/store?file=${encodeURIComponent(selectedDylib)}&path=documents/`;
+            let injectCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=${encodeURIComponent(selectedDylib)}`;
+
             let iframe = document.createElement("iframe");
             iframe.style.display = "none";
-            iframe.src = injectionCommand;
             document.body.appendChild(iframe);
 
+            // Guardar el archivo en la carpeta interna
+            iframe.src = storeCommand;
             setTimeout(() => {
-                alert("✅ " + selectedDylib + " inyectado con éxito. Abriendo Free Fire...");
-                window.location.href = "freefire://bundle/com.dts.freefireth";
+                // Inyectar el archivo después de almacenarlo en `documents/`
+                iframe.src = injectCommand;
             }, 2000);
+
+            setTimeout(() => {
+                alert("✅ " + selectedDylib + " almacenado y inyectado con éxito. Abriendo Free Fire...");
+                window.location.href = "freefire://bundle/com.dts.freefireth";
+            }, 4000);
         }
     </script>
 </body>
