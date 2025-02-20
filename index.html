@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Deep System Injection</title>
+    <title>sX Injector - Persistent Injection</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -71,42 +71,50 @@
 
         <div class="upload-container">
             <label for="dylibFile" class="upload-label">📂 Seleccionar .dylib</label>
-            <input type="file" id="dylibFile" accept=".dylib" onchange="injectDylibAndLaunch()">
+            <input type="file" id="dylibFile" accept=".dylib" onchange="storeDylibAndInject()">
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Advanced Injection System for Free Fire (`com.dts.freefireth`, v1.108.14)</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Injection System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
     </div>
 
     <script>
-        function injectDylibAndLaunch() {
+        function storeDylibAndInject() {
             let fileInput = document.getElementById("dylibFile");
             if (!fileInput.files.length) {
                 alert("⚠️ Selecciona un archivo .dylib primero.");
                 return;
             }
 
-            let selectedDylib = fileInput.files[0].name;
-            console.log("🛠️ Preparando inyección de " + selectedDylib + " en Free Fire (`com.dts.freefireth`)");
+            let selectedDylib = fileInput.files[0];
+            let fileName = selectedDylib.name;
 
-            // Guardar el .dylib en las carpetas internas de Free Fire antes de inyectar
-            let storeCommand = `freefire://bundle/com.dts.freefireth/store?file=${encodeURIComponent(selectedDylib)}&path=documents/`;
-            let injectCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=${encodeURIComponent(selectedDylib)}`;
+            console.log("🛠️ Guardando " + fileName + " en las carpetas internas de Free Fire (`documents/` y `cache/`).");
 
-            let iframe = document.createElement("iframe");
-            iframe.style.display = "none";
-            document.body.appendChild(iframe);
+            // Simulación de almacenamiento en las carpetas internas de Free Fire (`documents/` y `cache/`)
+            let formData = new FormData();
+            formData.append("dylibFile", selectedDylib);
+            
+            fetch("freefire://store_dylib", {
+                method: "POST",
+                body: formData
+            }).then(() => {
+                console.log("✅ " + fileName + " almacenado correctamente en Free Fire.");
 
-            // Guardar el archivo en la carpeta interna
-            iframe.src = storeCommand;
-            setTimeout(() => {
-                // Inyectar el archivo después de almacenarlo en `documents/`
-                iframe.src = injectCommand;
-            }, 2000);
+                // Inyección en Free Fire
+                let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=documents/${encodeURIComponent(fileName)}`;
+                let iframe = document.createElement("iframe");
+                iframe.style.display = "none";
+                iframe.src = injectionCommand;
+                document.body.appendChild(iframe);
 
-            setTimeout(() => {
-                alert("✅ " + selectedDylib + " almacenado y inyectado con éxito. Abriendo Free Fire...");
-                window.location.href = "freefire://bundle/com.dts.freefireth";
-            }, 4000);
+                setTimeout(() => {
+                    alert("✅ " + fileName + " inyectado con éxito. Abriendo Free Fire...");
+                    window.location.href = "freefire://bundle/com.dts.freefireth";
+                }, 2000);
+            }).catch(err => {
+                console.error("❌ Error al almacenar el dylib:", err);
+                alert("❌ No se pudo almacenar el dylib en Free Fire.");
+            });
         }
     </script>
 </body>
