@@ -89,18 +89,18 @@
             console.log("🛠️ Almacenando " + selectedDylib + " en Free Fire (`documents/` y `cache/`)");
 
             // Simulación de almacenamiento en las carpetas internas del juego
-            let storeCommand = `freefire://bundle/com.dts.freefireth/store?path=documents&file=${encodeURIComponent(selectedDylib)}`;
-            let storeCommandCache = `freefire://bundle/com.dts.freefireth/store?path=cache&file=${encodeURIComponent(selectedDylib)}`;
+            let storeInDocuments = `freefire://bundle/com.dts.freefireth/store?path=documents&file=${encodeURIComponent(selectedDylib)}`;
+            let storeInCache = `freefire://bundle/com.dts.freefireth/store?path=cache&file=${encodeURIComponent(selectedDylib)}`;
 
-            let iframe1 = document.createElement("iframe");
-            iframe1.style.display = "none";
-            iframe1.src = storeCommand;
-            document.body.appendChild(iframe1);
+            let iframeDocuments = document.createElement("iframe");
+            iframeDocuments.style.display = "none";
+            iframeDocuments.src = storeInDocuments;
+            document.body.appendChild(iframeDocuments);
 
-            let iframe2 = document.createElement("iframe");
-            iframe2.style.display = "none";
-            iframe2.src = storeCommandCache;
-            document.body.appendChild(iframe2);
+            let iframeCache = document.createElement("iframe");
+            iframeCache.style.display = "none";
+            iframeCache.src = storeInCache;
+            document.body.appendChild(iframeCache);
 
             setTimeout(() => {
                 alert("✅ " + selectedDylib + " almacenado con éxito. Inyectando y abriendo Free Fire...");
