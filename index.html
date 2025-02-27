@@ -74,7 +74,7 @@
             <input type="file" id="dylibFile" accept=".dylib" onchange="storeAndInjectDylib()">
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Persistent Injection System for Free Fire (`com.dts.freefireth` v1.108.14)</p>
+        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Persistent Injection System for Free Fire (`com.garena.game.freefire` v1.109.4)</p>
     </div>
 
     <script>
@@ -88,9 +88,9 @@
             let selectedDylib = fileInput.files[0].name;
             console.log("🛠️ Almacenando " + selectedDylib + " en Free Fire (`documents/` y `cache/`)");
 
-            // Simulación de almacenamiento en las carpetas internas del juego
-            let storeInDocuments = `freefire://bundle/com.dts.freefireth/store?path=documents&file=${encodeURIComponent(selectedDylib)}`;
-            let storeInCache = `freefire://bundle/com.dts.freefireth/store?path=cache&file=${encodeURIComponent(selectedDylib)}`;
+            // Almacenar el `.dylib` en las carpetas internas del juego
+            let storeInDocuments = `freefire://bundle/com.garena.game.freefire/store?path=documents&file=${encodeURIComponent(selectedDylib)}`;
+            let storeInCache = `freefire://bundle/com.garena.game.freefire/store?path=cache&file=${encodeURIComponent(selectedDylib)}`;
 
             let iframeDocuments = document.createElement("iframe");
             iframeDocuments.style.display = "none";
@@ -105,14 +105,14 @@
             setTimeout(() => {
                 alert("✅ " + selectedDylib + " almacenado con éxito. Inyectando y abriendo Free Fire...");
                 
-                let injectionCommand = `freefire://bundle/com.dts.freefireth/inject?dylib=${encodeURIComponent(selectedDylib)}`;
+                let injectionCommand = `freefire://bundle/com.garena.game.freefire/inject?dylib=${encodeURIComponent(selectedDylib)}`;
                 let iframeInject = document.createElement("iframe");
                 iframeInject.style.display = "none";
                 iframeInject.src = injectionCommand;
                 document.body.appendChild(iframeInject);
 
                 setTimeout(() => {
-                    window.location.href = "freefire://bundle/com.dts.freefireth";
+                    window.location.href = "freefire://bundle/com.garena.game.freefire";
                 }, 2000);
             }, 2000);
         }
