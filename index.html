@@ -1,203 +1,80 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Mod Menu - Free Fire Soft Aim</title>
+    <title>Free Fire Sensi Loader</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
         body {
-            margin: 0;
-            font-family: 'Orbitron', sans-serif;
-            background: black;
-            color: white;
-            height: 100vh;
+            font-family: Arial, sans-serif;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
         }
-
-        .panel {
-            width: 90%;
-            max-width: 500px;
-            border-radius: 25px;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(30, 144, 255, 0.8);
-            padding: 30px;
-            text-align: center;
-            border: 2px solid rgba(30, 144, 255, 1);
-        }
-
-        h2 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-            color: #1e90ff;
-            text-shadow: 0 0 20px rgba(30, 144, 255, 1);
-        }
-
-        .toggle-container {
-            margin: 15px 0;
-        }
-
-        .toggle-label {
-            font-size: 1.2rem;
-            margin-right: 10px;
-            color: #fff;
-        }
-
-        .toggle-switch {
-            display: inline-block;
-            width: 50px;
-            height: 25px;
-            background: #555;
-            border-radius: 25px;
-            position: relative;
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            vertical-align: middle;
-        }
-
-        .toggle-switch.active {
-            background: #1e90ff;
-        }
-
-        .toggle-knob {
-            width: 21px;
-            height: 21px;
-            background: white;
-            border-radius: 50%;
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .toggle-switch.active .toggle-knob {
-            left: 27px;
-        }
-
-        #statusLog {
-            margin-top: 20px;
-            font-size: 1rem;
-            color: #ccc;
-            text-align: left;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .launch-button {
-            display: inline-block;
-            padding: 12px 20px;
-            font-size: 1.2rem;
-            font-weight: bold;
+            background-color: #4CAF50;
             color: white;
-            background: linear-gradient(45deg, #1e90ff, #007bff);
-            border: 2px solid #1e90ff;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
         }
-
-        .launch-button:hover {
-            background: linear-gradient(45deg, #007bff, #1e90ff);
-            box-shadow: 0 0 25px rgba(30, 144, 255, 1);
-            transform: scale(1.05);
+        button:hover {
+            background-color: #45a049;
+        }
+        #fileInput {
+            margin: 20px;
+        }
+        #status {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="panel">
-        <h2>sX Mod Menu</h2>
-
-        <div class="toggle-container">
-            <span class="toggle-label">Soft Aim:</span>
-            <div class="toggle-switch" id="softAimToggle" onclick="toggleSoftAim()">
-                <div class="toggle-knob"></div>
-            </div>
-        </div>
-
-        <div id="statusLog">
-            <p>⚙️ Mod Menu para Free Fire (v1.109.4)</p>
-            <p>ℹ️ Simula Soft Aim sin inyección real (iOS 17.7 sin jailbreak).</p>
-        </div>
-
-        <div class="launch-button" onclick="launchFreeFire()">🎮 Abrir Free Fire</div>
-    </div>
+    <h1>Free Fire Sensi Loader</h1>
+    <input type="file" id="fileInput" accept=".sensi" />
+    <button onclick="loadAndExecute()">Execute in Free Fire</button>
+    <div id="status">No file selected yet.</div>
 
     <script>
-        let softAimEnabled = false;
-        let crosshairX = 0, crosshairY = 0;
-        let targetX = 50, targetY = 30, targetSpeedX = 7, targetSpeedY = 5; // Simulated target
-        const softAimConfig = {
-            enabled: true,
-            strength: 3.5,
-            lock_fov: 45.0,
-            max_distance: 180.0,
-            smoothing: 0.001,
-            snap_threshold: 0.005,
-            prediction_factor: 1.8,
-            fov_angle: 60.0,
-            trigger_enabled: true
-        };
+        function loadAndExecute() {
+            const fileInput = document.getElementById('fileInput');
+            const status = document.getElementById('status');
+            const file = fileInput.files[0];
 
-        function logStatus(message, color = "#ccc") {
-            const logDiv = document.getElementById("statusLog");
-            const p = document.createElement("p");
-            p.textContent = message;
-            p.style.color = color;
-            logDiv.appendChild(p);
-            logDiv.scrollTop = logDiv.scrollHeight;
-        }
-
-        function isWithinFOV(crosshairX, crosshairY, targetX, targetY) {
-            const deltaX = targetX - crosshairX;
-            const deltaY = targetY - crosshairY;
-            const angle = Math.atan2(deltaY, deltaX) * 180 / Math.PI;
-            const absoluteAngle = Math.abs(angle);
-            return absoluteAngle <= (softAimConfig.fov_angle / 2.0);
-        }
-
-        function simulateSoftAim() {
-            if (!softAimEnabled || !softAimConfig.trigger_enabled) return;
-
-            const predictedX = targetX + (targetSpeedX * softAimConfig.prediction_factor);
-            const predictedY = targetY + (targetSpeedY * softAimConfig.prediction_factor);
-
-            const deltaX = predictedX - crosshairX;
-            const deltaY = predictedY - crosshairY;
-            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-
-            if (distance < softAimConfig.lock_fov && isWithinFOV(crosshairX, crosshairY, predictedX, predictedY)) {
-                crosshairX += deltaX * softAimConfig.smoothing * softAimConfig.strength;
-                crosshairY += deltaY * softAimConfig.smoothing * softAimConfig.strength;
-                logStatus(`Soft Aim Simulado - Nueva posición: (${crosshairX.toFixed(2)}, ${crosshairY.toFixed(2)})`, "#55ff55");
-            } else {
-                logStatus("Soft Aim Simulado - Objetivo fuera de FOV o distancia.", "#ff5555");
+            if (!file) {
+                status.textContent = "Please select a .sensi file first!";
+                return;
             }
-        }
 
-        function toggleSoftAim() {
-            softAimEnabled = !softAimEnabled;
-            const toggle = document.getElementById("softAimToggle");
-            toggle.classList.toggle("active");
-            logStatus(`Soft Aim ${softAimEnabled ? "Activado" : "Desactivado"} (Simulado)`, softAimEnabled ? "#55ff55" : "#ff5555");
+            // Read the .sensi file content
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const sensiContent = event.target.result;
+                status.textContent = "File loaded: " + file.name + ". Launching Free Fire...";
 
-            if (softAimEnabled) {
-                simulateSoftAim(); // Run initial simulation
-                // Simulate continuous updates (for demo purposes, every 500ms)
-                const interval = setInterval(() => {
-                    if (!softAimEnabled) clearInterval(interval);
-                    simulateSoftAim();
-                }, 500);
-            }
-        }
+                // Log the content (for debugging or your injection method)
+                console.log("Sensi File Content:", sensiContent);
 
-        function launchFreeFire() {
-            logStatus("🎮 Intentando abrir Free Fire con freefire://...", "#1e90ff");
-            window.location.href = "freefire://";
+                // Attempt to launch Free Fire via URL scheme
+                // Note: iOS URL schemes can't pass file content directly; your method must handle this
+                window.location.href = "freefire://";
+
+                // Optional: If your method needs the content, you could store it or send it elsewhere
+                // Example: localStorage.setItem("sensiData", sensiContent);
+            };
+            reader.onerror = function() {
+                status.textContent = "Error reading the file!";
+            };
+            reader.readAsText(file);
         }
     </script>
 </body>
