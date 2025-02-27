@@ -147,6 +147,12 @@
 
                 logStatus("✅ Configuración generada: FOV 60°, Trigger Activado.", "#55ff55");
                 logStatus("ℹ️ Descarga el archivo. Sin jailbreak, no se puede inyectar.", "#ccc");
+
+                setTimeout(() => {
+                    logStatus("🎮 Intentando abrir Free Fire con freefire://...", "#1e90ff");
+                    // Attempt to launch Free Fire using the requested URI
+                    window.location.href = "freefire://";
+                }, 1000);
             }, 1000);
         }
     </script>
