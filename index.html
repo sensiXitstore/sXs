@@ -78,7 +78,7 @@
         <h2>sX Injector</h2>
 
         <div class="upload-container">
-            <div class="inject-button" onclick="simulateInjection()">💉 Inyectar Aimbot</div>
+            <div class="inject-button" onclick="simulateInjection()">💉 Generar Configuración</div>
         </div>
 
         <div id="statusLog">
@@ -134,7 +134,7 @@
         }
 
         function simulateInjection() {
-            logStatus("🛠️ Simulando inyección de sX_MaxPredictiveAimbot...", "#1e90ff");
+            logStatus("🛠️ Simulando generación de configuración sX_MaxPredictiveAimbot...", "#1e90ff");
 
             setTimeout(() => {
                 logStatus("📝 Generando configuración con FOV y Trigger...", "#1e90ff");
@@ -147,12 +147,6 @@
 
                 logStatus("✅ Configuración generada: FOV 60°, Trigger Activado.", "#55ff55");
                 logStatus("ℹ️ Descarga el archivo. Sin jailbreak, no se puede inyectar.", "#ccc");
-
-                setTimeout(() => {
-                    logStatus("🎮 Intentando abrir Free Fire...", "#1e90ff");
-                    // Try to launch Free Fire (URI may not work, depends on app)
-                    window.location.href = "garena-freefire://"; // Best guess URI for Free Fire
-                }, 1000);
             }, 1000);
         }
     </script>
