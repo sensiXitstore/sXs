@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sX Injector - Persistent Injection</title>
+    <title>sX Injector - iPhone Config</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
@@ -37,15 +37,7 @@
             text-shadow: 0 0 20px rgba(30, 144, 255, 1);
         }
 
-        .upload-container {
-            margin-top: 20px;
-        }
-
-        input {
-            display: none;
-        }
-
-        .upload-label {
+        .inject-button {
             display: inline-block;
             padding: 12px 20px;
             font-size: 1.2rem;
@@ -58,10 +50,26 @@
             transition: all 0.2s ease-in-out;
         }
 
-        .upload-label:hover {
+        .inject-button:hover {
             background: linear-gradient(45deg, #007bff, #1e90ff);
             box-shadow: 0 0 25px rgba(30, 144, 255, 1);
             transform: scale(1.05);
+        }
+
+        #statusLog {
+            margin-top: 20px;
+            font-size: 1rem;
+            color: #ccc;
+            text-align: left;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        #downloadLink {
+            margin-top: 10px;
+            color: #1e90ff;
+            text-decoration: underline;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -70,51 +78,82 @@
         <h2>sX Injector</h2>
 
         <div class="upload-container">
-            <label for="dylibFile" class="upload-label">📂 Seleccionar .dylib</label>
-            <input type="file" id="dylibFile" accept=".dylib" onchange="storeAndInjectDylib()">
+            <div class="inject-button" onclick="simulateInjection()">💉 Inyectar Aimbot</div>
         </div>
 
-        <p style="margin-top: 20px; font-size: 1rem; color: white;">⚙️ Persistent Injection System for Free Fire (`com.garena.game.freefire` v1.109.4)</p>
+        <div id="statusLog">
+            <p>⚙️ Config Loader para Free Fire (v1.109.4)</p>
+            <p>ℹ️ Solo iPhone: Genera una configuración sin inyección real.</p>
+        </div>
+
+        <a id="downloadLink" style="display: none;" download="sX_MaxPredictiveAimbot.config">⬇️ Descargar Configuración</a>
     </div>
 
     <script>
-        function storeAndInjectDylib() {
-            let fileInput = document.getElementById("dylibFile");
-            if (!fileInput.files.length) {
-                alert("⚠️ Selecciona un archivo .dylib primero.");
-                return;
+        // Hardcoded Aimbot config (from your MaxPredictiveAimbot C++ code)
+        const aimbotConfig = {
+            headtracking_enabled: true,
+            yaw_sensitivity: 7.0,
+            pitch_sensitivity: 6.0,
+            smoothing_factor: 0.001,
+            max_rotation_speed: 80.0,
+            deadzone: 0.0002,
+            softaim: {
+                enabled: true,
+                strength: 3.5,
+                lock_fov: 45.0,
+                max_distance: 180.0,
+                smoothing: 0.001,
+                snap_threshold: 0.005,
+                prediction_factor: 1.8,
+                fov_angle: 60.0,
+                trigger_enabled: true,
+                trigger_active: true // Default trigger state (simulate as always active)
+            },
+            aimbot: {
+                enabled: true,
+                aim_speed: 8.0,
+                lock_fov: 50.0,
+                auto_fire_threshold: 0.02,
+                auto_fire: true
+            },
+            advanced: {
+                auto_toggle: true,
+                sensitivity_boost: 4.5,
+                recoil_compensation: 0.99
             }
+        };
 
-            let selectedDylib = fileInput.files[0].name;
-            console.log("🛠️ Almacenando " + selectedDylib + " en Free Fire (`documents/` y `cache/`)");
+        function logStatus(message, color = "#ccc") {
+            const logDiv = document.getElementById("statusLog");
+            const p = document.createElement("p");
+            p.textContent = message;
+            p.style.color = color;
+            logDiv.appendChild(p);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
 
-            // Almacenar el `.dylib` en las carpetas internas del juego
-            let storeInDocuments = `freefire://bundle/com.garena.game.freefire/store?path=documents&file=${encodeURIComponent(selectedDylib)}`;
-            let storeInCache = `freefire://bundle/com.garena.game.freefire/store?path=cache&file=${encodeURIComponent(selectedDylib)}`;
-
-            let iframeDocuments = document.createElement("iframe");
-            iframeDocuments.style.display = "none";
-            iframeDocuments.src = storeInDocuments;
-            document.body.appendChild(iframeDocuments);
-
-            let iframeCache = document.createElement("iframe");
-            iframeCache.style.display = "none";
-            iframeCache.src = storeInCache;
-            document.body.appendChild(iframeCache);
+        function simulateInjection() {
+            logStatus("🛠️ Simulando inyección de sX_MaxPredictiveAimbot...", "#1e90ff");
 
             setTimeout(() => {
-                alert("✅ " + selectedDylib + " almacenado con éxito. Inyectando y abriendo Free Fire...");
-                
-                let injectionCommand = `freefire://bundle/com.garena.game.freefire/inject?dylib=${encodeURIComponent(selectedDylib)}`;
-                let iframeInject = document.createElement("iframe");
-                iframeInject.style.display = "none";
-                iframeInject.src = injectionCommand;
-                document.body.appendChild(iframeInject);
+                logStatus("📝 Generando configuración con FOV y Trigger...", "#1e90ff");
+
+                // Create a JSON config file based on the hardcoded settings
+                const configBlob = new Blob([JSON.stringify(aimbotConfig, null, 2)], { type: "application/json" });
+                const downloadLink = document.getElementById("downloadLink");
+                downloadLink.href = URL.createObjectURL(configBlob);
+                downloadLink.style.display = "block";
+
+                logStatus("✅ Configuración generada: FOV 60°, Trigger Activado.", "#55ff55");
+                logStatus("ℹ️ Descarga el archivo. Sin jailbreak, no se puede inyectar.", "#ccc");
 
                 setTimeout(() => {
-                    window.location.href = "freefire://bundle/com.garena.game.freefire";
-                }, 2000);
-            }, 2000);
+                    logStatus("🎮 Intentando abrir Free Fire...", "#1e90ff");
+                    // Try to launch Free Fire (URI may not work, depends on app)
+                    window.location.href = "garena-freefire://"; // Best guess URI for Free Fire
+                }, 1000);
+            }, 1000);
         }
     </script>
 </body>
