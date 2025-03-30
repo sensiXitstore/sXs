@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>SensiX - Soft Aim</title>
+  <title>SensiX - Drag Aimbot</title>
   <style>
     body {
       margin: 0;
@@ -17,21 +17,21 @@
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
-      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      background: radial-gradient(circle at center, #0f0f0f 0%, #000 100%);
       animation: pulse 4s infinite alternate ease-in-out;
       z-index: -1;
     }
 
     @keyframes pulse {
       0% { filter: brightness(1); }
-      100% { filter: brightness(1.3); }
+      100% { filter: brightness(1.2); }
     }
 
     .container {
       position: relative;
       z-index: 2;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 80px;
     }
 
     h1 {
@@ -39,20 +39,34 @@
       margin-bottom: 10px;
     }
 
+    .slider-container {
+      margin-top: 30px;
+    }
+
+    input[type=range] {
+      width: 60%;
+    }
+
+    .slider-label {
+      font-size: 14px;
+      margin-top: 10px;
+      color: #aaa;
+    }
+
     .toggle-btn {
       background-color: #fff;
       color: #000;
       border: none;
-      padding: 14px 28px;
+      padding: 12px 22px;
       font-size: 16px;
-      margin-top: 20px;
-      border-radius: 10px;
+      margin-top: 30px;
+      border-radius: 8px;
       cursor: pointer;
       transition: all 0.3s ease;
     }
 
     .toggle-btn:hover {
-      background-color: #ccc;
+      background-color: #ddd;
     }
 
     .status {
@@ -67,7 +81,7 @@
       width: 100%;
       text-align: center;
       font-size: 12px;
-      color: #aaa;
+      color: #777;
     }
   </style>
 </head>
@@ -75,48 +89,60 @@
   <div id="background"></div>
   <div class="container">
     <h1>SensiX</h1>
-    <p>Soft Aim - Trigger Drag</p>
-    <button class="toggle-btn" onclick="toggleSoftAim()">Activar / Desactivar</button>
-    <div class="status" id="statusText">Estado: OFF</div>
+    <p>Drag Aimbot v1.109.12</p>
+
+    <div class="slider-container">
+      <input type="range" min="20" max="150" value="60" id="aimRadius">
+      <div class="slider-label">Aim Radius: <span id="radiusValue">60</span>%</div>
+    </div>
+
+    <button class="toggle-btn" onclick="injectDragAimbot()">Activar Drag Aimbot</button>
+    <div class="status" id="statusText">Esperando...</div>
   </div>
   <div class="footer">@rxzielg / @sensiXiters</div>
 
   <script>
-    let softAimEnabled = false;
+    function injectDragAimbot() {
+      const radius = document.getElementById("aimRadius").value;
+      document.getElementById("radiusValue").textContent = radius;
 
-    function toggleSoftAim() {
-      softAimEnabled = !softAimEnabled;
-      const status = document.getElementById("statusText");
+      const payload = encodeURIComponent(`[system]
+bundle_id=com.dts.freefireth
+version=1.109.12
+execution_mode=trigger
 
-      if (softAimEnabled) {
-        // Aquí va la lógica real de inyección en un entorno válido
-        const payload = encodeURIComponent(`[trigger]
+[trigger]
 event=fire_button_pressed
 activation=true
-mode=drag-only
+mode=drag-lock
 
 [drag_aimbot]
 head_detection=true
 head_offset_x=0.00
 head_offset_y=-0.037
-aim_speed=1.2
-drag_strength=1.6
-drag_delay=18ms
-prediction=false
-multi_angle_tracking=false
-lock_on_head=false
-auto_adjust_crosshair=true`);
+aim_speed=1.8
+drag_strength=2.3
+drag_delay=14ms
+lock_on_head=true
+auto_adjust_crosshair=true
 
-        window.location.href = `freefire://inject?payload=${payload}`;
-        status.textContent = "Estado: ON";
-        status.style.color = "#0f0";
-      } else {
-        // Desactivar lógica
-        window.location.href = `freefire://inject?payload=`;
-        status.textContent = "Estado: OFF";
-        status.style.color = "#f00";
-      }
+[aim_radius]
+expand_radius=${radius}%
+dynamic_adjustment=true
+
+[interface]
+silent_execution=true
+background_injection=true
+creator=@sensiXiters`);
+
+      window.location.href = `freefire://inject?payload=${payload}`;
+      document.getElementById("statusText").textContent = "Drag Aimbot activado";
+      document.getElementById("statusText").style.color = "#0f0";
     }
+
+    document.getElementById("aimRadius").addEventListener("input", function () {
+      document.getElementById("radiusValue").textContent = this.value;
+    });
   </script>
 </body>
 </html>
