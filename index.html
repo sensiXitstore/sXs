@@ -1,111 +1,103 @@
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SensiX - Drag Aimbot</title>
+  <title>ESP + Drag Aimbot Menu</title>
   <style>
     body {
+      background-color: #111;
       margin: 0;
-      font-family: 'Courier New', monospace;
-      color: white;
-      background: black;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .menu {
+      width: 300px;
+      background-color: #000;
+      border-radius: 10px;
       overflow: hidden;
     }
-
-    #background {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: radial-gradient(circle at center, #0f0f0f 0%, #000 100%);
-      animation: pulse 4s infinite alternate ease-in-out;
-      z-index: -1;
-    }
-
-    @keyframes pulse {
-      0% { filter: brightness(1); }
-      100% { filter: brightness(1.2); }
-    }
-
-    .container {
-      position: relative;
-      z-index: 2;
+    .button {
+      background-color: #0070FF;
+      color: white;
+      padding: 15px;
       text-align: center;
-      padding-top: 80px;
-    }
-
-    h1 {
-      font-size: 3em;
-      margin-bottom: 10px;
-    }
-
-    .slider-container {
-      margin-top: 30px;
-    }
-
-    input[type=range] {
-      width: 60%;
-    }
-
-    .slider-label {
-      font-size: 14px;
-      margin-top: 10px;
-      color: #aaa;
-    }
-
-    .toggle-btn {
-      background-color: #fff;
-      color: #000;
-      border: none;
-      padding: 12px 22px;
+      font-weight: bold;
       font-size: 16px;
-      margin-top: 30px;
-      border-radius: 8px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      border-bottom: 2px solid #111;
     }
-
-    .toggle-btn:hover {
-      background-color: #ddd;
+    .slider-section {
+      background-color: #444;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-
-    .status {
-      margin-top: 20px;
+    .slider {
+      width: 90%;
+      margin: 10px 0;
+    }
+    .slider-thumb {
+      background-color: #00FF00;
+    }
+    .slider-value {
+      margin: 5px 0;
+    }
+    .red-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      font-weight: bold;
       font-size: 18px;
-      color: #0f0;
+      margin: 0 10px;
+      border-radius: 4px;
     }
-
     .footer {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 12px;
-      color: #777;
+      background-color: red;
+      height: 10px;
     }
   </style>
 </head>
 <body>
-  <div id="background"></div>
-  <div class="container">
-    <h1>SensiX</h1>
-    <p>Drag Aimbot v1.109.12</p>
-
-    <div class="slider-container">
-      <input type="range" min="20" max="150" value="60" id="aimRadius">
-      <div class="slider-label">Aim Radius: <span id="radiusValue">60</span>%</div>
+  <div class="menu">
+    <div class="button" onclick="toggleAimbot()">AIMBOT</div>
+    <div class="slider-section">
+      <div>AIM RADIUS <span id="radiusValue">60</span></div>
+      <div>
+        <button class="red-btn" onclick="adjustRadius(-5)">-</button>
+        <input type="range" min="20" max="150" value="60" class="slider" id="aimSlider" oninput="updateRadius(this.value)">
+        <button class="red-btn" onclick="adjustRadius(5)">+</button>
+      </div>
     </div>
-
-    <button class="toggle-btn" onclick="injectDragAimbot()">Activar Drag Aimbot</button>
-    <div class="status" id="statusText">Esperando...</div>
+    <div class="button">ESP LINE</div>
+    <div class="button">ESP BOX</div>
+    <div class="button" style="background-color: #666;">ESP HP</div>
+    <div class="footer"></div>
   </div>
-  <div class="footer">@rxzielg / @sensiXiters</div>
 
   <script>
-    function injectDragAimbot() {
-      const radius = document.getElementById("aimRadius").value;
-      document.getElementById("radiusValue").textContent = radius;
+    function updateRadius(value) {
+      document.getElementById('radiusValue').textContent = value;
+    }
 
+    function adjustRadius(amount) {
+      const slider = document.getElementById('aimSlider');
+      let newVal = parseInt(slider.value) + amount;
+      if (newVal < 20) newVal = 20;
+      if (newVal > 150) newVal = 150;
+      slider.value = newVal;
+      updateRadius(newVal);
+    }
+
+    function toggleAimbot() {
+      const radius = document.getElementById('aimSlider').value;
       const payload = encodeURIComponent(`[system]
 bundle_id=com.dts.freefireth
 version=1.109.12
@@ -134,15 +126,8 @@ dynamic_adjustment=true
 silent_execution=true
 background_injection=true
 creator=@sensiXiters`);
-
       window.location.href = `freefire://inject?payload=${payload}`;
-      document.getElementById("statusText").textContent = "Drag Aimbot activado";
-      document.getElementById("statusText").style.color = "#0f0";
     }
-
-    document.getElementById("aimRadius").addEventListener("input", function () {
-      document.getElementById("radiusValue").textContent = this.value;
-    });
   </script>
 </body>
 </html>
