@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ESP + Drag Aimbot Menu</title>
+  <title>SensiX - Drag Aimbot Panel</title>
   <style>
     body {
       background-color: #111;
@@ -65,7 +65,10 @@
 </head>
 <body>
   <div class="menu">
-    <div class="button" onclick="toggleAimbot()">AIMBOT</div>
+    <div class="button" onclick="toggleAimbot()">AIMBOT DRAG</div>
+    <div class="button" onclick="activateDragAimbot()">DRAG AIMBOT</div>
+    <div class="button" onclick="activateNoRecoil()">NO RECOIL</div>
+
     <div class="slider-section">
       <div>AIM RADIUS <span id="radiusValue">110.00</span></div>
       <div>
@@ -74,9 +77,7 @@
         <button class="red-btn" onclick="adjustRadius(5)">+</button>
       </div>
     </div>
-    <div class="button" onclick="activateESP('line')">ESP LINE</div>
-    <div class="button" onclick="activateESP('box')">ESP BOX</div>
-    <div class="button" onclick="activateESP('hp')" style="background-color: #666;">ESP HP</div>
+
     <div class="footer"></div>
   </div>
 
@@ -108,11 +109,9 @@ mode=drag-lock
 
 [drag_aimbot]
 head_detection=true
-head_offset_x=0.00
-head_offset_y=-0.037
-aim_speed=1.8
-drag_strength=2.3
-drag_delay=14ms
+aim_speed=2.0
+drag_strength=2.6
+drag_delay=10ms
 lock_on_head=true
 auto_adjust_crosshair=true
 
@@ -124,15 +123,27 @@ dynamic_adjustment=true
 silent_execution=true
 background_injection=true
 creator=@sensiXiters`);
-      window.location.href = `freefire://inject?payload=${payload}`;
+      window.location.href = \`freefire://inject?payload=\${payload}\`;
     }
 
-    function activateESP(type) {
-      const payload = encodeURIComponent(`[esp]
-${type}=true
-version=1.109.12
-creator=@sensiXiters`);
-      window.location.href = `freefire://inject?payload=${payload}`;
+    function activateDragAimbot() {
+      const payload = encodeURIComponent(`[drag_aimbot]
+activation=true
+mode=trigger
+drag_strength=2.8
+aim_speed=2.1
+lock_on_head=true`);
+      window.location.href = \`freefire://inject?payload=\${payload}\`;
+    }
+
+    function activateNoRecoil() {
+      const payload = encodeURIComponent(`[recoil_control]
+enabled=true
+bullet_spread=0%
+crosshair_expand=false
+recoil_drop=0%
+recoil_reset_delay=0ms`);
+      window.location.href = \`freefire://inject?payload=\${payload}\`;
     }
   </script>
 </body>
