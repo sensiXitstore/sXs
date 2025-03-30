@@ -1,81 +1,89 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Sensi Loader</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            margin: 10px;
-            cursor: pointer;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #fileInput {
-            margin: 20px;
-        }
-        #status {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #333;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>sX Soft Injector</title>
+  <style>
+    body {
+      background-color: #111;
+      color: white;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+    button {
+      background-color: white;
+      color: black;
+      border: none;
+      padding: 12px 24px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <h1>Free Fire Sensi Loader</h1>
-    <input type="file" id="fileInput" accept=".sensi" />
-    <button onclick="loadAndExecute()">Execute in Free Fire</button>
-    <div id="status">No file selected yet.</div>
+  <h1>sX Soft Injector</h1>
+  <p>Versión: SoftDragAimbot_TriggerOnly.sensi</p>
+  <button onclick="inject()">Inyectar en Free Fire</button>
+  <div class="footer">@rxzielg / @sensiXiters</div>
 
-    <script>
-        function loadAndExecute() {
-            const fileInput = document.getElementById('fileInput');
-            const status = document.getElementById('status');
-            const file = fileInput.files[0];
+  <script>
+    function inject() {
+      // Contenido del archivo .sensi embebido como payload
+      const sensiPayload = encodeURIComponent(`// Archivo: SoftDragAimbot_TriggerOnly.sensi
+[system]
+bundle_id=com.dts.freefireth
+version=1.109.12
+execution_mode=trigger
 
-            if (!file) {
-                status.textContent = "Please select a .sensi file first!";
-                return;
-            }
+[trigger]
+event=fire_button_pressed
+activation=true
+mode=drag-only
 
-            // Read the .sensi file content
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const sensiContent = event.target.result;
-                status.textContent = "File loaded: " + file.name + ". Launching Free Fire...";
+[drag_aimbot]
+head_detection=true
+head_offset_x=0.00
+head_offset_y=-0.037
+aim_speed=1.2
+drag_strength=1.6
+drag_delay=18ms
+prediction=false
+multi_angle_tracking=false
+lock_on_head=false
+auto_adjust_crosshair=true
 
-                // Log the content (for debugging or your injection method)
-                console.log("Sensi File Content:", sensiContent);
+[recoil_control]
+enabled=false
+bullet_spread=default
+crosshair_expand=default
+recoil_drop=default
 
-                // Attempt to launch Free Fire via URL scheme
-                // Note: iOS URL schemes can't pass file content directly; your method must handle this
-                window.location.href = "freefire://";
+[weapon_logic]
+adaptive_mode=false
+smart_response=false
 
-                // Optional: If your method needs the content, you could store it or send it elsewhere
-                // Example: localStorage.setItem("sensiData", sensiContent);
-            };
-            reader.onerror = function() {
-                status.textContent = "Error reading the file!";
-            };
-            reader.readAsText(file);
-        }
-    </script>
+[interface]
+silent_execution=true
+background_injection=true
+custom_icon=sX_soft
+creator=@sensiXiters`);
+
+      // Inyección vía esquema personalizado (si es aceptado por Free Fire)
+      window.location.href = `freefire://inject?payload=${sensiPayload}`;
+    }
+  </script>
 </body>
 </html>
