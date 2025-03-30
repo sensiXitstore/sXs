@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SensiX - Drag Aimbot Panel</title>
+  <title>SensiX Drag Aimbot</title>
   <style>
     body {
       background-color: #111;
@@ -29,6 +29,10 @@
       font-size: 16px;
       cursor: pointer;
       border-bottom: 2px solid #111;
+    }
+    .button.active {
+      background-color: #00ff00;
+      color: black;
     }
     .slider-section {
       background-color: #444;
@@ -65,23 +69,21 @@
 </head>
 <body>
   <div class="menu">
-    <div class="button" onclick="toggleAimbot()">AIMBOT DRAG</div>
-    <div class="button" onclick="activateDragAimbot()">DRAG AIMBOT</div>
-    <div class="button" onclick="activateNoRecoil()">NO RECOIL</div>
-
+    <div id="aimbotBtn" class="button" onclick="toggleAimbot()">AIMBOT</div>
     <div class="slider-section">
       <div>AIM RADIUS <span id="radiusValue">110.00</span></div>
       <div>
         <button class="red-btn" onclick="adjustRadius(-5)">-</button>
-        <input type="range" min="0" max="1000" step="0.01" value="110" class="slider" id="aimSlider" oninput="updateRadius(this.value)">
+        <input type="range" min="0" max="2000" step="0.01" value="110" class="slider" id="aimSlider" oninput="updateRadius(this.value)">
         <button class="red-btn" onclick="adjustRadius(5)">+</button>
       </div>
     </div>
-
     <div class="footer"></div>
   </div>
 
   <script>
+    let aimbotActive = false;
+
     function updateRadius(value) {
       document.getElementById('radiusValue').textContent = parseFloat(value).toFixed(2);
     }
@@ -90,14 +92,20 @@
       const slider = document.getElementById('aimSlider');
       let newVal = parseFloat(slider.value) + amount;
       if (newVal < 0) newVal = 0;
-      if (newVal > 1000) newVal = 1000;
+      if (newVal > 2000) newVal = 2000;
       slider.value = newVal;
       updateRadius(newVal);
     }
 
     function toggleAimbot() {
+      aimbotActive = !aimbotActive;
+      const btn = document.getElementById('aimbotBtn');
       const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
-      const payload = encodeURIComponent(`[system]
+
+      if (aimbotActive) {
+        btn.classList.add('active');
+        btn.textContent = "AIMBOT ACTIVADO";
+        const payload = encodeURIComponent(`[system]
 bundle_id=com.dts.freefireth
 version=1.109.12
 execution_mode=trigger
@@ -109,9 +117,11 @@ mode=drag-lock
 
 [drag_aimbot]
 head_detection=true
-aim_speed=2.0
-drag_strength=2.6
-drag_delay=10ms
+head_offset_x=0.00
+head_offset_y=-0.037
+aim_speed=1.8
+drag_strength=2.3
+drag_delay=14ms
 lock_on_head=true
 auto_adjust_crosshair=true
 
@@ -123,27 +133,12 @@ dynamic_adjustment=true
 silent_execution=true
 background_injection=true
 creator=@sensiXiters`);
-      window.location.href = \`freefire://inject?payload=\${payload}\`;
-    }
-
-    function activateDragAimbot() {
-      const payload = encodeURIComponent(`[drag_aimbot]
-activation=true
-mode=trigger
-drag_strength=2.8
-aim_speed=2.1
-lock_on_head=true`);
-      window.location.href = \`freefire://inject?payload=\${payload}\`;
-    }
-
-    function activateNoRecoil() {
-      const payload = encodeURIComponent(`[recoil_control]
-enabled=true
-bullet_spread=0%
-crosshair_expand=false
-recoil_drop=0%
-recoil_reset_delay=0ms`);
-      window.location.href = \`freefire://inject?payload=\${payload}\`;
+        window.location.href = `freefire://inject?payload=${payload}`;
+      } else {
+        btn.classList.remove('active');
+        btn.textContent = "AIMBOT";
+        window.location.href = `freefire://inject?payload=`;
+      }
     }
   </script>
 </body>
