@@ -21,6 +21,15 @@
       overflow: hidden;
       transform: scale(1.25);
     }
+    .title-box {
+      background-color: red;
+      color: white;
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      padding: 20px;
+      border-bottom: 2px solid #111;
+    }
     .button {
       background-color: #0070FF;
       color: white;
@@ -30,6 +39,9 @@
       font-size: 22px;
       cursor: pointer;
       border-bottom: 2px solid #111;
+    }
+    .button.active {
+      background-color: #00cc00;
     }
     .slider-section {
       background-color: #444;
@@ -66,9 +78,10 @@
 </head>
 <body>
   <div class="menu">
-    <div class="button" onclick="activateAimbot('drag')">AIMBOT DRAG</div>
-    <div class="button" onclick="activateAimbot('normal')">AIMBOT NORMAL</div>
-    <div class="button" onclick="activateAimbot('aimlock')">AIMLOCK</div>
+    <div class="title-box">SensiX</div>
+    <div class="button" id="btn-drag" onclick="activateAimbot('drag')">AIMBOT DRAG</div>
+    <div class="button" id="btn-normal" onclick="activateAimbot('normal')">AIMBOT NORMAL</div>
+    <div class="button" id="btn-aimlock" onclick="activateAimbot('aimlock')">AIMLOCK</div>
     <div class="slider-section">
       <div style="font-size: 22px;">AIM RADIUS <span id="radiusValue">2500.00</span></div>
       <div>
@@ -94,8 +107,16 @@
       updateRadius(newVal);
     }
 
+    function resetButtons() {
+      document.getElementById('btn-drag').classList.remove('active');
+      document.getElementById('btn-normal').classList.remove('active');
+      document.getElementById('btn-aimlock').classList.remove('active');
+    }
+
     function activateAimbot(mode) {
       const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
+      resetButtons();
+      document.getElementById('btn-' + mode).classList.add('active');
 
       let aimbotSection = "";
       if (mode === "drag") {
