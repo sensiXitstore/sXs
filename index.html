@@ -79,9 +79,9 @@
 <body>
   <div class="menu">
     <div class="title-box">SensiX</div>
-    <div class="button" id="btn-drag" onclick="activateAimbot('drag')">AIMBOT DRAG</div>
-    <div class="button" id="btn-normal" onclick="activateAimbot('normal')">AIMBOT NORMAL</div>
-    <div class="button" id="btn-aimlock" onclick="activateAimbot('aimlock')">AIMLOCK</div>
+    <div class="button" id="btn-drag" onclick="toggleAimbot('drag')">AIMBOT DRAG</div>
+    <div class="button" id="btn-normal" onclick="toggleAimbot('normal')">AIMBOT NORMAL</div>
+    <div class="button" id="btn-aimlock" onclick="toggleAimbot('aimlock')">AIMLOCK</div>
     <div class="slider-section">
       <div style="font-size: 22px;">AIM RADIUS <span id="radiusValue">2500.00</span></div>
       <div>
@@ -94,6 +94,12 @@
   </div>
 
   <script>
+    let aimbotModes = {
+      drag: false,
+      normal: false,
+      aimlock: false
+    };
+
     function updateRadius(value) {
       document.getElementById('radiusValue').textContent = parseFloat(value).toFixed(2);
     }
@@ -107,20 +113,17 @@
       updateRadius(newVal);
     }
 
-    function resetButtons() {
-      document.getElementById('btn-drag').classList.remove('active');
-      document.getElementById('btn-normal').classList.remove('active');
-      document.getElementById('btn-aimlock').classList.remove('active');
-    }
+    function toggleAimbot(mode) {
+      const btn = document.getElementById('btn-' + mode);
+      aimbotModes[mode] = !aimbotModes[mode];
+      btn.classList.toggle('active');
 
-    function activateAimbot(mode) {
       const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
-      resetButtons();
-      document.getElementById('btn-' + mode).classList.add('active');
 
-      let aimbotSection = "";
-      if (mode === "drag") {
-        aimbotSection = `[drag_aimbot]
+      let sections = [];
+
+      if (aimbotModes.drag) {
+        sections.push(`[drag_aimbot]
 head_detection=true
 head_offset_x=0.00
 head_offset_y=-0.037
@@ -128,21 +131,25 @@ aim_speed=2.8
 drag_strength=3.2
 drag_delay=5ms
 lock_on_head=true
-auto_adjust_crosshair=true`;
-      } else if (mode === "normal") {
-        aimbotSection = `[aimbot]
+auto_adjust_crosshair=true`);
+      }
+
+      if (aimbotModes.normal) {
+        sections.push(`[aimbot]
 activation=trigger
 mode=normal
 head_lock=true
 aim_speed=2.5
-prediction=true`;
-      } else if (mode === "aimlock") {
-        aimbotSection = `[aimlock]
+prediction=true`);
+      }
+
+      if (aimbotModes.aimlock) {
+        sections.push(`[aimlock]
 enable=true
 lock_type=head
 sticky=true
 speed=2.9
-auto_snap=true`;
+auto_snap=true`);
       }
 
       const payload = encodeURIComponent(`[system]
@@ -154,7 +161,9 @@ execution_mode=trigger
 event=fire_button_pressed
 activation=true
 
-${aimbotSection}
+${sections.join("
+
+")}
 
 [aim_radius]
 expand_radius=${radius}%
