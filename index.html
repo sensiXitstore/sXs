@@ -74,6 +74,15 @@
       background-color: red;
       height: 12px;
     }
+    .inject-btn {
+      background-color: #00cc00;
+      color: black;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -90,6 +99,7 @@
         <button class="red-btn" onclick="adjustRadius(50)">+</button>
       </div>
     </div>
+    <div class="inject-btn" onclick="executeInjection()">EJECUTAR INYECCIÓN</div>
     <div class="footer"></div>
   </div>
 
@@ -117,9 +127,10 @@
       const btn = document.getElementById('btn-' + mode);
       aimbotModes[mode] = !aimbotModes[mode];
       btn.classList.toggle('active');
+    }
 
+    function executeInjection() {
       const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
-
       let sections = [];
 
       if (aimbotModes.drag) {
