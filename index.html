@@ -74,15 +74,6 @@
       background-color: red;
       height: 12px;
     }
-    .inject-btn {
-      background-color: #00cc00;
-      color: black;
-      font-size: 24px;
-      font-weight: bold;
-      padding: 18px;
-      text-align: center;
-      cursor: pointer;
-    }
   </style>
 </head>
 <body>
@@ -99,12 +90,11 @@
         <button class="red-btn" onclick="adjustRadius(50)">+</button>
       </div>
     </div>
-    <div class="inject-btn" onclick="executeInjection()">EJECUTAR INYECCIÓN</div>
     <div class="footer"></div>
   </div>
 
   <script>
-    let aimbotModes = {
+    const state = {
       drag: false,
       normal: false,
       aimlock: false
@@ -124,17 +114,15 @@
     }
 
     function toggleAimbot(mode) {
-      const btn = document.getElementById('btn-' + mode);
-      aimbotModes[mode] = !aimbotModes[mode];
-      btn.classList.toggle('active');
-    }
-
-    function executeInjection() {
       const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
-      let sections = [];
+      const button = document.getElementById('btn-' + mode);
+      state[mode] = !state[mode];
+      button.classList.toggle('active', state[mode]);
 
-      if (aimbotModes.drag) {
-        sections.push(`[drag_aimbot]
+      let aimbotSection = "";
+
+      if (mode === "drag") {
+        aimbotSection = `[drag_aimbot]
 head_detection=true
 head_offset_x=0.00
 head_offset_y=-0.037
@@ -142,28 +130,24 @@ aim_speed=2.8
 drag_strength=3.2
 drag_delay=5ms
 lock_on_head=true
-auto_adjust_crosshair=true`);
-      }
-
-      if (aimbotModes.normal) {
-        sections.push(`[aimbot]
+auto_adjust_crosshair=true`;
+      } else if (mode === "normal") {
+        aimbotSection = `[aimbot]
 activation=trigger
 mode=normal
 head_lock=true
 aim_speed=2.5
-prediction=true`);
-      }
-
-      if (aimbotModes.aimlock) {
-        sections.push(`[aimlock]
+prediction=true`;
+      } else if (mode === "aimlock") {
+        aimbotSection = `[aimlock]
 enable=true
 lock_type=head
 sticky=true
 speed=2.9
-auto_snap=true`);
+auto_snap=true`;
       }
 
-      const payload = encodeURIComponent(`[system]
+      const payload = state[mode] ? encodeURIComponent(`[system]
 bundle_id=com.dts.freefireth
 version=1.109.12
 execution_mode=trigger
@@ -172,9 +156,7 @@ execution_mode=trigger
 event=fire_button_pressed
 activation=true
 
-${sections.join("
-
-")}
+${aimbotSection}
 
 [aim_radius]
 expand_radius=${radius}%
@@ -183,7 +165,8 @@ dynamic_adjustment=true
 [interface]
 silent_execution=true
 background_injection=true
-creator=@sensiXiters`);
+creator=@sensiXiters`) : encodeURIComponent(`[disable]
+feature=${mode}`);
 
       window.location.href = `freefire://inject?payload=${payload}`;
     }
