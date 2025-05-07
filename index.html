@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SensiX</title>
+  <title>SensiX Injector</title>
   <style>
     body {
       background-color: #111;
@@ -74,11 +73,20 @@
       background-color: red;
       height: 12px;
     }
+    .inject-btn {
+      background-color: #00cc00;
+      color: black;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 18px;
+      text-align: center;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="menu">
-    <div class="title-box">SensiX</div>
+    <div class="title-box">SensiX Injector</div>
     <div class="button" id="btn-drag" onclick="toggleAimbot('drag')">AIMBOT DRAG</div>
     <div class="button" id="btn-normal" onclick="toggleAimbot('normal')">AIMBOT NORMAL</div>
     <div class="button" id="btn-aimlock" onclick="toggleAimbot('aimlock')">AIMLOCK</div>
@@ -90,11 +98,12 @@
         <button class="red-btn" onclick="adjustRadius(50)">+</button>
       </div>
     </div>
+    <div class="inject-btn" onclick="executeInjection()">EJECUTAR INYECCIÓN</div>
     <div class="footer"></div>
   </div>
 
   <script>
-    const state = {
+    let aimbotModes = {
       drag: false,
       normal: false,
       aimlock: false
@@ -114,61 +123,81 @@
     }
 
     function toggleAimbot(mode) {
+      const btn = document.getElementById('btn-' + mode);
+      aimbotModes[mode] = !aimbotModes[mode];
+      btn.classList.toggle('active');
+    }
+
+    function executeInjection() {
       const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
-      const button = document.getElementById('btn-' + mode);
-      state[mode] = !state[mode];
-      button.classList.toggle('active', state[mode]);
+      let features = [
+        "FEATURE=AutoAimSystemDeep",
+        "FEATURE=AimbotMemoryTrack",
+        "FEATURE=SnapToHeadOnly",
+        "FEATURE=HitboxRedirectFull",
+        "FEATURE=CrosshairLockOverride",
+        "FEATURE=TriggerSnapOnly",
+        "FEATURE=SnapSpeedMAX",
+        "FEATURE=NoRecoilInternal",
+        "FEATURE=NoSpreadEngine",
+        "FEATURE=UltraDPIInjection",
+        "FEATURE=ScreenSensitivityInjected",
+        "FEATURE=TouchOverride",
+        "FEATURE=MouseTrackingCore",
+        "FEATURE=PermanentExecution",
+        "FEATURE=ReactiveFollowLogic",
+        "FEATURE=AngleCorrection",
+        "FEATURE=TargetingByBone",
+        "FEATURE=FPSBypass"
+      ];
 
-      let aimbotSection = "";
-
-      if (mode === "drag") {
-        aimbotSection = `[drag_aimbot]
-head_detection=true
-head_offset_x=0.00
-head_offset_y=-0.037
-aim_speed=2.8
-drag_strength=3.2
-drag_delay=5ms
-lock_on_head=true
-auto_adjust_crosshair=true`;
-      } else if (mode === "normal") {
-        aimbotSection = `[aimbot]
-activation=trigger
-mode=normal
-head_lock=true
-aim_speed=2.5
-prediction=true`;
-      } else if (mode === "aimlock") {
-        aimbotSection = `[aimlock]
-enable=true
-lock_type=head
-sticky=true
-speed=2.9
-auto_snap=true`;
+      if (aimbotModes.drag) {
+        features.push("FEATURE=DragLogic");
+      }
+      if (aimbotModes.normal) {
+        features.push("FEATURE=AimAssistNormal");
+      }
+      if (aimbotModes.aimlock) {
+        features.push("FEATURE=AimLock", "FEATURE=HeadLock");
       }
 
-      const payload = state[mode] ? encodeURIComponent(`[system]
-bundle_id=com.dts.freefireth
-version=1.109.12
-execution_mode=trigger
+      let sensiCode = `[SENSI_EXEC]
+VERSION=1.0
+BUNDLE=com.dts.freefireth
+ENGINE=AIMBOT_SYSTEM_OVERRIDE
+PATCH=A5B28=01
+PATCH=A5B38=01
+PATCH=A5B48=01
+PATCH=A5B58=01
+PATCH=A5B68=01
+PATCH=A5B78=00
+PATCH=A5B88=01
+PATCH=A5B98=01
+PATCH=A5BC8=01
+PATCH=A5BD8=01
+PATCH=A5BE8=01
+PATCH=A5BF8=01
+PATCH=A5C08=01
+PATCH=A5C18=01
+PATCH=A5C28=01
+PATCH=A5C38=01
+PATCH=A5C48=01
+PATCH=A5C58=01
+PATCH=A5C68=01
+PATCH=A5C78=01
+PATCH=A5C88=01
+PATCH=A5C98=01
+PATCH=A5CA8=01
+PATCH=A5CB8=01
+PATCH=A5CC8=01
+PATCH=A5CD8=01
+PATCH=A5CE8=01
+${features.join('\n')}
+FEATURE=AimRadiusMultiplier_${radius}
+[/SENSI_EXEC]`;
 
-[trigger]
-event=fire_button_pressed
-activation=true
-
-${aimbotSection}
-
-[aim_radius]
-expand_radius=${radius}%
-dynamic_adjustment=true
-
-[interface]
-silent_execution=true
-background_injection=true
-creator=@sensiXiters`) : encodeURIComponent(`[disable]
-feature=${mode}`);
-
-      window.location.href = `freefire://inject?payload=${payload}`;
+      const encoded = encodeURIComponent(sensiCode);
+      window.location.href = `freefire://inject?payload=${encoded}`;
     }
   </script>
 </body>
