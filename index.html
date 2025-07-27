@@ -156,7 +156,9 @@
         "FEATURE=ReactiveFollowLogic",
         "FEATURE=AngleCorrection",
         "FEATURE=TargetingByBone",
-        "FEATURE=FPSBypass"
+        "FEATURE=FPSBypass",
+        "FEATURE=CrosshairTeleportMAX",
+        "FEATURE=HeadLockExtended"
       ];
 
       if (aimbotModes.drag) {
@@ -166,42 +168,18 @@
         features.push("FEATURE=AimbotTriggerOnly");
       }
       if (aimbotModes.aimlock) {
-        features.push("FEATURE=AimLock", "FEATURE=HeadLock", "FEATURE=CrosshairStickToHead");
+        features.push("FEATURE=AimLock", "FEATURE=CrosshairStickToHead");
       }
 
       let sensiCode = `[SENSI_EXEC]
-VERSION=1.0
+VERSION=1.111.17
 BUNDLE=com.dts.freefireth
-ENGINE=AIMBOT_SYSTEM_OVERRIDE
-PATCH=A5B28=01
-PATCH=A5B38=01
-PATCH=A5B48=01
-PATCH=A5B58=01
-PATCH=A5B68=01
-PATCH=A5B78=00
-PATCH=A5B88=01
-PATCH=A5B98=01
-PATCH=A5BC8=01
-PATCH=A5BD8=01
-PATCH=A5BE8=01
-PATCH=A5BF8=01
-PATCH=A5C08=01
-PATCH=A5C18=01
-PATCH=A5C28=01
-PATCH=A5C38=01
-PATCH=A5C48=01
-PATCH=A5C58=01
-PATCH=A5C68=01
-PATCH=A5C78=01
-PATCH=A5C88=01
-PATCH=A5C98=01
-PATCH=A5CA8=01
-PATCH=A5CB8=01
-PATCH=A5CC8=01
-PATCH=A5CD8=01
-PATCH=A5CE8=01
-${features.join('\n')}
+ENGINE=OVERRIDE_FULL_REBOOT
+TRIGGER=drag_lift_shoot
+${features.join('
+')}
 FEATURE=AimRadiusMultiplier_${radius}
+REBOOT=freefire
 [/SENSI_EXEC]`;
 
       const encoded = encodeURIComponent(sensiCode);
