@@ -24,16 +24,16 @@
         .fov-value{margin-top:12px;font-size:26px;font-weight:bold;color:#ff0033;text-shadow:0 0 20px;}
         .circle-container{position:relative;margin:40px auto;width:240px;height:240px;}
         .fov-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:4px solid #ff0033;border-radius:50%;box-shadow:0 0 40px #ff0033;transition:all 0.3s;}
+        .inject-btn{margin-top:25px;padding:18px;background:#ff0033;box-shadow:0 0 40px #ff0033;border-radius:15px;text-align:center;font-weight:bold;font-size:18px;animation:pulse 2s infinite;cursor:pointer;}
         .status{font-size:13px;text-align:center;margin-top:15px;color:#00ff33;text-shadow:0 0 10px;}
-        .inject-btn{margin-top:20px;padding:18px;background:#ff0033;box-shadow:0 0 40px #ff0033;border-radius:15px;text-align:center;font-weight:bold;font-size:18px;animation:pulse 2s infinite;}
-        @keyframes pulse{0%{box-shadow:0 0 40px #ff0033;}50%{box-shadow:0 0 60px #ff0033;}100%{box-shadow:0 0 40px #ff0033;}}
+        @keyframes pulse{0%,100%{box-shadow:0 0 40px #ff0033;}50%{box-shadow:0 0 70px #ff0033;}}
     </style>
 </head>
 <body>
 
 <div class="panel">
     <h1>DRACOX V2 • DEEPBUNDLE</h1>
-    <div class="subtitle">DEC 2025 • 100% UNDETECTED • iOS 16–19</div>
+    <div class="subtitle">DEC 2025 • OFF BY DEFAULT • iOS 16–19</div>
 
     <div class="tab">
         <button class="active" onclick="openTab('aim')">AIM</button>
@@ -42,40 +42,41 @@
 
     <!-- AIM TAB -->
     <div id="aim" class="tab-content active">
-        <div class="option"><span>Continuous Head Lock</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'headlock')"><span class="slider"></span></label></div>
-        <div class="option"><span>Fire Button Auto Aim</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'fireaim')"><span class="slider"></span></label></div>
-        <div class="option"><span>Head Only Target</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'headonly')"><span class="slider"></span></label></div>
-        <div class="option"><span>Auto Snap On Fire</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'snap')"><span class="slider"></span></label></div>
-        <div class="option"><span>Predictive 360 Tracking</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'360track')"><span class="slider"></span></label></div>
-        <div class="option"><span>Never Lose Head</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'neverlose')"><span class="slider"></span></label></div>
-        <div class="option"><span>Anti Chest Focus</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'anticheck')"><span class="slider"></span></label></div>
+        <div class="option"><span>Continuous Head Lock</span><label class="switch"><input type="checkbox" onchange="inject(this,'headlock')"><span class="slider"></span></label></div>
+        <div class="option"><span>Fire Button Auto Aim</span><label class="switch"><input type="checkbox" onchange="inject(this,'fireaim')"><span class="slider"></span></label></div>
+        <div class="option"><span>Head Only Target</span><label class="switch"><input type="checkbox" onchange="inject(this,'headonly')"><span class="slider"></span></label></div>
+        <div class="option"><span>Auto Snap On Fire</span><label class="switch"><input type="checkbox" onchange="inject(this,'snap')"><span class="slider"></span></label></div>
+        <div class="option"><span>Predictive 360 Tracking</span><label class="switch"><input type="checkbox" onchange="inject(this,'360track')"><span class="slider"></span></label></div>
+        <div class="option"><span>Never Lose Head</span><label class="switch"><input type="checkbox" onchange="inject(this,'neverlose')"><span class="slider"></span></label></div>
+        <div class="option"><span>Anti Chest Focus</span><label class="switch"><input type="checkbox" onchange="inject(this,'anticheck')"><span class="slider"></span></label></div>
 
-        <div style="color:#ff3366;margin:25px 0 10px;">Aim Radius FOV</div>
-        <input type="range" class="fov-slider" min="30" max="360" value="360" id="fovRange" oninput="injectFOV(this.value)">
-        <div class="fov-value">360°</div>
+        <div style="color:#ff3366;margin:25px 0 10px;">Aim Radius FOV (solo se inyecta al soltar)</div>
+        <input type="range" class="fov-slider" min="30" max="360" value="90" id="fovRange">
+        <div class="fov-value">90°</div>
 
         <div class="circle-container">
-            <div class="fov-circle" id="fovCircle"></div>
+            <div class="fov-circle" id="fovCircle" style="width:180px;height:180px;"></div>
         </div>
     </div>
 
     <!-- EXTRA TAB -->
     <div id="extra" class="tab-content">
-        <div class="option"><span>Real Speed ×4.5</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'speed')"><span class="slider"></span></label></div>
-        <div class="option"><span>No Stamina Drain</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'nostamina')"><span class="slider"></span></label></div>
-        <div class="option"><span>God Speed Real</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'godspeed')"><span class="slider"></span></label></div>
-        <div class="option"><span>High Jump Boost</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'jump')"><span class="slider"></span></label></div>
-        <div class="option"><span>Garena AC Bypass v4.6</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'bypass')"><span class="slider"></span></label></div>
+        <div class="option"><span>Real Speed ×4.5</span><label class="switch"><input type="checkbox" onchange="inject(this,'speed')"><span class="slider"></span></label></div>
+        <div class="option"><span>No Stamina Drain</span><label class="switch"><input type="checkbox" onchange="inject(this,'nostamina')"><span class="slider"></span></label></div>
+        <div class="option"><span>God Speed Real</span><label class="switch"><input type="checkbox" onchange="inject(this,'godspeed')"><span class="slider"></span></label></div>
+        <div class="option"><span>High Jump Boost</span><label class="switch"><input type="checkbox" onchange="inject(this,'jump')"><span class="slider"></span></label></div>
+        <div class="option"><span>Garena AC Bypass v4.6</span><label class="switch"><input type="checkbox" onchange="inject(this,'bypass')"><span class="slider"></span></label></div>
     </div>
 
-    <div class="inject-btn" onclick="fullInject()">INJECTAR TODO AHORA</div>
-    <div class="status" id="status">Status: Ready • DeepBundle Hook Active</div>
+    <div class="inject-btn" onclick="fullInject()">INJECTAR TODO SELECCIONADO</div>
+    <div class="status" id="status">Status: Ready • Ajusta y luego inyecta</div>
 </div>
 
 <script>
     const status = document.getElementById('status');
     const fovValue = document.querySelector('.fov-value');
     const fovCircle = document.getElementById('fovCircle');
+    const fovRange = document.getElementById('fovRange');
 
     function openTab(tab) {
         document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
@@ -84,30 +85,58 @@
         event.target.classList.add('active');
     }
 
+    // Inyección normal de switches (solo al soltar)
     function inject(checkbox, feature) {
         const state = checkbox.checked ? '1' : '0';
-        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&${feature}=${state}&date=20251204&lock=headonly360`;
+        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&${feature}=${state}&date=20251204`;
         window.location.href = url;
-        status.textContent = checkbox.checked ? `Injected: ${feature.toUpperCase()} ON` : `Disabled: ${feature.toUpperCase()}`;
-        setTimeout(()=>status.textContent = "Status: Ready • DeepBundle Hook Active", 2000);
+        status.textContent = checkbox.checked ? `${feature.toUpperCase()} → ACTIVADO` : `${feature.toUpperCase()} → DESACTIVADO`;
+        setTimeout(()=>status.textContent="Status: Ready • Ajusta y luego inyecta", 2000);
     }
 
-    function injectFOV(value) {
-        fovValue.textContent = value + '°';
-        const size = value * 0.75;
+    // FOV: solo inyecta cuando sueltas el dedo
+    fovRange.addEventListener('input', function() {
+        const val = this.value;
+        fovValue.textContent = val + '°';
+        const size = val * 0.75;
         fovCircle.style.width = size + 'px';
         fovCircle.style.height = size + 'px';
-        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&fov=${value}&date=20251204`;
+    });
+
+    fovRange.addEventListener('change', function() {  // solo al soltar
+        const val = this.value;
+        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&fov=${val}&date=20251204`;
         window.location.href = url;
-    }
+        status.textContent = `FOV ${val}° INYECTADO`;
+        setTimeout(()=>status.textContent="Status: Ready • Ajusta y luego inyecta", 2000);
+    });
 
+    // Inyectar todo lo que esté activado
     function fullInject() {
-        window.location.href = "freefire://deepbundle-inject?v2=DracoX_V2.sensi&lock=headonly360&fire=autotrack&speed=4.5&bypass=1&fov=360&date=20251204";
-        status.textContent = "FULL INJECTED • ALL FEATURES ACTIVE";
+        let params = "v2=DracoX_V2.sensi&date=20251204";
+        document.querySelectorAll('input[type=checkbox]:checked').forEach(cb => {
+            const feature = cb.parentElement.parentElement.textContent.trim().toLowerCase().replace(/ /g,'');
+            if (feature.includes('headlock')) params += "&headlock=1";
+            if (feature.includes('firebutton')) params += "&fireaim=1";
+            if (feature.includes('headonly')) params += "&headonly=1";
+            if (feature.includes('autosnap')) params += "&snap=1";
+            if (feature.includes('360track')) params += "&360track=1";
+            if (feature.includes('neverlose')) params += "&neverlose=1";
+            if (feature.includes('anticheck')) params += "&anticheck=1";
+            if (feature.includes('speed')) params += "&speed=1";
+            if (feature.includes('nostamina')) params += "&nostamina=1";
+            if (feature.includes('godspeed')) params += "&godspeed=1";
+            if (feature.includes('jump')) params += "&jump=1";
+            if (feature.includes('bypass')) params += "&bypass=1";
+        });
+        params += "&fov=" + fovRange.value;
+        window.location.href = "freefire://deepbundle-inject?" + params;
+        status.textContent = "FULL INJECT COMPLETADO";
     }
 
-    // FOV inicial
-    injectFOV(360);
+    // Valor inicial del círculo
+    fovCircle.style.width = (90 * 0.75) + 'px';
+    fovCircle.style.height = (90 * 0.75) + 'px';
 </script>
 </body>
 </html>
