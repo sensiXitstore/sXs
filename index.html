@@ -18,7 +18,7 @@
             color: #00ffff;
             position: relative;
         }
-        /* 30 Triángulos animados flotantes - MÁS INTENSOS */
+        /* 30 Triángulos animados flotantes */
         .triangle {
             position: absolute;
             width: 0;
@@ -235,7 +235,7 @@
             transition: all 0.3s;
         }
         .inject-btn:active {
-            transform: scale(0.98); /* Simula vibración iOS */
+            transform: scale(0.98);
         }
         @keyframes pulse {
             0%, 100% { box-shadow: 0 0 30px #00ffff; }
@@ -258,7 +258,7 @@
     </style>
 </head>
 <body>
-    <!-- 30 Triángulos animados -->
+    <!-- 30 Triángulos -->
     <div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div>
     <div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div>
     <div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div>
@@ -267,19 +267,17 @@
     <div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div><div class="triangle"></div>
 
     <div class="panel">
-        <!-- Logo Sensi Xiters (URL real, fallback CSS) -->
         <img src="https://freefireheadshotpanel.com/wp-content/uploads/2024/10/Sensi-X-Panel-APK.jpg" alt="Sensi Xiters Logo" class="bg-logo" onerror="this.style.display='none'; this.parentNode.style.background='radial-gradient(circle at center, rgba(0,255,255,0.1) 0%, transparent 70%)';">
 
         <div class="title">SENSI X PREMIUM</div>
-        <div class="creator">by DracoX • iOS DeepBundle 2025 (OB51 Compatible)</div>
+        <div class="creator">by DracoX • iOS DeepBundle 2025 (OB51)</div>
 
         <div class="tab">
             <button class="active" onclick="openTab('aim')">AIM</button>
-            <button onclick="openTab('extra')">EXTRA</button>
             <button onclick="openTab('info')">INFO</button>
         </div>
 
-        <!-- AIM TAB -->
+        <!-- AIM TAB - SOLO TUS FUNCIONES -->
         <div id="aim" class="tab-content active">
             <div class="option">
                 <span>Head Tracking Lock (Max 100)</span>
@@ -293,6 +291,10 @@
                 <span>Drag Aimbot (Pro 1)</span>
                 <label class="switch"><input type="checkbox" onchange="inj(this,'dragaim=1')"><span class="slider"></span></label>
             </div>
+            <div class="option">
+                <span>Pro Bypass OB51 (1)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'bypass=1')"><span class="slider"></span></label>
+            </div>
 
             <div class="slider-label">Aim FOV (Default 0°)</div>
             <input type="range" class="range" min="0" max="500" value="0" id="fov">
@@ -305,38 +307,6 @@
             <div class="slider-label">No Recoil Force (Default 0% - Inyecta 0 para Zero)</div>
             <input type="range" class="range" min="0" max="100" value="0" id="recoil">
             <div class="value" id="recVal">0%</div>
-        </div>
-
-        <!-- EXTRA TAB -->
-        <div id="extra" class="tab-content">
-            <div class="option">
-                <span>Magic Bullet (Head Only 1)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'magicbullet=1')"><span class="slider"></span></label>
-            </div>
-            <div class="option">
-                <span>Auto Headshot (98% 1)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'autohead=1')"><span class="slider"></span></label>
-            </div>
-            <div class="option">
-                <span>Head Magnet (Force 100)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'headmagnet=100')"><span class="slider"></span></label>
-            </div>
-            <div class="option">
-                <span>ESP Wallhack (Full 1)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'esp=1')"><span class="slider"></span></label>
-            </div>
-            <div class="option">
-                <span>Speed Hack (x10 10)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'speed=10')"><span class="slider"></span></label>
-            </div>
-            <div class="option">
-                <span>Fly Mode (Air 1)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'fly=1')"><span class="slider"></span></label>
-            </div>
-            <div class="option">
-                <span>Pro Bypass OB51 (1)</span>
-                <label class="switch"><input type="checkbox" onchange="inj(this,'bypass=1')"><span class="slider"></span></label>
-            </div>
         </div>
 
         <!-- INFO TAB -->
@@ -354,7 +324,7 @@
             </div>
         </div>
 
-        <div class="inject-btn" onclick="fullInject()">INJECTAR PREMIUM (DeepBundle Hook)</div>
+        <div class="inject-btn" onclick="fullInject()">INJECTAR AL SISTEMA (DeepBundle Hook)</div>
     </div>
 
     <script>
@@ -377,39 +347,31 @@
         }
 
         function inj(cb, param) {
-            if (!cb.checked) { param += '=0'; } // Default 0 si OFF
-            const fullParam = param;
-            injectUrl(fullParam);
+            const state = cb.checked ? param : param.replace('=1','=0').replace('=100','=0').replace('=99','=0'); // Default 0 si OFF
+            injectUrl(state);
         }
 
-        fov.onchange = () => injectUrl(`aimfov=${fov.value}`);
-        radius.onchange = () => injectUrl(`aimradius=${radius.value}`);
-        recoil.onchange = () => injectUrl(`norecoil=${recoil.value || 0}`); // Fuerza zero si 0
+        fov.onchange = () => injectUrl(`aimfov=${fov.value || 0}`);
+        radius.onchange = () => injectUrl(`aimradius=${radius.value || 0}`);
+        recoil.onchange = () => injectUrl(`norecoil=${recoil.value || 0}`); // 0 = zero recoil
 
         function injectUrl(param) {
             const base = `v2=DracoX_V2.sensi&${param}&offset=0x1AB5G330&bundle=com.dts.freefireth&ob51=1&by=DracoX&date=20251204`;
             let url = `freefire://deepbundle-inject?${base}`;
             try { window.location.href = url; } catch(e) {}
             setTimeout(() => {
-                // Fallback Universal Link iOS
                 url = `universal://deepbundle-inject?${base}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
                 window.location.href = url;
             }, 150);
         }
 
         function fullInject() {
-            let params = `v2=DracoX_V2.sensi&by=DracoX&date=20251204&aimfov=${fov.value}&aimradius=${radius.value}&norecoil=${recoil.value || 0}&offset=0x1AB5G330&bundle=com.dts.freefireth&ob51=1`;
+            let params = `v2=DracoX_V2.sensi&by=DracoX&date=20251204&aimfov=${fov.value || 0}&aimradius=${radius.value || 0}&norecoil=${recoil.value || 0}&offset=0x1AB5G330&bundle=com.dts.freefireth&ob51=1`;
             document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
                 const txt = c.parentElement.previousElementSibling.textContent.toLowerCase().replace(/ /g, '');
                 if (txt.includes('headtrack')) params += '&headtrack=100';
                 if (txt.includes('aimlock')) params += '&aimlock=99';
                 if (txt.includes('dragaim')) params += '&dragaim=1';
-                if (txt.includes('magicbullet')) params += '&magicbullet=1';
-                if (txt.includes('autohead')) params += '&autohead=1';
-                if (txt.includes('headmagnet')) params += '&headmagnet=100';
-                if (txt.includes('esp')) params += '&esp=1';
-                if (txt.includes('speed')) params += '&speed=10';
-                if (txt.includes('fly')) params += '&fly=1';
                 if (txt.includes('bypass')) params += '&bypass=1';
             });
             let url = `freefire://deepbundle-inject?${params}`;
