@@ -2,141 +2,115 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DRACOX V2 • DEEPBUNDLE 2025</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SensiX by DracoX</title>
     <style>
-        body{margin:0;height:100vh;background:#000;display:flex;justify-content:center;align-items:center;font-family:'Courier New',monospace;overflow:hidden;}
-        .panel{width:340px;padding:22px;background:rgba(8,0,5,0.98);border:3px solid #ff0033;border-radius:20px;box-shadow:0 0 50px #ff0033;color:#ff3366;}
-        h1{text-align:center;font-size:20px;margin:0 0 10px;color:#ff0033;text-shadow:0 0 20px #ff0033;}
-        .subtitle{font-size:13px;text-align:center;margin-bottom:25px;color:#ff6699;}
-        .tab{display:flex;margin-bottom:20px;}
-        .tab button{flex:1;padding:14px;background:#1a0011;border:2px solid #ff0033;color:#ff3366;border-radius:12px;font-weight:bold;}
-        .tab button.active{background:#ff0033;box-shadow:0 0 25px #ff0033;}
-        .option{display:flex;justify-content:space-between;align-items:center;margin:18px 0;font-size:15px;}
-        .switch{position:relative;display:inline-block;width:70px;height:36px;}
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+        body{margin:0;height:100vh;background:#000;overflow:hidden;display:flex;justify-content:center;align-items:center;font-family:'Orbitron',sans-serif;color:#0ff;}
+        .panel{width:95vw;max-width:380px;height:95vh;background:rgba(0,5,15,0.92);border:2px solid #0ff;border-radius:18px;box-shadow:0 0 40px #0ff;overflow:hidden;position:relative;}
+        .bg-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;opacity:0.07;pointer-events:none;z-index:1;}
+        .title{text-align:center;padding:15px 0;font-size:22px;color:#0ff;text-shadow:0 0 20px #0ff;z-index:2;position:relative;}
+        .creator{font-size:11px;text-align:center;color:#00ffff88;margin-bottom:15px;}
+        .options{padding:0 20px 20px;overflow-y:auto;height:calc(100% - 140px);z-index:2;position:relative;}
+        .option{display:flex;justify-content:space-between;align-items:center;margin:18px 0;font-size:14px;color:#fff;}
+        .switch{position:relative;display:inline-block;width:66px;height:34px;}
         .switch input{opacity:0;width:0;height:0;}
-        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#333;transition:.3s;border-radius:36px;border:2px solid #ff0033;}
-        .slider:before{position:absolute;content:"";height:28px;width:28px;left:4px;bottom:4px;background:#ff0033;transition:.3s;border-radius:50%;}
-        input:checked + .slider{background:#440011;}
-        input:checked + .slider:before{transform:translateX(34px);}
-        .fov-slider{width:100%;-webkit-appearance:none;height:12px;background:#222;border-radius:6px;border:2px solid #ff0033;}
-        .fov-slider::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;background:#ff0033;border-radius:50%;box-shadow:0 0 30px #ff0033;}
-        .fov-value{margin-top:12px;font-size:26px;font-weight:bold;color:#ff0033;text-shadow:0 0 20px;}
-        .circle-container{position:relative;margin:40px auto;width:240px;height:240px;}
-        .fov-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:4px solid #ff0033;border-radius:50%;box-shadow:0 0 40px #ff0033;transition:all 0.3s;}
-        .inject-btn{margin-top:25px;padding:18px;background:#ff0033;box-shadow:0 0 40px #ff0033;border-radius:15px;text-align:center;font-weight:bold;font-size:18px;animation:pulse 2s infinite;cursor:pointer;}
-        .status{font-size:13px;text-align:center;margin-top:15px;color:#00ff33;text-shadow:0 0 10px;}
-        @keyframes pulse{0%,100%{box-shadow:0 0 40px #ff0033;}50%{box-shadow:0 0 70px #ff0033;}}
+        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#111;transition:.4s;border-radius:34px;border:2px solid #0ff;}
+        .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background:#000;box-shadow:0 0 15px #0ff;transition:.4s;border-radius:50%;}
+        input:checked + .slider{background:#0ff;}
+        input:checked + .slider:before{transform:translateX(32px);background:#000;}
+
+        .slider-label{color:#0ff;margin:20px 0 10px;display:block;font-size:13px;}
+        .range{width:100%;-webkit-appearance:none;height:10px;background:#111;border-radius:5px;border:1px solid #0ff;outline:none;}
+        .range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;background:#0ff;border-radius:50%;box-shadow:0 0 20px #0ff;cursor:pointer;}
+        .value{text-align:center;margin-top:8px;font-size:20px;color:#0ff;text-shadow:0 0 15px;}
+
+        .inject-btn{margin:20px;padding:16px;background:#0ff;color:#000;font-weight:bold;border-radius:12px;text-align:center;box-shadow:0 0 30px #0ff;animation:pulse 2s infinite;cursor:pointer;}
+        @keyframes pulse{0%,100%{box-shadow:0 0 30px #0ff}50%{box-shadow:0 0 50px #0ff}}
+
+        .triangle{position:absolute;width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:40px solid #0ff33;opacity:0.1;animation:float 15s infinite linear;}
+        @keyframes float{0%{transform:translateY(100vh) rotate(0deg)}100%{transform:translateY(-100px) rotate(360deg)}}
     </style>
 </head>
 <body>
 
 <div class="panel">
-    <h1>DRACOX V2 • DEEPBUNDLE</h1>
-    <div class="subtitle">DEC 2025 • OFF BY DEFAULT • iOS 16–19</div>
+    <img src="https://i.ibb.co/7b2Y7Y8/sensi-xiters-logo.png" class="bg-logo">
+    <div class="title">SENSI X</div>
+    <div class="creator">by DracoX • 2025 Ultimate Bundle</div>
 
-    <div class="tab">
-        <button class="active" onclick="openTab('aim')">AIM</button>
-        <button onclick="openTab('extra')">EXTRA</button>
+    <div class="options">
+        <div class="option"><span>Head Tracking Lock</span><label class="switch"><input type="checkbox" onchange="inj(this,'headtrack')"><span class="slider"></span></label></div>
+        <div class="option"><span>Aim Lock</span><label class="switch"><input type="checkbox" onchange="inj(this,'aimlock')"><span class="slider"></span></label></div>
+        <div class="option"><span>Drag Aimbot</span><label class="switch"><input type="checkbox" onchange="inj(this,'dragaim')"><span class="slider"></span></label></div>
+        <div class="option"><span>No Recoil</span><label class="switch"><input type="checkbox" onchange="inj(this,'norecoil')"><span class="slider"></span></label></div>
+        <div class="option"><span>Pro Bypass 2025</span><label class="switch"><input type="checkbox" onchange="inj(this,'bypass')"><span class="slider"></span></label></div>
+
+        <div class="slider-label">Aim FOV</div>
+        <input type="range" class="range" min="30" max="360" value="180" id="fov">
+        <div class="value" id="fovVal">180°</div>
+
+        <div class="slider-label">Aim Radius (Sensitivity)</div>
+        <input type="range" class="range" min="1" max="100" value="50" id="radius">
+        <div class="value" id="radVal">50%</div>
+
+        <div class="inject-btn" onclick="fullInject()">INJECTAR SENSI X</div>
     </div>
 
-    <!-- AIM TAB -->
-    <div id="aim" class="tab-content active">
-        <div class="option"><span>Continuous Head Lock</span><label class="switch"><input type="checkbox" onchange="inject(this,'headlock')"><span class="slider"></span></label></div>
-        <div class="option"><span>Fire Button Auto Aim</span><label class="switch"><input type="checkbox" onchange="inject(this,'fireaim')"><span class="slider"></span></label></div>
-        <div class="option"><span>Head Only Target</span><label class="switch"><input type="checkbox" onchange="inject(this,'headonly')"><span class="slider"></span></label></div>
-        <div class="option"><span>Auto Snap On Fire</span><label class="switch"><input type="checkbox" onchange="inject(this,'snap')"><span class="slider"></span></label></div>
-        <div class="option"><span>Predictive 360 Tracking</span><label class="switch"><input type="checkbox" onchange="inject(this,'360track')"><span class="slider"></span></label></div>
-        <div class="option"><span>Never Lose Head</span><label class="switch"><input type="checkbox" onchange="inject(this,'neverlose')"><span class="slider"></span></label></div>
-        <div class="option"><span>Anti Chest Focus</span><label class="switch"><input type="checkbox" onchange="inject(this,'anticheck')"><span class="slider"></span></label></div>
-
-        <div style="color:#ff3366;margin:25px 0 10px;">Aim Radius FOV (solo se inyecta al soltar)</div>
-        <input type="range" class="fov-slider" min="30" max="360" value="90" id="fovRange">
-        <div class="fov-value">90°</div>
-
-        <div class="circle-container">
-            <div class="fov-circle" id="fovCircle" style="width:180px;height:180px;"></div>
-        </div>
-    </div>
-
-    <!-- EXTRA TAB -->
-    <div id="extra" class="tab-content">
-        <div class="option"><span>Real Speed ×4.5</span><label class="switch"><input type="checkbox" onchange="inject(this,'speed')"><span class="slider"></span></label></div>
-        <div class="option"><span>No Stamina Drain</span><label class="switch"><input type="checkbox" onchange="inject(this,'nostamina')"><span class="slider"></span></label></div>
-        <div class="option"><span>God Speed Real</span><label class="switch"><input type="checkbox" onchange="inject(this,'godspeed')"><span class="slider"></span></label></div>
-        <div class="option"><span>High Jump Boost</span><label class="switch"><input type="checkbox" onchange="inject(this,'jump')"><span class="slider"></span></label></div>
-        <div class="option"><span>Garena AC Bypass v4.6</span><label class="switch"><input type="checkbox" onchange="inject(this,'bypass')"><span class="slider"></span></label></div>
-    </div>
-
-    <div class="inject-btn" onclick="fullInject()">INJECTAR TODO SELECCIONADO</div>
-    <div class="status" id="status">Status: Ready • Ajusta y luego inyecta</div>
+    <!-- Triángulos animados -->
+    <div class="triangle" style="left:10%;animation-delay:0s"></div>
+    <div class="triangle" style="left:30%;animation-delay:3s"></div>
+    <div class="triangle" style="left:50%;animation-delay:6s"></div>
+    <div class="triangle" style="left:70%;animation-delay:9s"></div>
+    <div class="triangle" style="left:90%;animation-delay:12s"></div>
 </div>
 
 <script>
-    const status = document.getElementById('status');
-    const fovValue = document.querySelector('.fov-value');
-    const fovCircle = document.getElementById('fovCircle');
-    const fovRange = document.getElementById('fovRange');
+    const fov = document.getElementById('fov');
+    const radius = document.getElementById('radius');
+    const fovVal = document.getElementById('fovVal');
+    const radVal = document.getElementById('radVal');
 
-    function openTab(tab) {
-        document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
-        document.querySelectorAll('.tab button').forEach(b=>b.classList.remove('active'));
-        document.getElementById(tab).classList.add('active');
-        event.target.classList.add('active');
+    fov.oninput = () => fovVal.textContent = fov.value + '°';
+    radius.oninput = () => radVal.textContent = radius.value + '%';
+
+    function inj(cb, feat) {
+        const state = cb.checked ? '1' : '0';
+        const url = `freefire://deepbundle-inject?sensix=1&${feat}=${state}&by=DracoX`;
+        try { window.location = url; } catch(e) {}
+        setTimeout(() => {
+            const intent = `intent://deepbundle-inject?sensix=1&${feat}=${state}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
+            window.location = intent;
+        }, 100);
     }
 
-    // Inyección normal de switches (solo al soltar)
-    function inject(checkbox, feature) {
-        const state = checkbox.checked ? '1' : '0';
-        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&${feature}=${state}&date=20251204`;
-        window.location.href = url;
-        status.textContent = checkbox.checked ? `${feature.toUpperCase()} → ACTIVADO` : `${feature.toUpperCase()} → DESACTIVADO`;
-        setTimeout(()=>status.textContent="Status: Ready • Ajusta y luego inyecta", 2000);
+    fov.onchange = () => injFovRadius();
+    radius.onchange = () => injFovRadius();
+
+    function injFovRadius() {
+        const url = `freefire://deepbundle-inject?sensix=1&fov=${fov.value}&radius=${radius.value}&by=DracoX`;
+        try { window.location = url; } catch(e) {}
+        setTimeout(() => {
+            window.location = `intent://deepbundle-inject?sensix=1&fov=${fov.value}&radius=${radius.value}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
+        }, 100);
     }
 
-    // FOV: solo inyecta cuando sueltas el dedo
-    fovRange.addEventListener('input', function() {
-        const val = this.value;
-        fovValue.textContent = val + '°';
-        const size = val * 0.75;
-        fovCircle.style.width = size + 'px';
-        fovCircle.style.height = size + 'px';
-    });
-
-    fovRange.addEventListener('change', function() {  // solo al soltar
-        const val = this.value;
-        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&fov=${val}&date=20251204`;
-        window.location.href = url;
-        status.textContent = `FOV ${val}° INYECTADO`;
-        setTimeout(()=>status.textContent="Status: Ready • Ajusta y luego inyecta", 2000);
-    });
-
-    // Inyectar todo lo que esté activado
     function fullInject() {
-        let params = "v2=DracoX_V2.sensi&date=20251204";
-        document.querySelectorAll('input[type=checkbox]:checked').forEach(cb => {
-            const feature = cb.parentElement.parentElement.textContent.trim().toLowerCase().replace(/ /g,'');
-            if (feature.includes('headlock')) params += "&headlock=1";
-            if (feature.includes('firebutton')) params += "&fireaim=1";
-            if (feature.includes('headonly')) params += "&headonly=1";
-            if (feature.includes('autosnap')) params += "&snap=1";
-            if (feature.includes('360track')) params += "&360track=1";
-            if (feature.includes('neverlose')) params += "&neverlose=1";
-            if (feature.includes('anticheck')) params += "&anticheck=1";
-            if (feature.includes('speed')) params += "&speed=1";
-            if (feature.includes('nostamina')) params += "&nostamina=1";
-            if (feature.includes('godspeed')) params += "&godspeed=1";
-            if (feature.includes('jump')) params += "&jump=1";
-            if (feature.includes('bypass')) params += "&bypass=1";
+        let p = `sensix=1&fov=${fov.value}&radius=${radius.value}&by=DracoX`;
+        document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+            const txt = c.parentElement.previousElementSibling.textContent.toLowerCase().replace(/ /g,'');
+            if(txt.includes('headtrack')) p += '&headtrack=1';
+            if(txt.includes('aimlock')) p += '&aimlock=1';
+            if(txt.includes('dragaim')) p += '&dragaim=1';
+            if(txt.includes('norecoil')) p += '&norecoil=1';
+            if(txt.includes('bypass')) p += '&bypass=1';
         });
-        params += "&fov=" + fovRange.value;
-        window.location.href = "freefire://deepbundle-inject?" + params;
-        status.textContent = "FULL INJECT COMPLETADO";
+        const url = `freefire://deepbundle-inject?${p}`;
+        try { window.location = url; } catch(e) {}
+        setTimeout(() => {
+            window.location = `intent://deepbundle-inject?${p}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
+        }, 100);
     }
-
-    // Valor inicial del círculo
-    fovCircle.style.width = (90 * 0.75) + 'px';
-    fovCircle.style.height = (90 * 0.75) + 'px';
 </script>
 </body>
 </html>
