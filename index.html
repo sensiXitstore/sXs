@@ -1,190 +1,113 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>SensiX Panel</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(-45deg, #1e1e1e, #000000, #1e1e1e, #000000);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    @keyframes gradientBG {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
-    }
-    .menu {
-      width: 500px;
-      background-color: #ffffff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 0 20px #0070FF;
-    }
-    .title-box {
-      background-color: #0070FF;
-      color: #ffffff;
-      text-align: center;
-      font-size: 28px;
-      font-weight: bold;
-      padding: 20px;
-    }
-    .button {
-      background-color: #000000;
-      color: #FFD700;
-      padding: 20px;
-      text-align: center;
-      font-weight: bold;
-      font-size: 22px;
-      cursor: pointer;
-      border-bottom: 1px solid #0070FF;
-    }
-    .button.active {
-      background-color: #0070FF;
-      color: #ffffff;
-    }
-    .slider-section {
-      background-color: #f0f0f0;
-      color: #000000;
-      padding: 20px;
-      font-weight: bold;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .slider {
-      width: 95%;
-      margin: 10px 0;
-    }
-    .slider-value {
-      margin: 5px 0;
-      font-size: 20px;
-    }
-    .red-btn {
-      background-color: #FFD700;
-      color: #000000;
-      border: none;
-      padding: 6px 14px;
-      font-weight: bold;
-      font-size: 22px;
-      margin: 0 10px;
-      border-radius: 4px;
-    }
-    .footer {
-      background-color: #0070FF;
-      height: 12px;
-    }
-    .inject-btn {
-      background-color: #000000;
-      color: #00ccff;
-      font-size: 24px;
-      font-weight: bold;
-      padding: 18px;
-      text-align: center;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRACOX V2 • DEEPBUNDLE 2025</title>
+    <style>
+        body{margin:0;height:100vh;background:#000;display:flex;justify-content:center;align-items:center;font-family:'Courier New',monospace;overflow:hidden;}
+        .panel{width:340px;padding:22px;background:rgba(8,0,5,0.98);border:3px solid #ff0033;border-radius:20px;box-shadow:0 0 50px #ff0033;color:#ff3366;}
+        h1{text-align:center;font-size:20px;margin:0 0 10px;color:#ff0033;text-shadow:0 0 20px #ff0033;}
+        .subtitle{font-size:13px;text-align:center;margin-bottom:25px;color:#ff6699;}
+        .tab{display:flex;margin-bottom:20px;}
+        .tab button{flex:1;padding:14px;background:#1a0011;border:2px solid #ff0033;color:#ff3366;border-radius:12px;font-weight:bold;}
+        .tab button.active{background:#ff0033;box-shadow:0 0 25px #ff0033;}
+        .option{display:flex;justify-content:space-between;align-items:center;margin:18px 0;font-size:15px;}
+        .switch{position:relative;display:inline-block;width:70px;height:36px;}
+        .switch input{opacity:0;width:0;height:0;}
+        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#333;transition:.3s;border-radius:36px;border:2px solid #ff0033;}
+        .slider:before{position:absolute;content:"";height:28px;width:28px;left:4px;bottom:4px;background:#ff0033;transition:.3s;border-radius:50%;}
+        input:checked + .slider{background:#440011;}
+        input:checked + .slider:before{transform:translateX(34px);}
+        .fov-slider{width:100%;-webkit-appearance:none;height:12px;background:#222;border-radius:6px;border:2px solid #ff0033;}
+        .fov-slider::-webkit-slider-thumb{-webkit-appearance:none;width:32px;height:32px;background:#ff0033;border-radius:50%;box-shadow:0 0 30px #ff0033;}
+        .fov-value{margin-top:12px;font-size:26px;font-weight:bold;color:#ff0033;text-shadow:0 0 20px;}
+        .circle-container{position:relative;margin:40px auto;width:240px;height:240px;}
+        .fov-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border:4px solid #ff0033;border-radius:50%;box-shadow:0 0 40px #ff0033;transition:all 0.3s;}
+        .status{font-size:13px;text-align:center;margin-top:15px;color:#00ff33;text-shadow:0 0 10px;}
+        .inject-btn{margin-top:20px;padding:18px;background:#ff0033;box-shadow:0 0 40px #ff0033;border-radius:15px;text-align:center;font-weight:bold;font-size:18px;animation:pulse 2s infinite;}
+        @keyframes pulse{0%{box-shadow:0 0 40px #ff0033;}50%{box-shadow:0 0 60px #ff0033;}100%{box-shadow:0 0 40px #ff0033;}}
+    </style>
 </head>
 <body>
-  <div class="menu">
-    <div class="title-box">SensiX Panel</div>
-    <div class="button" id="btn-drag" onclick="toggleAimbot('drag')">Drag Aimbot</div>
-    <div class="button" id="btn-normal" onclick="toggleAimbot('normal')">Aimbot</div>
-    <div class="button" id="btn-aimlock" onclick="toggleAimbot('aimlock')">Aimlock</div>
-    <div class="slider-section">
-      <div style="font-size: 22px;">AIM RADIUS <span id="radiusValue">5000.00</span></div>
-      <div>
-        <button class="red-btn" onclick="adjustRadius(-100)">-</button>
-        <input type="range" min="100" max="5000" step="0.01" value="5000" class="slider" id="aimSlider" oninput="updateRadius(this.value)">
-        <button class="red-btn" onclick="adjustRadius(100)">+</button>
-      </div>
+
+<div class="panel">
+    <h1>DRACOX V2 • DEEPBUNDLE</h1>
+    <div class="subtitle">DEC 2025 • 100% UNDETECTED • iOS 16–19</div>
+
+    <div class="tab">
+        <button class="active" onclick="openTab('aim')">AIM</button>
+        <button onclick="openTab('extra')">EXTRA</button>
     </div>
-    <div class="inject-btn" onclick="executeInjection()">Inject</div>
-    <div class="footer"></div>
-  </div>
 
-  <script>
-    let aimbotModes = {
-      drag: false,
-      normal: false,
-      aimlock: false
-    };
+    <!-- AIM TAB -->
+    <div id="aim" class="tab-content active">
+        <div class="option"><span>Continuous Head Lock</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'headlock')"><span class="slider"></span></label></div>
+        <div class="option"><span>Fire Button Auto Aim</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'fireaim')"><span class="slider"></span></label></div>
+        <div class="option"><span>Head Only Target</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'headonly')"><span class="slider"></span></label></div>
+        <div class="option"><span>Auto Snap On Fire</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'snap')"><span class="slider"></span></label></div>
+        <div class="option"><span>Predictive 360 Tracking</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'360track')"><span class="slider"></span></label></div>
+        <div class="option"><span>Never Lose Head</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'neverlose')"><span class="slider"></span></label></div>
+        <div class="option"><span>Anti Chest Focus</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'anticheck')"><span class="slider"></span></label></div>
 
-    function updateRadius(value) {
-      document.getElementById('radiusValue').textContent = parseFloat(value).toFixed(2);
+        <div style="color:#ff3366;margin:25px 0 10px;">Aim Radius FOV</div>
+        <input type="range" class="fov-slider" min="30" max="360" value="360" id="fovRange" oninput="injectFOV(this.value)">
+        <div class="fov-value">360°</div>
+
+        <div class="circle-container">
+            <div class="fov-circle" id="fovCircle"></div>
+        </div>
+    </div>
+
+    <!-- EXTRA TAB -->
+    <div id="extra" class="tab-content">
+        <div class="option"><span>Real Speed ×4.5</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'speed')"><span class="slider"></span></label></div>
+        <div class="option"><span>No Stamina Drain</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'nostamina')"><span class="slider"></span></label></div>
+        <div class="option"><span>God Speed Real</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'godspeed')"><span class="slider"></span></label></div>
+        <div class="option"><span>High Jump Boost</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'jump')"><span class="slider"></span></label></div>
+        <div class="option"><span>Garena AC Bypass v4.6</span><label class="switch"><input type="checkbox" checked onchange="inject(this,'bypass')"><span class="slider"></span></label></div>
+    </div>
+
+    <div class="inject-btn" onclick="fullInject()">INJECTAR TODO AHORA</div>
+    <div class="status" id="status">Status: Ready • DeepBundle Hook Active</div>
+</div>
+
+<script>
+    const status = document.getElementById('status');
+    const fovValue = document.querySelector('.fov-value');
+    const fovCircle = document.getElementById('fovCircle');
+
+    function openTab(tab) {
+        document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+        document.querySelectorAll('.tab button').forEach(b=>b.classList.remove('active'));
+        document.getElementById(tab).classList.add('active');
+        event.target.classList.add('active');
     }
 
-    function adjustRadius(amount) {
-      const slider = document.getElementById('aimSlider');
-      let newVal = parseFloat(slider.value) + amount;
-      if (newVal < 100) newVal = 100;
-      if (newVal > 5000) newVal = 5000;
-      slider.value = newVal;
-      updateRadius(newVal);
+    function inject(checkbox, feature) {
+        const state = checkbox.checked ? '1' : '0';
+        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&${feature}=${state}&date=20251204&lock=headonly360`;
+        window.location.href = url;
+        status.textContent = checkbox.checked ? `Injected: ${feature.toUpperCase()} ON` : `Disabled: ${feature.toUpperCase()}`;
+        setTimeout(()=>status.textContent = "Status: Ready • DeepBundle Hook Active", 2000);
     }
 
-    function toggleAimbot(mode) {
-      const btn = document.getElementById('btn-' + mode);
-      aimbotModes[mode] = !aimbotModes[mode];
-      btn.classList.toggle('active');
+    function injectFOV(value) {
+        fovValue.textContent = value + '°';
+        const size = value * 0.75;
+        fovCircle.style.width = size + 'px';
+        fovCircle.style.height = size + 'px';
+        const url = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&fov=${value}&date=20251204`;
+        window.location.href = url;
     }
 
-    function executeInjection() {
-      const radius = parseFloat(document.getElementById('aimSlider').value).toFixed(2);
-      let features = [
-        "FEATURE=AutoAimSystemDeep",
-        "FEATURE=AimbotMemoryTrack",
-        "FEATURE=SnapToHeadOnly",
-        "FEATURE=HitboxRedirectFull",
-        "FEATURE=CrosshairLockOverride",
-        "FEATURE=TriggerSnapOnly",
-        "FEATURE=SnapSpeedMAX",
-        "FEATURE=NoRecoilInternal",
-        "FEATURE=NoSpreadEngine",
-        "FEATURE=UltraDPIInjection",
-        "FEATURE=ScreenSensitivityInjected",
-        "FEATURE=TouchOverride",
-        "FEATURE=MouseTrackingCore",
-        "FEATURE=PermanentExecution",
-        "FEATURE=ReactiveFollowLogic",
-        "FEATURE=AngleCorrection",
-        "FEATURE=TargetingByBone",
-        "FEATURE=FPSBypass",
-        "FEATURE=CrosshairTeleportMAX",
-        "FEATURE=HeadLockExtended"
-      ];
-
-      if (aimbotModes.drag) {
-        features.push("FEATURE=DragLiftActivation");
-      }
-      if (aimbotModes.normal) {
-        features.push("FEATURE=AimbotTriggerOnly");
-      }
-      if (aimbotModes.aimlock) {
-        features.push("FEATURE=AimLock", "FEATURE=CrosshairStickToHead");
-      }
-
-      let sensiCode = `[SENSI_EXEC]
-VERSION=1.111.17
-BUNDLE=com.dts.freefireth
-ENGINE=OVERRIDE_FULL_REBOOT
-TRIGGER=drag_lift_shoot
-${features.join('
-')}
-FEATURE=AimRadiusMultiplier_${radius}
-REBOOT=freefire
-[/SENSI_EXEC]`;
-
-      const encoded = encodeURIComponent(sensiCode);
-      window.location.href = `freefire://inject?payload=${encoded}`;
+    function fullInject() {
+        window.location.href = "freefire://deepbundle-inject?v2=DracoX_V2.sensi&lock=headonly360&fire=autotrack&speed=4.5&bypass=1&fov=360&date=20251204";
+        status.textContent = "FULL INJECTED • ALL FEATURES ACTIVE";
     }
-  </script>
+
+    // FOV inicial
+    injectFOV(360);
+</script>
 </body>
 </html>
