@@ -5,112 +5,378 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>SensiX by DracoX</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-        body{margin:0;height:100vh;background:#000;overflow:hidden;display:flex;justify-content:center;align-items:center;font-family:'Orbitron',sans-serif;color:#0ff;}
-        .panel{width:95vw;max-width:380px;height:95vh;background:rgba(0,5,15,0.92);border:2px solid #0ff;border-radius:18px;box-shadow:0 0 40px #0ff;overflow:hidden;position:relative;}
-        .bg-logo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80%;opacity:0.07;pointer-events:none;z-index:1;}
-        .title{text-align:center;padding:15px 0;font-size:22px;color:#0ff;text-shadow:0 0 20px #0ff;z-index:2;position:relative;}
-        .creator{font-size:11px;text-align:center;color:#00ffff88;margin-bottom:15px;}
-        .options{padding:0 20px 20px;overflow-y:auto;height:calc(100% - 140px);z-index:2;position:relative;}
-        .option{display:flex;justify-content:space-between;align-items:center;margin:18px 0;font-size:14px;color:#fff;}
-        .switch{position:relative;display:inline-block;width:66px;height:34px;}
-        .switch input{opacity:0;width:0;height:0;}
-        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#111;transition:.4s;border-radius:34px;border:2px solid #0ff;}
-        .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background:#000;box-shadow:0 0 15px #0ff;transition:.4s;border-radius:50%;}
-        input:checked + .slider{background:#0ff;}
-        input:checked + .slider:before{transform:translateX(32px);background:#000;}
-
-        .slider-label{color:#0ff;margin:20px 0 10px;display:block;font-size:13px;}
-        .range{width:100%;-webkit-appearance:none;height:10px;background:#111;border-radius:5px;border:1px solid #0ff;outline:none;}
-        .range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;background:#0ff;border-radius:50%;box-shadow:0 0 20px #0ff;cursor:pointer;}
-        .value{text-align:center;margin-top:8px;font-size:20px;color:#0ff;text-shadow:0 0 15px;}
-
-        .inject-btn{margin:20px;padding:16px;background:#0ff;color:#000;font-weight:bold;border-radius:12px;text-align:center;box-shadow:0 0 30px #0ff;animation:pulse 2s infinite;cursor:pointer;}
-        @keyframes pulse{0%,100%{box-shadow:0 0 30px #0ff}50%{box-shadow:0 0 50px #0ff}}
-
-        .triangle{position:absolute;width:0;height:0;border-left:20px solid transparent;border-right:20px solid transparent;border-bottom:40px solid #0ff33;opacity:0.1;animation:float 15s infinite linear;}
-        @keyframes float{0%{transform:translateY(100vh) rotate(0deg)}100%{transform:translateY(-100px) rotate(360deg)}}
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        body {
+            margin: 0;
+            height: 100vh;
+            background: linear-gradient(135deg, #000 0%, #001122 50%, #000 100%);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Orbitron', sans-serif;
+            color: #00ffff;
+            position: relative;
+        }
+        /* Triángulos animados flotantes */
+        .triangle {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-bottom: 30px solid #00ffff;
+            opacity: 0.15;
+            animation: float 20s infinite linear;
+            z-index: 1;
+        }
+        .triangle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .triangle:nth-child(2) { left: 25%; animation-delay: 4s; border-bottom-color: #0099cc; }
+        .triangle:nth-child(3) { left: 40%; animation-delay: 8s; }
+        .triangle:nth-child(4) { left: 60%; animation-delay: 12s; border-bottom-color: #0099cc; }
+        .triangle:nth-child(5) { left: 75%; animation-delay: 16s; }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        .panel {
+            width: 95vw;
+            max-width: 360px;
+            height: 95vh;
+            background: rgba(0, 10, 20, 0.95);
+            border: 2px solid #00ffff;
+            border-radius: 20px;
+            box-shadow: 0 0 50px #00ffff;
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+        }
+        .bg-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60%;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .title {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 24px;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 25px #00ffff;
+            z-index: 3;
+            position: relative;
+        }
+        .creator {
+            font-size: 12px;
+            text-align: center;
+            color: #00cccc;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .tab {
+            display: flex;
+            justify-content: space-around;
+            margin: 10px 0;
+            z-index: 3;
+        }
+        .tab button {
+            padding: 10px 15px;
+            background: #001122;
+            border: 1px solid #00ffff;
+            color: #00ffff;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .tab button.active {
+            background: #00ffff;
+            color: #000;
+            box-shadow: 0 0 20px #00ffff;
+        }
+        .tab-content {
+            display: none;
+            padding: 0 15px;
+            height: calc(100% - 200px);
+            overflow-y: auto;
+            z-index: 3;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 15px 0;
+            font-size: 14px;
+            color: #fff;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #111;
+            transition: 0.4s;
+            border-radius: 30px;
+            border: 2px solid #00ffff;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 3px;
+            bottom: 3px;
+            background: #000;
+            box-shadow: 0 0 10px #00ffff;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background: #00ffff;
+        }
+        input:checked + .slider:before {
+            transform: translateX(28px);
+            background: #000;
+        }
+        .slider-label {
+            color: #00ffff;
+            margin: 15px 0 5px;
+            display: block;
+            font-size: 13px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .range {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 8px;
+            background: #111;
+            border-radius: 5px;
+            border: 1px solid #00ffff;
+            outline: none;
+        }
+        .range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            background: #00ffff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px #00ffff;
+            cursor: pointer;
+        }
+        .value {
+            text-align: center;
+            margin-top: 8px;
+            font-size: 18px;
+            color: #00ffff;
+            font-weight: 700;
+            text-shadow: 0 0 15px #00ffff;
+        }
+        .inject-btn {
+            margin: 20px auto;
+            padding: 15px;
+            width: 90%;
+            background: #00ffff;
+            color: #000;
+            font-weight: 900;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 0 30px #00ffff;
+            animation: pulse 2s infinite;
+            cursor: pointer;
+            display: block;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 30px #00ffff; }
+            50% { box-shadow: 0 0 50px #00ffff; }
+        }
+        .info-text {
+            color: #00cccc;
+            line-height: 1.5;
+            font-size: 13px;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
 </head>
 <body>
+    <!-- Triángulos animados -->
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+    <div class="triangle"></div>
+    <div class="triangle"></div>
 
-<div class="panel">
-    <img src="https://i.ibb.co/7b2Y7Y8/sensi-xiters-logo.png" class="bg-logo">
-    <div class="title">SENSI X</div>
-    <div class="creator">by DracoX • 2025 Ultimate Bundle</div>
+    <div class="panel">
+        <!-- Logo de fondo (URL real de Sensi X Panel) -->
+        <img src="https://freefireheadshotpanel.com/wp-content/uploads/2024/10/Sensi-X-Panel-APK.jpg" alt="Sensi Xiters Logo" class="bg-logo" onerror="this.style.display='none'; this.parentNode.style.background='radial-gradient(circle, #00ffff 0%, transparent 70%)';">
 
-    <div class="options">
-        <div class="option"><span>Head Tracking Lock</span><label class="switch"><input type="checkbox" onchange="inj(this,'headtrack')"><span class="slider"></span></label></div>
-        <div class="option"><span>Aim Lock</span><label class="switch"><input type="checkbox" onchange="inj(this,'aimlock')"><span class="slider"></span></label></div>
-        <div class="option"><span>Drag Aimbot</span><label class="switch"><input type="checkbox" onchange="inj(this,'dragaim')"><span class="slider"></span></label></div>
-        <div class="option"><span>No Recoil</span><label class="switch"><input type="checkbox" onchange="inj(this,'norecoil')"><span class="slider"></span></label></div>
-        <div class="option"><span>Pro Bypass 2025</span><label class="switch"><input type="checkbox" onchange="inj(this,'bypass')"><span class="slider"></span></label></div>
+        <div class="title">SENSI X</div>
+        <div class="creator">by DracoX • Ultimate 2025 Creator</div>
 
-        <div class="slider-label">Aim FOV</div>
-        <input type="range" class="range" min="30" max="360" value="180" id="fov">
-        <div class="value" id="fovVal">180°</div>
+        <div class="tab">
+            <button class="active" onclick="openTab('aim')">AIM</button>
+            <button onclick="openTab('extra')">EXTRA</button>
+            <button onclick="openTab('info')">INFO</button>
+        </div>
 
-        <div class="slider-label">Aim Radius (Sensitivity)</div>
-        <input type="range" class="range" min="1" max="100" value="50" id="radius">
-        <div class="value" id="radVal">50%</div>
+        <!-- AIM TAB -->
+        <div id="aim" class="tab-content active">
+            <div class="option">
+                <span>Head Tracking Lock (Max)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'headtrack=100')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Aim Lock (Ultra)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'aimlock=99')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Drag Aimbot (Pro)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'dragaim=1')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Magic Bullet (Head Only)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'magicbullet=1')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Auto Headshot (98%)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'autohead=1')"><span class="slider"></span></label>
+            </div>
 
-        <div class="inject-btn" onclick="fullInject()">INJECTAR SENSI X</div>
+            <div class="slider-label">Aim FOV (Max 500°)</div>
+            <input type="range" class="range" min="30" max="500" value="180" id="fov">
+            <div class="value" id="fovVal">180°</div>
+
+            <div class="slider-label">Aim Radius (Max 500%)</div>
+            <input type="range" class="range" min="10" max="500" value="100" id="radius">
+            <div class="value" id="radVal">100%</div>
+
+            <div class="slider-label">No Recoil Force (0-100%)</div>
+            <input type="range" class="range" min="0" max="100" value="50" id="recoil">
+            <div class="value" id="recVal">50%</div>
+        </div>
+
+        <!-- EXTRA TAB -->
+        <div id="extra" class="tab-content">
+            <div class="option">
+                <span>ESP Wallhack (Full)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'esp=1')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Speed Hack x10</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'speed=10')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Fly Mode (Air)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'fly=1')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Head Magnet (Force 100)</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'headmagnet=100')"><span class="slider"></span></label>
+            </div>
+            <div class="option">
+                <span>Anti-Ban Pro 2025</span>
+                <label class="switch"><input type="checkbox" onchange="inj(this,'antibans=1')"><span class="slider"></span></label>
+            </div>
+        </div>
+
+        <!-- INFO TAB -->
+        <div id="info" class="tab-content">
+            <div class="info-text">
+                <h3 style="color: #00ffff; text-align: center;">SensiX INFO v2025</h3>
+                <p><strong>Creator:</strong> DracoX – El rey del DeepBundle</p>
+                <p><strong>Version:</strong> Ultimate 2025 (Undetected 100%)</p>
+                <p><strong>Features:</strong> Aim FOV 500°, Radius 500%, Recoil 100% Zero + ESP/Fly/Speed x10</p>
+                <p><strong>Tips:</strong> Ajusta FOV a 360° para 360° tracking. Usa Anti-Ban siempre ON.</p>
+                <p><strong>Status:</strong> iOS 16-19 / Android 12+ Compatible</p>
+                <p style="color: #00cccc; font-size: 11px;">¡Headshots garantizados! By DracoX 🔥</p>
+            </div>
+        </div>
+
+        <div class="inject-btn" onclick="fullInject()">INJECTAR SENSI X MAX</div>
     </div>
 
-    <!-- Triángulos animados -->
-    <div class="triangle" style="left:10%;animation-delay:0s"></div>
-    <div class="triangle" style="left:30%;animation-delay:3s"></div>
-    <div class="triangle" style="left:50%;animation-delay:6s"></div>
-    <div class="triangle" style="left:70%;animation-delay:9s"></div>
-    <div class="triangle" style="left:90%;animation-delay:12s"></div>
-</div>
+    <script>
+        const fov = document.getElementById('fov');
+        const radius = document.getElementById('radius');
+        const recoil = document.getElementById('recoil');
+        const fovVal = document.getElementById('fovVal');
+        const radVal = document.getElementById('radVal');
+        const recVal = document.getElementById('recVal');
 
-<script>
-    const fov = document.getElementById('fov');
-    const radius = document.getElementById('radius');
-    const fovVal = document.getElementById('fovVal');
-    const radVal = document.getElementById('radVal');
+        fov.oninput = () => fovVal.textContent = fov.value + '°';
+        radius.oninput = () => radVal.textContent = radius.value + '%';
+        recoil.oninput = () => recVal.textContent = recoil.value + '%';
 
-    fov.oninput = () => fovVal.textContent = fov.value + '°';
-    radius.oninput = () => radVal.textContent = radius.value + '%';
+        function openTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
 
-    function inj(cb, feat) {
-        const state = cb.checked ? '1' : '0';
-        const url = `freefire://deepbundle-inject?sensix=1&${feat}=${state}&by=DracoX`;
-        try { window.location = url; } catch(e) {}
-        setTimeout(() => {
-            const intent = `intent://deepbundle-inject?sensix=1&${feat}=${state}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
-            window.location = intent;
-        }, 100);
-    }
+        function inj(cb, param) {
+            const state = cb.checked ? '1' : '0';
+            const fullParam = param + '=' + state;
+            injectUrl(fullParam);
+        }
 
-    fov.onchange = () => injFovRadius();
-    radius.onchange = () => injFovRadius();
+        fov.onchange = () => injectUrl(`aimfov=${fov.value}`);
+        radius.onchange = () => injectUrl(`aimradius=${radius.value}`);
+        recoil.onchange = () => injectUrl(`norecoil=${recoil.value}`);
 
-    function injFovRadius() {
-        const url = `freefire://deepbundle-inject?sensix=1&fov=${fov.value}&radius=${radius.value}&by=DracoX`;
-        try { window.location = url; } catch(e) {}
-        setTimeout(() => {
-            window.location = `intent://deepbundle-inject?sensix=1&fov=${fov.value}&radius=${radius.value}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
-        }, 100);
-    }
+        function injectUrl(param) {
+            const base = `sensix=1&${param}&by=DracoX&date=20251204`;
+            let url = `freefire://deepbundle-inject?${base}`;
+            try { window.location.href = url; } catch(e) {}
+            setTimeout(() => {
+                url = `intent://${base}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
+                window.location.href = url;
+            }, 150);
+        }
 
-    function fullInject() {
-        let p = `sensix=1&fov=${fov.value}&radius=${radius.value}&by=DracoX`;
-        document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
-            const txt = c.parentElement.previousElementSibling.textContent.toLowerCase().replace(/ /g,'');
-            if(txt.includes('headtrack')) p += '&headtrack=1';
-            if(txt.includes('aimlock')) p += '&aimlock=1';
-            if(txt.includes('dragaim')) p += '&dragaim=1';
-            if(txt.includes('norecoil')) p += '&norecoil=1';
-            if(txt.includes('bypass')) p += '&bypass=1';
-        });
-        const url = `freefire://deepbundle-inject?${p}`;
-        try { window.location = url; } catch(e) {}
-        setTimeout(() => {
-            window.location = `intent://deepbundle-inject?${p}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
-        }, 100);
-    }
-</script>
+        function fullInject() {
+            let params = `sensix=1&by=DracoX&date=20251204&aimfov=${fov.value}&aimradius=${radius.value}&norecoil=${recoil.value}`;
+            document.querySelectorAll('input[type=checkbox]:checked').forEach(c => {
+                const txt = c.parentElement.previousElementSibling.textContent.toLowerCase().replace(/ /g, '');
+                if (txt.includes('headtrack')) params += '&headtrack=100';
+                if (txt.includes('aimlock')) params += '&aimlock=99';
+                if (txt.includes('dragaim')) params += '&dragaim=1';
+                if (txt.includes('magicbullet')) params += '&magicbullet=1';
+                if (txt.includes('autohead')) params += '&autohead=1';
+                if (txt.includes('esp')) params += '&esp=1';
+                if (txt.includes('speed')) params += '&speed=10';
+                if (txt.includes('fly')) params += '&fly=1';
+                if (txt.includes('headmagnet')) params += '&headmagnet=100';
+                if (txt.includes('antibans')) params += '&antibans=1';
+            });
+            let url = `freefire://deepbundle-inject?${params}`;
+            try { window.location.href = url; } catch(e) {}
+            setTimeout(() => {
+                url = `intent://${params}#Intent;scheme=freefire;package=com.dts.freefireth;end`;
+                window.location.href = url;
+            }, 150);
+        }
+    </script>
 </body>
 </html>
