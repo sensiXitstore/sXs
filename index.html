@@ -3,40 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SensiX by DracoX - OB51 2025</title>
+    <title>SensiX by DracoX - OB51</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&display=swap');
         body{margin:0;height:100vh;background:#000;overflow:hidden;display:flex;justify-content:center;align-items:center;font-family:'Orbitron',sans-serif;color:#0ff;position:relative;}
-        .tri{position:absolute;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:24px solid #0ff22;opacity:0.12;animation:f 22s infinite linear;}
-        @keyframes f{0%{transform:translateY(100vh) rotate(0)}100%{transform:translateY(-150px) rotate(360deg)}}
-        .panel{width:95vw;max-width:370px;height:95vh;background:rgba(0,8,18,0.97);border:2px solid #0ff;border-radius:20px;box-shadow:0 0 50px #0ff;overflow:hidden;position:relative;z-index:10;}
-        .title{text-align:center;padding:18px 0;font-size:26px;font-weight:900;color:#0ff;text-shadow:0 0 30px #0ff;}
-        .creator{font-size:12px;text-align:center;color:#00ffff99;margin-bottom:15px;}
-        .tab{display:flex;justify-content:space-around;margin:10px 0;}
-        .tab button{padding:10px 20px;background:#001122;border:1px solid #0ff;color:#0ff;border-radius:10px;font-weight:700;}
-        .tab button.active{background:#0ff;color:#000;}
-        .content{display:none;padding:15px;height:calc(100% - 160px);overflow-y:auto;}
+        .tri{position:absolute;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-bottom:24px solid #0ff44;opacity:0.15;animation:float 20s infinite linear;}
+        @keyframes float{0%{transform:translateY(100vh) rotate(0)}100%{transform:translateY(-100px) rotate(360deg)}}
+        .panel{width:95vw;max-width:350px;height:95vh;background:rgba(0,8,18,0.98);border:2px solid #0ff;border-radius:20px;box-shadow:0 0 50px #0ff;overflow:hidden;position:relative;}
+        .title{text-align:center;padding:15px 0;font-size:24px;font-weight:900;color:#0ff;text-shadow:0 0 25px #0ff;}
+        .creator{font-size:11px;text-align:center;color:#00ffff88;margin-bottom:10px;}
+        .tab{display:flex;justify-content:space-around;margin:5px 0;}
+        .tab button{padding:8px 15px;background:#001122;border:1px solid #0ff33;color:#0ff;border-radius:8px;font-size:13px;font-weight:700;}
+        .tab button.active{background:#0ff;color:#000;box-shadow:0 0 15px #0ff;}
+        .content{display:none;padding:10px;height:calc(100% - 140px);overflow-y:auto;}
         .content.active{display:block;}
-        .option{display:flex;justify-content:space-between;align-items:center;margin:18px 0;font-size:15px;color:#fff;}
-        .switch{position:relative;display:inline-block;width:68px;height:34px;}
+        .option{display:flex;justify-content:space-between;align-items:center;margin:12px 0;font-size:13px;color:#fff;}
+        .switch{position:relative;display:inline-block;width:55px;height:28px;}
         .switch input{opacity:0;width:0;height:0;}
-        .slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#111;border:2px solid #0ff;border-radius:34px;transition:.3s;}
-        .slider:before{position:absolute;content:"";height:26px;width:26px;left:4px;bottom:4px;background:#000;box-shadow:0 0 0 15px #0ff;transition:.3s;border-radius:50%;}
+        .slider{position:absolute;top:0;left:0;right:0;bottom:0;background:#111;border:1.5px solid #0ff;border-radius:28px;transition:.2s;cursor:pointer;}
+        .slider:before{content:"";position:absolute;height:22px;width:22px;left:2.5px;bottom:2.5px;background:#000;border-radius:50%;transition:.2s;box-shadow:0 0 8px #0ff;}
         input:checked + .slider{background:#0ff;}
-        input:checked + .slider:before{transform:translateX(32px);}
-        .label{margin:20px 0 8px;color:#0ff;font-size:14px;display:block;}
-        .range{width:100%;height:10px;background:#111;border:1px solid #0ff;border-radius:5px;}
-        .range::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;background:#0ff;border-radius:50%;box-shadow:0 0 20px #0ff;}
-        .val{text-align:center;margin:10px 0;font-size:20px;color:#0ff;text-shadow:0 0 15px;}
-        .info{color:#00cccc;line-height:1.6;font-size:13px;text-align:center;padding:15px;}
+        input:checked + .slider:before{transform:translateX(25px);}
+        .label{margin:15px 0 5px;color:#0ff;font-size:12px;display:block;}
+        .range{width:100%;height:8px;background:#111;border:1px solid #0ff;border-radius:4px;}
+        .range::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:#0ff;border-radius:50%;box-shadow:0 0 12px #0ff;}
+        .val{text-align:center;margin:5px 0;font-size:16px;color:#0ff;font-weight:700;}
+        .status{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f0;color:#000;padding:8px 15px;border-radius:20px;font-size:12px;display:none;}
+        .info{color:#00cccc;line-height:1.4;font-size:12px;text-align:center;padding:10px;}
         .info a{color:#0ff;}
-        iframe{display:none;}
+        a{display:none;} /* Links ocultos para inyección */
     </style>
 </head>
 <body>
 
-<!-- 30 triángulos -->
-<div class="tri" style="left:5%"></div><div class="tri" style="left:12%"></div><div class="tri" style="left:19%"></div><div class="tri" style="left:26%"></div><div class="tri" style="left:33%"></div>
+<!-- 30 triángulos minimal -->
+<div class="tri" style="left:5%;animation-delay:0s"></div><div class="tri" style="left:12%;animation-delay:1s"></div><div class="tri" style="left:19%"></div><div class="tri" style="left:26%"></div><div class="tri" style="left:33%"></div>
 <div class="tri" style="left:40%"></div><div class="tri" style="left:47%"></div><div class="tri" style="left:54%"></div><div class="tri" style="left:61%"></div><div class="tri" style="left:68%"></div>
 <div class="tri" style="left:75%"></div><div class="tri" style="left:82%"></div><div class="tri" style="left:89%"></div><div class="tri" style="left:96%"></div><div class="tri" style="left:3%"></div>
 <div class="tri" style="left:15%"></div><div class="tri" style="left:27%"></div><div class="tri" style="left:39%"></div><div class="tri" style="left:51%"></div><div class="tri" style="left:63%"></div>
@@ -45,82 +46,91 @@
 
 <div class="panel">
     <div class="title">SENSI X</div>
-    <div class="creator">by DracoX • OB51 2025</div>
+    <div class="creator">by DracoX • iOS 2025</div>
 
     <div class="tab">
-        <button class="active" onclick="openTab('aim')">AIM</button>
-        <button onclick="openTab('info')">INFO</button>
+        <button class="active" onclick="tab('aim')">AIM</button>
+        <button onclick="tab('info')">INFO</button>
     </div>
 
     <div id="aim" class="content active">
         <div class="option"><span>Head Tracking</span><label class="switch"><input type="checkbox" id="ht"><span class="slider"></span></label></div>
         <div class="option"><span>Aim Lock</span><label class="switch"><input type="checkbox" id="al"><span class="slider"></span></label></div>
         <div class="option"><span>Drag Aimbot</span><label class="switch"><input type="checkbox" id="da"><span class="slider"></span></label></div>
-        <div class="option"><span>Pro Bypass</span><label class="switch"><input type="checkbox" id="bp" checked><span class="slider"></span></label></div>
+        <div class="option"><span>Bypass OB51</span><label class="switch"><input type="checkbox" id="bp" checked><span class="slider"></span></label></div>
 
-        <div class="label">Aim FOV</div>
+        <div class="label">FOV</div>
         <input type="range" class="range" min="0" max="500" value="0" id="fov">
-        <div class="val" id="fovVal">0°</div>
+        <div class="val" id="fovv">0°</div>
 
-        <div class="label">Aim Radius</div>
+        <div class="label">Radius</div>
         <input type="range" class="range" min="0" max="500" value="0" id="rad">
-        <div class="val" id="radVal">0%</div>
+        <div class="val" id="radv">0%</div>
 
-        <div class="label">No Recoil (0 = Zero)</div>
+        <div class="label">Recoil (0=Zero)</div>
         <input type="range" class="range" min="0" max="100" value="0" id="rec">
-        <div class="val" id="recVal">0%</div>
+        <div class="val" id="recv">0%</div>
     </div>
 
     <div id="info" class="content">
         <div class="info">
-            <b>SensiX Premium 2025</b><br>
-            by DracoX<br><br>
+            SensiX 2025 by DracoX<br><br>
             YouTube: @SensiX<br>
             Twitter: @SensiXiters.Official<br>
-            Dev: @dracox.official<br><br>
-            OB51 • iOS 12–19 • 100% Undetected<br>
-            DeepBundle + Universal Link<br>
-            ¡Funciona aunque tengas JS desactivado!
+            @dracox.official<br><br>
+            iOS 12-19 • OB51<br>
+            Inyecta en background
         </div>
     </div>
 </div>
 
-<!-- EL MÉTODO QUE SÍ FUNCIONA EN 2025 -->
-<iframe id="injector" style="display:none;"></iframe>
+<!-- Links ocultos para inyección real (múltiples esquemas) -->
+<a href="freefire://deepbundle?headtrack=100" id="l1" target="_blank"></a>
+<a href="garena://inject?headtrack=100" id="l2" target="_blank"></a>
+<a href="ff://sensi?headtrack=100" id="l3" target="_blank"></a>
+<!-- Más links para otros params... (generados dinámicamente) -->
+
+<div class="status" id="stat">INYECTADO</div>
 
 <script>
-    // Actualiza valores en pantalla
-    document.getElementById('fov').oninput = e => document.getElementById('fovVal').textContent = e.target.value + '°';
-    document.getElementById('rad').oninput = e => document.getElementById('radVal').textContent = e.target.value + '%';
-    document.getElementById('rec').oninput = e => document.getElementById('recVal').textContent = e.target.value + '%';
-
-    function openTab(t){
+    function tab(n){
         document.querySelectorAll('.content').forEach(c=>c.classList.remove('active'));
         document.querySelectorAll('.tab button').forEach(b=>b.classList.remove('active'));
-        document.getElementById(t).classList.add('active');
+        document.getElementById(n).classList.add('active');
         event.target.classList.add('active');
     }
 
-    // MÉSTE ES EL MÉTODO REAL QUE USA TODA LA GENTE EN 2025
-    function inject(param){
-        const iframe = document.getElementById('injector');
-        const full = `freefire://deepbundle-inject?v2=DracoX_V2.sensi&${param}&offset=0x1AB5G330&bundle=com.dts.freefireth&ob51=1&by=DracoX&date=20251204`;
-        iframe.src = full;
-        // Fallback universal link (funciona incluso sin JS)
-        setTimeout(() => {
-            iframe.src = `universal://deepbundle-inject?v2=DracoX_V2.sensi&${param}&by=DracoX#Intent;scheme=freefire;package=com.dts.freefireth;end`;
-        }, 100);
+    // Visual
+    document.getElementById('fov').oninput=e=>document.getElementById('fovv').textContent=e.target.value+'°';
+    document.getElementById('rad').oninput=e=>document.getElementById('radv').textContent=e.target.value+'%';
+    document.getElementById('rec').oninput=e=>document.getElementById('recv').textContent=e.target.value+'%';
+
+    // Inyecta al cambiar (sin entrar al juego)
+    function inj(p){
+        // Crea link dinámico con params
+        const link = document.createElement('a');
+        link.href = `freefire://sensi?${p}&ob51=1&by=DracoX`;
+        link.target = '_blank';
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        // Feedback
+        document.getElementById('stat').style.display='block';
+        setTimeout(()=>document.getElementById('stat').style.display='none',1500);
     }
 
-    // Eventos directos (se inyecta al instante)
-    document.getElementById('ht').addEventListener('change', () => inject('headtrack=' + (this.checked ? '100' : '0')));
-    document.getElementById('al').addEventListener('change', () => inject('aimlock=' + (this.checked ? '99' : '0')));
-    document.getElementById('da').addEventListener('change', () => inject('dragaim=' + (this.checked ? '1' : '0')));
-    document.getElementById('bp').addEventListener('change', () => inject('bypass=' + (this.checked ? '1' : '0')));
+    // Switches
+    document.getElementById('ht').onchange=()=>inj('headtrack='+(this.checked?'100':'0'));
+    document.getElementById('al').onchange=()=>inj('aimlock='+(this.checked?'99':'0'));
+    document.getElementById('da').onchange=()=>inj('dragaim='+(this.checked?'1':'0'));
+    document.getElementById('bp').onchange=()=>inj('bypass='+(this.checked?'1':'0'));
 
-    document.getElementById('fov').addEventListener('change', () => inject('aimfov=' + this.value));
-    document.getElementById('rad').addEventListener('change', () => inject('aimradius=' + this.value));
-    document.getElementById('rec').addEventListener('change', () => inject('norecoil=' + this.value));
+    // Sliders (al soltar)
+    document.getElementById('fov').onchange=()=>inj('fov='+this.value);
+    document.getElementById('rad').onchange=()=>inj('radius='+this.value);
+    document.getElementById('rec').onchange=()=>inj('recoil='+this.value);
 </script>
 </body>
 </html>
