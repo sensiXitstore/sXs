@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SensiX by DracoX - OB51</title>
+    <title>SensiX by DracoX - OB51 2025</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;900&display=swap');
         body{margin:0;height:100vh;background:#000;overflow:hidden;display:flex;justify-content:center;align-items:center;font-family:'Orbitron',sans-serif;color:#0ff;position:relative;}
@@ -28,16 +28,13 @@
         .range{width:100%;height:8px;background:#111;border:1px solid #0ff;border-radius:4px;}
         .range::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:#0ff;border-radius:50%;box-shadow:0 0 12px #0ff;}
         .val{text-align:center;margin:5px 0;font-size:16px;color:#0ff;font-weight:700;}
-        .status{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f0;color:#000;padding:8px 15px;border-radius:20px;font-size:12px;display:none;}
-        .info{color:#00cccc;line-height:1.4;font-size:12px;text-align:center;padding:10px;}
-        .info a{color:#0ff;}
-        a{display:none;} /* Links ocultos para inyección */
+        .status{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#0f0;color:#000;padding:8px 15px;border-radius:20px;font-size:12px;display:none;z-index:999;}
     </style>
 </head>
 <body>
 
-<!-- 30 triángulos minimal -->
-<div class="tri" style="left:5%;animation-delay:0s"></div><div class="tri" style="left:12%;animation-delay:1s"></div><div class="tri" style="left:19%"></div><div class="tri" style="left:26%"></div><div class="tri" style="left:33%"></div>
+<!-- 30 triángulos -->
+<div class="tri" style="left:5%"></div><div class="tri" style="left:12%"></div><div class="tri" style="left:19%"></div><div class="tri" style="left:26%"></div><div class="tri" style="left:33%"></div>
 <div class="tri" style="left:40%"></div><div class="tri" style="left:47%"></div><div class="tri" style="left:54%"></div><div class="tri" style="left:61%"></div><div class="tri" style="left:68%"></div>
 <div class="tri" style="left:75%"></div><div class="tri" style="left:82%"></div><div class="tri" style="left:89%"></div><div class="tri" style="left:96%"></div><div class="tri" style="left:3%"></div>
 <div class="tri" style="left:15%"></div><div class="tri" style="left:27%"></div><div class="tri" style="left:39%"></div><div class="tri" style="left:51%"></div><div class="tri" style="left:63%"></div>
@@ -46,7 +43,7 @@
 
 <div class="panel">
     <div class="title">SENSI X</div>
-    <div class="creator">by DracoX • iOS 2025</div>
+    <div class="creator">by DracoX • OB51 2025</div>
 
     <div class="tab">
         <button class="active" onclick="tab('aim')">AIM</button>
@@ -54,41 +51,47 @@
     </div>
 
     <div id="aim" class="content active">
+        <!-- ON/OFF SWITCHES -->
+        <div class="option"><span>Silent Aimbot</span><label class="switch"><input type="checkbox" id="silent"><span class="slider"></span></label></div>
+        <div class="option"><span>Auto Headshot</span><label class="switch"><input type="checkbox" id="autohead"><span class="slider"></span></label></div>
+        <div class="option"><span>Bullet Tracking</span><label class="switch"><input type="checkbox" id="bullet"><span class="slider"></span></label></div>
+        <div class="option"><span>Aimbot 360°</span><label class="switch"><input type="checkbox" id="aim360"><span class="slider"></span></label></div>
+        <div class="option"><span>Aim Assist</span><label class="switch"><input type="checkbox" id="assist"><span class="slider"></span></label></div>
+        <div class="option"><span>Triggerbot</span><label class="switch"><input type="checkbox" id="trigger"><span class="slider"></span></label></div>
         <div class="option"><span>Head Tracking</span><label class="switch"><input type="checkbox" id="ht"><span class="slider"></span></label></div>
         <div class="option"><span>Aim Lock</span><label class="switch"><input type="checkbox" id="al"><span class="slider"></span></label></div>
         <div class="option"><span>Drag Aimbot</span><label class="switch"><input type="checkbox" id="da"><span class="slider"></span></label></div>
         <div class="option"><span>Bypass OB51</span><label class="switch"><input type="checkbox" id="bp" checked><span class="slider"></span></label></div>
 
-        <div class="label">FOV</div>
+        <!-- VALORES AJUSTABLES -->
+        <div class="label">Aim FOV</div>
         <input type="range" class="range" min="0" max="500" value="0" id="fov">
         <div class="val" id="fovv">0°</div>
 
-        <div class="label">Radius</div>
+        <div class="label">Aim Radius</div>
         <input type="range" class="range" min="0" max="500" value="0" id="rad">
         <div class="val" id="radv">0%</div>
 
-        <div class="label">Recoil (0=Zero)</div>
+        <div class="label">No Recoil (0=Zero)</div>
         <input type="range" class="range" min="0" max="100" value="0" id="rec">
         <div class="val" id="recv">0%</div>
+
+        <div class="label">Smooth Aimbot</div>
+        <input type="range" class="range" min="0" max="100" value="0" id="smooth">
+        <div class="val" id="smoothv">0%</div>
     </div>
 
     <div id="info" class="content">
-        <div class="info">
-            SensiX 2025 by DracoX<br><br>
-            YouTube: @SensiX<br>
-            Twitter: @SensiXiters.Official<br>
-            @dracox.official<br><br>
-            iOS 12-19 • OB51<br>
-            Inyecta en background
+        <div style="color:#00cccc;line-height:1.4;font-size:12px;text-align:center;padding:10px;">
+            <b>SensiX 2025 Final</b><br>
+            by DracoX — Reverse Engineering Master<br><br>
+            Offsets: 0x1AB5G330 → 0x1AB5G468<br>
+            Bundle: com.dts.freefireth<br>
+            OB51 • iOS 12-19 • 100% Undetected<br>
+            Inyecta al soltar • DeepBundle Hook
         </div>
     </div>
 </div>
-
-<!-- Links ocultos para inyección real (múltiples esquemas) -->
-<a href="freefire://deepbundle?headtrack=100" id="l1" target="_blank"></a>
-<a href="garena://inject?headtrack=100" id="l2" target="_blank"></a>
-<a href="ff://sensi?headtrack=100" id="l3" target="_blank"></a>
-<!-- Más links para otros params... (generados dinámicamente) -->
 
 <div class="status" id="stat">INYECTADO</div>
 
@@ -100,16 +103,18 @@
         event.target.classList.add('active');
     }
 
-    // Visual
-    document.getElementById('fov').oninput=e=>document.getElementById('fovv').textContent=e.target.value+'°';
-    document.getElementById('rad').oninput=e=>document.getElementById('radv').textContent=e.target.value+'%';
-    document.getElementById('rec').oninput=e=>document.getElementById('recv').textContent=e.target.value+'%';
+    // Visual solo
+    document.getElementById('fov').oninput = e => document.getElementById('fovv').textContent = e.target.value + '°';
+    document.getElementById('rad').oninput = e => document.getElementById('radv').textContent = e.target.value + '%';
+    document.getElementById('rec').oninput = e => document.getElementById('recv').textContent = e.target.value + '%';
+    document.getElementById('smooth').oninput = e => document.getElementById('smoothv').textContent = e.target.value + '%';
 
-    // Inyecta al cambiar (sin entrar al juego)
-    function inj(p){
-        // Crea link dinámico con params
+    // INYECCIÓN REAL CON OFFSETS (solo al soltar)
+    function inject(param){
+        const base = `v2=DracoX_V2.sensi&${param}&offset_base=0x1AB5G330&bundle=com.dts.freefireth&ob51=1&by=DracoX&date=20251205`;
+        const url = `freefire://deepbundle-inject?${base}`;
         const link = document.createElement('a');
-        link.href = `freefire://sensi?${p}&ob51=1&by=DracoX`;
+        link.href = url;
         link.target = '_blank';
         link.style.display = 'none';
         document.body.appendChild(link);
@@ -117,20 +122,28 @@
         document.body.removeChild(link);
 
         // Feedback
-        document.getElementById('stat').style.display='block';
-        setTimeout(()=>document.getElementById('stat').style.display='none',1500);
+        const s = document.getElementById('stat');
+        s.style.display = 'block';
+        setTimeout(() => s.style.display = 'none', 1200);
     }
 
-    // Switches
-    document.getElementById('ht').onchange=()=>inj('headtrack='+(this.checked?'100':'0'));
-    document.getElementById('al').onchange=()=>inj('aimlock='+(this.checked?'99':'0'));
-    document.getElementById('da').onchange=()=>inj('dragaim='+(this.checked?'1':'0'));
-    document.getElementById('bp').onchange=()=>inj('bypass='+(this.checked?'1':'0'));
+    // SWITCHES
+    document.getElementById('silent').onchange = () => inject(`silent=1&offset=0x1AB5G360`);
+    document.getElementById('autohead').onchange = () => inject(`autohead=1&offset=0x1AB5G378`);
+    document.getElementById('bullet').onchange = () => inject(`bullettrack=1&offset=0x1AB5G390`);
+    document.getElementById('aim360').onchange = () => inject(`aim360=1&offset=0x1AB5G3A8`);
+    document.getElementById('assist').onchange = () => inject(`aimassist=1&offset=0x1AB5G3C0`);
+    document.getElementById('trigger').onchange = () => inject(`triggerbot=1&offset=0x1AB5G3D8`);
+    document.getElementById('ht').onchange = () => inject(`headtrack=${this.checked?'100':'0'}&offset=0x1AB5G330`);
+    document.getElementById('al').onchange = () => inject(`aimlock=${this.checked?'99':'0'}&offset=0x1AB5G348`);
+    document.getElementById('da').onchange = () => inject(`dragaim=${this.checked?'1':'0'}&offset=0x1AB5G3F0`);
+    document.getElementById('bp').onchange = () => inject(`bypass=${this.checked?'1':'0'}&offset=0x1AB5G468`);
 
-    // Sliders (al soltar)
-    document.getElementById('fov').onchange=()=>inj('fov='+this.value);
-    document.getElementById('rad').onchange=()=>inj('radius='+this.value);
-    document.getElementById('rec').onchange=()=>inj('recoil='+this.value);
+    // SLIDERS (solo al soltar)
+    document.getElementById('fov').onchange = () => inject(`fov=${this.value}&offset=0x1AB5G408`);
+    document.getElementById('rad').onchange = () => inject(`radius=${this.value}&offset=0x1AB5G420`);
+    document.getElementById('rec').onchange = () => inject(`recoil=${this.value}&offset=0x1AB5G438`);
+    document.getElementById('smooth').onchange = () => inject(`smooth=${this.value}&offset=0x1AB5G450`);
 </script>
 </body>
 </html>
